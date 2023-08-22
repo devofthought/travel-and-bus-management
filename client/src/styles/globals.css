@@ -1,4 +1,7 @@
-@import "./tailwindConfig.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -13,33 +16,18 @@ code {
     monospace;
 }
 
+ul {
+  list-style: none;
+}
+li {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+}
+
 * {
   margin: 0;
   padding: 0;
-  font-weight: 500 !important;
-}
-a {
-  text-decoration: none !important;
-}
-ul {
-  margin: 0 !important;
-  padding: 0 !important;
-}
-p {
-  margin: 0;
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
-  margin-left: 0;
-  margin-right: 0;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p {
-  margin-top: 0 !important;
-  margin: 0 !important;
-  margin-bottom: 0 !important;
+  box-sizing: border-box;
 }
