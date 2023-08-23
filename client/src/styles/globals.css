@@ -31,3 +31,17 @@ a {
   padding: 0;
   box-sizing: border-box;
 }
+
+/* ##################### Common Colors ##################### */
+.primary-text {
+  color: #22c55e;
+}
+.secondary-text {
+  color: #3b83f6;
+}
+.primary-bg {
+  background: #22c55e;
+}
+.secondary-bg {
+  background: #3b83f6;
+}
