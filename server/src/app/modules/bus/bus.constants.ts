@@ -14,4 +14,5 @@ export const availability_status = [
   'discontinue',
   'service',
   'standBy',
+  'rest',
 ]

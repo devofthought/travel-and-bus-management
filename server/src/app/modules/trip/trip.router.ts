@@ -10,4 +10,10 @@ router.post(
   TripController.createTrip
 )
 
+router.patch(
+  '/:id',
+  validateRequest(TripValidation.updateTripZodSchema),
+  TripController.updateTrip
+)
+
 export const TripRoutes = router
