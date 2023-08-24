@@ -4,6 +4,7 @@ import validateRequest from '../../middlewares/validateRequest'
 import { TripController } from './trip.controller'
 const router = express.Router()
 
+router.get('/', TripController.getAllTrip)
 router.post(
   '/',
   validateRequest(TripValidation.createTripZodSchema),

@@ -1,10 +1,14 @@
 import httpStatus from 'http-status'
 import ApiError from '../../../errors/ApiError'
-import { ITrip, ITripResponse } from './trip.interface'
+import { ITrip, ITripFilter, ITripResponse } from './trip.interface'
 import { Trip } from './trip.model'
 import { Driver } from '../driver/driver.model'
 import { Bus } from '../bus/bus.model'
-import mongoose from 'mongoose'
+import mongoose, { SortOrder } from 'mongoose'
+import { IPaginationOptions } from '../../../interfaces/pagination'
+import { IGenericResponse } from '../../../interfaces/common'
+import { tripSearchableFields } from './trip.constants'
+import { paginationHelper } from '../../../helper/paginationHelper'
 
 const createTrip = async (payload: ITrip): Promise<ITripResponse | null> => {
   const driver = await Driver.findById(payload.driver_id)
@@ -164,7 +168,60 @@ const updateTrip = async (
   /* if admin want to change driver id */
 }
 
+const getAllTrip = async (
+  filters: ITripFilter,
+  paginationOptions: IPaginationOptions
+): Promise<IGenericResponse<ITrip[]>> => {
+  const { searchTerm, ...filtersData } = filters
+
+  const andConditions = []
+
+  if (searchTerm) {
+    andConditions.push({
+      $or: tripSearchableFields?.map((field: any) => ({
+        [field]: {
+          $regex: searchTerm,
+          $options: 'i',
+        },
+      })),
+    })
+  }
+
+  if (Object.keys(filtersData).length) {
+    andConditions.push({
+      $and: Object.entries(filtersData).map(([field, value]) => ({
+        [field]: value,
+      })),
+    })
+  }
+
+  const { page, limit, skip, sortBy, sortOrder } =
+    paginationHelper.calculatePagination(paginationOptions)
+
+  const sortCondition: '' | { [key: string]: SortOrder } = sortBy &&
+    sortOrder && { [sortBy]: sortOrder }
+
+  const whereCondition =
+    andConditions?.length > 0 ? { $and: andConditions } : {}
+
+  const result = await Trip.find(whereCondition)
+    .sort(sortCondition)
+    .skip(skip)
+    .limit(limit)
+
+  const total = await Trip.countDocuments(whereCondition)
+
+  return {
+    meta: {
+      page,
+      limit,
+      total,
+    },
+    data: result,
+  }
+}
 export const TripService = {
   createTrip,
   updateTrip,
+  getAllTrip,
 }
