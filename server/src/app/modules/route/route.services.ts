@@ -75,8 +75,25 @@ const getSingleRoute = async (route_code: string): Promise<IRoute | null> => {
   return result
 }
 
+const updateRoute = async (
+  route_code: string,
+  payload: Partial<IRoute>
+): Promise<IRoute | null> => {
+  const isExist = await Route.findOne({ route_code })
+
+  if (!isExist) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Route not found')
+  }
+
+  const result = await Route.findOneAndUpdate({ route_code }, payload, {
+    new: true,
+  })
+  return result
+}
+
 export const RouteService = {
   createRoute,
   getAllRoute,
   getSingleRoute,
+  updateRoute,
 }

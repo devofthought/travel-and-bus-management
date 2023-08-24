@@ -10,5 +10,10 @@ router.post(
   validateRequest(RouteValidation.createRouteZodSchema),
   RouteController.createRoute
 )
+router.patch(
+  '/:route_code',
+  validateRequest(RouteValidation.updateRouteZodSchema),
+  RouteController.updateRoute
+)
 router.get('/:route_code', RouteController.getSingleRoute)
 export const RouteRoutes = router

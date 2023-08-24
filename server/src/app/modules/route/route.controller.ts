@@ -44,8 +44,22 @@ const getSingleRoute = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
+const updateRoute = catchAsync(async (req: Request, res: Response) => {
+  const route_code = req.params.route_code
+  const updatedData = req.body
+  const result = await RouteService.updateRoute(route_code, updatedData)
+
+  sendResponse<IRouteResponse>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Route updated successfully !',
+    data: result,
+  })
+})
+
 export const RouteController = {
   createRoute,
   getAllRoute,
   getSingleRoute,
+  updateRoute,
 }
