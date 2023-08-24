@@ -91,9 +91,18 @@ const updateRoute = async (
   return result
 }
 
+const deleteRoute = async (route_code: string): Promise<IRoute | null> => {
+  const result = await Route.findOneAndDelete({ route_code })
+  if (!result) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'route not found!')
+  }
+  return result
+}
+
 export const RouteService = {
   createRoute,
   getAllRoute,
   getSingleRoute,
   updateRoute,
+  deleteRoute,
 }
