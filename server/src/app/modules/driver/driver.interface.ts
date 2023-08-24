@@ -10,6 +10,7 @@ export type IDriver = {
   driving_licence: number
   years_exprience: number
   address: string
+  driving_status: 'on-trip' | 'rest' | 'ready' | 'sick'
 }
 
 export type DriverModel = Model<IDriver, Record<string, unknown>>
@@ -22,4 +23,5 @@ export type IDriverFilter = {
   phone?: string
   driving_licence?: string
   address?: string
+  driving_status?: string
 }

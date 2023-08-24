@@ -1,5 +1,6 @@
 import { Schema, model } from 'mongoose'
 import { IDriver, DriverModel } from './driver.interface'
+import { driving_status } from './driver.constants'
 
 export const driverSchema = new Schema<IDriver, DriverModel>(
   {
@@ -40,6 +41,11 @@ export const driverSchema = new Schema<IDriver, DriverModel>(
     address: {
       type: String,
       required: true,
+    },
+    driving_status: {
+      type: String,
+      required: true,
+      enum: driving_status,
     },
   },
   {

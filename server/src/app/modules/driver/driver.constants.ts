@@ -14,3 +14,5 @@ export const driverFilterableFields = [
   'driving_licence',
   'years_exprience',
 ]
+
+export const driving_status = ['on-trip', 'rest', 'ready', 'sick']
