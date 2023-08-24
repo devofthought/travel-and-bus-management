@@ -32,47 +32,20 @@ const getAllBus = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
-// const getSingleRoute = catchAsync(async (req: Request, res: Response) => {
-//   const route_code = req.params.route_code
-//   const result = await RouteService.getSingleRoute(route_code)
+const getSingleBus = catchAsync(async (req: Request, res: Response) => {
+  const bus_code = req.params.bus_code
+  const result = await BusService.getSingleBus(bus_code)
 
-//   sendResponse<IRouteResponse>(res, {
-//     statusCode: httpStatus.OK,
-//     success: true,
-//     message: 'Route retrieved successfully !',
-//     data: result,
-//   })
-// })
-
-// const updateRoute = catchAsync(async (req: Request, res: Response) => {
-//   const route_code = req.params.route_code
-//   const updatedData = req.body
-//   const result = await RouteService.updateRoute(route_code, updatedData)
-
-//   sendResponse<IRouteResponse>(res, {
-//     statusCode: httpStatus.OK,
-//     success: true,
-//     message: 'Route updated successfully !',
-//     data: result,
-//   })
-// })
-
-// const deleteRoute = catchAsync(async (req: Request, res: Response) => {
-//   const route_code = req.params.route_code
-//   const result = await RouteService.deleteRoute(route_code)
-
-//   sendResponse<IRouteResponse>(res, {
-//     statusCode: httpStatus.OK,
-//     success: true,
-//     message: 'Route deleted successfully!',
-//     data: result,
-//   })
-// })
+  sendResponse<IBusResponse>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Bus data retrieved successfully!',
+    data: result,
+  })
+})
 
 export const BusController = {
   createBus,
   getAllBus,
-  // getSingleRoute,
-  // updateRoute,
-  // deleteRoute,
+  getSingleBus,
 }

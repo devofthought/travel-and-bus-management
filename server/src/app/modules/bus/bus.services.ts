@@ -14,6 +14,9 @@ const createBus = async (payload: IBus): Promise<IBusResponse> => {
   const bus_code = await generatedBusCode() // generated bus code
   payload.bus_code = bus_code
   const newRoute = await Bus.create(payload)
+  if (!newRoute) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create bus')
+  }
   return newRoute
 }
 
@@ -70,7 +73,17 @@ const getAllBus = async (
   }
 }
 
+const getSingleBus = async (bus_code: string): Promise<IBus | null> => {
+  const id = bus_code.toLocaleUpperCase()
+  const result = await Bus.findOne({ bus_code: id })
+  if (!result) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Bus not found!')
+  }
+  return result
+}
+
 export const BusService = {
   createBus,
   getAllBus,
+  getSingleBus,
 }

@@ -72,6 +72,9 @@ const getAllRoute = async (
 
 const getSingleRoute = async (route_code: string): Promise<IRoute | null> => {
   const result = await Route.findOne({ route_code })
+  if (!result) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'route not found!')
+  }
   return result
 }
 
