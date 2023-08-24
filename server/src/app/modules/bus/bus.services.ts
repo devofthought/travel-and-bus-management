@@ -73,12 +73,30 @@ const getAllBus = async (
   }
 }
 
-const getSingleBus = async (bus_code: string): Promise<IBus | null> => {
-  const id = bus_code.toLocaleUpperCase()
-  const result = await Bus.findOne({ bus_code: id })
+const getSingleBus = async (id: string): Promise<IBus | null> => {
+  const bus_code = id.toLocaleUpperCase()
+  const result = await Bus.findOne({ bus_code })
   if (!result) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Bus not found!')
   }
+  return result
+}
+
+const updateBus = async (
+  id: string,
+  payload: Partial<IBus>
+): Promise<IBus | null> => {
+  const bus_code = id.toLocaleUpperCase()
+  delete payload.bus_code
+  const isExist = await Bus.findOne({ bus_code })
+
+  if (!isExist) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Bus not found!')
+  }
+
+  const result = await Bus.findOneAndUpdate({ bus_code }, payload, {
+    new: true,
+  })
   return result
 }
 
@@ -86,4 +104,5 @@ export const BusService = {
   createBus,
   getAllBus,
   getSingleBus,
+  updateBus,
 }

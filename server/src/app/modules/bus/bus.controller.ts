@@ -44,8 +44,22 @@ const getSingleBus = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
+const updateBus = catchAsync(async (req: Request, res: Response) => {
+  const bus_code = req.params.bus_code
+  const updatedData = req.body
+  const result = await BusService.updateBus(bus_code, updatedData)
+
+  sendResponse<IBusResponse>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Bus updated successfully!',
+    data: result,
+  })
+})
+
 export const BusController = {
   createBus,
   getAllBus,
   getSingleBus,
+  updateBus,
 }

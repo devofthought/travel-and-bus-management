@@ -10,5 +10,10 @@ router.post(
   validateRequest(BusValidation.createBusZodSchema),
   BusController.createBus
 )
+router.patch(
+  '/:bus_code',
+  validateRequest(BusValidation.updateBusZodSchema),
+  BusController.updateBus
+)
 router.get('/:bus_code', BusController.getSingleBus)
 export const BusRoutes = router
