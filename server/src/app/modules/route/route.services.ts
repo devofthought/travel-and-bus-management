@@ -71,14 +71,20 @@ const getAllRoute = async (
 }
 
 const getSingleRoute = async (route_code: string): Promise<IRoute | null> => {
-  const result = await Route.findOne({ route_code })
+  const id = route_code.toLocaleUpperCase()
+  const result = await Route.findOne({ route_code: id })
+  if (!result) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'route not found!')
+  }
   return result
 }
 
 const updateRoute = async (
-  route_code: string,
+  id: string,
   payload: Partial<IRoute>
 ): Promise<IRoute | null> => {
+  const route_code = id.toLocaleUpperCase()
+  delete payload.route_code
   const isExist = await Route.findOne({ route_code })
 
   if (!isExist) {
@@ -91,7 +97,8 @@ const updateRoute = async (
   return result
 }
 
-const deleteRoute = async (route_code: string): Promise<IRoute | null> => {
+const deleteRoute = async (id: string): Promise<IRoute | null> => {
+  const route_code = id.toLocaleUpperCase()
   const result = await Route.findOneAndDelete({ route_code })
   if (!result) {
     throw new ApiError(httpStatus.NOT_FOUND, 'route not found!')

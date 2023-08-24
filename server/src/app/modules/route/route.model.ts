@@ -5,7 +5,7 @@ export const routeSchema = new Schema<IRoute, RouteModel>(
     route_code: {
       type: String,
       required: true,
-      //   unique: true,
+      unique: true,
     },
     from: {
       type: String,
