@@ -44,8 +44,20 @@ const getAllTrip = catchAsync(async (req: Request, res: Response) => {
     data: result.data,
   })
 })
+const getSingleTrip = catchAsync(async (req: Request, res: Response) => {
+  const id = req.params.id
+  const result = await TripService.getSingleTrip(id)
+
+  sendResponse<ITripResponse>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Trip retrieved successfully!',
+    data: result,
+  })
+})
 export const TripController = {
   createTrip,
   updateTrip,
   getAllTrip,
+  getSingleTrip,
 }

@@ -220,8 +220,18 @@ const getAllTrip = async (
     data: result,
   }
 }
+
+const getSingleTrip = async (id: string): Promise<ITrip | null> => {
+  const result = await Trip.findById(id)
+  if (!result) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'route not found!')
+  }
+  return result
+}
+
 export const TripService = {
   createTrip,
   updateTrip,
   getAllTrip,
+  getSingleTrip,
 }

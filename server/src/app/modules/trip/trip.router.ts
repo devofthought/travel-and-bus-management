@@ -17,4 +17,6 @@ router.patch(
   TripController.updateTrip
 )
 
+router.get('/:id', TripController.getSingleTrip)
+
 export const TripRoutes = router
