@@ -22,3 +22,11 @@ export type ITripResponse = {
 }
 
 export type TripModel = Model<ITrip, Record<string, unknown>>
+
+export type ITripFilter = {
+  searchTerm?: string
+  trips_status?: 'pending' | 'completed' | 'on-processing'
+  ticket_price?: number
+  bus_code?: string
+  route_code?: string
+}
