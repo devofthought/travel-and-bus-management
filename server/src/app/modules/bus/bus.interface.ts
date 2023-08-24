@@ -12,7 +12,12 @@ export type IBusFilter = {
 export type IBusResponse = {
   available_seats: number
   bus_code: string
-  availability_status: 'transit' | 'discontinue' | 'service' | 'standBy'
+  availability_status:
+    | 'transit'
+    | 'discontinue'
+    | 'service'
+    | 'standBy'
+    | 'rest'
   brand_name: string
   model: string
   bus_image: string
