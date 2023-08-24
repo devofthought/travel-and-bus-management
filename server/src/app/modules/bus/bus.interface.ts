@@ -1,11 +1,12 @@
 import { Model } from 'mongoose'
 
 export type IBusFilter = {
-  available_seats: number
-  bus_code: string
-  availability_status: 'transit' | 'discontinue' | 'service' | 'standBy'
-  brand_name: string
-  modal: string
+  searchTerm?: string
+  available_seats?: number
+  bus_code?: string
+  availability_status?: 'transit' | 'discontinue' | 'service' | 'standBy'
+  brand_name?: string
+  modal?: string
 }
 
 export type IBusResponse = {
