@@ -70,7 +70,13 @@ const getAllRoute = async (
   }
 }
 
+const getSingleRoute = async (route_code: string): Promise<IRoute | null> => {
+  const result = await Route.findOne({ route_code })
+  return result
+}
+
 export const RouteService = {
   createRoute,
   getAllRoute,
+  getSingleRoute,
 }

@@ -32,7 +32,20 @@ const getAllRoute = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
+const getSingleRoute = catchAsync(async (req: Request, res: Response) => {
+  const route_code = req.params.route_code
+  const result = await RouteService.getSingleRoute(route_code)
+
+  sendResponse<IRouteResponse>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Route retrieved successfully !',
+    data: result,
+  })
+})
+
 export const RouteController = {
   createRoute,
   getAllRoute,
+  getSingleRoute,
 }
