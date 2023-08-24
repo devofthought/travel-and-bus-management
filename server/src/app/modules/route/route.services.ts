@@ -84,6 +84,7 @@ const updateRoute = async (
   payload: Partial<IRoute>
 ): Promise<IRoute | null> => {
   const route_code = id.toLocaleUpperCase()
+  delete payload.route_code
   const isExist = await Route.findOne({ route_code })
 
   if (!isExist) {
