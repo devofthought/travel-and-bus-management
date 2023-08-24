@@ -4,7 +4,7 @@ import sendResponse from '../../../shared/sendResponse'
 import { BusService } from './bus.services'
 import catchAsync from '../../../shared/catchAsync'
 import { pick } from '../../../shared/pick'
-import { routeFilterableFields } from './bus.constants'
+import { busFilterableFields } from './bus.constants'
 import { paginationFields } from '../../../constants/pagination'
 import { IBusResponse } from './bus.interface'
 
@@ -19,7 +19,7 @@ const createBus = catchAsync(async (req: Request, res: Response) => {
 })
 
 const getAllBus = catchAsync(async (req: Request, res: Response) => {
-  const filters = pick(req.query, routeFilterableFields)
+  const filters = pick(req.query, busFilterableFields)
   const paginationOptions = pick(req.query, paginationFields)
   const result = await BusService.getAllBus(filters, paginationOptions)
 
