@@ -8,7 +8,7 @@ const SaySomething = () => {
 
   return (
     <>
-      <div className="main-container">
+      <div className="main-container mt-10">
         <form
           className="border-[1px] shadow-lg hover:shadow-xl rounded px-4 sm:px-8 pt-6 pb-8 mb-4"
           onSubmit={handleSubmit}
