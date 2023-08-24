@@ -117,111 +117,112 @@ const createUser = async (payload: IUser): Promise<IUserSignupResponse> => {
       refreshToken,
     }
   }
+}
 
-  const refreshToken = async (token: string): Promise<IRefreshTokenResponse> => {
-    let verifiedToken = null
-    try {
-      verifiedToken = jwtHelpers.verifyToken(
-        token,
-        config.jwt.refresh_secret as Secret
-      )
-    } catch (error) {
-      throw new ApiError(httpStatus.FORBIDDEN, 'Invalid refresh token')
+const refreshToken = async (token: string): Promise<IRefreshTokenResponse> => {
+  let verifiedToken = null
+  try {
+    verifiedToken = jwtHelpers.verifyToken(
+      token,
+      config.jwt.refresh_secret as Secret
+    )
+  } catch (error) {
+    throw new ApiError(httpStatus.FORBIDDEN, 'Invalid refresh token')
+  }
+
+  const { id, role } = verifiedToken
+
+  // check if user exists of not
+  const isUserExist = await User.findOne({ _id: id })
+
+  if (!isUserExist) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'User not found')
+  }
+
+  const accessToken = jwtHelpers.createToken(
+    {
+      id: id,
+      role: role,
+    },
+    config.jwt.secret as Secret,
+    config.jwt.expires_in as string
+  )
+
+  return {
+    accessToken,
+  }
+}
+
+const googleAuth = async (
+  tokenId: string
+): Promise<IUserLoginResponse | void> => {
+  try {
+    const response = await cilent.verifyIdToken({
+      idToken: tokenId,
+      audience:
+        '733785501526-kf7fkkbo5i29t9kjq2npllh2fd14fvhj.apps.googleusercontent.com',
+    })
+
+    const payload = response.getPayload()
+    if (!payload) {
+      throw new ApiError(httpStatus.NOT_FOUND, 'Payload not found!')
     }
 
-    const { id, role } = verifiedToken
+    const { name, email, email_verified, family_name } = payload
 
-    // check if user exists of not
-    const isUserExist = await User.findOne({ _id: id })
+    if (!email_verified) {
+      throw new ApiError(
+        httpStatus.NOT_FOUND,
+        'Cannot login! Try a different way.'
+      )
+    }
 
-    if (!isUserExist) {
-      throw new ApiError(httpStatus.NOT_FOUND, 'User not found')
+    let userExists = await User.findOne({ email: email })
+
+    if (!userExists) {
+      userExists = await User.create({
+        name: name,
+        email: email,
+        password: family_name + '@1234',
+        role: 'user',
+        phone: email,
+      })
     }
 
     const accessToken = jwtHelpers.createToken(
       {
-        id: id,
-        role: role,
+        id: userExists._id,
+        role: userExists.role,
       },
       config.jwt.secret as Secret,
       config.jwt.expires_in as string
     )
 
+    const refreshToken = jwtHelpers.createToken(
+      {
+        id: userExists._id,
+        role: userExists.role,
+      },
+      config.jwt.refresh_secret as Secret,
+      config.jwt.refresh_expires_in as string
+    )
+
     return {
+      userData: userExists,
       accessToken,
+      refreshToken,
     }
+  } catch (error) {
+    throw new ApiError(
+      httpStatus.INTERNAL_SERVER_ERROR,
+      'Something went wrong.'
+    )
   }
+}
 
-  const googleAuth = async (
-    tokenId: string
-  ): Promise<IUserLoginResponse | void> => {
-    try {
-      const response = await cilent.verifyIdToken({
-        idToken: tokenId,
-        audience:
-          '733785501526-kf7fkkbo5i29t9kjq2npllh2fd14fvhj.apps.googleusercontent.com',
-      })
-
-      const payload = response.getPayload()
-      if (!payload) {
-        throw new ApiError(httpStatus.NOT_FOUND, 'Payload not found!')
-      }
-
-      const { name, email, email_verified, family_name } = payload
-
-      if (!email_verified) {
-        throw new ApiError(
-          httpStatus.NOT_FOUND,
-          'Cannot login! Try a different way.'
-        )
-      }
-
-      let userExists = await User.findOne({ email: email })
-
-      if (!userExists) {
-        userExists = await User.create({
-          name: name,
-          email: email,
-          password: family_name + '@1234',
-          role: 'user',
-          phone: email,
-        })
-      }
-
-      const accessToken = jwtHelpers.createToken(
-        {
-          id: userExists._id,
-          role: userExists.role,
-        },
-        config.jwt.secret as Secret,
-        config.jwt.expires_in as string
-      )
-
-      const refreshToken = jwtHelpers.createToken(
-        {
-          id: userExists._id,
-          role: userExists.role,
-        },
-        config.jwt.refresh_secret as Secret,
-        config.jwt.refresh_expires_in as string
-      )
-
-      return {
-        userData: userExists,
-        accessToken,
-        refreshToken,
-      }
-    } catch (error) {
-      throw new ApiError(
-        httpStatus.INTERNAL_SERVER_ERROR,
-        'Something went wrong.'
-      )
-    }
-  }
-
-  export const AuthService = {
-    createUser,
-    login,
-    refreshToken,
-    googleAuth,
-  }
+export const AuthService = {
+  createUser,
+  login,
+  refreshToken,
+  googleAuth,
+}
