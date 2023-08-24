@@ -57,9 +57,22 @@ const updateBus = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
+const deleteBus = catchAsync(async (req: Request, res: Response) => {
+  const bus_code = req.params.bus_code
+  const result = await BusService.deleteBus(bus_code)
+
+  sendResponse<IBusResponse>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Bus deleted successfully!',
+    data: result,
+  })
+})
+
 export const BusController = {
   createBus,
   getAllBus,
   getSingleBus,
   updateBus,
+  deleteBus,
 }

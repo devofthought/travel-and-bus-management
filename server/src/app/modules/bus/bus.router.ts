@@ -16,4 +16,6 @@ router.patch(
   BusController.updateBus
 )
 router.get('/:bus_code', BusController.getSingleBus)
+router.delete('/:bus_code', BusController.deleteBus)
+
 export const BusRoutes = router

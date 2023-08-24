@@ -100,9 +100,19 @@ const updateBus = async (
   return result
 }
 
+const deleteBus = async (id: string): Promise<IBus | null> => {
+  const bus_code = id.toLocaleUpperCase()
+  const result = await Bus.findOneAndDelete({ bus_code })
+  if (!result) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Bus not found!')
+  }
+  return result
+}
+
 export const BusService = {
   createBus,
   getAllBus,
   getSingleBus,
   updateBus,
+  deleteBus,
 }
