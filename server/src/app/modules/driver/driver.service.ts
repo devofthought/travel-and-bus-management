@@ -7,7 +7,7 @@ import { IDriver, IDriverFilter } from './driver.interface'
 import { driverSearchableFields } from './driver.constants'
 import { Driver } from './driver.model'
 import httpStatus from 'http-status'
-import ApiError from '../../../errors/apiError'
+import ApiError from '../../../errors/ApiError'
 
 const getAllDrivers = async (
   filters: IDriverFilter,
