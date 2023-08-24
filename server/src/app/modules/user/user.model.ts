@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-this-alias */
-import mongoose from 'mongoose'
-import { IUser, UserModel } from './user.interface'
-import { role } from './user.constants'
 import bcrypt from 'bcrypt'
+import mongoose from 'mongoose'
 import config from '../../../config'
+import { role } from './user.constants'
+import { IUser, UserModel } from './user.interface'
 const { Schema } = mongoose
 
 const userSchema = new Schema<IUser, UserModel>(
@@ -69,3 +69,42 @@ userSchema.pre('save', async function (next) {
 })
 
 export const User = mongoose.model<IUser, UserModel>('User', userSchema)
+
+
+user = {
+  email,
+  password,
+  role,
+  admin_id,
+  traveller_id,
+  driver_id
+}
+
+admin = {
+  name,
+  email,
+  address,
+  password,
+  image
+}
+
+driver = {
+  name,
+  image,
+  age,
+  phone,
+  email,
+  driving_licence,
+  experience,
+  address,
+  joining_date,
+  driving_status
+}
+
+traveler = {
+  name,
+  image,
+  age,
+  phone,
+  email
+}
