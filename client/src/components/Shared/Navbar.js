@@ -61,7 +61,7 @@ const Navbar = () => {
           : "bg-gradient-to-r from-green-500 to-blue-500"
       }`}
     >
-      <div className="w-11/12 max-w-[1200px] mx-auto">
+      <div className="main-container">
         <div
           className={`navbar-wrapper__body  ${
             stickyNav ? "sticky__body" : ""
