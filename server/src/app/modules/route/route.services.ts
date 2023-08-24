@@ -10,11 +10,6 @@ import { Route } from './route.model'
 import { routeSearchableFields } from './route.constants'
 import { generatedRouteCode } from './route.utils'
 
-/*
- *'from',
- *'to',
- *'distance',
- */
 const createRoute = async (payload: IRoute): Promise<IRouteResponse> => {
   const route_code = await generatedRouteCode() // genarated bus code
   payload.route_code = route_code
@@ -22,6 +17,60 @@ const createRoute = async (payload: IRoute): Promise<IRouteResponse> => {
   return newRoute
 }
 
+const getAllRoute = async (
+  filters: IRouteFilter,
+  paginationOptions: IPaginationOptions
+): Promise<IGenericResponse<IRoute[]>> => {
+  const { searchTerm, ...filtersData } = filters
+
+  const andConditions = []
+
+  if (searchTerm) {
+    andConditions.push({
+      $or: routeSearchableFields?.map((field: any) => ({
+        [field]: {
+          $regex: searchTerm,
+          $options: 'i',
+        },
+      })),
+    })
+  }
+
+  if (Object.keys(filtersData).length) {
+    andConditions.push({
+      $and: Object.entries(filtersData).map(([field, value]) => ({
+        [field]: value,
+      })),
+    })
+  }
+
+  const { page, limit, skip, sortBy, sortOrder } =
+    paginationHelper.calculatePagination(paginationOptions)
+
+  const sortCondition: '' | { [key: string]: SortOrder } = sortBy &&
+    sortOrder && { [sortBy]: sortOrder }
+
+  const whereCondition =
+    andConditions?.length > 0 ? { $and: andConditions } : {}
+
+  const result = await Route.find(whereCondition)
+    .sort(sortCondition)
+    .skip(skip)
+    .limit(limit)
+
+  const total = await Route.countDocuments(whereCondition)
+
+  return {
+    meta: {
+      page,
+      limit,
+      total,
+    },
+    data: result,
+  }
+}
+
 export const RouteService = {
   createRoute,
+  getAllRoute,
 }
