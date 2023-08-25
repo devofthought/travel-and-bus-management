@@ -5,7 +5,7 @@ import { IGenericResponse } from '../../../interfaces/common'
 import { IPaginationOptions } from '../../../interfaces/pagination'
 import httpStatus from 'http-status'
 import ApiError from '../../../errors/ApiError'
-import { routeSearchableFields } from './bus.constants'
+import { busSearchableFields } from './bus.constants'
 import { IBus, IBusFilter, IBusResponse } from './bus.interface'
 import { generatedBusCode } from './bus.utils'
 import { Bus } from './bus.model'
@@ -30,7 +30,7 @@ const getAllBus = async (
 
   if (searchTerm) {
     andConditions.push({
-      $or: routeSearchableFields?.map((field: any) => ({
+      $or: busSearchableFields?.map((field: any) => ({
         [field]: {
           $regex: searchTerm,
           $options: 'i',

@@ -21,7 +21,7 @@ export const busSchema = new Schema<IBus, BusModel>(
       type: String,
       required: true,
     },
-    modal: {
+    model: {
       type: String,
       required: true,
     },
