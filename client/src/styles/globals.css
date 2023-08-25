@@ -46,6 +46,14 @@ a {
   background: #3b83f6;
 }
 
+.secondary-bg-hover:hover {
+  background: #3b83f6;
+  color: #fff;
+  transition: 300ms;
+  --tw-bg-opacity: 0.2;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 /* ##################### Main Container ##################### */
 .main-container {
   width: 90%;
