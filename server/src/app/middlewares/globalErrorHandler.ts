@@ -7,8 +7,8 @@ import { IGenericErrorMessage } from '../../interfaces/error'
 import { handleValidationError } from '../../errors/handleValidationError'
 import handleZodError from '../../errors/handleZodError'
 import { handleCastError } from '../../errors/handleCastError'
-import ApiError from '../../errors/apiError'
 import { ZodError } from 'zod'
+import ApiError from '../../errors/ApiError'
 
 // Global error handler middleware
 const globalErrorHandler: ErrorRequestHandler = (
