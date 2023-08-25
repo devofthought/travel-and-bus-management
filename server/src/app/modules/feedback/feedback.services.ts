@@ -82,6 +82,12 @@ const getSingleUserFeedbacks = async (
   return result
 }
 
+const getApprovedFeedbacks = async (): Promise<IFeedback[] | null> => {
+  const result = await Feedback.find({ status: 'approved' })
+
+  return result
+}
+
 const updateFeedback = async (
   id: string,
   payload: Partial<IFeedback>
@@ -112,4 +118,5 @@ export const FeedbackService = {
   getSingleUserFeedbacks,
   updateFeedback,
   deleteFeedback,
+  getApprovedFeedbacks,
 }

@@ -48,6 +48,17 @@ const getSingleUserFeedback: RequestHandler = catchAsync(async (req, res) => {
   })
 })
 
+const getApprovedFeedbacks: RequestHandler = catchAsync(async (req, res) => {
+  const result = await FeedbackService.getApprovedFeedbacks()
+
+  sendResponse<IFeedback[]>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Approved feedbacks retrieved successfully!',
+    data: result,
+  })
+})
+
 const updateFeedback: RequestHandler = catchAsync(async (req, res) => {
   const id = req.params.id
   const updatedData = req.body
@@ -78,4 +89,5 @@ export const FeedbackController = {
   getSingleUserFeedback,
   updateFeedback,
   deleteFeedback,
+  getApprovedFeedbacks,
 }
