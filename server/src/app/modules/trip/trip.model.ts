@@ -17,6 +17,7 @@ export const tripSchema = new Schema<ITrip, TripModel>(
     },
     bus_code: {
       type: String,
+      ref: 'Bus',
       required: true,
     },
     ticket_price: {

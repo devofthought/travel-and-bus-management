@@ -69,7 +69,9 @@ const createTrip = async (payload: ITrip): Promise<ITripResponse | null> => {
   }
   let finalTrip = null
   if (newTripObject) {
-    finalTrip = await Trip.findById(newTripObject._id).populate('driver_id')
+    finalTrip = await Trip.findById(newTripObject._id)
+      .populate('driver_id')
+      .populate('bus_code')
   }
   return finalTrip
 }
