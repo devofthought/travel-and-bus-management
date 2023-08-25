@@ -1,5 +1,46 @@
 /* eslint-disable no-unused-vars */
-import { Model } from 'mongoose';
+
+// admin.model.ts
+export interface AdminModel {
+  name: string;
+  email: string;
+  address: string;
+  password: string;
+  image: string;
+}
+
+// driver.model.ts
+export interface DriverModel {
+  name: string;
+  image: string;
+  age: number;
+  phone: string;
+  email: string;
+  driving_license: string;
+  experience: string;
+  address: string;
+  joining_date: string;
+  driving_status: string;
+}
+
+// traveller.model.ts
+export interface TravellerModel {
+  name: string;
+  image: string;
+  age: number;
+  phone: string;
+  email: string;
+}
+
+export interface UserModel {
+  email: string;
+  password: string;
+  role: 'admin' | 'traveller' | 'driver';
+  admin_id?: string;
+  traveller_id?: string;
+  driver_id?: string;
+}
+
 
 export type IUser = {
   _id: string;
@@ -18,7 +59,7 @@ export type IUserMethods = {
   isPasswordMatch(givenPassword: string, savedPassword: string): boolean;
 };
 
-export type UserModel = Model<IUser, Record<string, unknown>, IUserMethods>;
+// export type UserModel = Model<IUser, Record<string, unknown>, IUserMethods>;
 
 export type IUserFilter = {
   searchTerm?: string;

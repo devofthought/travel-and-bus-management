@@ -1,6 +1,11 @@
 /* eslint-disable no-constant-condition */
+import { OAuth2Client } from 'google-auth-library'
 import httpStatus from 'http-status'
+import { Secret } from 'jsonwebtoken'
+import config from '../../../config'
 import ApiError from '../../../errors/apiError'
+import { jwtHelpers } from '../../../helper/jwtHelpers'
+import { VariantCreation } from '../../../utils/utilities'
 import { IUser } from '../user/user.interface'
 import { User } from '../user/user.model'
 import {
@@ -9,10 +14,6 @@ import {
   IUserLoginResponse,
   IUserSignupResponse,
 } from './auth.interface'
-import { jwtHelpers } from '../../../helper/jwtHelpers'
-import { Secret } from 'jsonwebtoken'
-import config from '../../../config'
-import { OAuth2Client } from 'google-auth-library'
 
 // oauthj cilent code
 const cilent = new OAuth2Client(
@@ -20,70 +21,101 @@ const cilent = new OAuth2Client(
 )
 
 const createUser = async (payload: IUser): Promise<IUserSignupResponse> => {
-  const result = await User.create(payload)
-  let accessToken
-  let refreshToken
-  if (result) {
-    accessToken = jwtHelpers.createToken(
+
+
+  switch (payload.role) {
+    case 'admin':
+      VariantCreation.createAdmin(userData)
+        .then(createdAdmin => {
+          userData['admin_id'] = createdAdmin._id;
+          const newUser = new User(userData);
+          return newUser.save();
+        })
+      break;
+
+    case 'traveler':
+      VariantCreation.createTraveler(userData)
+        .then(createdTraveler => {
+          userData['traveler_id'] = createdTraveler._id;
+          const newUser = new User(userData);
+          return newUser.save();
+        })
+      break;
+
+    case 'driver':
+      VariantCreation.createDriver(userData)
+        .then(createdDriver => {
+          userData['driver_id'] = createdDriver._id;
+          const newUser = new User(userData);
+          return newUser.save();
+        })
+      break;
+
+      const result = await User.create(payload)
+      let accessToken
+      let refreshToken
+      if (result) {
+        accessToken = jwtHelpers.createToken(
+          {
+            id: result._id,
+            role: result.role,
+          },
+          config.jwt.secret as Secret,
+          config.jwt.expires_in as string
+        )
+
+        refreshToken = jwtHelpers.createToken(
+          {
+            id: result._id,
+            role: result.role,
+          },
+          config.jwt.refresh_secret as Secret,
+          config.jwt.refresh_expires_in as string
+        )
+      }
+      return { result, refreshToken, accessToken }
+  }
+
+  const login = async (payload: IUserLogin): Promise<IUserLoginResponse> => {
+    const user = new User()
+    const isUserExist = await user.isUserExist(payload.email)
+
+    if (!isUserExist) {
+      throw new ApiError(httpStatus.NOT_FOUND, 'User not found')
+    }
+
+    if (
+      isUserExist.password &&
+      !(await user.isPasswordMatch(payload.password, isUserExist.password))
+    ) {
+      throw new ApiError(httpStatus.UNAUTHORIZED, 'Invalid password')
+    }
+
+    const accessToken = jwtHelpers.createToken(
       {
-        id: result._id,
-        role: result.role,
+        id: isUserExist._id,
+        role: isUserExist.role,
       },
       config.jwt.secret as Secret,
       config.jwt.expires_in as string
     )
 
-    refreshToken = jwtHelpers.createToken(
+    const refreshToken = jwtHelpers.createToken(
       {
-        id: result._id,
-        role: result.role,
+        id: isUserExist._id,
+        role: isUserExist.role,
       },
       config.jwt.refresh_secret as Secret,
       config.jwt.refresh_expires_in as string
     )
-  }
-  return { result, refreshToken, accessToken }
-}
 
-const login = async (payload: IUserLogin): Promise<IUserLoginResponse> => {
-  const user = new User()
-  const isUserExist = await user.isUserExist(payload.email)
+    const userData = await User.findOne({ _id: isUserExist._id })
 
-  if (!isUserExist) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'User not found')
-  }
-
-  if (
-    isUserExist.password &&
-    !(await user.isPasswordMatch(payload.password, isUserExist.password))
-  ) {
-    throw new ApiError(httpStatus.UNAUTHORIZED, 'Invalid password')
-  }
-
-  const accessToken = jwtHelpers.createToken(
-    {
-      id: isUserExist._id,
-      role: isUserExist.role,
-    },
-    config.jwt.secret as Secret,
-    config.jwt.expires_in as string
-  )
-
-  const refreshToken = jwtHelpers.createToken(
-    {
-      id: isUserExist._id,
-      role: isUserExist.role,
-    },
-    config.jwt.refresh_secret as Secret,
-    config.jwt.refresh_expires_in as string
-  )
-
-  const userData = await User.findOne({ _id: isUserExist._id })
-
-  return {
-    userData,
-    accessToken,
-    refreshToken,
+    return {
+      userData,
+      accessToken,
+      refreshToken,
+    }
   }
 }
 
