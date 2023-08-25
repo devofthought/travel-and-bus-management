@@ -98,7 +98,7 @@ const Navbar = () => {
               styles={`px-2 py-[2px] sm:px-3 sm:py-1 font-semibold border-2 rounded-lg ${
                 stickyNav ? "border-blue-500 secondary-text" : "text-white"
               }`}
-              linkclassName={`btn-text px-2`}
+              textStyle={`btn-text px-2`}
               btnName="Bus"
               href="/bus"
             />
@@ -106,7 +106,7 @@ const Navbar = () => {
               styles={`px-2 py-[2px] sm:px-3 sm:py-1 font-semibold border-2 rounded-lg ${
                 stickyNav ? "border-blue-500 secondary-text" : "text-white"
               }`}
-              linkclassName={`btn-text px-2`}
+              textStyle={`btn-text px-2`}
               btnName="Reserve Bus"
               href="/reserve-bus"
             />
@@ -117,7 +117,7 @@ const Navbar = () => {
               styles={`px-2 py-[2px] md:px-3 md:py-1 font-semibold border-2 rounded-lg primary-bg text-white ${
                 stickyNav ? "border-green-500" : ""
               }`}
-              linkclassName={`btn-text px-2`}
+              textStyle={`btn-text px-2`}
               btnName="Login"
               href="/login"
             />

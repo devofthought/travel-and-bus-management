@@ -48,7 +48,7 @@ const SaySomething = () => {
             styles="w-full sm:w-60 md:w-80 primary-bg hover:bg-green-700 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-center"
             btnName="Submit"
             href="/"
-            linkclassName="text-center"
+            textStyle="text-center"
           />
         </div>
       </form>
