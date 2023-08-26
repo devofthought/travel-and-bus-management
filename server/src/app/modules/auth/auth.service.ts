@@ -25,7 +25,15 @@ const cilent = new OAuth2Client(
 )
 
 const createTraveler = async (payload: IUser): Promise<any> => {
-  let newUserAllData = null
+  let newUserAllData: IUser | null = null
+
+  const user = new User()
+  const isUserExist = await user.isUserExist(payload.email)
+
+  if (isUserExist) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'email already exists')
+  }
+
   const session = await mongoose.startSession()
   try {
     session.startTransaction()
@@ -58,7 +66,7 @@ const createTraveler = async (payload: IUser): Promise<any> => {
   }
 
   if (newUserAllData) {
-    newUserAllData = await User.findOne({ _id: newUserAllData.id })
+    newUserAllData = await User.findOne({ _id: newUserAllData._id })
       .populate('driver_id')
       .populate('traveler_id')
       .populate('admin_id')
@@ -84,10 +92,10 @@ const createTraveler = async (payload: IUser): Promise<any> => {
       config.jwt.refresh_expires_in as string
     )
   }
-  return { newUserAllData, refreshToken, accessToken }
+  return { result: newUserAllData, refreshToken, accessToken }
 }
 
-const createDriver = async (payload: IDriver): Promise<any> => {
+const createDriver = async (payload: IDriver): Promise<IUserSignupResponse> => {
   const driverData = { ...payload }
   let newDriverData = null
   const session = await mongoose.startSession()
@@ -132,7 +140,7 @@ const createDriver = async (payload: IDriver): Promise<any> => {
   return { result: newDriverData }
 }
 
-const createAdmin = async (payload: IDriver): Promise<any> => {
+const createAdmin = async (payload: IDriver): Promise<IUserSignupResponse> => {
   const adminData = { ...payload }
   let newAdminAllData = null
   const session = await mongoose.startSession()
