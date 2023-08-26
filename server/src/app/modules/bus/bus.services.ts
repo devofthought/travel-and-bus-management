@@ -13,11 +13,11 @@ import { Bus } from './bus.model'
 const createBus = async (payload: IBus): Promise<IBusResponse> => {
   const bus_code = await generatedBusCode() // generated bus code
   payload.bus_code = bus_code
-  const newRoute = await Bus.create(payload)
-  if (!newRoute) {
+  const newBus = await Bus.create(payload)
+  if (!newBus) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create bus')
   }
-  return newRoute
+  return newBus
 }
 
 const getAllBus = async (
