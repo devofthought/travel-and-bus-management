@@ -1,19 +1,27 @@
 import httpStatus from 'http-status'
 import ApiError from '../../../errors/ApiError'
-import { ITrip, ITripFilter, ITripResponse } from './trip.interface'
+import {
+  ITrip,
+  ITripFilter,
+  ITripResponse,
+  ITripsFilter,
+} from './trip.interface'
 import { Trip } from './trip.model'
 import { Driver } from '../driver/driver.model'
 import { Bus } from '../bus/bus.model'
 import mongoose, { SortOrder } from 'mongoose'
 import { IPaginationOptions } from '../../../interfaces/pagination'
 import { IGenericResponse } from '../../../interfaces/common'
-import { tripSearchableFields } from './trip.constants'
+import {
+  tripSearchableFields,
+  upComingTripSearchableFields,
+} from './trip.constants'
 import { paginationHelper } from '../../../helper/paginationHelper'
+import { Route } from '../route/route.model'
 
 const createTrip = async (payload: ITrip): Promise<ITripResponse | null> => {
   const driver = await Driver.findById(payload.driver_id)
   const bus = await Bus.findOne({ bus_code: payload.bus_code })
-
   if (!driver) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Driver not found')
   }
@@ -72,6 +80,7 @@ const createTrip = async (payload: ITrip): Promise<ITripResponse | null> => {
     finalTrip = await Trip.findById(newTripObject._id)
       .populate('driver_id')
       .populate('bus_code')
+      .populate('route_id')
   }
   return finalTrip
 }
@@ -231,9 +240,22 @@ const getSingleTrip = async (id: string): Promise<ITrip | null> => {
   return result
 }
 
+/**
+ * dept.
+ * from
+ * to
+ *
+ * (must trips status pending)
+ * */
+
+const getUpComingTrip = async () => {
+  return null
+}
+
 export const TripService = {
   createTrip,
   updateTrip,
   getAllTrip,
   getSingleTrip,
+  getUpComingTrip,
 }

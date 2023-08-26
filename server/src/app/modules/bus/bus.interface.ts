@@ -10,6 +10,7 @@ export type IBusFilter = {
 }
 
 export type IBusResponse = {
+  total_seats: number
   available_seats: number
   bus_code: string
   availability_status:

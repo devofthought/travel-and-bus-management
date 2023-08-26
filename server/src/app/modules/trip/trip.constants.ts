@@ -6,3 +6,6 @@ export const tripFilterableFields = [
   'ticket_price',
   'trips_status',
 ]
+
+export const upComingTripSearchableFields = ['departure_time']
+export const upComingTripFilterableFields = ['from', 'to', 'departure_time']

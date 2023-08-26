@@ -1,9 +1,11 @@
 import { Model, Types } from 'mongoose'
 import { IDriver } from '../driver/driver.interface'
 import { IBus } from '../bus/bus.interface'
+import { IRoute } from '../route/route.interface'
 
 export type ITrip = {
   route_code: string
+  route_id: Types.ObjectId | IRoute
   departure_time: string
   arrival_time: string
   bus_code: string

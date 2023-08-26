@@ -6,7 +6,10 @@ import httpStatus from 'http-status'
 import { ITripResponse } from './trip.interface'
 import { pick } from '../../../shared/pick'
 import { paginationFields } from '../../../constants/pagination'
-import { tripFilterableFields } from './trip.constants'
+import {
+  tripFilterableFields,
+  upComingTripFilterableFields,
+} from './trip.constants'
 
 const createTrip = catchAsync(async (req: Request, res: Response) => {
   const result = await TripService.createTrip(req.body)
@@ -18,6 +21,19 @@ const createTrip = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
+const getUpComingTrip = catchAsync(async (req: Request, res: Response) => {
+  const filters = pick(req.query, upComingTripFilterableFields)
+  const paginationOptions = pick(req.query, paginationFields)
+  const result = await TripService.getUpComingTrip(filters, paginationOptions)
+
+  sendResponse<ITripResponse[]>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Up-coming Trip retrieved successfully!',
+    meta: result.meta,
+    data: result.data,
+  })
+})
 const updateTrip = catchAsync(async (req: Request, res: Response) => {
   const id = req.params.id
   const updatedData = req.body
@@ -60,4 +76,5 @@ export const TripController = {
   updateTrip,
   getAllTrip,
   getSingleTrip,
+  getUpComingTrip,
 }
