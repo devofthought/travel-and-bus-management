@@ -6,8 +6,13 @@ const router = express.Router()
 
 router.post(
   '/signup',
-  validateRequest(authValidation.createUserZodSchema),
+  validateRequest(authValidation.createTravelerZodSchema),
   AuthController.createUser
+)
+router.post(
+  '/admin/create-driver',
+  validateRequest(authValidation.createDriverZodSchema),
+  AuthController.createDriver
 )
 
 router.post(

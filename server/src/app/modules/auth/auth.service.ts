@@ -15,6 +15,8 @@ import {
 } from './auth.interface'
 import { Traveler } from '../traveler/traveler.modal'
 import mongoose from 'mongoose'
+import { Driver } from '../driver/driver.model'
+import { IDriver } from '../driver/driver.interface'
 
 // oauthj cilent code
 const cilent = new OAuth2Client(
@@ -82,6 +84,72 @@ const createTraveler = async (payload: IUser): Promise<any> => {
     )
   }
   return { newUserAllData, refreshToken, accessToken }
+}
+
+const createDriver = async (payload: IDriver): Promise<any> => {
+  const driverData = { ...payload }
+  let newDriverAllData = null
+  const session = await mongoose.startSession()
+  try {
+    session.startTransaction()
+    //array
+    driverData.joining_date = new Date().toISOString()
+    const newDriver = await Driver.create([driverData], { session })
+    if (!newDriver.length) {
+      throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create a driver')
+    }
+
+    const user = {
+      name: payload.name,
+      email: payload.email,
+      driver_id: newDriver[0]._id,
+      role: 'driver',
+      password: config.default_driver_password as string,
+    }
+
+    const newUser = await User.create([user], { session })
+
+    if (!newUser.length) {
+      throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create user')
+    }
+    newDriverAllData = newUser[0]
+
+    await session.commitTransaction()
+    await session.endSession()
+  } catch (error) {
+    await session.abortTransaction()
+    await session.endSession()
+    throw error
+  }
+
+  if (newDriverAllData) {
+    newDriverAllData = await User.findOne({ _id: newDriverAllData.id })
+      .populate('driver_id')
+      .populate('traveler_id')
+      .populate('admin_id')
+  }
+  let accessToken
+  let refreshToken
+  if (newDriverAllData) {
+    accessToken = jwtHelpers.createToken(
+      {
+        id: newDriverAllData._id,
+        role: newDriverAllData.role,
+      },
+      config.jwt.secret as Secret,
+      config.jwt.expires_in as string
+    )
+
+    refreshToken = jwtHelpers.createToken(
+      {
+        id: newDriverAllData._id,
+        role: newDriverAllData.role,
+      },
+      config.jwt.refresh_secret as Secret,
+      config.jwt.refresh_expires_in as string
+    )
+  }
+  return { newDriverAllData, refreshToken, accessToken }
 }
 
 const login = async (payload: IUserLogin): Promise<IUserLoginResponse> => {
@@ -229,6 +297,7 @@ const googleAuth = async (
 
 export const AuthService = {
   createTraveler,
+  createDriver,
   login,
   refreshToken,
   googleAuth,

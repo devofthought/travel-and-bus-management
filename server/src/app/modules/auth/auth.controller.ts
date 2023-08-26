@@ -32,6 +32,29 @@ const createUser: RequestHandler = catchAsync(async (req, res) => {
   })
 })
 
+const createDriver: RequestHandler = catchAsync(async (req, res) => {
+  const { ...userData } = req.body
+
+  const { result, refreshToken, accessToken } = await AuthService.createDriver(
+    userData
+  )
+
+  // set refresh token in the browser cookie
+  const cookieOptions = {
+    secure: config.node_env === 'production',
+    httpOnly: true,
+  }
+
+  res.cookie('refreshToken', refreshToken, cookieOptions)
+
+  sendResponse<IUserSignupResponse>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Driver created successfully',
+    data: { result, accessToken },
+  })
+})
+
 const login: RequestHandler = catchAsync(async (req, res) => {
   const { ...loginData } = req.body
 
@@ -102,6 +125,7 @@ const googleAuth: RequestHandler = catchAsync(async (req, res) => {
 
 export const AuthController = {
   createUser,
+  createDriver,
   login,
   refreshToken,
   googleAuth,

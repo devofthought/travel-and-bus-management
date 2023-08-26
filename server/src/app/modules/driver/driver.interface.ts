@@ -7,7 +7,7 @@ export type IDriver = {
   age: number
   email: string
   phone: string
-  driving_license: number
+  driving_license: string
   years_experience: number
   address: string
   joining_date: string
