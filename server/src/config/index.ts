@@ -8,6 +8,7 @@ export default {
   port: process.env.PORT,
   node_env: process.env.NODE_ENV,
   default_driver_password: process.env.DEFAULT_DRIVER_PASSWORD,
+  default_admin_password: process.env.DEFAULT_ADMIN_PASSWORD,
   jwt: {
     secret: process.env.JWT_SECRET,
     expires_in: process.env.JWT_EXPIRES_IN,

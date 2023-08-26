@@ -17,6 +17,7 @@ import { Traveler } from '../traveler/traveler.modal'
 import mongoose from 'mongoose'
 import { Driver } from '../driver/driver.model'
 import { IDriver } from '../driver/driver.interface'
+import { Admin } from '../admin/admin.modal'
 
 // oauthj cilent code
 const cilent = new OAuth2Client(
@@ -24,7 +25,15 @@ const cilent = new OAuth2Client(
 )
 
 const createTraveler = async (payload: IUser): Promise<any> => {
-  let newUserAllData = null
+  let newUserAllData: IUser | null = null
+
+  const user = new User()
+  const isUserExist = await user.isUserExist(payload.email)
+
+  if (isUserExist) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'email already exists')
+  }
+
   const session = await mongoose.startSession()
   try {
     session.startTransaction()
@@ -57,7 +66,7 @@ const createTraveler = async (payload: IUser): Promise<any> => {
   }
 
   if (newUserAllData) {
-    newUserAllData = await User.findOne({ _id: newUserAllData.id })
+    newUserAllData = await User.findOne({ _id: newUserAllData._id })
       .populate('driver_id')
       .populate('traveler_id')
       .populate('admin_id')
@@ -83,12 +92,12 @@ const createTraveler = async (payload: IUser): Promise<any> => {
       config.jwt.refresh_expires_in as string
     )
   }
-  return { newUserAllData, refreshToken, accessToken }
+  return { result: newUserAllData, refreshToken, accessToken }
 }
 
-const createDriver = async (payload: IDriver): Promise<any> => {
+const createDriver = async (payload: IDriver): Promise<IUserSignupResponse> => {
   const driverData = { ...payload }
-  let newDriverAllData = null
+  let newDriverData = null
   const session = await mongoose.startSession()
   try {
     session.startTransaction()
@@ -112,7 +121,7 @@ const createDriver = async (payload: IDriver): Promise<any> => {
     if (!newUser.length) {
       throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create user')
     }
-    newDriverAllData = newUser[0]
+    newDriverData = newUser[0]
 
     await session.commitTransaction()
     await session.endSession()
@@ -122,34 +131,57 @@ const createDriver = async (payload: IDriver): Promise<any> => {
     throw error
   }
 
-  if (newDriverAllData) {
-    newDriverAllData = await User.findOne({ _id: newDriverAllData.id })
+  if (newDriverData) {
+    newDriverData = await User.findOne({ _id: newDriverData.id })
       .populate('driver_id')
       .populate('traveler_id')
       .populate('admin_id')
   }
-  let accessToken
-  let refreshToken
-  if (newDriverAllData) {
-    accessToken = jwtHelpers.createToken(
-      {
-        id: newDriverAllData._id,
-        role: newDriverAllData.role,
-      },
-      config.jwt.secret as Secret,
-      config.jwt.expires_in as string
-    )
+  return { result: newDriverData }
+}
 
-    refreshToken = jwtHelpers.createToken(
-      {
-        id: newDriverAllData._id,
-        role: newDriverAllData.role,
-      },
-      config.jwt.refresh_secret as Secret,
-      config.jwt.refresh_expires_in as string
-    )
+const createAdmin = async (payload: IDriver): Promise<IUserSignupResponse> => {
+  const adminData = { ...payload }
+  let newAdminAllData = null
+  const session = await mongoose.startSession()
+  try {
+    session.startTransaction()
+    //array
+    const newAdmin = await Admin.create([adminData], { session })
+    if (!newAdmin.length) {
+      throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create a admin')
+    }
+
+    const user = {
+      name: payload.name,
+      email: payload.email,
+      admin_id: newAdmin[0]._id,
+      role: 'admin',
+      password: config.default_admin_password as string,
+    }
+
+    const newUser = await User.create([user], { session })
+
+    if (!newUser.length) {
+      throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create user')
+    }
+    newAdminAllData = newUser[0]
+
+    await session.commitTransaction()
+    await session.endSession()
+  } catch (error) {
+    await session.abortTransaction()
+    await session.endSession()
+    throw error
   }
-  return { newDriverAllData, refreshToken, accessToken }
+
+  if (newAdminAllData) {
+    newAdminAllData = await User.findOne({ _id: newAdminAllData.id })
+      .populate('driver_id')
+      .populate('traveler_id')
+      .populate('admin_id')
+  }
+  return { result: newAdminAllData }
 }
 
 const login = async (payload: IUserLogin): Promise<IUserLoginResponse> => {
@@ -298,6 +330,7 @@ const googleAuth = async (
 export const AuthService = {
   createTraveler,
   createDriver,
+  createAdmin,
   login,
   refreshToken,
   googleAuth,
