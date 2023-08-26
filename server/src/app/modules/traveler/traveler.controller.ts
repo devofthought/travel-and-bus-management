@@ -36,7 +36,21 @@ const getSingleTraveler = catchAsync(async (req: Request, res: Response) => {
     data: result,
   })
 })
+
+const updateTraveler = catchAsync(async (req: Request, res: Response) => {
+  const id = req.params.id
+  const updatedData = req.body
+  const result = await TravelerService.updateTraveler(id, updatedData)
+
+  sendResponse<ITravelerResponse>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Traveler information updated successfully!',
+    data: result,
+  })
+})
 export const TravelerController = {
   getAllTraveler,
   getSingleTraveler,
+  updateTraveler,
 }

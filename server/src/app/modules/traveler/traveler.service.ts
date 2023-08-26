@@ -70,7 +70,25 @@ const getSingleTraveler = async (id: string): Promise<ITraveler | null> => {
   return result
 }
 
+const updateTraveler = async (
+  id: string,
+  payload: Partial<ITraveler>
+): Promise<ITraveler | null> => {
+  delete payload._id
+  const isExist = await Traveler.findById(id)
+
+  if (!isExist) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Bus not found!')
+  }
+
+  const result = await Traveler.findOneAndUpdate({ _id: id }, payload, {
+    new: true,
+  })
+  return result
+}
+
 export const TravelerService = {
   getAllTraveler,
   getSingleTraveler,
+  updateTraveler,
 }
