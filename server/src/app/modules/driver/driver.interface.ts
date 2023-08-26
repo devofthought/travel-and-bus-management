@@ -7,9 +7,10 @@ export type IDriver = {
   age: number
   email: string
   phone: string
-  driving_licence: number
-  years_exprience: number
+  driving_license: number
+  years_experience: number
   address: string
+  joining_date: string
   driving_status: 'on-trip' | 'rest' | 'ready' | 'sick'
 }
 
@@ -21,7 +22,7 @@ export type IDriverFilter = {
   bloodGroup?: string
   email?: string
   phone?: string
-  driving_licence?: string
+  driving_license?: string
   address?: string
   driving_status?: string
 }

@@ -3,7 +3,7 @@ import { OAuth2Client } from 'google-auth-library'
 import httpStatus from 'http-status'
 import { Secret } from 'jsonwebtoken'
 import config from '../../../config'
-import ApiError from '../../../errors/apiError'
+import ApiError from '../../../errors/ApiError'
 import { jwtHelpers } from '../../../helper/jwtHelpers'
 import { VariantCreation } from '../../../utils/utilities'
 import { IUser } from '../user/user.interface'
@@ -21,35 +21,30 @@ const cilent = new OAuth2Client(
 )
 
 const createUser = async (payload: IUser): Promise<IUserSignupResponse> => {
-
-
   switch (payload.role) {
     case 'admin':
-      VariantCreation.createAdmin(userData)
-        .then(createdAdmin => {
-          userData['admin_id'] = createdAdmin._id;
-          const newUser = new User(userData);
-          return newUser.save();
-        })
-      break;
+      VariantCreation.createAdmin(userData).then(createdAdmin => {
+        userData['admin_id'] = createdAdmin._id
+        const newUser = new User(userData)
+        return newUser.save()
+      })
+      break
 
     case 'traveler':
-      VariantCreation.createTraveler(userData)
-        .then(createdTraveler => {
-          userData['traveler_id'] = createdTraveler._id;
-          const newUser = new User(userData);
-          return newUser.save();
-        })
-      break;
+      VariantCreation.createTraveler(userData).then(createdTraveler => {
+        userData['traveler_id'] = createdTraveler._id
+        const newUser = new User(userData)
+        return newUser.save()
+      })
+      break
 
     case 'driver':
-      VariantCreation.createDriver(userData)
-        .then(createdDriver => {
-          userData['driver_id'] = createdDriver._id;
-          const newUser = new User(userData);
-          return newUser.save();
-        })
-      break;
+      VariantCreation.createDriver(userData).then(createdDriver => {
+        userData['driver_id'] = createdDriver._id
+        const newUser = new User(userData)
+        return newUser.save()
+      })
+      break
 
       const result = await User.create(payload)
       let accessToken
@@ -75,47 +70,47 @@ const createUser = async (payload: IUser): Promise<IUserSignupResponse> => {
       }
       return { result, refreshToken, accessToken }
   }
+}
 
-  const login = async (payload: IUserLogin): Promise<IUserLoginResponse> => {
-    const user = new User()
-    const isUserExist = await user.isUserExist(payload.email)
+const login = async (payload: IUserLogin): Promise<IUserLoginResponse> => {
+  const user = new User()
+  const isUserExist = await user.isUserExist(payload.email)
 
-    if (!isUserExist) {
-      throw new ApiError(httpStatus.NOT_FOUND, 'User not found')
-    }
+  if (!isUserExist) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'User not found')
+  }
 
-    if (
-      isUserExist.password &&
-      !(await user.isPasswordMatch(payload.password, isUserExist.password))
-    ) {
-      throw new ApiError(httpStatus.UNAUTHORIZED, 'Invalid password')
-    }
+  if (
+    isUserExist.password &&
+    !(await user.isPasswordMatch(payload.password, isUserExist.password))
+  ) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'Invalid password')
+  }
 
-    const accessToken = jwtHelpers.createToken(
-      {
-        id: isUserExist._id,
-        role: isUserExist.role,
-      },
-      config.jwt.secret as Secret,
-      config.jwt.expires_in as string
-    )
+  const accessToken = jwtHelpers.createToken(
+    {
+      id: isUserExist._id,
+      role: isUserExist.role,
+    },
+    config.jwt.secret as Secret,
+    config.jwt.expires_in as string
+  )
 
-    const refreshToken = jwtHelpers.createToken(
-      {
-        id: isUserExist._id,
-        role: isUserExist.role,
-      },
-      config.jwt.refresh_secret as Secret,
-      config.jwt.refresh_expires_in as string
-    )
+  const refreshToken = jwtHelpers.createToken(
+    {
+      id: isUserExist._id,
+      role: isUserExist.role,
+    },
+    config.jwt.refresh_secret as Secret,
+    config.jwt.refresh_expires_in as string
+  )
 
-    const userData = await User.findOne({ _id: isUserExist._id })
+  const userData = await User.findOne({ _id: isUserExist._id })
 
-    return {
-      userData,
-      accessToken,
-      refreshToken,
-    }
+  return {
+    userData,
+    accessToken,
+    refreshToken,
   }
 }
 

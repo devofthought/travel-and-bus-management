@@ -30,15 +30,19 @@ export const driverSchema = new Schema<IDriver, DriverModel>(
       type: String,
       required: true,
     },
-    driving_licence: {
+    driving_license: {
       type: Number,
       required: true,
     },
-    years_exprience: {
+    years_experience: {
       type: Number,
       required: true,
     },
     address: {
+      type: String,
+      required: true,
+    },
+    joining_date: {
       type: String,
       required: true,
     },
