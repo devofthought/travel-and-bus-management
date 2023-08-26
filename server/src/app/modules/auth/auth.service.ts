@@ -95,7 +95,7 @@ const createTraveler = async (payload: IUser): Promise<any> => {
   return { result: newUserAllData, refreshToken, accessToken }
 }
 
-const createDriver = async (payload: IDriver): Promise<IUserSignupResponse> => {
+const createDriver = async (payload: IDriver): Promise<any> => {
   const driverData = { ...payload }
   let newDriverData = null
   const session = await mongoose.startSession()
@@ -140,7 +140,7 @@ const createDriver = async (payload: IDriver): Promise<IUserSignupResponse> => {
   return { result: newDriverData }
 }
 
-const createAdmin = async (payload: IDriver): Promise<IUserSignupResponse> => {
+const createAdmin = async (payload: IDriver): Promise<any> => {
   const adminData = { ...payload }
   let newAdminAllData = null
   const session = await mongoose.startSession()
