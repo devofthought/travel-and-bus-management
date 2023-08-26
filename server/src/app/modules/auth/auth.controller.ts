@@ -13,9 +13,8 @@ import config from '../../../config'
 const createUser: RequestHandler = catchAsync(async (req, res) => {
   const { ...userData } = req.body
 
-  const { result, refreshToken, accessToken } = await AuthService.createUser(
-    userData
-  )
+  const { result, refreshToken, accessToken } =
+    await AuthService.createTraveler(userData)
 
   // set refresh token in the browser cookie
   const cookieOptions = {
@@ -28,8 +27,34 @@ const createUser: RequestHandler = catchAsync(async (req, res) => {
   sendResponse<IUserSignupResponse>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'user created successfully',
+    message: 'Traveler created successfully',
     data: { result, accessToken },
+  })
+})
+
+const createDriver: RequestHandler = catchAsync(async (req, res) => {
+  const { ...userData } = req.body
+
+  const { result } = await AuthService.createDriver(userData)
+
+  sendResponse<IUserSignupResponse>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Driver created successfully',
+    data: { result },
+  })
+})
+
+const createAdmin: RequestHandler = catchAsync(async (req, res) => {
+  const { ...userData } = req.body
+
+  const { result } = await AuthService.createAdmin(userData)
+
+  sendResponse<IUserSignupResponse>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Admin created successfully',
+    data: { result },
   })
 })
 
@@ -103,6 +128,8 @@ const googleAuth: RequestHandler = catchAsync(async (req, res) => {
 
 export const AuthController = {
   createUser,
+  createDriver,
+  createAdmin,
   login,
   refreshToken,
   googleAuth,

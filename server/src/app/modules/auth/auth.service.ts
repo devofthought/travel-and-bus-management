@@ -2,17 +2,20 @@
 import { OAuth2Client } from 'google-auth-library'
 import httpStatus from 'http-status'
 import { Secret } from 'jsonwebtoken'
+import mongoose from 'mongoose'
 import config from '../../../config'
-import ApiError from '../../../errors/apiError'
+import ApiError from '../../../errors/ApiError'
 import { jwtHelpers } from '../../../helper/jwtHelpers'
-import { VariantCreation } from '../../../utils/utilities'
+import { Admin } from '../admin/admin.modal'
+import { IDriver } from '../driver/driver.interface'
+import { Driver } from '../driver/driver.model'
+import { Traveler } from '../traveler/traveler.modal'
 import { IUser } from '../user/user.interface'
 import { User } from '../user/user.model'
 import {
   IRefreshTokenResponse,
   IUserLogin,
-  IUserLoginResponse,
-  IUserSignupResponse,
+  IUserLoginResponse
 } from './auth.interface'
 
 // oauthj cilent code
@@ -20,61 +23,164 @@ const cilent = new OAuth2Client(
   '902731341146-i96tb5ehl1hlog621ba6qamdfss3qob1.apps.googleusercontent.com'
 )
 
-const createUser = async (payload: IUser): Promise<IUserSignupResponse> => {
+const createTraveler = async (payload: IUser): Promise<any> => {
+  let newUserAllData: IUser | null = null
 
+  const user = new User()
+  const isUserExist = await user.isUserExist(payload.email)
 
-  switch (payload.role) {
-    case 'admin':
-      VariantCreation.createAdmin(userData)
-        .then(createdAdmin => {
-          userData['admin_id'] = createdAdmin._id;
-          const newUser = new User(userData);
-          return newUser.save();
-        })
-      break;
-
-    case 'traveler':
-      VariantCreation.createTraveler(userData)
-        .then(createdTraveler => {
-          userData['traveler_id'] = createdTraveler._id;
-          const newUser = new User(userData);
-          return newUser.save();
-        })
-      break;
-
-    case 'driver':
-      VariantCreation.createDriver(userData)
-        .then(createdDriver => {
-          userData['driver_id'] = createdDriver._id;
-          const newUser = new User(userData);
-          return newUser.save();
-        })
-      break;
-
-      const result = await User.create(payload)
-      let accessToken
-      let refreshToken
-      if (result) {
-        accessToken = jwtHelpers.createToken(
-          {
-            id: result._id,
-            role: result.role,
-          },
-          config.jwt.secret as Secret,
-          config.jwt.expires_in as string
-        )
-
-        refreshToken = jwtHelpers.createToken(
-          {
-            id: result._id,
-            role: result.role,
-          },
-          config.jwt.refresh_secret as Secret,
-          config.jwt.refresh_expires_in as string
-        )
-      }
+  if (isUserExist) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'email already exists')
   }
-  return { result, refreshToken, accessToken }
+  const session = await mongoose.startSession()
+  try {
+    session.startTransaction()
+
+    //array
+    const newTraveler = await Traveler.create([payload], { session })
+    if (!newTraveler.length) {
+      throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create a traveler')
+    }
+
+    const user = {
+      ...payload,
+      traveler_id: newTraveler[0]._id,
+      role: 'traveler',
+    }
+
+    const newUser = await User.create([user], { session })
+
+    if (!newUser.length) {
+      throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create user')
+    }
+    newUserAllData = newUser[0]
+
+    await session.commitTransaction()
+    await session.endSession()
+  } catch (error) {
+    await session.abortTransaction()
+    await session.endSession()
+    throw error
+  }
+
+  if (newUserAllData) {
+    newUserAllData = await User.findOne({ _id: newUserAllData._id })
+      .populate('driver_id')
+      .populate('traveler_id')
+      .populate('admin_id')
+  }
+  let accessToken
+  let refreshToken
+  if (newUserAllData) {
+    accessToken = jwtHelpers.createToken(
+      {
+        id: newUserAllData._id,
+        role: newUserAllData.role,
+      },
+      config.jwt.secret as Secret,
+      config.jwt.expires_in as string
+    )
+
+    refreshToken = jwtHelpers.createToken(
+      {
+        id: newUserAllData._id,
+        role: newUserAllData.role,
+      },
+      config.jwt.refresh_secret as Secret,
+      config.jwt.refresh_expires_in as string
+    )
+  }
+  return { result: newUserAllData, refreshToken, accessToken }
+}
+
+
+const createDriver = async (payload: IDriver): Promise<any> => {
+  const driverData = { ...payload }
+  let newDriverData = null
+  const session = await mongoose.startSession()
+  try {
+    session.startTransaction()
+    //array
+    driverData.joining_date = new Date().toISOString()
+    const newDriver = await Driver.create([driverData], { session })
+    if (!newDriver.length) {
+      throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create a driver')
+    }
+
+    const user = {
+      name: payload.name,
+      email: payload.email,
+      driver_id: newDriver[0]._id,
+      role: 'driver',
+      password: config.default_driver_password as string,
+    }
+
+    const newUser = await User.create([user], { session })
+
+    if (!newUser.length) {
+      throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create user')
+    }
+    newDriverData = newUser[0]
+
+    await session.commitTransaction()
+    await session.endSession()
+  } catch (error) {
+    await session.abortTransaction()
+    await session.endSession()
+    throw error
+  }
+
+  if (newDriverData) {
+    newDriverData = await User.findOne({ _id: newDriverData.id })
+      .populate('driver_id')
+      .populate('traveler_id')
+      .populate('admin_id')
+  }
+  return { result: newDriverData }
+}
+
+const createAdmin = async (payload: IDriver): Promise<any> => {
+  const adminData = { ...payload }
+  let newAdminAllData = null
+  const session = await mongoose.startSession()
+  try {
+    session.startTransaction()
+    //array
+    const newAdmin = await Admin.create([adminData], { session })
+    if (!newAdmin.length) {
+      throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create a admin')
+    }
+
+    const user = {
+      name: payload.name,
+      email: payload.email,
+      admin_id: newAdmin[0]._id,
+      role: 'admin',
+      password: config.default_admin_password as string,
+    }
+
+    const newUser = await User.create([user], { session })
+
+    if (!newUser.length) {
+      throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create user')
+    }
+    newAdminAllData = newUser[0]
+
+    await session.commitTransaction()
+    await session.endSession()
+  } catch (error) {
+    await session.abortTransaction()
+    await session.endSession()
+    throw error
+  }
+
+  if (newAdminAllData) {
+    newAdminAllData = await User.findOne({ _id: newAdminAllData.id })
+      .populate('driver_id')
+      .populate('traveler_id')
+      .populate('admin_id')
+  }
+  return { result: newAdminAllData }
 }
 
 const login = async (payload: IUserLogin): Promise<IUserLoginResponse> => {
@@ -222,7 +328,9 @@ const googleAuth = async (
 }
 
 export const AuthService = {
-  createUser,
+  createTraveler,
+  createDriver,
+  createAdmin,
   login,
   refreshToken,
   googleAuth,

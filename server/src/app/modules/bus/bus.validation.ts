@@ -11,7 +11,7 @@ const createBusZodSchema = z.object({
     brand_name: z.string({
       required_error: 'Brand name is required',
     }),
-    modal: z.string({
+    model: z.string({
       required_error: 'Brand name is required',
     }),
     bus_image: z
@@ -49,7 +49,7 @@ const updateBusZodSchema = z.object({
         required_error: 'Brand name is required',
       })
       .optional(),
-    modal: z
+    model: z
       .string({
         required_error: 'Brand name is required',
       })

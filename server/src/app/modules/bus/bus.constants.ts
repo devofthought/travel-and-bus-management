@@ -12,6 +12,7 @@ export const busFilterableFields = [
 export const availability_status = [
   'transit',
   'discontinue',
-  'service',
+  'servicing',
   'standBy',
+  'rest',
 ]
