@@ -4,18 +4,12 @@ import { driving_status } from './driver.constants'
 
 export const driverSchema = new Schema<IDriver, DriverModel>(
   {
-    driver_id: {
-      type: String,
-      required: true,
-      unique: true,
-    },
     name: {
       type: String,
       required: true,
     },
     image: {
       type: String,
-      required: true,
     },
     age: {
       type: Number,
@@ -29,16 +23,20 @@ export const driverSchema = new Schema<IDriver, DriverModel>(
     phone: {
       type: String,
       required: true,
+      unique: true,
     },
-    driving_licence: {
-      type: Number,
+    driving_license: {
+      type: String,
       required: true,
     },
-    years_exprience: {
+    years_experience: {
       type: Number,
       required: true,
     },
     address: {
+      type: String,
+    },
+    joining_date: {
       type: String,
       required: true,
     },

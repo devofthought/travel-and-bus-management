@@ -7,6 +7,7 @@ export default {
   db_url: process.env.DATABASE_URL,
   port: process.env.PORT,
   node_env: process.env.NODE_ENV,
+  default_driver_password: process.env.DEFAULT_DRIVER_PASSWORD,
   jwt: {
     secret: process.env.JWT_SECRET,
     expires_in: process.env.JWT_EXPIRES_IN,
