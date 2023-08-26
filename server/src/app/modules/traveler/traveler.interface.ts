@@ -8,4 +8,23 @@ export type ITraveler = {
   phone?: string
   email: string
 }
+
+export type ITravelerFilter = {
+  searchTerm?: string
+  name?: string
+  image?: string
+  age?: number
+  phone?: string
+  email?: string
+}
+
+export type ITravelerResponse = {
+  _id: string
+  name: string
+  image?: string
+  age?: number
+  phone?: string
+  email: string
+}
+
 export type TravelerModel = Model<ITraveler, Record<string, unknown>>
