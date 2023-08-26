@@ -1,9 +1,13 @@
+import Banner from "@/containers/Banner";
+import Technologies from "@/containers/Technologies";
 import React from "react";
-
+          
 const HomePage = () => {
   return (
     <div>
-      <h1 className="text-4xl text-center">Home</h1>
+      <Banner/>
+      <Technologies/>
+      <div className="h-screen"></div>
     </div>
   );
 };
