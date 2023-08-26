@@ -7,6 +7,11 @@ export const tripSchema = new Schema<ITrip, TripModel>(
       type: String,
       required: true,
     },
+    route_id: {
+      type: Schema.Types.ObjectId,
+      ref: 'Route',
+      required: true,
+    },
     departure_time: {
       type: String,
       required: true,

@@ -21,3 +21,14 @@ export type IUserMethods = {
 }
 
 export type UserModel = Model<IUser, Record<string, unknown>, IUserMethods>
+
+export type IUserFilter = {
+  searchTerm?: string
+  _id?: string
+  email?: string
+  passwor?: string
+  role?: 'admin' | 'traveler' | 'driver'
+  admin_id?: string
+  traveler_id?: string
+  driver_id?: string
+}

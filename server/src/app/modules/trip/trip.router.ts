@@ -5,6 +5,8 @@ import { TripController } from './trip.controller'
 const router = express.Router()
 
 router.get('/', TripController.getAllTrip)
+router.get('/up-coming', TripController.getUpComingTrip)
+
 router.post(
   '/',
   validateRequest(TripValidation.createTripZodSchema),
