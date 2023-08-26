@@ -5,7 +5,6 @@ import { Secret } from 'jsonwebtoken'
 import config from '../../../config'
 import ApiError from '../../../errors/ApiError'
 import { jwtHelpers } from '../../../helper/jwtHelpers'
-import { VariantCreation } from '../../../utils/utilities'
 import { IUser } from '../user/user.interface'
 import { User } from '../user/user.model'
 import {
@@ -14,62 +13,75 @@ import {
   IUserLoginResponse,
   IUserSignupResponse,
 } from './auth.interface'
+import { Traveler } from '../traveler/traveler.modal'
+import mongoose from 'mongoose'
 
 // oauthj cilent code
 const cilent = new OAuth2Client(
   '902731341146-i96tb5ehl1hlog621ba6qamdfss3qob1.apps.googleusercontent.com'
 )
 
-const createUser = async (payload: IUser): Promise<IUserSignupResponse> => {
-  switch (payload.role) {
-    case 'admin':
-      VariantCreation.createAdmin(userData).then(createdAdmin => {
-        userData['admin_id'] = createdAdmin._id
-        const newUser = new User(userData)
-        return newUser.save()
-      })
-      break
+const createTraveler = async (payload: IUser): Promise<any> => {
+  let newUserAllData = null
+  const session = await mongoose.startSession()
+  try {
+    session.startTransaction()
 
-    case 'traveler':
-      VariantCreation.createTraveler(userData).then(createdTraveler => {
-        userData['traveler_id'] = createdTraveler._id
-        const newUser = new User(userData)
-        return newUser.save()
-      })
-      break
+    //array
+    const newTraveler = await Traveler.create([payload], { session })
+    if (!newTraveler.length) {
+      throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create a traveler')
+    }
 
-    case 'driver':
-      VariantCreation.createDriver(userData).then(createdDriver => {
-        userData['driver_id'] = createdDriver._id
-        const newUser = new User(userData)
-        return newUser.save()
-      })
-      break
+    const user = {
+      ...payload,
+      traveler_id: newTraveler[0]._id,
+      role: 'traveler',
+    }
 
-      const result = await User.create(payload)
-      let accessToken
-      let refreshToken
-      if (result) {
-        accessToken = jwtHelpers.createToken(
-          {
-            id: result._id,
-            role: result.role,
-          },
-          config.jwt.secret as Secret,
-          config.jwt.expires_in as string
-        )
+    const newUser = await User.create([user], { session })
 
-        refreshToken = jwtHelpers.createToken(
-          {
-            id: result._id,
-            role: result.role,
-          },
-          config.jwt.refresh_secret as Secret,
-          config.jwt.refresh_expires_in as string
-        )
-      }
-      return { result, refreshToken, accessToken }
+    if (!newUser.length) {
+      throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create user')
+    }
+    newUserAllData = newUser[0]
+
+    await session.commitTransaction()
+    await session.endSession()
+  } catch (error) {
+    await session.abortTransaction()
+    await session.endSession()
+    throw error
   }
+
+  if (newUserAllData) {
+    newUserAllData = await User.findOne({ _id: newUserAllData.id })
+      .populate('driver_id')
+      .populate('traveler_id')
+      .populate('admin_id')
+  }
+  let accessToken
+  let refreshToken
+  if (newUserAllData) {
+    accessToken = jwtHelpers.createToken(
+      {
+        id: newUserAllData._id,
+        role: newUserAllData.role,
+      },
+      config.jwt.secret as Secret,
+      config.jwt.expires_in as string
+    )
+
+    refreshToken = jwtHelpers.createToken(
+      {
+        id: newUserAllData._id,
+        role: newUserAllData.role,
+      },
+      config.jwt.refresh_secret as Secret,
+      config.jwt.refresh_expires_in as string
+    )
+  }
+  return { newUserAllData, refreshToken, accessToken }
 }
 
 const login = async (payload: IUserLogin): Promise<IUserLoginResponse> => {
@@ -216,7 +228,7 @@ const googleAuth = async (
 }
 
 export const AuthService = {
-  createUser,
+  createTraveler,
   login,
   refreshToken,
   googleAuth,

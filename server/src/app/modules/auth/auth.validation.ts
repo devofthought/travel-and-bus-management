@@ -1,24 +1,23 @@
-import { z } from 'zod';
+import { z } from 'zod'
 
 const createUserZodSchema = z.object({
-  body: z.object({
-    email: z.string({
-      required_error: 'email is required',
+  body: z
+    .object({
+      email: z.string({
+        required_error: 'email is required',
+      }),
+      password: z.string({
+        required_error: 'password is required',
+      }),
+      confirm_password: z.string({
+        required_error: 'confirm password is required',
+      }),
+    })
+    .refine(data => data.password === data.confirm_password, {
+      message: "Passwords don't match",
+      path: ['confirm_password'],
     }),
-    password: z.string({
-      required_error: 'password is required',
-    }),
-    role: z.enum(['user', 'admin'], {
-      required_error: 'role is required',
-    }),
-    name: z.string({
-      required_error: 'name is required',
-    }),
-    phone: z.string({
-      required_error: 'phone number is required',
-    }),
-  }),
-});
+})
 
 const loginUserZodSchema = z.object({
   body: z.object({
@@ -29,7 +28,7 @@ const loginUserZodSchema = z.object({
       required_error: 'password is required',
     }),
   }),
-});
+})
 
 const refreshTokenZodSchema = z.object({
   cookies: z.object({
@@ -37,10 +36,10 @@ const refreshTokenZodSchema = z.object({
       required_error: 'refreshToken is required',
     }),
   }),
-});
+})
 
 export const authValidation = {
   createUserZodSchema,
   loginUserZodSchema,
   refreshTokenZodSchema,
-};
+}

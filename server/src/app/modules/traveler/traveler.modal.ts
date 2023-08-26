@@ -3,9 +3,9 @@ import { Schema, model } from 'mongoose'
 
 const travelerSchema = new Schema<ITraveler>({
   name: { type: String, required: true },
-  image: { type: String, required: true },
-  age: { type: Number, required: true },
-  phone: { type: String, required: true },
+  image: { type: String },
+  age: { type: Number },
+  phone: { type: String },
   email: { type: String, required: true, unique: true },
 })
 
