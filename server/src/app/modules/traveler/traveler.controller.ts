@@ -25,6 +25,18 @@ const getAllTraveler = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
+const getSingleTraveler = catchAsync(async (req: Request, res: Response) => {
+  const id = req.params.id
+  const result = await TravelerService.getSingleTraveler(id)
+
+  sendResponse<ITravelerResponse>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Traveler data retrieved successfully!',
+    data: result,
+  })
+})
 export const TravelerController = {
   getAllTraveler,
+  getSingleTraveler,
 }

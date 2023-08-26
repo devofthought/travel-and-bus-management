@@ -62,6 +62,15 @@ const getAllTraveler = async (
   }
 }
 
+const getSingleTraveler = async (id: string): Promise<ITraveler | null> => {
+  const result = await Traveler.findById(id)
+  if (!result) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Traveler not found!')
+  }
+  return result
+}
+
 export const TravelerService = {
   getAllTraveler,
+  getSingleTraveler,
 }
