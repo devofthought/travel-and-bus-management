@@ -49,6 +49,23 @@ const createDriverZodSchema = z.object({
   }),
 })
 
+const createAdminZodSchema = z.object({
+  body: z.object({
+    name: z.string({
+      required_error: 'name is required',
+    }),
+    email: z.string({
+      required_error: 'email is required',
+    }),
+    phone: z.string({
+      required_error: 'phone is required',
+    }),
+    address: z.string({
+      required_error: 'address is required',
+    }),
+  }),
+})
+
 const loginUserZodSchema = z.object({
   body: z.object({
     email: z.string({
@@ -71,6 +88,7 @@ const refreshTokenZodSchema = z.object({
 export const authValidation = {
   createTravelerZodSchema,
   createDriverZodSchema,
+  createAdminZodSchema,
   loginUserZodSchema,
   refreshTokenZodSchema,
 }

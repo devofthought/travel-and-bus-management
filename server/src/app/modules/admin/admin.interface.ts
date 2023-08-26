@@ -5,7 +5,7 @@ export type IAdmin = {
   name: string
   email: string
   address: string
-  password: string
+  phone: string
   image: string
 }
 
