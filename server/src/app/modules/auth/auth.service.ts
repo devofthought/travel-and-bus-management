@@ -73,51 +73,52 @@ const createUser = async (payload: IUser): Promise<IUserSignupResponse> => {
           config.jwt.refresh_expires_in as string
         )
       }
-      return { result, refreshToken, accessToken }
+  }
+  return { result, refreshToken, accessToken }
+}
+
+const login = async (payload: IUserLogin): Promise<IUserLoginResponse> => {
+  const user = new User()
+  const isUserExist = await user.isUserExist(payload.email)
+
+  if (!isUserExist) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'User not found')
   }
 
-  const login = async (payload: IUserLogin): Promise<IUserLoginResponse> => {
-    const user = new User()
-    const isUserExist = await user.isUserExist(payload.email)
+  if (
+    isUserExist.password &&
+    !(await user.isPasswordMatch(payload.password, isUserExist.password))
+  ) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'Invalid password')
+  }
 
-    if (!isUserExist) {
-      throw new ApiError(httpStatus.NOT_FOUND, 'User not found')
-    }
+  const accessToken = jwtHelpers.createToken(
+    {
+      id: isUserExist._id,
+      role: isUserExist.role,
+    },
+    config.jwt.secret as Secret,
+    config.jwt.expires_in as string
+  )
 
-    if (
-      isUserExist.password &&
-      !(await user.isPasswordMatch(payload.password, isUserExist.password))
-    ) {
-      throw new ApiError(httpStatus.UNAUTHORIZED, 'Invalid password')
-    }
+  const refreshToken = jwtHelpers.createToken(
+    {
+      id: isUserExist._id,
+      role: isUserExist.role,
+    },
+    config.jwt.refresh_secret as Secret,
+    config.jwt.refresh_expires_in as string
+  )
 
-    const accessToken = jwtHelpers.createToken(
-      {
-        id: isUserExist._id,
-        role: isUserExist.role,
-      },
-      config.jwt.secret as Secret,
-      config.jwt.expires_in as string
-    )
+  const userData = await User.findOne({ _id: isUserExist._id })
 
-    const refreshToken = jwtHelpers.createToken(
-      {
-        id: isUserExist._id,
-        role: isUserExist.role,
-      },
-      config.jwt.refresh_secret as Secret,
-      config.jwt.refresh_expires_in as string
-    )
-
-    const userData = await User.findOne({ _id: isUserExist._id })
-
-    return {
-      userData,
-      accessToken,
-      refreshToken,
-    }
+  return {
+    userData,
+    accessToken,
+    refreshToken,
   }
 }
+
 
 const refreshToken = async (token: string): Promise<IRefreshTokenResponse> => {
   let verifiedToken = null
