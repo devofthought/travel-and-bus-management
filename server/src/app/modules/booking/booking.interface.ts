@@ -1,11 +1,19 @@
-import { Model } from 'mongoose'
+import { Document } from 'mongoose';
 
-export type IBooking = {
-  user_id: string
-  trip_id: string
-  booking_seat: string
-  status: string
-  payment_id: string
+export interface BookingInterface extends Document {
+  user_id: string;
+  trip_id: string;
+  booking_seat: string;
+  status: 'pending' | 'approved' | 'completed' | 'cancelled';
+  payment_id?: string;
 }
 
-export type BookingModel = Model<IBooking, Record<string, unknown>>
+export interface BookingCreateDTO {
+  user_id: string;
+  trip_id: string;
+  booking_seat: string;
+}
+
+export interface BookingUpdateDTO {
+  status: string;
+}
