@@ -1,4 +1,4 @@
-import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
+import { CaretRightOutlined } from "@ant-design/icons";
 import React from "react";
 import { Collapse, theme } from "antd";
 
@@ -115,9 +115,12 @@ const CollapseComponent = () => {
       <Collapse
         bordered={false}
         defaultActiveKey={["1"]}
-        expandIcon={({ isActive }) =>
-          !isActive ? <PlusOutlined /> : <MinusOutlined />
-        }
+        expandIcon={({ isActive }) => (
+          <CaretRightOutlined
+            style={{ fontSize: "18px", marginTop: "5px" }}
+            rotate={isActive ? 90 : 0}
+          />
+        )}
         style={{
           background: token.colorBgContainer,
         }}

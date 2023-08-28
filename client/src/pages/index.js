@@ -9,13 +9,13 @@ import WhatWeOffer from "@/containers/HomePage/WhatWeOffer";
 import Banner from "@/containers/Banner";
 import Technologies from "@/containers/Technologies";
 import React from "react";
-          
+
 const HomePage = () => {
   return (
     <div>
       <Navbar />
-      <Banner/>
-      <Technologies/>
+      <Banner />
+      <Technologies />
       <WhatWeOffer />
       <ReserveABus />
       <Review />

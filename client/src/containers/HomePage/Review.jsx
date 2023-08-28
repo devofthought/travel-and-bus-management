@@ -81,7 +81,7 @@ const Review = () => {
   };
 
   return (
-    <div className="container w-11/12 py-10 mx-auto">
+    <div className="main-container py-10">
       <div className=" mb-6">
         <h1 className="font-bold text-center text-5xl">What Our Clients Say</h1>
         <div className="h-1 w-[200px] secondary-bg mx-auto mt-2"></div>

@@ -2,7 +2,7 @@ import CollapseComponent from "@/components/UI/Collapse";
 
 const FAQ = () => {
   return (
-    <div className="container w-11/12 m-auto">
+    <div className="main-container">
       <div className=" mb-10">
         <h1 className="font-bold text-center text-5xl">
           Frequently Asked Questions

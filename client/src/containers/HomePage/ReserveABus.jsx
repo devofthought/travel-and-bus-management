@@ -1,32 +1,17 @@
-import { Col, Row, Select, Input, Carousel } from "antd";
-import { UserOutlined } from "@ant-design/icons";
-import dayjs from "dayjs";
-import customParseFormat from "dayjs/plugin/customParseFormat";
-import { DatePicker } from "antd";
+import { Col, Row, Input, Carousel, DatePicker } from "antd";
 import Image from "next/image";
-dayjs.extend(customParseFormat);
+import moment from "moment";
 
 const dateFormatList = ["DD/MM/YYYY", "DD/MM/YY", "DD-MM-YYYY", "DD-MM-YY"];
 
 const disabledDate = (current) => {
-  console.log(current, dayjs().endOf("day"));
-  // Can not select days before today and today
-  return current && current < dayjs().endOf("day");
-};
-
-const contentStyle = {
-  height: "300px",
-  color: "#fff",
-  textAlign: "center",
-  background: "#364d79",
+  // Can not select days before today
+  return current && current < moment().startOf("day");
 };
 
 const ReserveABus = () => {
-  const handleChange = (value) => {
-    console.log(`selected ${value}`);
-  };
   return (
-    <div className="container w-11/12 mx-auto">
+    <div className="main-container py-10">
       <div className=" mb-10">
         <h1 className="font-bold text-center text-5xl">
           Do You Want To Go Picnic? <br /> Reserve a Full Bus
@@ -50,31 +35,12 @@ const ReserveABus = () => {
                   </div>
                   <div>
                     <Input className="h-16 text-lg" placeholder="Bus Type" />
-                    {/* <Select
-                      defaultValue="non-ac"
-                      className="h-16 text-lg"
-                      placeholder="To"
-                      prefix={<UserOutlined />}
-                      onChange={handleChange}
-                      options={[
-                        {
-                          value: "ac",
-                          label: "AC",
-                        },
-                        {
-                          value: "non-ac",
-                          label: "Non-AC",
-                        },
-                        ,
-                      ]}
-                    /> */}
                   </div>
                   <div>
                     <DatePicker
                       className="h-16 text-lg w-full"
                       placeholder="Journey Date"
                       disabledDate={disabledDate}
-                      // defaultValue={dayjs("01/01/2015", dateFormatList[0])}
                       format={dateFormatList}
                     />
                   </div>
