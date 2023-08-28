@@ -14,7 +14,23 @@ const getBooking = async (payload: any) => {
 } */
 
 const createBooking = async (bookingData: BookingCreateDTO) => {
-    const newBooking = await Booking.create(bookingData);
+
+    /* 
+    trip_id: "",
+    user_id,
+    seat: ["A1","A2","A3"],
+    */
+    let newBooking = [];
+    for (let i = 0; i < bookingData.booking_seat.length; i++) {
+        const revisedBookingData = {
+            trip_id: bookingData.trip_id,
+            user_id: bookingData.user_id,
+            bookingSeat: bookingData.booking_seat[i],
+        }
+        const booking = await Booking.create(revisedBookingData);
+        newBooking.push(booking);
+    }
+    // const newBooking = await Booking.create(bookingData);
     return newBooking;
 };
 
