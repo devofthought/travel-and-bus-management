@@ -15,8 +15,8 @@ const HomePage = () => {
   return (
     <div>
       <Navbar />
-      <Banner/>
-      <Technologies/>
+      <Banner />
+      <Technologies />
       <WhatWeOffer />
       <ReserveABus />
       <Review />
@@ -24,7 +24,6 @@ const HomePage = () => {
       <OurBuses />
       <SaySomething />
       <Footer />
-      {/* <div className="h-screen"></div> */}
     </div>
   );
 };

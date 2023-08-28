@@ -1,47 +1,47 @@
-import { Button, Checkbox, Form, Input, Radio } from 'antd';
-import React, { useState } from 'react';
+import { Button, Checkbox, Form, Input, Radio } from "antd";
+import Link from "next/link";
+import React, { useState } from "react";
 
 const Login = () => {
-
-  const [radioOption, setRadioOption] = useState('login');
+  const [radioOption, setRadioOption] = useState("login");
 
   const onChange = ({ target: { value } }) => {
-    console.log('radio checked', value);
+    console.log("radio checked", value);
     setRadioOption(value);
   };
 
   const options = [
     {
-      label: 'Login',
-      value: 'login',
+      label: "Login",
+      value: "login",
     },
     {
-      label: 'Signup',
-      value: 'signup',
-    }
+      label: "Signup",
+      value: "signup",
+    },
   ];
 
   const onFinish = (values) => {
-    console.log('Success:', values);
+    console.log("Success:", values);
   };
   const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
+    console.log("Failed:", errorInfo);
   };
 
   return (
-    <div className='flex justify-center'>
-      <div className='grid justify-center mt-24 p-24 w-fit border-solid border-2'>
-      <Radio.Group
-        className='flex justify-center mb-10'
-        options={options}
-        onChange={onChange}
-        value={radioOption}
-        optionType="button"
-        buttonStyle="solid"
-      />
-      <h1 className='text-4xl text-center font-bold mb-10'>Login</h1>
+    <div className="flex justify-center">
+      <div className="grid justify-center mt-24 p-24 w-fit border-solid border-2">
+        <Radio.Group
+          className="flex justify-center mb-10"
+          options={options}
+          onChange={onChange}
+          value={radioOption}
+          optionType="button"
+          buttonStyle="solid"
+        />
+        <h1 className="text-4xl text-center font-bold mb-10">Login</h1>
         <Form
-          className=''
+          className=""
           name="basic"
           labelCol={{
             span: 8,
@@ -65,7 +65,7 @@ const Login = () => {
             rules={[
               {
                 required: true,
-                message: 'Please input your email!',
+                message: "Please input your email!",
               },
             ]}
           >
@@ -78,7 +78,7 @@ const Login = () => {
             rules={[
               {
                 required: true,
-                message: 'Please input your password!',
+                message: "Please input your password!",
               },
             ]}
           >
@@ -102,7 +102,11 @@ const Login = () => {
               span: 16,
             }}
           >
-            <Button className='border-solid border-blue-400 font-semibold text-blue-400' type="primary" htmlType="submit">
+            <Button
+              className="border-solid border-blue-400 font-semibold text-blue-400"
+              type="primary"
+              htmlType="submit"
+            >
               Submit
             </Button>
           </Form.Item>

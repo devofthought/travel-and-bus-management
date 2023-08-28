@@ -94,33 +94,36 @@ const Navbar = () => {
                 />
               </Link>
             </li>
-            <Button
-              styles={`px-2 py-[2px] sm:px-3 sm:py-1 font-semibold border-2 rounded-lg ${
-                stickyNav ? "border-blue-500 secondary-text" : "text-white"
-              }`}
-              linkclassName={`btn-text px-2`}
-              btnName="Bus"
-              href="/bus"
-            />
-            <Button
-              styles={`px-2 py-[2px] sm:px-3 sm:py-1 font-semibold border-2 rounded-lg ${
-                stickyNav ? "border-blue-500 secondary-text" : "text-white"
-              }`}
-              linkclassName={`btn-text px-2`}
-              btnName="Reserve Bus"
-              href="/reserve-bus"
-            />
+            <Link href="bus">
+              <Button
+                styles={`px-2 py-[2px] sm:px-3 sm:py-1 font-semibold border-2 rounded-lg ${
+                  stickyNav ? "border-blue-500 secondary-text" : "text-white"
+                }`}
+                textStyle={`btn-text px-2`}
+                btnName="Bus"
+              />
+            </Link>
+            <Link href="/reserve-bus">
+              <Button
+                styles={`px-2 py-[2px] sm:px-3 sm:py-1 font-semibold border-2 rounded-lg ${
+                  stickyNav ? "border-blue-500 secondary-text" : "text-white"
+                }`}
+                textStyle={`btn-text px-2`}
+                btnName="Reserve Bus"
+              />
+            </Link>
           </div>
           {/* Right side menu */}
           <div className="flex items-center gap-4">
-            <Button
-              styles={`px-2 py-[2px] md:px-3 md:py-1 font-semibold border-2 rounded-lg primary-bg text-white ${
-                stickyNav ? "border-green-500" : ""
-              }`}
-              linkclassName={`btn-text px-2`}
-              btnName="Login"
-              href="/login"
-            />
+            <Link href="/login">
+              <Button
+                styles={`px-2 py-[2px] md:px-3 md:py-1 font-semibold border-2 rounded-lg primary-bg text-white ${
+                  stickyNav ? "border-green-500" : ""
+                }`}
+                textStyle={`btn-text px-2`}
+                btnName="Login"
+              />
+            </Link>
             <Image
               alt="avatar"
               onClick={() => setIsOpen(true)}
