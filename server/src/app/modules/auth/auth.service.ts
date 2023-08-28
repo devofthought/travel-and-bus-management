@@ -2,22 +2,21 @@
 import { OAuth2Client } from 'google-auth-library'
 import httpStatus from 'http-status'
 import { Secret } from 'jsonwebtoken'
+import mongoose from 'mongoose'
 import config from '../../../config'
 import ApiError from '../../../errors/ApiError'
 import { jwtHelpers } from '../../../helper/jwtHelpers'
+import { Admin } from '../admin/admin.modal'
+import { IDriver } from '../driver/driver.interface'
+import { Driver } from '../driver/driver.model'
+import { Traveler } from '../traveler/traveler.modal'
 import { IUser } from '../user/user.interface'
 import { User } from '../user/user.model'
 import {
   IRefreshTokenResponse,
   IUserLogin,
-  IUserLoginResponse,
-  IUserSignupResponse,
+  IUserLoginResponse
 } from './auth.interface'
-import { Traveler } from '../traveler/traveler.modal'
-import mongoose from 'mongoose'
-import { Driver } from '../driver/driver.model'
-import { IDriver } from '../driver/driver.interface'
-import { Admin } from '../admin/admin.modal'
 
 // oauthj cilent code
 const cilent = new OAuth2Client(
@@ -33,7 +32,6 @@ const createTraveler = async (payload: IUser): Promise<any> => {
   if (isUserExist) {
     throw new ApiError(httpStatus.NOT_FOUND, 'email already exists')
   }
-
   const session = await mongoose.startSession()
   try {
     session.startTransaction()
@@ -94,6 +92,7 @@ const createTraveler = async (payload: IUser): Promise<any> => {
   }
   return { result: newUserAllData, refreshToken, accessToken }
 }
+
 
 const createDriver = async (payload: IDriver): Promise<any> => {
   const driverData = { ...payload }
@@ -225,6 +224,7 @@ const login = async (payload: IUserLogin): Promise<IUserLoginResponse> => {
     refreshToken,
   }
 }
+
 
 const refreshToken = async (token: string): Promise<IRefreshTokenResponse> => {
   let verifiedToken = null
