@@ -5,7 +5,7 @@ const Banner = () => {
   useEffect(() => {
     const handleScroll = () => {
       const parallaxElement = document.querySelector('.parallax');
-      console.log(parallaxElement);
+      // console.log(parallaxElement);
       if (parallaxElement) {
         const scrollPosition = window.scrollY;
         parallaxElement.style.transform = `translateY(${scrollPosition * 0.5}px)`;
