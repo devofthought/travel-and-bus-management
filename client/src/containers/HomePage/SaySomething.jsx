@@ -1,4 +1,5 @@
 import Button from "@/components/UI/Button";
+import Link from "next/link";
 import React from "react";
 
 const SaySomething = () => {
@@ -44,12 +45,13 @@ const SaySomething = () => {
           />
         </div>
         <div className="flex items-center justify-center">
-          <Button
-            styles="w-full sm:w-60 md:w-80 primary-bg hover:bg-green-700 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-center"
-            btnName="Submit"
-            href="/"
-            textStyle="text-center"
-          />
+          <Link href="/">
+            <Button
+              styles="w-full sm:w-60 md:w-80 primary-bg hover:bg-green-700 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-center"
+              btnName="Submit"
+              textStyle="text-center"
+            />
+          </Link>
         </div>
       </form>
     </div>
