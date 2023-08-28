@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import httpStatus from 'http-status'
+import { JwtPayload } from 'jsonwebtoken'
 import { SortOrder } from 'mongoose'
-import { IUser, IUserFilter } from './user.interface'
-import { User } from './user.model'
-import { IGenericResponse } from '../../../interfaces/common'
+import ApiError from '../../../errors/ApiError'
+import { bcryptHelpers } from '../../../helper/bcryptHelpers'
 import { paginationHelper } from '../../../helper/paginationHelper'
+import { IGenericResponse } from '../../../interfaces/common'
 import { IPaginationOptions } from '../../../interfaces/pagination'
 import { UserSearchableFields } from './user.constants'
-import httpStatus from 'http-status'
-import ApiError from '../../../errors/ApiError'
-import { JwtPayload } from 'jsonwebtoken'
-import { bcryptHelpers } from '../../../helper/bcryptHelpers'
+import { IUser, IUserFilter } from './user.interface'
+import { User } from './user.model'
 
 const getAllUsers = async (
   filters: IUserFilter,
@@ -78,16 +78,16 @@ const updateUser = async (
     throw new ApiError(httpStatus.BAD_REQUEST, 'user not found')
   }
 
-  const { name, ...userData } = payload
+  const { ...userData } = payload
   const updateUserData: Partial<IUser> = { ...userData }
 
   // dynamically handling nested fields
-  if (name && Object.keys(name)?.length > 0) {
+  /* if (name && Object.keys(name)?.length > 0) {
     Object.keys(name).forEach(key => {
       const nameKey = `name.${key}` as keyof Partial<IUser>
-      ;(updateUserData as any)[nameKey] = name[key as keyof typeof name]
+        ; (updateUserData as any)[nameKey] = name[key as keyof typeof name]
     })
-  }
+  } */
 
   const result = await User.findOneAndUpdate({ _id: id }, updateUserData, {
     new: true,
@@ -119,20 +119,20 @@ const updateMyProfile = async (
     throw new ApiError(httpStatus.BAD_REQUEST, 'user not found')
   }
 
-  const { name, password, ...userData } = payload
+  const { password, ...userData } = payload
   const updateUserData: Partial<IUser> = { ...userData }
 
   // dynamically handling nested fields
-  if (name && Object.keys(name)?.length > 0) {
+  /* if (name && Object.keys(name)?.length > 0) {
     Object.keys(name).forEach(key => {
       const nameKey = `name.${key}` as keyof Partial<IUser>
-      ;(updateUserData as any)[nameKey] = name[key as keyof typeof name]
+        ; (updateUserData as any)[nameKey] = name[key as keyof typeof name]
     })
-  }
+  } */
 
   // hash the password before updating
   if (password) {
-    ;(updateUserData as any)['password'] = await bcryptHelpers.hashPassword(
+    ; (updateUserData as any)['password'] = await bcryptHelpers.hashPassword(
       password
     )
   }
@@ -147,6 +147,24 @@ const updateMyProfile = async (
   return result
 }
 
+
+/* 
+const updateUserProfile = async (userId: string, updatedUserData: any): Promise<User | null> => {
+  // Update the user's profile
+  const updatedUser = await User.findByIdAndUpdate(userId, updatedUserData, { new: true });
+
+  return updatedUser;
+};
+
+const updateTravellerProfile = async (travellerId: string, updatedTravellerData: any): Promise<Traveller | null> => {
+  // Update the traveller's profile
+  const updatedTraveller = await Traveller.findByIdAndUpdate(travellerId, updatedTravellerData, { new: true });
+
+  return updatedTraveller;
+};
+
+*/
+
 export const UserService = {
   getAllUsers,
   getSingleUser,
@@ -154,4 +172,18 @@ export const UserService = {
   deleteUser,
   getMyProfile,
   updateMyProfile,
-}
+};
+
+
+
+/* const getUserProfile = async (payload: any) => {
+  const userInfo = await User.findOne({ email: payload?.email });
+  const { model, id } = userInfo?.admin_id ? { model: Admin, id: userInfo?.admin_id } : userInfo?.traveller_id ? { model: Traveller, id: userInfo?.traveller_id } : { model: Driver, id: userInfo?.driver_id };
+
+  const result = await model.findById(id);
+
+  return {
+    result,
+    userInfo,
+  };
+} */
