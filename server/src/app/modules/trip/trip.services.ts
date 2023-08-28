@@ -2,7 +2,6 @@ import httpStatus from 'http-status'
 import mongoose, { SortOrder } from 'mongoose'
 import ApiError from '../../../errors/ApiError'
 import { paginationHelper } from '../../../helper/paginationHelper'
-import { IGenericResponse } from '../../../interfaces/common'
 import { IPaginationOptions } from '../../../interfaces/pagination'
 import { Booking } from '../booking/booking.model'
 import { Bus } from '../bus/bus.model'
@@ -181,7 +180,7 @@ const updateTrip = async (
 const getAllTrip = async (
   filters: ITripFilter,
   paginationOptions: IPaginationOptions
-): Promise<IGenericResponse<ITrip[]>> => {
+) => {
   const { searchTerm, ...filtersData } = filters
 
   const andConditions = []
@@ -250,7 +249,7 @@ const getAllTrip = async (
       from: route?.from,
       to: route?.to,
       fare: trip.ticket_price,
-      available_seat: bus?.total_seats - bookedSeatsArray[0].booked_seats.length,
+      available_seat: bus?.total_seats && bus?.total_seats - bookedSeatsArray[0].booked_seats.length,
       total_seat: bus?.total_seats,
     })
   }
