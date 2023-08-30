@@ -2,20 +2,20 @@ import { userRole } from "@/config/userRole";
 import AdminDashboardLayout from "@/layouts/AdminDashboardLayout";
 import React from "react";
 
-const Dashboard = () => {
+const CreateDriver = () => {
   return (
     <>
       {"admin" === userRole.ADMIN && (
         <>
-          <h1>admin</h1>
+          <h1>this is create trip</h1>
         </>
       )}
     </>
   );
 };
 
-export default Dashboard;
+export default CreateDriver;
 
-Dashboard.getLayout = function getLayout(page) {
+CreateDriver.getLayout = function getLayout(page) {
   return <AdminDashboardLayout>{page}</AdminDashboardLayout>;
 };
