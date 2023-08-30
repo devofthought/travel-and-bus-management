@@ -1,25 +1,8 @@
-import { Button, Checkbox, Form, Input, Radio } from "antd";
-import Link from "next/link";
-import React, { useState } from "react";
+import React from 'react';
+import { Button, Checkbox, Form, Input } from 'antd';
+import AuthLayout from '@/layouts/AuthLayout';
 
 const Login = () => {
-  const [radioOption, setRadioOption] = useState("login");
-
-  const onChange = ({ target: { value } }) => {
-    console.log("radio checked", value);
-    setRadioOption(value);
-  };
-
-  const options = [
-    {
-      label: "Login",
-      value: "login",
-    },
-    {
-      label: "Signup",
-      value: "signup",
-    },
-  ];
 
   const onFinish = (values) => {
     console.log("Success:", values);
@@ -29,17 +12,8 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center">
-      <div className="grid justify-center mt-24 p-24 w-fit border-solid border-2">
-        <Radio.Group
-          className="flex justify-center mb-10"
-          options={options}
-          onChange={onChange}
-          value={radioOption}
-          optionType="button"
-          buttonStyle="solid"
-        />
-        <h1 className="text-4xl text-center font-bold mb-10">Login</h1>
+    <>
+      <h1 className='text-4xl text-center font-bold mb-10'>Login.</h1>
         <Form
           className=""
           name="basic"
@@ -111,9 +85,13 @@ const Login = () => {
             </Button>
           </Form.Item>
         </Form>
-      </div>
-    </div>
+    </>
   );
 };
 
 export default Login;
+
+
+Login.getLayout = function getLayout(page) {
+  return <AuthLayout>{page}</AuthLayout>;
+};
