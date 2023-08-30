@@ -23,7 +23,6 @@ const HomePage = () => {
       <OurBuses />
       <SaySomething />
       <Footer />
-      <div className="h-screen"></div>
     </div>
   );
 };

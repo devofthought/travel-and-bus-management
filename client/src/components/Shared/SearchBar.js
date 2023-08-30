@@ -14,7 +14,7 @@ const SearchBar = () => {
 
     return (
         <div className="search-bar">
-            <Row className="bg-indigo-400 p-4 z-50 rounded-lg" gutter={[16, 16]}>
+            <Row className="bg-indigo-400 p-4 rounded-lg" gutter={[16, 16]}>
                 <Col span={6}>
                     <Input className="p-2" placeholder="From" />
                 </Col>
