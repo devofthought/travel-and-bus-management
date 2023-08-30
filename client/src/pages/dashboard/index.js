@@ -1,12 +1,9 @@
-import AdminDashboardLayout from '@/layouts/AdminDashboardLayout';
-import React from 'react';
+import { userRole } from "@/config/userRole";
+import AdminDashboardLayout from "@/layouts/AdminDashboardLayout";
+import React from "react";
 
 const Dashboard = () => {
-    return (
-        <div>
-            <AdminDashboardLayout/>
-        </div>
-    );
+  return <>{"admin" === userRole.ADMIN && <AdminDashboardLayout />}</>;
 };
 
 export default Dashboard;
