@@ -1,30 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { Avatar, Dropdown, Menu } from "antd";
-import { PieChartOutlined, UserOutlined } from "@ant-design/icons";
+import { UserOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
-import { BiBus, BiLogOut } from "react-icons/bi";
-import { MdCreate, MdUpdate } from "react-icons/md";
-import { SiCompilerexplorer } from "react-icons/si";
+import Link from "next/link";
+import { rightSubMenus } from "@/utils/tools/rightSubMenu";
 
-function getItem(label, key, path, icon, children) {
-  return {
-    key,
-    path,
-    icon,
-    children,
-    label,
-  };
+function renderMenuItems(items) {
+  return items.map((item) => {
+    if (item.children) {
+      return (
+        <Menu.SubMenu key={item.path} icon={item.icon} title={item.label}>
+          {renderMenuItems(item.children)}
+        </Menu.SubMenu>
+      );
+    } else {
+      return (
+        <Menu.Item key={item.path} icon={item.icon}>
+          <Link href={item.path} passHref>
+            {item.label}
+          </Link>
+        </Menu.Item>
+      );
+    }
+  });
 }
-const items = [
-  getItem("Traveler", "1", "traveler-list", <PieChartOutlined />),
-  getItem("Bus", "2", "dashboard/all-bus", <BiBus />),
-  getItem("trip", "3", "dashboard/trip-list", "", [
-    getItem("create", "4", "dashboard/create-trip", <MdCreate />),
-    getItem("update", "5", "dashboard/update-trip", <MdUpdate />),
-    getItem("complete", "6", "dashboard/complete-trip", <SiCompilerexplorer />),
-  ]),
-  getItem("logout", "99", "logout", <BiLogOut />),
-];
 
 function DashboardRightBarDropDown() {
   const router = useRouter();
@@ -35,22 +34,18 @@ function DashboardRightBarDropDown() {
     setSelectedKeys([pathName]);
   }, [router.pathname]);
 
+  const filterMenus = rightSubMenus?.filter((rt) =>
+    rt?.permission?.includes("admin")
+  );
+
   const menu = (
     <Menu
       theme="light"
       defaultSelectedKeys={["1"]}
       mode="inline"
-      onClick={(item) => {
-        router.push(item?.key);
-      }}
-      items={items}
       selectedKeys={[selectedKeys]}
     >
-      {items.map((item) => (
-        <Menu.Item key={item.key} icon={item.icon} className="font-semibold">
-          {item.label}
-        </Menu.Item>
-      ))}
+      {renderMenuItems(filterMenus)}
     </Menu>
   );
 

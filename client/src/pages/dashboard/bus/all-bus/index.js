@@ -2,20 +2,20 @@ import { userRole } from "@/config/userRole";
 import AdminDashboardLayout from "@/layouts/AdminDashboardLayout";
 import React from "react";
 
-const Dashboard = () => {
+const AllBus = () => {
   return (
     <>
       {"admin" === userRole.ADMIN && (
         <>
-          <h1>admin</h1>
+          <h1>this is All bus </h1>
         </>
       )}
     </>
   );
 };
 
-export default Dashboard;
+export default AllBus;
 
-Dashboard.getLayout = function getLayout(page) {
+AllBus.getLayout = function getLayout(page) {
   return <AdminDashboardLayout>{page}</AdminDashboardLayout>;
 };

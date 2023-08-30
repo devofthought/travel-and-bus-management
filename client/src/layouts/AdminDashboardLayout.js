@@ -6,7 +6,7 @@ import DashboardRightBarDropDown from "@/components/Shared/DashboardRightBarDrop
 import Footer from "@/components/UI/Footer";
 const { Header, Sider, Content } = Layout;
 
-const AdminDashboardLayout = () => {
+const AdminDashboardLayout = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer },
@@ -16,7 +16,7 @@ const AdminDashboardLayout = () => {
     <Layout className="h-screen">
       {/************************************* sideBar *****************************************/}
       <Sider
-        width={200}
+        width={300}
         trigger={null}
         collapsible
         collapsed={collapsed}
@@ -59,7 +59,7 @@ const AdminDashboardLayout = () => {
             background: colorBgContainer,
           }}
         >
-          Content
+          {children}
         </Content>
         <Footer />
       </Layout>
