@@ -1,17 +1,10 @@
 import { userRole } from "@/config/userRole";
+import ReserveHistoryListContainer from "@/containers/AdminDashboard/ReserveBus/ReserveHistory/index.js";
 import AdminDashboardLayout from "@/layouts/AdminDashboardLayout";
 import React from "react";
 
 const ReserveBus = () => {
-  return (
-    <>
-      {"admin" === userRole.ADMIN && (
-        <>
-          <h1>this is Reserve Bus</h1>
-        </>
-      )}
-    </>
-  );
+  return <>{"admin" === userRole.ADMIN && <ReserveHistoryListContainer />}</>;
 };
 
 export default ReserveBus;
