@@ -57,6 +57,8 @@ const AdminDashboardLayout = ({ children }) => {
             padding: 24,
             minHeight: "calc(100vh - 185px)",
             background: colorBgContainer,
+            overflowX: "hidden" /* Hide horizontal scrollbar */,
+            overflowY: "scroll" /* Add vertical scrollbar */,
           }}
         >
           {children}

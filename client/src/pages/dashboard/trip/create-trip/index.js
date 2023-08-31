@@ -1,14 +1,15 @@
 import { userRole } from "@/config/userRole";
 import AdminDashboardLayout from "@/layouts/AdminDashboardLayout";
 import React from "react";
-
+import CreateTripComponent from "@/containers/AdminDashboard/Trip/CreateTrip/CreateTrip";
+import BusTable from "@/containers/AdminDashboard/Trip/CreateTrip/BusTable";
 const CreateTrip = () => {
   return (
     <>
       {"admin" === userRole.ADMIN && (
-        <>
-          <h1>this is create trip</h1>
-        </>
+        <div>
+          <CreateTripComponent />
+        </div>
       )}
     </>
   );
