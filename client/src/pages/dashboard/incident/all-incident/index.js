@@ -1,5 +1,7 @@
 import { userRole } from "@/config/userRole";
 import AdminDashboardLayout from "@/layouts/AdminDashboardLayout";
+import IncidentListContainer from "@/containers/AdminDashboard/Incident/index.js";
+
 import React from "react";
 
 const Incident = () => {
@@ -7,7 +9,7 @@ const Incident = () => {
     <>
       {"admin" === userRole.ADMIN && (
         <>
-          <h1>this is Incident page</h1>
+          <IncidentListContainer />
         </>
       )}
     </>

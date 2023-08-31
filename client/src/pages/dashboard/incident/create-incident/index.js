@@ -1,10 +1,10 @@
 import { userRole } from "@/config/userRole";
-import CreateDriverContainer from "@/containers/AdminDashboard/Driver/CreateDriver";
+import CreateIncidentContainer from "@/containers/AdminDashboard/Incident/CreateIncident";
 import AdminDashboardLayout from "@/layouts/AdminDashboardLayout";
 import React from "react";
 
 const CreateDriver = () => {
-  return <>{"admin" === userRole.ADMIN && <CreateDriverContainer />}</>;
+  return <>{"admin" === userRole.ADMIN && <CreateIncidentContainer />}</>;
 };
 
 export default CreateDriver;

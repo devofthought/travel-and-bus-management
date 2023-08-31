@@ -1,4 +1,5 @@
 import { userRole } from "@/config/userRole";
+import DriverListContainer from "@/containers/AdminDashboard/Driver/DriverList";
 import AdminDashboardLayout from "@/layouts/AdminDashboardLayout";
 import React from "react";
 
@@ -7,7 +8,7 @@ const AllDriver = () => {
     <>
       {"admin" === userRole.ADMIN && (
         <>
-          <h1>this is All driver</h1>
+          <DriverListContainer />
         </>
       )}
     </>

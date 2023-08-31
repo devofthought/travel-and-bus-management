@@ -113,10 +113,16 @@ export const Menus = [
     permission: ["admin"],
     children: [
       {
-        label: "create Bus",
+        label: "All incident",
         key: "349jgj938hj",
-        path: "/dashboard/incident",
+        path: "/dashboard/incident/all-incident",
         icon: <BsCardChecklist />,
+      },
+      {
+        label: "create incident",
+        key: "349jgj938hj",
+        path: "/dashboard/incident/create-incident",
+        icon: <MdOutlineDriveFileRenameOutline />,
       },
     ],
   },

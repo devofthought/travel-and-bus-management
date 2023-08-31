@@ -1,4 +1,5 @@
 import { userRole } from "@/config/userRole";
+import CompleteTripTable from "@/containers/AdminDashboard/Trip/CompleteTrip/CompleteTripTable";
 import AdminDashboardLayout from "@/layouts/AdminDashboardLayout";
 import React from "react";
 
@@ -7,7 +8,7 @@ const CompleteTrip = () => {
     <>
       {"admin" === userRole.ADMIN && (
         <>
-          <h1>this is complete trip</h1>
+          <CompleteTripTable />
         </>
       )}
     </>
