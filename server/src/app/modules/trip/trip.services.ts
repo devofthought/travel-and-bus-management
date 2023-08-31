@@ -1,23 +1,21 @@
 import httpStatus from 'http-status'
+import mongoose, { SortOrder } from 'mongoose'
 import ApiError from '../../../errors/ApiError'
+import { paginationHelper } from '../../../helper/paginationHelper'
+import { IPaginationOptions } from '../../../interfaces/pagination'
+import { Booking } from '../booking/booking.model'
+import { Bus } from '../bus/bus.model'
+import { Driver } from '../driver/driver.model'
+import { Route } from '../route/route.model'
+import {
+  tripSearchableFields
+} from './trip.constants'
 import {
   ITrip,
   ITripFilter,
-  ITripResponse,
-  ITripsFilter,
+  ITripResponse
 } from './trip.interface'
 import { Trip } from './trip.model'
-import { Driver } from '../driver/driver.model'
-import { Bus } from '../bus/bus.model'
-import mongoose, { SortOrder } from 'mongoose'
-import { IPaginationOptions } from '../../../interfaces/pagination'
-import { IGenericResponse } from '../../../interfaces/common'
-import {
-  tripSearchableFields,
-  upComingTripSearchableFields,
-} from './trip.constants'
-import { paginationHelper } from '../../../helper/paginationHelper'
-import { Route } from '../route/route.model'
 
 const createTrip = async (payload: ITrip): Promise<ITripResponse | null> => {
   const driver = await Driver.findById(payload.driver_id)
@@ -182,7 +180,7 @@ const updateTrip = async (
 const getAllTrip = async (
   filters: ITripFilter,
   paginationOptions: IPaginationOptions
-): Promise<IGenericResponse<ITrip[]>> => {
+) => {
   const { searchTerm, ...filtersData } = filters
 
   const andConditions = []
@@ -220,6 +218,42 @@ const getAllTrip = async (
     .skip(skip)
     .limit(limit)
 
+
+  let result2 = [];
+  for (let trip of result) {
+    const bus = await Bus.findOne({ bus_code: trip.bus_code })
+      .select('_id model total_seats'); // find bus_id and bus_model
+    const route = await Route.findById(trip.route_id); // find to and from
+    const bookedSeatsArray = await Booking.aggregate([
+      {
+        $group: {
+          _id: null,
+          booked_seats: { $push: '$booked_seat' }
+        }
+      },
+      {
+        $project: {
+          _id: 0,
+          booked_seats: 1
+        }
+      }
+    ]); // create an array of booked_seats
+
+    result2.push({
+      bus_id: bus?._id,
+      bus_model: bus?.model,
+      driver_id: trip.driver_id,
+      traveling_date: trip?.createdAt,
+      departure_time: trip.departure_time,
+      arrival_time: trip.arrival_time,
+      from: route?.from,
+      to: route?.to,
+      fare: trip.ticket_price,
+      available_seat: bus?.total_seats && bus?.total_seats - bookedSeatsArray[0].booked_seats.length,
+      total_seat: bus?.total_seats,
+    })
+  }
+
   const total = await Trip.countDocuments(whereCondition)
 
   return {
@@ -228,7 +262,7 @@ const getAllTrip = async (
       limit,
       total,
     },
-    data: result,
+    data: result2,
   }
 }
 

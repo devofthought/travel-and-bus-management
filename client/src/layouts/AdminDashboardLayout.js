@@ -1,48 +1,22 @@
 import React, { useState } from "react";
-import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  UserOutlined,
-  LaptopOutlined,
-  NotificationOutlined,
-} from "@ant-design/icons";
-import { Layout, Menu, Button, theme } from "antd";
-import { Avatar } from "antd";
+import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import { Layout, Button, theme } from "antd";
+import SideBar from "@/components/Shared/SideBar";
+import DashboardRightBarDropDown from "@/components/Shared/DashboardRightBarDropDown";
+import Footer from "@/components/UI/Footer";
 const { Header, Sider, Content } = Layout;
 
-const AdminDashboardLayout = () => {
+const AdminDashboardLayout = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
 
-  const items1 = ["1", "2", "3"].map((key) => ({
-    key,
-    label: `nav ${key}`,
-  }));
-
-  const items2 = [UserOutlined, LaptopOutlined, NotificationOutlined].map(
-    (icon, index) => {
-      const key = String(index + 1);
-      return {
-        key: `sub${key}`,
-        icon: React.createElement(icon),
-        label: `subnav ${key}`,
-        children: new Array(4).fill(null).map((_, j) => {
-          const subKey = index * 4 + j + 1;
-          return {
-            key: subKey,
-            label: `option${subKey}`,
-          };
-        }),
-      };
-    }
-  );
-
   return (
     <Layout className="h-screen">
+      {/************************************* sideBar *****************************************/}
       <Sider
-        width={200}
+        width={300}
         trigger={null}
         collapsible
         collapsed={collapsed}
@@ -51,22 +25,11 @@ const AdminDashboardLayout = () => {
         }}
       >
         {collapsed || (
-          <div
-            className="flex justify-center items-center h-16 rounded-xl mx-2 my-3 shadow-md duration-700"
-             
-          >
-            <h3 className="text-2xl">Druto Travel</h3>
+          <div className="flex justify-center items-center h-16 rounded-xl mx-2 my-3 shadow-md duration-700">
+            <h3 className="text-2xl">Dhruto Travel</h3>
           </div>
         )}
-        <Menu
-          mode="inline"
-          defaultSelectedKeys={["1"]}
-          defaultOpenKeys={["sub1"]}
-          style={{
-            borderRight: 0,
-          }}
-          items={items2}
-        />
+        <SideBar />
       </Sider>
       <Layout>
         <Header
@@ -86,22 +49,19 @@ const AdminDashboardLayout = () => {
               height: 55,
             }}
           />
-          <Avatar
-            className="mr-5 flex justify-center items-center"
-            size="large"
-            icon={<UserOutlined />}
-          />
+          <DashboardRightBarDropDown />
         </Header>
         <Content
           style={{
-            margin: "24px 16px",
+            margin: "24px 16px 5px 16px" /* top | right | bottom | left */,
             padding: 24,
-            minHeight: 280,
+            minHeight: "calc(100vh - 185px)",
             background: colorBgContainer,
           }}
         >
-          Content
+          {children}
         </Content>
+        <Footer />
       </Layout>
     </Layout>
   );

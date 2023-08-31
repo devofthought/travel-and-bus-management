@@ -1,0 +1,144 @@
+import { AppstoreOutlined } from "@ant-design/icons";
+import { BiBus, BiListOl, BiTrip, BiUser } from "react-icons/bi";
+import { BsBusFront, BsBusFrontFill, BsCardChecklist } from "react-icons/bs";
+import { GiAutoRepair, GiBusStop } from "react-icons/gi";
+import {
+  MdCreate,
+  MdOutlineDriveFileRenameOutline,
+  MdOutlineRssFeed,
+  MdTravelExplore,
+  MdUpdate,
+} from "react-icons/md";
+import { SiCompilerexplorer } from "react-icons/si";
+import { TbBrandFeedly } from "react-icons/tb";
+
+export const Menus = [
+  {
+    label: "Dashbaord",
+    key: "7943gh2qg",
+    icon: <AppstoreOutlined />,
+    path: "/dashboard",
+    permission: ["admin"],
+  },
+  {
+    label: "Trip",
+    key: "r3gh9g9h3",
+    icon: <BiTrip />,
+    permission: ["admin"],
+    children: [
+      {
+        label: "Trip List",
+        key: "84030831hn",
+        path: "/dashboard/trip/trip-list",
+        icon: <BiListOl />,
+      },
+      {
+        label: "Create Trip",
+        key: "803yg083gh",
+        path: "/dashboard/trip/create-trip",
+        icon: <MdCreate />,
+      },
+      {
+        label: "Update Trip",
+        key: "3894uj08g23j5",
+        path: "/dashboard/trip/update-trip",
+        icon: <MdUpdate />,
+      },
+      {
+        label: "Completed Trip",
+        key: "493uj92g3j",
+        path: "/dashboard/trip/complete-trip",
+        icon: <SiCompilerexplorer />,
+      },
+    ],
+  },
+  {
+    label: "Traveler",
+    key: "34uj0g30h798",
+    icon: <MdTravelExplore />,
+    permission: ["admin"],
+    children: [
+      {
+        label: "Traveler List",
+        key: "43uyg803hg8",
+        path: "/dashboard/traveler/traveler-list",
+        icon: <BiListOl />,
+      },
+    ],
+  },
+  {
+    label: "Driver",
+    key: "843h80g3h80",
+    icon: <BiUser />,
+    permission: ["admin"],
+    children: [
+      {
+        label: "create Driver",
+        key: "9835g8093",
+        path: "/dashboard/driver/create-driver",
+        icon: <MdOutlineDriveFileRenameOutline />,
+      },
+      {
+        label: "All Driver",
+        key: "904ut3290u",
+        path: "/dashboard/driver/all-drivers",
+        icon: <BiListOl />,
+      },
+    ],
+  },
+  {
+    label: "Bus",
+    key: "380gj803d",
+    icon: <BiBus />,
+    permission: ["admin"],
+    children: [
+      {
+        label: "create Bus",
+        key: "349jgj938hj",
+        path: "/dashboard/bus/create-bus",
+        icon: <BsBusFront />,
+      },
+      {
+        label: "All Bus",
+        key: "8034ug890u35u",
+        path: "/dashboard/bus/all-bus",
+        icon: <GiBusStop />,
+      },
+    ],
+  },
+  {
+    label: "Incident",
+    key: "380gj803d",
+    icon: <GiAutoRepair />,
+    permission: ["admin"],
+    children: [
+      {
+        label: "create Bus",
+        key: "349jgj938hj",
+        path: "/dashboard/incident",
+        icon: <BsCardChecklist />,
+      },
+    ],
+  },
+  {
+    label: "Reserve Bus",
+    key: "380gj803d",
+    icon: <BsBusFrontFill />,
+    path: "/dashboard/reserve-bus",
+    permission: ["admin"],
+  },
+  {
+    label: "Support",
+    key: "380gj803d",
+    icon: <MdOutlineRssFeed />,
+    permission: ["admin"],
+    children: [
+      {
+        label: "Support All",
+        key: "349jgj938hj",
+        path: "/dashboard/support",
+        icon: <TbBrandFeedly />,
+      },
+    ],
+  },
+];
