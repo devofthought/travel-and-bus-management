@@ -6,19 +6,8 @@ const CreateDriverForm = () => {
   const [data, setData] = useState([]);
 
   const onFinish = (values) => {
-    // Convert date and time to a single datetime format
-    const departureDateTime = dayjs(values.departure_time).format(
-      "YYYY-MM-DD HH:mm:ss"
-    );
-    const arrivalDateTime = dayjs(values.arrival_time).format(
-      "YYYY-MM-DD HH:mm:ss"
-    );
-
-    // Update values with the formatted datetime values
     setData({
       ...values,
-      departure_time: departureDateTime,
-      arrival_time: arrivalDateTime,
     });
   };
   console.log(data);
