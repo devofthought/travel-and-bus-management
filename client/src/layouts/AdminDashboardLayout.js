@@ -38,6 +38,7 @@ const AdminDashboardLayout = () => {
       };
     }
   );
+
   return (
     <Layout className="h-screen">
       <Sider
