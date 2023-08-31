@@ -1,7 +1,7 @@
 import { Avatar, Rate, Table, Typography } from "antd";
 import { useState } from "react";
 
-const BusTable = () => {
+const UpdateTripTable = () => {
   const [dataSource, setDataSource] = useState([]);
 
   const columns = [
@@ -16,30 +16,44 @@ const BusTable = () => {
       minWidth: 200,
     },
     {
-      title: "Availability Status",
-      dataIndex: "availability_status",
-      minWidth: 200,
-      sorter: (a, b) => a.availability_status - b.availability_status,
-    },
-    {
-      title: "Brand Name",
-      dataIndex: "brand_name",
+      title: "From",
+      dataIndex: "from",
       minWidth: 200,
     },
     {
-      title: "Trip Complete",
-      dataIndex: "trip_complete",
+      title: "To",
+      dataIndex: "to",
       minWidth: 200,
     },
     {
-      title: "Bus Image",
-      dataIndex: "bus_image",
+      title: "Distance",
+      dataIndex: "distance",
+      minWidth: 200,
+    },
+    {
+      title: "Dept. Time",
+      dataIndex: "departure_time",
+      minWidth: 200,
+    },
+    {
+      title: "Arr. time",
+      dataIndex: "arrival_time",
+      minWidth: 200,
+    },
+    {
+      title: "Fare",
+      dataIndex: "Ticket_price",
+      minWidth: 200,
+    },
+    {
+      title: "Trip status",
+      dataIndex: "trip_status",
       minWidth: 200,
     },
   ];
   return (
-    <span className="block w-full md:w-1/2">
-      <Typography.Title level={4}>Bus</Typography.Title>
+    <span className="block w-full">
+      <Typography.Title level={4}>update Trip</Typography.Title>
       <Table
         columns={columns}
         dataSource={dataSource}
@@ -50,4 +64,4 @@ const BusTable = () => {
     </span>
   );
 };
-export default BusTable;
+export default UpdateTripTable;

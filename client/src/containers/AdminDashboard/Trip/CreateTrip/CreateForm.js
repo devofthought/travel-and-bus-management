@@ -1,9 +1,28 @@
-import { Form, Button, Input, Select, InputNumber, Space } from "antd";
+import { Form, Button, Select, InputNumber, DatePicker } from "antd";
 import { useState } from "react";
+import dayjs from "dayjs";
 
 const CreateTripForm = () => {
   const [data, setData] = useState([]);
+
+  const onFinish = (values) => {
+    // Convert date and time to a single datetime format
+    const departureDateTime = dayjs(values.departure_time).format(
+      "YYYY-MM-DD HH:mm:ss"
+    );
+    const arrivalDateTime = dayjs(values.arrival_time).format(
+      "YYYY-MM-DD HH:mm:ss"
+    );
+
+    // Update values with the formatted datetime values
+    setData({
+      ...values,
+      departure_time: departureDateTime,
+      arrival_time: arrivalDateTime,
+    });
+  };
   console.log(data);
+
   return (
     <div
       style={{
@@ -13,9 +32,7 @@ const CreateTripForm = () => {
       <Form
         autoComplete="off"
         layout="vertical"
-        onFinish={(values) => {
-          setData(values);
-        }}
+        onFinish={onFinish}
         onFinishFailed={(error) => {
           console.log({ error });
         }}
@@ -28,33 +45,29 @@ const CreateTripForm = () => {
         </Form.Item>
 
         <Form.Item
-          name="departure_time"
           label="Departure Time"
+          name="departure_time"
           rules={[
             {
               required: true,
               message: "Please enter Departure Time",
             },
-            { whitespace: true },
           ]}
-          hasFeedback
         >
-          <Input placeholder="Type Departure Time" />
+          <DatePicker showTime placeholder="Select Departure Date" />
         </Form.Item>
 
         <Form.Item
-          name="arrival_time"
           label="Arrival Time"
+          name="arrival_time"
           rules={[
             {
               required: true,
               message: "Please enter Arrival Time",
             },
-            { whitespace: true },
           ]}
-          hasFeedback
         >
-          <Input placeholder="Type Arrival Time" />
+          <DatePicker showTime placeholder="Select Arrival Date" />
         </Form.Item>
 
         <Form.Item name="bus_code" label="Bus code" requiredMark="require">
@@ -93,7 +106,6 @@ const CreateTripForm = () => {
             formatter={(values) =>
               `৳ ${values}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
             }
-            parser={(values) => values.replace(/\$\s?|(,*)/g, "")}
             placeholder="Type trip fare"
           />
         </Form.Item>

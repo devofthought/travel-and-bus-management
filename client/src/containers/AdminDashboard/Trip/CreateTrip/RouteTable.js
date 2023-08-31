@@ -8,7 +8,7 @@ const RouteTable = () => {
     {
       title: "Sr.",
       dataIndex: "sr",
-      width: 200,
+      minWidth: 200,
     },
     {
       title: "Route Code",

@@ -25,6 +25,12 @@ const DriverTable = () => {
       sorter: (a, b) => a.age - b.age,
     },
     {
+      title: "Trip Completed",
+      dataIndex: "trip_completed",
+      minWidth: 200,
+      sorter: (a, b) => a.trip_completed - b.trip_completed,
+    },
+    {
       title: "Email",
       dataIndex: "email",
       minWidth: 200,
