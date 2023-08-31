@@ -42,8 +42,11 @@ const TripListContainer = () => {
     },
     {
       title: "Fare",
-      dataIndex: "Ticket_price",
+      dataIndex: "ticket_price",
       minWidth: 200,
+      render: (ticket_price) => {
+        return <p>${ticket_price}</p>;
+      },
     },
     {
       title: "Trip status",
@@ -76,7 +79,7 @@ const demoData = [
     distance: "100 km",
     departure_time: "08:00 AM",
     arrival_time: "12:00 PM",
-    Ticket_price: "$50",
+    Ticket_price: 50,
     trip_status: "Scheduled",
   },
   {
@@ -88,7 +91,7 @@ const demoData = [
     distance: "150 km",
     departure_time: "09:30 AM",
     arrival_time: "01:30 PM",
-    Ticket_price: "$65",
+    Ticket_price: 65,
     trip_status: "On-going",
   },
   {
@@ -100,7 +103,7 @@ const demoData = [
     distance: "120 km",
     departure_time: "10:15 AM",
     arrival_time: "02:15 PM",
-    Ticket_price: "$55",
+    Ticket_price: 55,
     trip_status: "Completed",
   },
 ];
