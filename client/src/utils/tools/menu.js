@@ -1,4 +1,5 @@
 import { AppstoreOutlined } from "@ant-design/icons";
+import { AiOutlinePullRequest } from "react-icons/ai";
 import { BiBus, BiListOl, BiTrip, BiUser } from "react-icons/bi";
 import { BsBusFront, BsBusFrontFill, BsCardChecklist } from "react-icons/bs";
 import { GiAutoRepair, GiBusStop } from "react-icons/gi";
@@ -128,11 +129,25 @@ export const Menus = [
   },
   {
     label: "Reserve Bus",
-    key: "380gj803d",
+    key: "adsf234f234",
     icon: <BsBusFrontFill />,
-    path: "/dashboard/reserve-bus",
     permission: ["admin"],
+    children: [
+      {
+        label: "Reserve Request",
+        key: "3214gf124f",
+        path: "/dashboard/reserve-bus/pending",
+        icon: <AiOutlinePullRequest />,
+      },
+      {
+        label: "Reserve history",
+        key: "4325234f23f",
+        path: "/dashboard/reserve-bus/history",
+        icon: <BiListOl />,
+      },
+    ],
   },
+
   {
     label: "Support",
     key: "380gj803d",
