@@ -1,5 +1,5 @@
-import React from 'react';
-import { Image } from 'antd';
+import React from "react";
+import { Image } from "antd";
 
 const SvgImageScrollBar = () => {
   const icons = [
@@ -13,33 +13,36 @@ const SvgImageScrollBar = () => {
   ];
 
   const containerStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    overflowX: 'hidden',
-    padding: '16px',
+    display: "flex",
+    alignItems: "center",
+    overflowX: "hidden",
+    padding: "16px",
   };
 
   const listStyle = {
-    display: 'flex',
-    listStyle: 'none',
+    display: "flex",
+    listStyle: "none",
     padding: 0,
     margin: 0,
-    width: '100%',
-    overflowX: 'scroll',
+    width: "100%",
+    // overflowX: 'scroll',
   };
 
   const imageStyle = {
     // display: 'inline-block',
-    width: '500px',
-    height: 'auto',
-    padding: '8px',
+    width: "120px",
+    height: "auto",
+    padding: "8px",
   };
 
   return (
     <div>
-      <h1 style={{ marginTop: '40px', marginBottom: '20px', textAlign: 'center', fontSize: '36px', fontWeight: '600' }}>Technologies Used</h1>
+      <div className=" mb-10 mt-10">
+        <h1 className="font-bold text-center text-5xl">Technologies Used</h1>
+        <div className="h-1 w-[200px] secondary-bg mx-auto mt-2"></div>
+      </div>
       <div style={containerStyle}>
-        <ul style={listStyle}>
+        <ul style={listStyle} className="justify-evenly">
           {icons.map((icon, index) => (
             <li style={imageStyle} key={index}>
               <Image src={icon} alt={icon} preview={false} />

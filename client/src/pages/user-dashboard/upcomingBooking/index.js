@@ -1,4 +1,5 @@
 import UpcomingBookingTable from "@/containers/UserDashboard/upcomingBookingTable";
+import RootLayout from "@/layouts/RootLayout";
 import UserDashboardLayout from "@/layouts/UserDashboardLayout";
 import React from "react";
 
@@ -65,7 +66,7 @@ const UpcomingBooking = () => {
       payment_status: "Pending",
     },
   ];
-  
+
   return (
     <div>
       <UpcomingBookingTable data={upcomingBookingData} />
@@ -76,5 +77,9 @@ const UpcomingBooking = () => {
 export default UpcomingBooking;
 
 UpcomingBooking.getLayout = function getLayout(page) {
-  return <UserDashboardLayout>{page}</UserDashboardLayout>;
+  return (
+    <RootLayout>
+      <UserDashboardLayout>{page}</UserDashboardLayout>
+    </RootLayout>
+  );
 };

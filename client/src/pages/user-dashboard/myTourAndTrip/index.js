@@ -1,4 +1,5 @@
 import MyTourAndTripsTable from "@/containers/UserDashboard/myTourAndTripsTable";
+import RootLayout from "@/layouts/RootLayout";
 import UserDashboardLayout from "@/layouts/UserDashboardLayout";
 import React from "react";
 
@@ -66,5 +67,9 @@ const MyTourAndTrip = () => {
 export default MyTourAndTrip;
 
 MyTourAndTrip.getLayout = function getLayout(page) {
-  return <UserDashboardLayout>{page}</UserDashboardLayout>;
+  return (
+    <RootLayout>
+      <UserDashboardLayout>{page}</UserDashboardLayout>
+    </RootLayout>
+  );
 };

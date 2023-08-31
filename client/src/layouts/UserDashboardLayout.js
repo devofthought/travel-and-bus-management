@@ -1,3 +1,4 @@
+import Banner from "@/containers/Banner";
 import { Segmented } from "antd";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";

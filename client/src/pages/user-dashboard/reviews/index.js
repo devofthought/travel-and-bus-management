@@ -1,4 +1,5 @@
 import ReviewTable from "@/containers/UserDashboard/reviewTable";
+import RootLayout from "@/layouts/RootLayout";
 import UserDashboardLayout from "@/layouts/UserDashboardLayout";
 import React from "react";
 
@@ -45,5 +46,5 @@ const Reviews = () => {
 export default Reviews;
 
 Reviews.getLayout = function getLayout(page) {
-  return <UserDashboardLayout>{page}</UserDashboardLayout>;
+  return <RootLayout><UserDashboardLayout>{page}</UserDashboardLayout></RootLayout>;
 };

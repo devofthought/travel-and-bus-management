@@ -23,7 +23,7 @@ const Banner = ({ handleSearchTrip }) => {
   return (
     <>
       <div
-        className="relative h-96"
+        className="relative h-96 top-12"
         style={{ position: "relative", height: "500px" }}
       >
         <div
@@ -47,7 +47,7 @@ const Banner = ({ handleSearchTrip }) => {
           ></div>
         </div>
         <div
-          className="flex items-center justify-center h-full text-white text-center"
+          className="flex items-center justify-center h-96 text-white text-center"
           style={{ height: "100%", color: "white", position: "inherit" }}
         >
           <div>
