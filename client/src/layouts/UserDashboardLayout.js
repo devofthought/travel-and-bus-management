@@ -1,3 +1,4 @@
+import SecondaryBanner from "@/components/Shared/SecondaryBanner";
 import Banner from "@/containers/Banner";
 import { Segmented } from "antd";
 import { useRouter } from "next/router";
@@ -19,7 +20,8 @@ const UserDashboardLayout = ({ children }) => {
   }, [selectedOption]);
 
   return (
-    <div className="h-screen z-50">
+    <div className="z-50">
+      <SecondaryBanner/>
       <div className="w-2/3 mx-auto mt-20">
         <Segmented
           size="large"

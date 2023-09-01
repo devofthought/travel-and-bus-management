@@ -16,9 +16,9 @@ module.exports = {
       },
     },
   },
-  plugins: [],
-  corePlugins: {
-    preflight: false,
-  },
-  important: true,
+  // plugins: [],
+  // corePlugins: {
+  //   preflight: false,
+  // },
+  // important: true,
 };
