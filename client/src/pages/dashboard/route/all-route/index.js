@@ -1,22 +1,22 @@
 import { userRole } from "@/config/userRole";
-import DriverContainer from "@/containers/AdminDashboard/Driver";
+import RouteContainer from "@/containers/AdminDashboard/Route/index";
 import AdminDashboardLayout from "@/layouts/AdminDashboardLayout";
 import React from "react";
 
-const AllDriver = () => {
+const AllRoute = () => {
   return (
     <>
       {"admin" === userRole.ADMIN && (
         <>
-          <DriverContainer />
+          <RouteContainer />
         </>
       )}
     </>
   );
 };
 
-export default AllDriver;
+export default AllRoute;
 
-AllDriver.getLayout = function getLayout(page) {
+AllRoute.getLayout = function getLayout(page) {
   return <AdminDashboardLayout>{page}</AdminDashboardLayout>;
 };
