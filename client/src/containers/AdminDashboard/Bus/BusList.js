@@ -3,7 +3,6 @@ import { useState } from "react";
 import { EditOutlined } from "@ant-design/icons";
 
 const BusListTable = ({ data }) => {
-  console.log(data);
   const [isEditing, setIsEditing] = useState(false);
   const [editingBus, setEditingBus] = useState(null);
   const columns = [
