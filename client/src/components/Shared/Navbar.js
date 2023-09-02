@@ -75,8 +75,8 @@ const Navbar = () => {
                 src="https://i.ibb.co/Smm15yx/bus-vector.jpg"
                 decoding="async"
                 loading="lazy"
-                width={300}
-                height={300}
+                width={48}
+                height={48}
               />
             </Link>
           </div>
@@ -89,8 +89,8 @@ const Navbar = () => {
                   src="https://i.ibb.co/Smm15yx/bus-vector.jpg"
                   decoding="async"
                   loading="lazy"
-                  width={300}
-                  height={300}
+                  width={48}
+                  height={48}
                 />
               </Link>
             </li>
@@ -131,8 +131,8 @@ const Navbar = () => {
               src="https://i.ibb.co/nrtwzQd/avatar-boy.webp"
               decoding="async"
               loading="lazy"
-              width={300}
-              height={300}
+              width={48}
+              height={48}
             />
           </div>
           {/* Sidebar  */}
@@ -148,8 +148,8 @@ const Navbar = () => {
                       src="https://i.ibb.co/Smm15yx/bus-vector.jpg"
                       decoding="async"
                       loading="lazy"
-                      width={300}
-                      height={300}
+                      width={48}
+                      height={48}
                     />
                   </Link>
                 </div>
