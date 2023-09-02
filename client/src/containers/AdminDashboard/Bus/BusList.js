@@ -2,15 +2,19 @@ import { Table, Modal, Avatar } from "antd";
 import { useState } from "react";
 import { EditOutlined } from "@ant-design/icons";
 
-const BusListTable = () => {
+const BusListTable = ({ data }) => {
+  console.log(data);
   const [isEditing, setIsEditing] = useState(false);
   const [editingBus, setEditingBus] = useState(null);
-  const [dataSource, setDataSource] = useState(demoData);
   const columns = [
     {
       title: "Sr.",
       dataIndex: "sr",
       minWidth: 200,
+      render: (text, record, index) => {
+        // You can render a static serial number here
+        return `${index + 1}`;
+      },
     },
     {
       title: "Bus code",
@@ -24,15 +28,15 @@ const BusListTable = () => {
     },
     {
       title: "Brand",
-      dataIndex: "brand",
+      dataIndex: "brand_name",
       minWidth: 200,
     },
     {
       title: "Image",
-      dataIndex: "image",
+      dataIndex: "bus_image",
       minWidth: 200,
-      render: (image) => {
-        return <Avatar shape="square" size={64} src={image} />;
+      render: (bus_image) => {
+        return <Avatar shape="square" size={64} src={bus_image} />;
       },
     },
     {
@@ -58,8 +62,32 @@ const BusListTable = () => {
       sorter: (a, b) => a.total_trip - b.total_trip,
     },
     {
+      title: "Current status",
+      dataIndex: "availability_status",
+      minWidth: 200,
+      render: (availability_status) => {
+        return (
+          <p
+            className={
+              availability_status === "servicing"
+                ? "bg-[rgba(255,189,90,.2)] text-[#ffc107] rounded pl-2"
+                : availability_status === "standBy"
+                ? "bg-[rgba(28,213,174,.2)] text-[#38cab3] rounded pl-2"
+                : availability_status === "transit"
+                ? "bg-[#7CB9E8] text-[#0039a6] rounded pl-2"
+                : availability_status === "rest"
+                ? "bg-[#A3C1AD] text-[#002244] rounded pl-2"
+                : "bg-[rgba(247,79,117,.2)] text-[#f74f75] rounded pl-2"
+            }
+          >
+            {availability_status}
+          </p>
+        );
+      },
+    },
+    {
       title: "Seats",
-      dataIndex: "seats",
+      dataIndex: "available_seats",
       minWidth: 200,
       render: (seats) => {
         return <p>{seats} Seats</p>;
@@ -93,7 +121,7 @@ const BusListTable = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <Table columns={columns} dataSource={dataSource}></Table>
+        <Table columns={columns} dataSource={data}></Table>
         <Modal
           title="Edit Bus details"
           open={isEditing}
