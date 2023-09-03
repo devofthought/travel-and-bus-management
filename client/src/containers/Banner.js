@@ -9,7 +9,7 @@ const Banner = ({ handleSearchTrip }) => {
       if (parallaxElement) {
         const scrollPosition = window.scrollY;
         parallaxElement.style.transform = `translateY(${
-          scrollPosition * 0.5
+          scrollPosition * 0.3
         }px)`;
       }
     };
@@ -60,7 +60,7 @@ const Banner = ({ handleSearchTrip }) => {
           </div>
         </div>
       </div>
-      <div className="flex justify-center bg-white h-[250px] sm:h-[200px] lg:h-[150px]">
+      <div className="flex justify-center bg-white h-[250px]">
         <div className="absolute z-20 flex justify-center -mt-20 sm:-mt-10 lg:-mt-2">
           <SearchBar handleSearchTrip={handleSearchTrip} />
         </div>

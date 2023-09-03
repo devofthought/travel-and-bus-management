@@ -1,4 +1,6 @@
 import Button from "@/components/UI/Button";
+import { DatePicker, Input } from "antd";
+import TextArea from "antd/es/input/TextArea";
 import Link from "next/link";
 import React from "react";
 
@@ -19,42 +21,24 @@ const SaySomething = () => {
           </h1>
           <div className="h-[2px] md:h-1 w-[160px] secondary-bg mx-auto mt-4"></div>
         </div>
-        <div className="mb-4 md:mb-5 flex flex-col sm:flex-row sm:justify-between gap-4 sm:gap-5">
-          <input
-            className="shadow appearance-none border rounded w-full p-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="name"
-            type="text"
-            placeholder="Name"
-            name="name"
-            required
-          />
-          <input
-            className="shadow appearance-none border rounded w-full p-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="email"
-            type="email"
-            placeholder="Email"
-            name="email"
-            required
-          />
+        <div className="grid grid-cols-2 gap-5">
+          <div>
+            <Input className="h-14 text-lg" placeholder="Name" />
+          </div>
+          <div>
+            <Input className="h-14 text-lg" placeholder="Email" />
+          </div>
         </div>
-        <div className="mb-4 md:mb-5">
-          <textarea
-            className="h-40 md:h-48 shadow appearance-none border rounded w-full p-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="message"
-            placeholder="Your Words"
-            name="message"
-            rows="4"
-            required
-          />
+        <div className="mt-5">
+          <TextArea className="h-44 text-lg" placeholder="Your Words" />
         </div>
-        <div className="flex items-center justify-center">
-          <Link href="/">
-            <Button
-              styles="w-full sm:w-60 md:w-80 primary-bg hover:bg-green-700 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-center"
-              btnName="Submit"
-              textStyle="text-center"
-            />
-          </Link>
+        <div className="w-32 mx-auto">
+          <button
+            type="submit"
+            className="border-none w-full h-12 secondary-bg text-center mt-5 rounded-lg text-lg text-white"
+          >
+            Submit
+          </button>
         </div>
       </form>
     </div>

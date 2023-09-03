@@ -15,7 +15,7 @@ const offerData = [
     id: 2,
     icon: <MdOutlineDiscount className="" size={48}></MdOutlineDiscount>,
     title: "Discount & Promo",
-    style: "md:-mt-10 text-white bg-green-500",
+    style: "md:-mt-10 text-white primary-bg",
     des: " Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorum nemo distinctio dignissimos animi magnam, facere iste earum voluptatem labore corporis? Praesentium dolor ad facilis nisi",
   },
   {
@@ -34,7 +34,7 @@ const offerData = [
     id: 5,
     icon: <AiOutlineSafety className="" size={48}></AiOutlineSafety>,
     title: "Safety Guarantee",
-    style: "md:-mt-10 text-white bg-blue-500",
+    style: "md:-mt-10 text-white secondary-bg",
     des: " Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorum nemo distinctio dignissimos animi magnam, facere iste earum voluptatem labore corporis? Praesentium dolor ad facilis nisi",
   },
   {

@@ -47,7 +47,7 @@ const ReserveABus = () => {
                 </div>
                 <button
                   type="submit"
-                  className="h-16 secondary-bg text-center w-full mt-5 rounded-lg text-lg text-white"
+                  className="border-none h-16 secondary-bg text-center w-full mt-5 rounded-lg text-lg text-white"
                 >
                   Reserving Request
                 </button>
@@ -60,8 +60,9 @@ const ReserveABus = () => {
                 <Image
                   src="/bus-2546383_1280.jpg"
                   alt="Description of the image"
+                  className="w-full"
                   width={650}
-                  height={200}
+                  height={230}
                 />
               </div>
               <div>
@@ -69,8 +70,9 @@ const ReserveABus = () => {
                   <Image
                     src="/bus-2546383_1280.jpg"
                     alt="Description of the image"
+                    className="w-full"
                     width={600}
-                    height={200}
+                    height={230}
                   />
                 </h3>
               </div>
@@ -78,16 +80,18 @@ const ReserveABus = () => {
                 <Image
                   src="/bus-2546383_1280.jpg"
                   alt="Description of the image"
+                  className="w-full"
                   width={650}
-                  height={200}
+                  height={230}
                 />
               </div>
               <div>
                 <Image
                   src="/bus-2546383_1280.jpg"
                   alt="Description of the image"
+                  className="w-full"
                   width={650}
-                  height={200}
+                  height={230}
                 />
               </div>
             </Carousel>
