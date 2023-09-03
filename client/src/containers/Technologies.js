@@ -36,10 +36,12 @@ const SvgImageScrollBar = () => {
   };
 
   return (
-    <div>
-      <div className=" mb-10 mt-10">
-        <h1 className="font-bold text-center text-5xl">Technologies Used</h1>
-        <div className="h-1 w-[200px] secondary-bg mx-auto mt-2"></div>
+    <div className="mt-10 mb-14 md:mb-20">
+      <div className="mn-6 md:mb-10">
+        <h1 className="font-bold text-center text-2xl md:text-3xl lg:text-4xl">
+          Technologies Used
+        </h1>
+        <div className="h-[2px] md:h-1 w-[160px] secondary-bg mx-auto mt-[6px]"></div>
       </div>
       <div style={containerStyle}>
         <ul style={listStyle} className="justify-evenly">
