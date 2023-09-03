@@ -15,7 +15,7 @@ const offerData = [
     id: 2,
     icon: <MdOutlineDiscount className="" size={48}></MdOutlineDiscount>,
     title: "Discount & Promo",
-    style: "md:-mt-10 text-white secondary-bg",
+    style: "md:-mt-10 text-white bg-green-500",
     des: " Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorum nemo distinctio dignissimos animi magnam, facere iste earum voluptatem labore corporis? Praesentium dolor ad facilis nisi",
   },
   {
@@ -34,7 +34,7 @@ const offerData = [
     id: 5,
     icon: <AiOutlineSafety className="" size={48}></AiOutlineSafety>,
     title: "Safety Guarantee",
-    style: "md:-mt-10 text-white secondary-bg",
+    style: "md:-mt-10 text-white bg-blue-500",
     des: " Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorum nemo distinctio dignissimos animi magnam, facere iste earum voluptatem labore corporis? Praesentium dolor ad facilis nisi",
   },
   {
@@ -47,45 +47,43 @@ const offerData = [
 
 const WhatWeOffer = () => {
   return (
-    <div className="">
-      <div className="main-container">
-        <div className=" mb-10 md:mb-28">
-          <h1 className="font-bold text-center text-5xl">
-            What We Offer For You
-          </h1>
-          <div className="h-1 w-[200px] secondary-bg mx-auto mt-2"></div>
-        </div>
-        <div>
-          <Row
-            gutter={{
-              xs: 8,
-              sm: 16,
-              md: 24,
-              lg: 32,
-            }}
-          >
-            {offerData.map((data) => (
-              <Col
-                key={data.id}
-                className="gutter-row "
-                xs={24}
-                sm={24}
-                md={12}
-                lg={8}
+    <div className="main-container">
+      <div className="mb-10 md:mb-28">
+        <h1 className="font-bold text-center text-2xl md:text-3xl lg:text-4xl">
+          What We Offer For You
+        </h1>
+        <div className="h-[2px] md:h-1 w-[160px] secondary-bg mx-auto mt-2"></div>
+      </div>
+      <div>
+        <Row
+          gutter={{
+            xs: 8,
+            sm: 16,
+            md: 24,
+            lg: 32,
+          }}
+        >
+          {offerData.map((data) => (
+            <Col
+              key={data.id}
+              className="gutter-row "
+              xs={24}
+              sm={24}
+              md={12}
+              lg={8}
+            >
+              <div
+                className={`p-10 mb-8 rounded-2xl shadow-xl bg-white hover:bg-blue-500 hover:text-white ${data?.style}`}
               >
-                <div
-                  className={`p-10 mb-8 rounded-2xl shadow-xl bg-white secondary-bg-hover ${data?.style}`}
-                >
-                  <div className="">{data?.icon}</div>
-                  <h1 className="text-2xl font-bold mt-6 ">{data?.title}</h1>
-                  <p className="text-base opacity-90 mt-4 font-medium">
-                    {data?.des}
-                  </p>
-                </div>
-              </Col>
-            ))}
-          </Row>
-        </div>
+                <div className="">{data?.icon}</div>
+                <h1 className="text-2xl font-bold mt-6 ">{data?.title}</h1>
+                <p className="text-base opacity-90 mt-4 font-medium">
+                  {data?.des}
+                </p>
+              </div>
+            </Col>
+          ))}
+        </Row>
       </div>
     </div>
   );

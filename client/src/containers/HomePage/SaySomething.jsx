@@ -13,9 +13,12 @@ const SaySomething = () => {
         className="border-[1px] shadow-lg hover:shadow-xl rounded px-4 sm:px-8 pt-6 pb-8 mb-4"
         onSubmit={handleSubmit}
       >
-        <h1 className="primary-text text-xl sm:text-2xl md:text-3xl font-semibold md:font-bold mb-7 text-center">
-          Say Something
-        </h1>
+        <div className=" mb-10">
+          <h1 className="font-bold text-center text-2xl md:text-3xl lg:text-4xl">
+            Say Something
+          </h1>
+          <div className="h-[2px] md:h-1 w-[160px] secondary-bg mx-auto mt-4"></div>
+        </div>
         <div className="mb-4 md:mb-5 flex flex-col sm:flex-row sm:justify-between gap-4 sm:gap-5">
           <input
             className="shadow appearance-none border rounded w-full p-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
