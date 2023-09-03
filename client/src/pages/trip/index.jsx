@@ -252,130 +252,138 @@ const Trip = () => {
                   <ul className="flex flex-wrap justify-around items-center gap-2 text-xs">
                     <li className="flex flex-col lg:flex-row justify-between items-center gap-2">
                       <span>
-                        <MdChair className="w-6 h-6 text-[#686666]" />
+                        <MdChair className="w-8 h-8 text-[#686666]" />
                       </span>
-                      <span className="ms-2">Blocked</span>
+                      <span className="ms-2 font-semibold text-[#686666]">
+                        Blocked
+                      </span>
                     </li>
                     <li className="flex flex-col lg:flex-row justify-between items-center gap-2">
                       <span>
-                        <MdChair className="w-6 h-6 text-gray-400" />
+                        <MdChair className="w-8 h-8 text-gray-400" />
                       </span>
-                      <span className="ms-2">Available</span>
+                      <span className="ms-2 font-semibold text-gray-400">
+                        Available
+                      </span>
                     </li>
                     <li className="flex flex-col lg:flex-row justify-between items-center gap-2">
                       <span>
-                        <MdChair className="w-6 h-6 text-[#9cd27c]" />
+                        <MdChair className="w-8 h-8 text-[#9cd27c]" />
                       </span>
-                      <span className="ms-2">Selected</span>
+                      <span className="ms-2 font-semibold text-[#9cd27c]">
+                        Selected
+                      </span>
                     </li>
                     <li className="flex flex-col lg:flex-row justify-between items-center gap-2">
                       <span>
-                        <MdChair className="w-6 h-6 text-[#ff9090]" />
+                        <MdChair className="w-8 h-8 text-[#ff9090]" />
                       </span>
-                      <span className="ms-2">Sold</span>
+                      <span className="ms-2 font-semibold text-[#ff9090]">
+                        Sold
+                      </span>
                     </li>
                   </ul>
                   <div className="flex flex-col md:flex-row p-4 mt-4">
                     <div
-                      className="rounded-sm p-2"
+                      className="rounded-sm p-2 w-[280px] sm:w-[300px] md:w-[320px] mx-auto"
                       style={{ border: "1px solid lightgray" }}
                     >
                       <div className="flex justify-end p-4 border-b border-[90%] mb-4">
                         <GiSteeringWheel className="w-10 h-10 text-gray-400" />
                       </div>
-                      <div className="w-full md:w-[360px] grid grid-cols-4 gap-2">
+                      <div className="w-full grid grid-cols-4 gap-2">
                         <span></span>
                         <span></span>
-                        <span>
+                        <span className="flex justify-center items-center">
                           <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
                         </span>
-                        <span>
+                        <span className="flex justify-center items-center">
                           <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
                         </span>
 
                         <span></span>
                         <span></span>
-                        <span>
+                        <span className="flex justify-center items-center">
                           <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
                         </span>
-                        <span>
-                          <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
-                        </span>
-
-                        <span>
-                          <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
-                        </span>
-                        <span></span>
-                        <span>
-                          <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
-                        </span>
-                        <span>
+                        <span className="flex justify-center items-center">
                           <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
                         </span>
 
-                        <span>
+                        <span className="flex justify-center items-center">
                           <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
                         </span>
                         <span></span>
-                        <span>
+                        <span className="flex justify-center items-center">
                           <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
                         </span>
-                        <span>
+                        <span className="flex justify-center items-center">
                           <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
                         </span>
 
-                        <span>
+                        <span className="flex justify-center items-center">
                           <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
                         </span>
                         <span></span>
-                        <span>
+                        <span className="flex justify-center items-center">
                           <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
                         </span>
-                        <span>
+                        <span className="flex justify-center items-center">
                           <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
                         </span>
 
-                        <span>
+                        <span className="flex justify-center items-center">
                           <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
                         </span>
                         <span></span>
-                        <span>
+                        <span className="flex justify-center items-center">
                           <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
                         </span>
-                        <span>
+                        <span className="flex justify-center items-center">
                           <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
                         </span>
 
-                        <span>
+                        <span className="flex justify-center items-center">
                           <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
                         </span>
                         <span></span>
-                        <span>
+                        <span className="flex justify-center items-center">
                           <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
                         </span>
-                        <span>
+                        <span className="flex justify-center items-center">
                           <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
                         </span>
 
-                        <span>
+                        <span className="flex justify-center items-center">
                           <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
                         </span>
                         <span></span>
-                        <span>
+                        <span className="flex justify-center items-center">
                           <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
                         </span>
-                        <span>
+                        <span className="flex justify-center items-center">
                           <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
                         </span>
 
-                        <span>
+                        <span className="flex justify-center items-center">
                           <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
                         </span>
                         <span></span>
-                        <span>
+                        <span className="flex justify-center items-center">
                           <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
                         </span>
-                        <span>
+                        <span className="flex justify-center items-center">
+                          <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
+                        </span>
+
+                        <span className="flex justify-center items-center">
+                          <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
+                        </span>
+                        <span></span>
+                        <span className="flex justify-center items-center">
+                          <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
+                        </span>
+                        <span className="flex justify-center items-center">
                           <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
                         </span>
 
@@ -384,14 +392,14 @@ const Trip = () => {
                         <span></span>
                         <span></span>
 
-                        <span>
+                        <span className="flex justify-center items-center">
                           <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
                         </span>
                         <span></span>
-                        <span>
+                        <span className="flex justify-center items-center">
                           <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
                         </span>
-                        <span>
+                        <span className="flex justify-center items-center">
                           <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
                         </span>
                       </div>
@@ -435,7 +443,7 @@ const Trip = () => {
                           Total: ৳ 1360.00
                         </h4>
                       </div>
-                      <div className="border p-4 rounded-lg mt-10">
+                      <div className="border p-4 rounded-lg mt-10 w-full md:w-10/12 mx-auto">
                         <form className="flex flex-col gap-4">
                           <input
                             type="text"
@@ -451,7 +459,7 @@ const Trip = () => {
                             required={true}
                           />
                           <Button
-                            styles={`w-full px-2 py-[2px] md:px-3 md:py-1 font-semibold border-2 rounded-lg primary-bg text-white`}
+                            styles={`w-full px-2 md:px-3 py-2 font-semibold border-2 rounded-lg primary-bg text-white`}
                             textStyle={`btn-text px-2`}
                             btnName="Proceed to pay"
                             required={true}
