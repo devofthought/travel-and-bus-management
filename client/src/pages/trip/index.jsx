@@ -153,7 +153,7 @@ const Trip = () => {
           >
             <div className="bg-white rounded-md">
               <ul className="flex items-center justify-between p-4 rounded-md">
-                <li className="w-[50%] md:w-[30%] lg:w-[25%] pr-7 border-r border-dashed">
+                <li className="w-[50%] md:w-[30%] lg:w-[25%] pr-7 border-t-0 border-l-0 border-b-0 border-r border-dashed">
                   <div>
                     <div className="search_bus-name__AN5TP">
                       <h6 className="text-md md:text-lg lg:text-xl text-[#5b2192] font-semibold uppercase">
@@ -201,7 +201,7 @@ const Trip = () => {
                     </div>
                   </div>
                 </li>
-                <li className="w-[20%] lg:w-[15%] p-7 border-r border-dashed hidden md:block">
+                <li className="w-[20%] lg:w-[15%] p-7 border-t-0 border-l-0 border-b-0 border-r border-dashed hidden md:block">
                   <div className="search_item-content__ydL0p">
                     <h6 className="uppercase text-sm text-gray-500 font-semibold">
                       Departure time
@@ -211,7 +211,7 @@ const Trip = () => {
                     </p>
                   </div>
                 </li>
-                <li className="w-[20%] lg:w-[15%] p-7 border-r border-dashed hidden md:block">
+                <li className="w-[20%] lg:w-[15%] p-7 border-t-0 border-l-0 border-b-0 border-r border-dashed hidden md:block">
                   <div className="search_item-content__ydL0p">
                     <h6 className="uppercase text-sm text-gray-500 font-semibold">
                       Arrival time
@@ -221,7 +221,7 @@ const Trip = () => {
                     </p>
                   </div>
                 </li>
-                <li className="w-[15%] p-7 border-r border-dashed hidden lg:block">
+                <li className="w-[15%] p-7 border-t-0 border-l-0 border-b-0 border-r border-dashed hidden lg:block">
                   <div className="search_item-content__ydL0p">
                     <h6 className="uppercase text-sm text-gray-500 font-semibold">
                       Seats Available
@@ -248,20 +248,8 @@ const Trip = () => {
               </ul>
               <div></div>
               {selectedBusId === trip?.id && (
-                <div className="border-t border-dashed border-[90%] mt-6 pt-6">
+                <div className="border-l-0 border-r-0 border-b-0 border-t border-dashed border-[90%] mt-6 pt-6">
                   <ul className="flex flex-wrap justify-around items-center gap-2 text-xs">
-                    <li className="flex flex-col lg:flex-row justify-between items-center gap-2">
-                      <span>
-                        <MdChair className="w-6 h-6 text-[#c7a6e6]" />
-                      </span>
-                      <span className="ms-2">Booked (M)</span>
-                    </li>
-                    <li className="flex flex-col lg:flex-row justify-between items-center gap-2">
-                      <span>
-                        <MdChair className="w-6 h-6 text-[#f04df0]" />
-                      </span>
-                      <span className="ms-2">Booked (F)</span>
-                    </li>
                     <li className="flex flex-col lg:flex-row justify-between items-center gap-2">
                       <span>
                         <MdChair className="w-6 h-6 text-[#686666]" />
@@ -284,17 +272,14 @@ const Trip = () => {
                       <span>
                         <MdChair className="w-6 h-6 text-[#ff9090]" />
                       </span>
-                      <span className="ms-2">Sold (M)</span>
-                    </li>
-                    <li className="flex flex-col lg:flex-row justify-between items-center gap-2">
-                      <span>
-                        <MdChair className="w-6 h-6 text-[#ff99cc]" />
-                      </span>
-                      <span className="ms-2">Sold (F)</span>
+                      <span className="ms-2">Sold</span>
                     </li>
                   </ul>
                   <div className="flex flex-col md:flex-row p-4 mt-4">
-                    <div className="border border-gray-300 rounded-sm p-2">
+                    <div
+                      className="rounded-sm p-2"
+                      style={{ border: "1px solid lightgray" }}
+                    >
                       <div className="flex justify-end p-4 border-b border-[90%] mb-4">
                         <GiSteeringWheel className="w-10 h-10 text-gray-400" />
                       </div>
