@@ -1,6 +1,6 @@
 import { Model, Types } from 'mongoose'
-import { IDriver } from '../driver/driver.interface'
 import { IBus } from '../bus/bus.interface'
+import { IDriver } from '../driver/driver.interface'
 import { IRoute } from '../route/route.interface'
 
 export type ITrip = {
@@ -12,6 +12,7 @@ export type ITrip = {
   ticket_price: number
   trips_status: 'pending' | 'completed' | 'on-processing'
   driver_id: Types.ObjectId | IDriver
+  createdAt: Date
 }
 
 export type ITripResponse = {

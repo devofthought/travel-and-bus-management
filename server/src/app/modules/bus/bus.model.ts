@@ -1,9 +1,9 @@
 import { Schema, model } from 'mongoose'
-import { IBus, BusModel } from './bus.interface'
 import { availability_status } from './bus.constants'
+import { BusModel, IBus } from './bus.interface'
 export const busSchema = new Schema<IBus, BusModel>(
   {
-    available_seats: {
+    total_seats: {
       type: Number,
       required: true,
     },

@@ -1,15 +1,11 @@
-import Link from "next/link";
 import React from "react";
 
-const Button = ({ styles, btnName, href, linkClass }) => {
+const Button = ({ styles, btnName, textStyle }) => {
   return (
-    <div className={styles}>
-      <Link
-        className={(linkClass && "flex items-center justify-center") || ""}
-        href={href || "#"}
-      >
+    <div className={`${styles} cursor-pointer`}>
+      <div className={(textStyle && "flex items-center justify-center") || ""}>
         {btnName}
-      </Link>
+      </div>
     </div>
   );
 };

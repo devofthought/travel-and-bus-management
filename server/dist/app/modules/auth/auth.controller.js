@@ -87,7 +87,7 @@ const googleAuth = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, voi
     let refreshToken, accessToken;
     if (result) {
         ;
-        ({ refreshToken } = result, accessToken = __rest(result, ["refreshToken"]));
+        (({ refreshToken } = result), accessToken = __rest(result, ["refreshToken"]));
     }
     // set refresh token in the browser cookie
     const cookieOptions = {

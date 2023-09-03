@@ -83,8 +83,10 @@ const Review = () => {
   return (
     <div className="main-container py-10">
       <div className=" mb-6">
-        <h1 className="font-bold text-center text-5xl">What Our Clients Say</h1>
-        <div className="h-1 w-[200px] secondary-bg mx-auto mt-2"></div>
+        <h1 className="font-bold text-center text-2xl md:text-3xl lg:text-4xl">
+          What Our Clients Say
+        </h1>
+        <div className="h-[2px] md:h-1 w-[160px] secondary-bg mx-auto mt-2"></div>
       </div>
       <div className="mb-10 px-2 md:px-0">
         <Slider {...settings}>
