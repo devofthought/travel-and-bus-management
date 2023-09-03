@@ -51,10 +51,10 @@ const Banner = ({ handleSearchTrip }) => {
           style={{ height: "100%", color: "white", position: "inherit" }}
         >
           <div>
-            <h1 className="text-4xl font-bold" style={{ fontSize: "100px" }}>
+            <h1 className="text-8xl font-bold">
               Dhruto Travel
             </h1>
-            <p style={{ textAlign: "center", fontSize: "24px" }}>
+            <p className="text-center text-2xl">
               Book with Ease, Travel with Speed
             </p>
           </div>

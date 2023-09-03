@@ -2,15 +2,18 @@ import { Table, Modal, Avatar } from "antd";
 import { useState } from "react";
 import { EditOutlined } from "@ant-design/icons";
 
-const DriverList = () => {
+const DriverList = ({ data }) => {
+  console.log(data);
   const [isEditing, setIsEditing] = useState(false);
   const [editingDriver, setEditingDriver] = useState(null);
-  const [dataSource, setDataSource] = useState(demoData);
   const columns = [
     {
       title: "Sr.",
       dataIndex: "sr",
       minWidth: 200,
+      render: (text, record, index) => {
+        return `${index + 1}`;
+      },
     },
     {
       title: "Image",
@@ -39,18 +42,20 @@ const DriverList = () => {
       title: "Age",
       dataIndex: "age",
       minWidth: 200,
+      sorter: (a, b) => a.age - b.age,
     },
     {
       title: "License",
-      dataIndex: "license",
+      dataIndex: "driving_license",
       minWidth: 200,
     },
     {
       title: "Experience",
-      dataIndex: "experience",
+      dataIndex: "years_experience",
       minWidth: 200,
-      render: (experience) => {
-        return <p>{experience} years</p>;
+      sorter: (a, b) => a.years_experience - b.years_experience,
+      render: (years_experience) => {
+        return <p>{years_experience} years</p>;
       },
     },
     {
@@ -58,6 +63,15 @@ const DriverList = () => {
       dataIndex: "total_trip",
       minWidth: 200,
       sorter: (a, b) => a.total_trip - b.total_trip,
+    },
+    {
+      title: "Joining Date",
+      dataIndex: "joining_date",
+      minWidth: 200,
+      sorter: (a, b) => a.joining_date - b.joining_date,
+      render: (joining_date) => {
+        return <p>{new Date(joining_date).toDateString()}</p>;
+      },
     },
     {
       key: "5",
@@ -87,7 +101,7 @@ const DriverList = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <Table columns={columns} dataSource={dataSource}></Table>
+        <Table columns={columns} dataSource={data}></Table>
         <Modal
           title="Edit driver information"
           open={isEditing}
@@ -110,42 +124,3 @@ const DriverList = () => {
 };
 
 export default DriverList;
-
-const demoData = [
-  {
-    key: "1",
-    sr: "1",
-    name: "Traveler",
-    image: "https://robohash.org/hicveldicta.png",
-    email: "user1@example.com",
-    phone: "123-456-7890",
-    experience: 10,
-    license: "3487823jbh093",
-    age: 28,
-    total_trip: 10,
-  },
-  {
-    key: "2",
-    sr: "2",
-    name: "Traveler",
-    image: "https://robohash.org/doloremquesintcorrupti.png",
-    email: "user2@example.com",
-    experience: 3,
-    license: "34h8g7893",
-    phone: "987-654-3210",
-    age: 35,
-    total_trip: 15,
-  },
-  {
-    key: "3",
-    sr: "3",
-    name: "Traveler",
-    image: "https://robohash.org/consequunturautconsequatur.png",
-    email: "user3@example.com",
-    phone: "555-123-4567",
-    experience: 15,
-    license: "89h34g32h8h",
-    age: 22,
-    total_trip: 5,
-  },
-];

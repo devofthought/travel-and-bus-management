@@ -50,7 +50,7 @@ const SearchBar = () => {
           </Col>
           <Col span={6}>
             <button
-              className="w-full h-full border border-blue-400 font-semibold rounded-md text-white"
+              className="w-full h-full bg-blue-950 hover:bg-blue-400 hover:text-slate-950 border border-blue-400 font-semibold rounded-md text-white"
               type="submit"
             >
               Search

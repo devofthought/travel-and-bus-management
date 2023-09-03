@@ -2,9 +2,11 @@ import { AppstoreOutlined } from "@ant-design/icons";
 import { AiOutlinePullRequest } from "react-icons/ai";
 import { BiBus, BiListOl, BiTrip, BiUser } from "react-icons/bi";
 import { BsBusFront, BsBusFrontFill, BsCardChecklist } from "react-icons/bs";
-import { GiAutoRepair, GiBusStop } from "react-icons/gi";
+import { FaRoad } from "react-icons/fa";
+import { GiAutoRepair, GiBusStop, GiMountainRoad } from "react-icons/gi";
 import {
   MdCreate,
+  MdOutlineAddRoad,
   MdOutlineDriveFileRenameOutline,
   MdOutlineRssFeed,
   MdTravelExplore,
@@ -104,6 +106,26 @@ export const Menus = [
         key: "8034ug890u35u",
         path: "/dashboard/bus/all-bus",
         icon: <GiBusStop />,
+      },
+    ],
+  },
+  {
+    label: "Route",
+    key: "dat3i43nnt",
+    icon: <FaRoad />,
+    permission: ["admin"],
+    children: [
+      {
+        label: "create Route",
+        key: "8034uni6oh83gh7",
+        path: "/dashboard/route/create-route",
+        icon: <MdOutlineAddRoad />,
+      },
+      {
+        label: "All Route",
+        key: "4hn7932gh9",
+        path: "/dashboard/route/all-route",
+        icon: <GiMountainRoad />,
       },
     ],
   },
