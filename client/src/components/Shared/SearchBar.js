@@ -57,7 +57,7 @@ const SearchBar = () => {
             </button>
           </Col>
         </Row> */}
-        <div className="w-9/12 mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 items-center gap-5 justify-between bg-white rounded-lg p-8">
+        <div className="w-9/12 mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 items-center gap-5 justify-between bg-white rounded-lg p-8 shadow-lg">
           <div class="relative rounded-md shadow-sm w-full h-full">
             <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
               <span class="text-gray-500 sm:text-sm">
