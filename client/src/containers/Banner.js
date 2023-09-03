@@ -51,10 +51,10 @@ const Banner = ({ handleSearchTrip }) => {
           style={{ height: "100%", color: "white", position: "inherit" }}
         >
           <div>
-            <h1 className="text-4xl font-bold" style={{ fontSize: "100px" }}>
+            <h1 className="text-8xl font-bold">
               Dhruto Travel
             </h1>
-            <p style={{ textAlign: "center", fontSize: "24px" }}>
+            <p className="text-center text-2xl">
               Book with Ease, Travel with Speed
             </p>
           </div>
@@ -64,10 +64,7 @@ const Banner = ({ handleSearchTrip }) => {
         className="flex justify-center"
         style={{ height: "500px", backgroundColor: "#00000B" }}
       >
-        <div
-          className="absolute z-50 flex justify-center"
-          style={{ marginTop: "-40px" }}
-        >
+        <div className="absolute z-10 flex justify-center">
           <SearchBar handleSearchTrip={handleSearchTrip} />
         </div>
       </div>

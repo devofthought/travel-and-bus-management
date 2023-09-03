@@ -32,7 +32,7 @@ const SearchBar = () => {
   return (
     <div className="search-bar">
       <form onSubmit={(e) => handleSearchTrip(e)}>
-        <Row className="bg-indigo-400 p-4 z-50 rounded-lg" gutter={[16, 16]}>
+        <Row className="bg-indigo-400 p-4 rounded-lg w-full" gutter={[16, 16]}>
           <Col span={6}>
             <Input name="from" className="p-2" placeholder="From" required />
           </Col>
@@ -49,7 +49,7 @@ const SearchBar = () => {
           </Col>
           <Col span={6}>
             <button
-              className="w-full h-full border border-blue-400 font-semibold rounded-md text-white"
+              className="w-full h-full bg-blue-950 hover:bg-blue-400 hover:text-slate-950 border border-blue-400 font-semibold rounded-md text-white"
               type="submit"
             >
               Search
