@@ -65,7 +65,7 @@ const Banner = ({ handleSearchTrip }) => {
         style={{ height: "500px", backgroundColor: "#00000B" }}
       >
         <div
-          className="absolute z-50 flex justify-center"
+          className="absolute z-10 flex justify-center"
           style={{ marginTop: "-40px" }}
         >
           <SearchBar handleSearchTrip={handleSearchTrip} />
