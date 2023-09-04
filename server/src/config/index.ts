@@ -16,4 +16,9 @@ export default {
     refresh_expires_in: process.env.JWT_REFRESH_EXPIRES_IN,
   },
   bcrypt_salt_rounds: process.env.BCRYPT_SALT_ROUNDS,
+  store_id: process.env.STORE_ID,
+  store_password: process.env.STORE_PASSWORD,
+  client_url: process.env.CLIENT_URL,
+  server_url: process.env.SERVER_URL,
+  stripe_secret_key: process.env.STRIPE_SECRET_KEY,
 }

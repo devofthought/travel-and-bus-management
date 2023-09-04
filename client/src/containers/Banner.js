@@ -9,7 +9,7 @@ const Banner = ({ handleSearchTrip }) => {
       if (parallaxElement) {
         const scrollPosition = window.scrollY;
         parallaxElement.style.transform = `translateY(${
-          scrollPosition * 0.5
+          scrollPosition * 0.3
         }px)`;
       }
     };
@@ -27,7 +27,7 @@ const Banner = ({ handleSearchTrip }) => {
         style={{ position: "relative", height: "500px" }}
       >
         <div
-          className="parallax absolute inset-0 bg-center bg-cover"
+          className="parallax absolute inset-0 bg-center bg-cover z-10"
           style={{
             backgroundImage: `url(${"/images/banner-img.jpg"})`,
             position: "absolute",
@@ -60,11 +60,8 @@ const Banner = ({ handleSearchTrip }) => {
           </div>
         </div>
       </div>
-      <div
-        className="flex justify-center"
-        style={{ height: "500px", backgroundColor: "#00000B" }}
-      >
-        <div className="absolute z-10 flex justify-center">
+      <div className="flex justify-center bg-white h-[250px]">
+        <div className="absolute z-20 flex justify-center -mt-20 sm:-mt-10 lg:-mt-2">
           <SearchBar handleSearchTrip={handleSearchTrip} />
         </div>
       </div>

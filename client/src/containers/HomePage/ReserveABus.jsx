@@ -16,10 +16,10 @@ const ReserveABus = () => {
   return (
     <div className="main-container py-10">
       <div className=" mb-10">
-        <h1 className="font-bold text-center text-5xl">
+        <h1 className="font-bold text-center text-2xl md:text-3xl lg:text-4xl">
           Do You Want To Go Picnic? <br /> Reserve a Full Bus
         </h1>
-        <div className="h-1 w-[200px] secondary-bg mx-auto mt-2"></div>
+        <div className="h-[2px] md:h-1 w-[160px] secondary-bg mx-auto mt-2"></div>
       </div>
       <div>
         <Row
@@ -72,7 +72,7 @@ const ReserveABus = () => {
                 </div>
                 <button
                   type="submit"
-                  className="h-16 secondary-bg text-center w-full mt-5 rounded-lg text-lg text-white"
+                  className="border-none h-16 secondary-bg text-center w-full mt-5 rounded-lg text-lg text-white"
                 >
                   Reserving Request
                 </button>
@@ -85,8 +85,9 @@ const ReserveABus = () => {
                 <Image
                   src="/bus-2546383_1280.jpg"
                   alt="Description of the image"
+                  className="w-full"
                   width={650}
-                  height={200}
+                  height={230}
                 />
               </div>
               <div>
@@ -94,8 +95,9 @@ const ReserveABus = () => {
                   <Image
                     src="/bus-2546383_1280.jpg"
                     alt="Description of the image"
+                    className="w-full"
                     width={600}
-                    height={200}
+                    height={230}
                   />
                 </h3>
               </div>
@@ -103,16 +105,18 @@ const ReserveABus = () => {
                 <Image
                   src="/bus-2546383_1280.jpg"
                   alt="Description of the image"
+                  className="w-full"
                   width={650}
-                  height={200}
+                  height={230}
                 />
               </div>
               <div>
                 <Image
                   src="/bus-2546383_1280.jpg"
                   alt="Description of the image"
+                  className="w-full"
                   width={650}
-                  height={200}
+                  height={230}
                 />
               </div>
             </Carousel>
