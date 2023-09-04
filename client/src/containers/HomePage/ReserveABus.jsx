@@ -1,4 +1,4 @@
-import { Col, Row, Input, Carousel, DatePicker } from "antd";
+import { Col, Row, Input, Carousel, DatePicker, Select } from "antd";
 import Image from "next/image";
 import moment from "moment";
 
@@ -10,6 +10,9 @@ const disabledDate = (current) => {
 };
 
 const ReserveABus = () => {
+
+  const { Option } = Select;
+
   return (
     <div className="main-container py-10">
       <div className=" mb-10">
@@ -33,9 +36,31 @@ const ReserveABus = () => {
                   <div>
                     <Input className="h-16 text-lg" placeholder="To" />
                   </div>
-                  <div>
-                    <Input className="h-16 text-lg" placeholder="Bus Type" />
-                  </div>
+                  {/* <Input className="h-16 text-lg" placeholder="Bus Type" /> */}
+                  {/* <div className="flex justify-center align-middle border-2 border-red-200 "> */}
+                    <Select
+                      defaultValue="40"
+                      size="large"
+                      style={{
+                        width: 280,
+                      }}
+                      // onChange={handleChange}
+                      options={[
+                        {
+                          value: '40',
+                          label: '40',
+                        },
+                        {
+                          value: '50',
+                          label: '50',
+                        },
+                        {
+                          value: '60',
+                          label: '60',
+                        }
+                      ]}
+                    />
+                  {/* </div> */}
                   <div>
                     <DatePicker
                       className="h-16 text-lg w-full"
