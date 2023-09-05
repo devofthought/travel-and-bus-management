@@ -1,11 +1,12 @@
 import { Table, Modal } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useDeleteRouteMutation } from "@/redux/route/routeApi";
 import UpdateRouteForm from "./UpdateRouteFrom";
+import Swal from "sweetalert2";
 
 const RouteListTable = ({ data }) => {
-  const [deleteRoute, { routeResponse: response, error, isLoading }] =
+  const [deleteRoute, { data: response, error, isLoading }] =
     useDeleteRouteMutation();
   const [isEditing, setIsEditing] = useState(false);
   const [editingRoute, setEditingRoute] = useState(null);
@@ -102,7 +103,27 @@ const RouteListTable = ({ data }) => {
     setIsEditing(false);
     setEditingRoute(null);
   };
-  // console.log(editingRoute);
+
+  useEffect(() => {
+    if (response?.success) {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: `${response?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } else {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: `${error?.data?.errorMessage[0]?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  }, [response, error]);
+
   return (
     <div className="App">
       <header className="App-header">

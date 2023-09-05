@@ -1,11 +1,12 @@
 import { Table, Modal } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useDeleteIncidentMutation } from "@/redux/incident/incidentApi";
 import UpdateIncidentForm from "./UpdateIncidentForm";
+import Swal from "sweetalert2";
 
 const incidentListTable = ({ data }) => {
-  const [deleteIncident, { incidentResponse: response, error, isLoading }] =
+  const [deleteIncident, { data: response, error, isLoading }] =
     useDeleteIncidentMutation();
   const [isEditing, setIsEditing] = useState(false);
   const [editingIncident, setEditingIncident] = useState(null);
@@ -92,7 +93,26 @@ const incidentListTable = ({ data }) => {
     setIsEditing(false);
     setEditingIncident(null);
   };
-  // console.log(editingRoute);
+
+  useEffect(() => {
+    if (response?.success) {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: `${response?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } else {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: `${error?.data?.errorMessage[0]?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  }, [response, error]);
   return (
     <div className="App">
       <header className="App-header">
