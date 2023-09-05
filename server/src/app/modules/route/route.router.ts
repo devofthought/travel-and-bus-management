@@ -11,11 +11,11 @@ router.post(
   RouteController.createRoute
 )
 router.patch(
-  '/:route_code',
+  '/:_id',
   validateRequest(RouteValidation.updateRouteZodSchema),
   RouteController.updateRoute
 )
-router.get('/:route_code', RouteController.getSingleRoute)
+router.get('/:_id', RouteController.getSingleRoute)
 router.delete('/:_id', RouteController.deleteRoute)
 
 export const RouteRoutes = router

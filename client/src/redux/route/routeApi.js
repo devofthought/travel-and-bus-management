@@ -7,7 +7,7 @@ const routeApi = apiSlice.injectEndpoints({
       providesTags: ["route"],
     }),
     getSingleRouteDetails: builder.query({
-      query: ({ route_id }) => `/route/${route_id}`,
+      query: (route_id) => `/route/${route_id}`,
       providesTags: ["route"],
     }),
     addRoute: builder.mutation({
@@ -25,6 +25,14 @@ const routeApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["route"],
     }),
+    updateRoute: builder.mutation({
+      query: ({ route_id, body }) => ({
+        url: `/route/${route_id}`,
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: ["route"],
+    }),
   }),
 });
 
@@ -33,4 +41,5 @@ export const {
   useGetSingleRouteDetailsQuery,
   useAddRouteMutation,
   useDeleteRouteMutation,
+  useUpdateRouteMutation,
 } = routeApi;

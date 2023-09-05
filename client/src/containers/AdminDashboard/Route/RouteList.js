@@ -2,6 +2,7 @@ import { Table, Modal } from "antd";
 import { useState } from "react";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useDeleteRouteMutation } from "@/redux/route/routeApi";
+import UpdateRouteForm from "./UpdateRouteFrom";
 
 const RouteListTable = ({ data }) => {
   const [deleteRoute, { routeResponse: response, error, isLoading }] =
@@ -14,7 +15,6 @@ const RouteListTable = ({ data }) => {
       dataIndex: "sr",
       minWidth: 200,
       render: (text, record, index) => {
-        // You can render a static serial number here
         return `${index + 1}`;
       },
     },
@@ -101,12 +101,13 @@ const RouteListTable = ({ data }) => {
     setIsEditing(false);
     setEditingRoute(null);
   };
+  // console.log(editingRoute);
   return (
     <div className="App">
       <header className="App-header">
         <Table columns={columns} dataSource={data}></Table>
         <Modal
-          title="Edit Bus details"
+          title="Edit route details"
           open={isEditing}
           okText="Save"
           centered
@@ -114,12 +115,14 @@ const RouteListTable = ({ data }) => {
             resetEditing();
           }}
           onOk={() => {
-            /* add there your logic on edit trip */
             resetEditing();
           }}
+          footer={null}
         >
-          {/* <UpdateTripForm editingRoute={editingRoute} /> */}
-          <h1>here will be a form for edit bus details</h1>
+          <UpdateRouteForm
+            editingRoute={editingRoute}
+            resetEditing={resetEditing}
+          ></UpdateRouteForm>
         </Modal>
       </header>
     </div>
