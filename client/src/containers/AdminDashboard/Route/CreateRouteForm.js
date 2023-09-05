@@ -16,8 +16,6 @@ const CreateRouteForm = () => {
     // console.log({ values });
     await AddRoute(values);
   };
-  const [form] = Form.useForm();
-  form.setFieldsValue(initialData);
 
   useEffect(() => {
     if (addResponse?.success) {
@@ -39,6 +37,9 @@ const CreateRouteForm = () => {
       });
     }
   }, [addResponse, addError]);
+
+  const [form] = Form.useForm();
+  form.setFieldsValue(initialData);
 
   return (
     <div

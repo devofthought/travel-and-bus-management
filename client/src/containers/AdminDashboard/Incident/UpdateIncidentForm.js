@@ -1,47 +1,48 @@
-import { Form, Button, Select, Input, InputNumber } from "antd";
-import { useEffect } from "react";
-import { useAddIncidentMutation } from "@/redux/incident/incidentApi";
+import { Form, Button, Input, InputNumber, Select } from "antd";
 import Swal from "sweetalert2";
-const initialData = {
-  bus_code: "",
-  servicing_status: "",
-  Description: "",
-  cost: 0,
-};
-const CreateIncidentForm = () => {
+import { useEffect } from "react";
+import {
+  useGetSingleIncidentDetailsQuery,
+  useUpdateIncidentMutation,
+} from "@/redux/incident/incidentApi";
+
+const UpdateIncidentForm = ({ editingIncident, resetEditing }) => {
+  const {
+    data,
+    error: currRouteError,
+    isLoading: currRouteIsLoading,
+  } = useGetSingleIncidentDetailsQuery(editingIncident?._id);
   const [
-    addIncident,
-    { data: addResponse, error: addError, isLoading: addIsLoading },
-  ] = useAddIncidentMutation();
+    updateIncident,
+    { data: updateResponse, error: updateError, isLoading: updateIsLoading },
+  ] = useUpdateIncidentMutation();
   const onFinish = async (values) => {
-    await addIncident(values);
+    await updateIncident({ route_id: data?.data?._id, body: values });
   };
 
+  const [form] = Form.useForm();
+  form.setFieldsValue(data?.data);
   useEffect(() => {
-    console.log(addResponse);
-    console.log(addError);
-    if (addResponse?.success) {
-      form.setFieldsValue(initialData);
+    if (updateResponse?.success) {
+      resetEditing();
       Swal.fire({
         position: "center",
         icon: "success",
-        title: `${addResponse?.message}`,
+        title: `${updateResponse?.message}`,
         showConfirmButton: false,
         timer: 1500,
       });
     } else {
+      resetEditing();
       Swal.fire({
         position: "center",
         icon: "error",
-        title: `${addError?.data?.errorMessage[0]?.message}`,
+        title: `${updateError?.data?.errorMessage[0]?.message}`,
         showConfirmButton: false,
         timer: 1500,
       });
     }
-  }, [addResponse, addError]);
-
-  const [form] = Form.useForm();
-  form.setFieldsValue(initialData);
+  }, [updateResponse, updateError]);
 
   return (
     <div
@@ -132,12 +133,12 @@ const CreateIncidentForm = () => {
         </Form.Item>
         <Form.Item wrapperCol={{ span: 24 }}>
           <Button
-            disabled={addIsLoading ? true : false}
+            disabled={updateIsLoading ? true : false}
             block
             type="primary"
             htmlType="submit"
           >
-            {addIsLoading ? "Loading..." : "Submit"}
+            {updateIsLoading ? "Loading..." : "Submit"}
           </Button>
         </Form.Item>
       </Form>
@@ -145,4 +146,4 @@ const CreateIncidentForm = () => {
   );
 };
 
-export default CreateIncidentForm;
+export default UpdateIncidentForm;
