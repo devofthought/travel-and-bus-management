@@ -1,18 +1,49 @@
-import { Form, Button, Select, Input, Upload, InputNumber } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
-import { useState } from "react";
-import dayjs from "dayjs";
-import { isRejected } from "@reduxjs/toolkit";
-import { useAddRouteMutation } from "@/redux/route/routeApi";
+import { Form, Button, Input, InputNumber } from "antd";
+import {
+  useGetSingleRouteDetailsQuery,
+  useUpdateRouteMutation,
+} from "@/redux/route/routeApi";
+import Swal from "sweetalert2";
+import { useEffect } from "react";
 
-const CreateRouteForm = () => {
-  const [data, setData] = useState([]);
-  const [AddRoute, { data: RouteResponse, error, isLoading }] =
-    useAddRouteMutation();
+const UpdateRouteForm = ({ editingRoute, resetEditing }) => {
+  const {
+    data,
+    error: currRouteError,
+    isLoading: currRouteIsLoading,
+  } = useGetSingleRouteDetailsQuery(editingRoute?._id);
+  const [
+    updateRoute,
+    { data: updateResponse, error: updateError, isLoading: updateIsLoading },
+  ] = useUpdateRouteMutation();
   const onFinish = async (values) => {
-    // console.log({ values });
-    await AddRoute(values);
+    await updateRoute({ route_id: data?.data?._id, body: values });
   };
+
+  const [form] = Form.useForm();
+  form.setFieldsValue(data?.data);
+
+  useEffect(() => {
+    if (updateResponse?.success) {
+      resetEditing();
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: `${updateResponse?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } else {
+      resetEditing();
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: `${updateError?.data?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  }, [updateResponse, updateError]);
 
   return (
     <div
@@ -21,6 +52,7 @@ const CreateRouteForm = () => {
       }}
     >
       <Form
+        form={form}
         autoComplete="off"
         layout="vertical"
         onFinish={onFinish}
@@ -83,8 +115,16 @@ const CreateRouteForm = () => {
         </Form.Item>
 
         <Form.Item wrapperCol={{ span: 24 }}>
-          <Button block type="primary" htmlType="submit">
-            Submit
+          <Button
+            disabled={updateIsLoading ? true : false}
+            block
+            type="primary"
+            htmlType="submit"
+          >
+            {updateIsLoading ? "Loading..." : "Submit"}
+          </Button>
+          <Button className="mt-2" block type="default" onClick={resetEditing}>
+            Cancel
           </Button>
         </Form.Item>
       </Form>
@@ -92,4 +132,4 @@ const CreateRouteForm = () => {
   );
 };
 
-export default CreateRouteForm;
+export default UpdateRouteForm;

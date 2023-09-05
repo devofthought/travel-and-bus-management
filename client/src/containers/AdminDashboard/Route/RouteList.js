@@ -1,17 +1,20 @@
-import { Table, Modal, Avatar } from "antd";
+import { Table, Modal } from "antd";
 import { useState } from "react";
-import { EditOutlined } from "@ant-design/icons";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { useDeleteRouteMutation } from "@/redux/route/routeApi";
+import UpdateRouteForm from "./UpdateRouteFrom";
 
 const RouteListTable = ({ data }) => {
+  const [deleteRoute, { routeResponse: response, error, isLoading }] =
+    useDeleteRouteMutation();
   const [isEditing, setIsEditing] = useState(false);
-  const [editingBus, setEditingBus] = useState(null);
+  const [editingRoute, setEditingRoute] = useState(null);
   const columns = [
     {
       title: "Sr.",
       dataIndex: "sr",
       minWidth: 200,
       render: (text, record, index) => {
-        // You can render a static serial number here
         return `${index + 1}`;
       },
     },
@@ -57,34 +60,54 @@ const RouteListTable = ({ data }) => {
     {
       key: "5",
       title: "Edit details",
-      render: (BusData) => {
+      render: (routeData) => {
         return (
-          <div style={{ color: "red", marginLeft: "20px" }}>
-            <EditOutlined
-              onClick={() => {
-                onEditTrip(BusData);
-              }}
-            />
+          <div style={{ color: "orange", marginLeft: "20px" }}>
+            <>
+              <EditOutlined
+                onClick={() => {
+                  onEditTrip(routeData);
+                }}
+              />
+              <DeleteOutlined
+                onClick={() => {
+                  onDeleteRoute(routeData);
+                }}
+                style={{ color: "red", marginLeft: 12 }}
+              />
+            </>
           </div>
         );
       },
     },
   ];
 
-  const onEditTrip = (BusData) => {
+  const onDeleteRoute = (routeData) => {
+    Modal.confirm({
+      title: "Are you sure, you want to delete this route record?",
+      okText: "Yes",
+      okType: "danger",
+      onOk: () => {
+        deleteRoute(routeData._id);
+      },
+    });
+  };
+
+  const onEditTrip = (routeData) => {
     setIsEditing(true);
-    setEditingBus({ ...BusData });
+    setEditingRoute({ ...routeData });
   };
   const resetEditing = () => {
     setIsEditing(false);
-    setEditingBus(null);
+    setEditingRoute(null);
   };
+  // console.log(editingRoute);
   return (
     <div className="App">
       <header className="App-header">
         <Table columns={columns} dataSource={data}></Table>
         <Modal
-          title="Edit Bus details"
+          title="Edit route details"
           open={isEditing}
           okText="Save"
           centered
@@ -92,12 +115,14 @@ const RouteListTable = ({ data }) => {
             resetEditing();
           }}
           onOk={() => {
-            /* add there your logic on edit trip */
             resetEditing();
           }}
+          footer={null}
         >
-          {/* <UpdateTripForm editingBus={editingBus} /> */}
-          <h1>here will be a form for edit bus details</h1>
+          <UpdateRouteForm
+            editingRoute={editingRoute}
+            resetEditing={resetEditing}
+          ></UpdateRouteForm>
         </Modal>
       </header>
     </div>
