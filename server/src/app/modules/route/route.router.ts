@@ -16,6 +16,6 @@ router.patch(
   RouteController.updateRoute
 )
 router.get('/:route_code', RouteController.getSingleRoute)
-router.delete('/:route_code', RouteController.deleteRoute)
+router.delete('/:_id', RouteController.deleteRoute)
 
 export const RouteRoutes = router

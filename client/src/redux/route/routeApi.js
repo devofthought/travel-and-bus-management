@@ -7,7 +7,7 @@ const routeApi = apiSlice.injectEndpoints({
       providesTags: ["route"],
     }),
     getSingleRouteDetails: builder.query({
-      query: ({ routeId }) => `/route/${routeId}`,
+      query: ({ route_id }) => `/route/${route_id}`,
       providesTags: ["route"],
     }),
     addRoute: builder.mutation({
@@ -16,7 +16,14 @@ const routeApi = apiSlice.injectEndpoints({
         method: "POST",
         body,
       }),
-      invalidatesTags: ["route"], // automatic-data fetching
+      invalidatesTags: ["route"],
+    }),
+    deleteRoute: builder.mutation({
+      query: (route_id) => ({
+        url: `/route/${route_id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["route"],
     }),
   }),
 });
@@ -25,4 +32,5 @@ export const {
   useGetAllRouteQuery,
   useGetSingleRouteDetailsQuery,
   useAddRouteMutation,
+  useDeleteRouteMutation,
 } = routeApi;

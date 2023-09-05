@@ -58,8 +58,8 @@ const updateRoute = catchAsync(async (req: Request, res: Response) => {
 })
 
 const deleteRoute = catchAsync(async (req: Request, res: Response) => {
-  const route_code = req.params.route_code
-  const result = await RouteService.deleteRoute(route_code)
+  const route_id = req.params._id
+  const result = await RouteService.deleteRoute(route_id)
 
   sendResponse<IRouteResponse>(res, {
     statusCode: httpStatus.OK,
