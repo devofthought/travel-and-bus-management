@@ -13,6 +13,15 @@ import { generatedRouteCode } from './route.utils'
 const createRoute = async (payload: IRoute): Promise<IRouteResponse> => {
   const route_code = await generatedRouteCode() // genarated bus code
   payload.route_code = route_code
+  payload.from = payload.from.toLowerCase()
+  payload.to = payload.to.toLowerCase()
+  const existingRoute = await Route.findOne({
+    from: payload.from,
+    to: payload.to,
+  })
+  if (existingRoute) {
+    throw new ApiError(httpStatus.NOT_ACCEPTABLE, 'This route already has!')
+  }
   const newRoute = await Route.create(payload)
   return newRoute
 }

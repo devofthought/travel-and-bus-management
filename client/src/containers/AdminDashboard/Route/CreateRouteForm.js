@@ -3,28 +3,17 @@ import { PlusOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import dayjs from "dayjs";
 import { isRejected } from "@reduxjs/toolkit";
+import { useAddRouteMutation } from "@/redux/route/routeApi";
 
 const CreateRouteForm = () => {
   const [data, setData] = useState([]);
-  const onFinish = (values) => {
-    console.log({ values });
-    setData({
-      ...values,
-    });
+  const [AddRoute, { RouteResponse: response, error, isLoading }] =
+    useAddRouteMutation();
+  const onFinish = async (values) => {
+    // console.log({ values });
+    await AddRoute(values);
   };
 
-  const uploadButton = (
-    <div>
-      <PlusOutlined />
-      <div
-        style={{
-          marginTop: 8,
-        }}
-      >
-        Upload
-      </div>
-    </div>
-  );
   return (
     <div
       style={{

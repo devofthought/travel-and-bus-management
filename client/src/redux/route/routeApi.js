@@ -10,7 +10,19 @@ const routeApi = apiSlice.injectEndpoints({
       query: ({ routeId }) => `/route/${routeId}`,
       providesTags: ["route"],
     }),
+    addRoute: builder.mutation({
+      query: (body) => ({
+        url: "/route",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["route"], // automatic-data fetching
+    }),
   }),
 });
 
-export const { useGetAllRouteQuery, useGetSingleRouteDetailsQuery } = routeApi;
+export const {
+  useGetAllRouteQuery,
+  useGetSingleRouteDetailsQuery,
+  useAddRouteMutation,
+} = routeApi;
