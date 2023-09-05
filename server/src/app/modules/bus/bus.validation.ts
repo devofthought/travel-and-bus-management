@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 const createBusZodSchema = z.object({
   body: z.object({
-    available_seats: z.number({
+    total_seats: z.string({
       required_error: 'Available seats is required',
     }),
     availability_status: z.string({
@@ -12,11 +12,11 @@ const createBusZodSchema = z.object({
       required_error: 'Brand name is required',
     }),
     model: z.string({
-      required_error: 'Brand name is required',
+      required_error: 'Bus model is required',
     }),
     bus_image: z
       .string({
-        required_error: 'Brand name is required',
+        required_error: 'bus image is required',
       })
       .optional(),
     outer_image: z
@@ -34,7 +34,7 @@ const createBusZodSchema = z.object({
 
 const updateBusZodSchema = z.object({
   body: z.object({
-    available_seats: z
+    total_seats: z
       .number({
         required_error: 'Available seats is required',
       })
