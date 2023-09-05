@@ -1,15 +1,47 @@
-import { Form, Button, Select, Input, Upload, InputNumber } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
-import { useState } from "react";
-
+import { Form, Button, Select, Input, InputNumber } from "antd";
+import { useEffect } from "react";
+import { useAddIncidentMutation } from "@/redux/incident/incidentApi";
+import Swal from "sweetalert2";
+const initialData = {
+  bus_code: "",
+  servicing_status: "",
+  Description: "",
+  cost: 0,
+};
 const CreateIncidentForm = () => {
-  const [data, setData] = useState([]);
-  const onFinish = (values) => {
-    console.log({ values });
-    setData({
-      ...values,
-    });
+  const [
+    addIncident,
+    { data: addResponse, error: addError, isLoading: addIsLoading },
+  ] = useAddIncidentMutation();
+  const onFinish = async (values) => {
+    await addIncident(values);
   };
+
+  useEffect(() => {
+    console.log(addResponse);
+    console.log(addError);
+    if (addResponse?.success) {
+      form.setFieldsValue(initialData);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: `${addResponse?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } else {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: `${addError?.data?.errorMessage[0]?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  }, [addResponse, addError]);
+
+  const [form] = Form.useForm();
+  form.setFieldsValue(initialData);
 
   return (
     <div
@@ -18,6 +50,7 @@ const CreateIncidentForm = () => {
       }}
     >
       <Form
+        form={form}
         autoComplete="off"
         layout="vertical"
         onFinish={onFinish}
@@ -55,25 +88,6 @@ const CreateIncidentForm = () => {
             <Select.Option value="pending">pending</Select.Option>
             <Select.Option value="done">done</Select.Option>
             <Select.Option value="on-servicing">on-servicing</Select.Option>
-          </Select>
-        </Form.Item>
-
-        <Form.Item
-          name="seats"
-          label="Bus seats"
-          requiredMark="require"
-          rules={[
-            {
-              required: true,
-              message: "bus seats is required",
-            },
-          ]}
-        >
-          <Select placeholder="Select trip Driver code">
-            <Select.Option value="30">30 seats bus</Select.Option>
-            <Select.Option value="40">40 seats bus</Select.Option>
-            <Select.Option value="44">44 seats bus</Select.Option>
-            <Select.Option value="48">48 seats bus</Select.Option>
           </Select>
         </Form.Item>
 
@@ -117,8 +131,13 @@ const CreateIncidentForm = () => {
           />
         </Form.Item>
         <Form.Item wrapperCol={{ span: 24 }}>
-          <Button block type="primary" htmlType="submit">
-            Submit
+          <Button
+            disabled={addIsLoading ? true : false}
+            block
+            type="primary"
+            htmlType="submit"
+          >
+            {addIsLoading ? "Loading..." : "Submit"}
           </Button>
         </Form.Item>
       </Form>

@@ -33,8 +33,8 @@ const getAllRoute = catchAsync(async (req: Request, res: Response) => {
 })
 
 const getSingleRoute = catchAsync(async (req: Request, res: Response) => {
-  const route_code = req.params.route_code
-  const result = await RouteService.getSingleRoute(route_code)
+  const route_id = req.params._id
+  const result = await RouteService.getSingleRoute(route_id)
 
   sendResponse<IRouteResponse>(res, {
     statusCode: httpStatus.OK,
@@ -45,9 +45,9 @@ const getSingleRoute = catchAsync(async (req: Request, res: Response) => {
 })
 
 const updateRoute = catchAsync(async (req: Request, res: Response) => {
-  const route_code = req.params.route_code
+  const route_id = req.params._id
   const updatedData = req.body
-  const result = await RouteService.updateRoute(route_code, updatedData)
+  const result = await RouteService.updateRoute(route_id, updatedData)
 
   sendResponse<IRouteResponse>(res, {
     statusCode: httpStatus.OK,
@@ -58,8 +58,8 @@ const updateRoute = catchAsync(async (req: Request, res: Response) => {
 })
 
 const deleteRoute = catchAsync(async (req: Request, res: Response) => {
-  const route_code = req.params.route_code
-  const result = await RouteService.deleteRoute(route_code)
+  const route_id = req.params._id
+  const result = await RouteService.deleteRoute(route_id)
 
   sendResponse<IRouteResponse>(res, {
     statusCode: httpStatus.OK,

@@ -2,6 +2,14 @@ import { useState } from "react";
 import { Select } from "antd";
 
 const PaymentMethodCard = () => {
+  const data = {
+    id: "1",
+    name: "abc",
+    price: 1600,
+    phone: 19333333,
+    quantity: 2,
+  };
+
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [selectedValue, setSelectedValue] = useState("");
   const handleChange = (value) => {
@@ -9,10 +17,28 @@ const PaymentMethodCard = () => {
     setIsButtonDisabled(false);
   };
   const handleSslcommerz = () => {
-    console.log("sslcommerz button clicked");
+    fetch("http://localhost:5000/api/v1/payment/order", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        window.location.replace(result.url);
+      });
   };
   const handleStripe = () => {
-    console.log("stripe button clicked");
+    fetch("http://localhost:5000/api/v1/payment/stripe/order", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        items: [data],
+      }),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        window.location.replace(result.url);
+      });
   };
 
   return (

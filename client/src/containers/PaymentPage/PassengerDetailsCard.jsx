@@ -7,18 +7,18 @@ const PassengerDetailsCard = (data) => {
           Passenger Details :
         </h1>
         <div className="bg-white p-3 mt-3 rounded-lg">
-          <div class="text-lg">
-            <div class="flex mb-1">
-              <span class="w-36 font-medium opacity-70 ">Name</span>
-              <span class="flex-grow font-bold">: {name}</span>
+          <div className="text-lg">
+            <div className="flex mb-1">
+              <span className="w-36 font-medium opacity-70 ">Name</span>
+              <span className="flex-grow font-bold">: {name}</span>
             </div>
-            <div class="flex mb-1">
-              <span class="w-36 font-medium opacity-70 ">Phone</span>
-              <span class="flex-grow font-bold">: {phone}</span>
+            <div className="flex mb-1">
+              <span className="w-36 font-medium opacity-70 ">Phone</span>
+              <span className="flex-grow font-bold">: {phone}</span>
             </div>
-            <div class="flex mb-1">
-              <span class="w-36 font-medium opacity-70 ">Email</span>
-              <span class="flex-grow font-bold">: {email}</span>
+            <div className="flex mb-1">
+              <span className="w-36 font-medium opacity-70 ">Email</span>
+              <span className="flex-grow font-bold">: {email}</span>
             </div>
           </div>
         </div>

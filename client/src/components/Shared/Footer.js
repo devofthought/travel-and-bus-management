@@ -21,25 +21,25 @@ const Footer = () => {
               </h5>
               <div className="mt-6 lg:mb-0 mb-6 flex">
                 <button
-                  className="bg-white text-[#d300c5] text-lightBlue-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
+                  className="border-none bg-white text-[#d300c5] text-lightBlue-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
                   type="button"
                 >
                   <SiInstagram className="w-full h-full p-2" />
                 </button>
                 <button
-                  className="bg-white text-[#1d9bf0] text-lightBlue-600 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
+                  className="border-none bg-white text-[#1d9bf0] text-lightBlue-600 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
                   type="button"
                 >
                   <TfiTwitter className="w-full h-full p-2" />
                 </button>
                 <button
-                  className="bg-white text-blue-700 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
+                  className="border-none bg-white text-blue-700 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
                   type="button"
                 >
                   <FaFacebookF className="w-full h-full p-2" />
                 </button>
                 <button
-                  className="bg-white text-[#1d9bf0] text-blueGray-800 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
+                  className="border-none bg-white text-[#1d9bf0] text-blueGray-800 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
                   type="button"
                 >
                   <BiLogoLinkedin className="w-full h-full p-[6px]" />

@@ -13,6 +13,15 @@ import { generatedRouteCode } from './route.utils'
 const createRoute = async (payload: IRoute): Promise<IRouteResponse> => {
   const route_code = await generatedRouteCode() // genarated bus code
   payload.route_code = route_code
+  payload.from = payload.from.toLowerCase()
+  payload.to = payload.to.toLowerCase()
+  const existingRoute = await Route.findOne({
+    from: payload.from,
+    to: payload.to,
+  })
+  if (existingRoute) {
+    throw new ApiError(httpStatus.NOT_ACCEPTABLE, 'This route already has!')
+  }
   const newRoute = await Route.create(payload)
   return newRoute
 }
@@ -70,9 +79,8 @@ const getAllRoute = async (
   }
 }
 
-const getSingleRoute = async (route_code: string): Promise<IRoute | null> => {
-  const id = route_code.toLocaleUpperCase()
-  const result = await Route.findOne({ route_code: id })
+const getSingleRoute = async (id: string): Promise<IRoute | null> => {
+  const result = await Route.findById(id)
   if (!result) {
     throw new ApiError(httpStatus.NOT_FOUND, 'route not found!')
   }
@@ -83,23 +91,21 @@ const updateRoute = async (
   id: string,
   payload: Partial<IRoute>
 ): Promise<IRoute | null> => {
-  const route_code = id.toLocaleUpperCase()
   delete payload.route_code
-  const isExist = await Route.findOne({ route_code })
+  const isExist = await Route.findById(id)
 
   if (!isExist) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Route not found')
   }
 
-  const result = await Route.findOneAndUpdate({ route_code }, payload, {
+  const result = await Route.findByIdAndUpdate(id, payload, {
     new: true,
   })
   return result
 }
 
 const deleteRoute = async (id: string): Promise<IRoute | null> => {
-  const route_code = id.toLocaleUpperCase()
-  const result = await Route.findOneAndDelete({ route_code })
+  const result = await Route.findByIdAndDelete(id)
   if (!result) {
     throw new ApiError(httpStatus.NOT_FOUND, 'route not found!')
   }

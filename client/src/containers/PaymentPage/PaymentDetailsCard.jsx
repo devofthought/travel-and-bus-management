@@ -7,18 +7,20 @@ const PaymentDetailsCard = (data) => {
           Payment Details Onward:
         </h1>
         <div className="bg-white p-3 mt-3 rounded-lg">
-          <div class="text-lg">
-            <div class="flex mb-1">
-              <span class="w-36 font-medium opacity-70 ">Seat Fare</span>
-              <span class="flex-grow font-bold">: {seatFare}</span>
+          <div className="text-lg">
+            <div className="flex mb-1">
+              <span className="w-36 font-medium opacity-70 ">Seat Fare</span>
+              <span className="flex-grow font-bold">: {seatFare}</span>
             </div>
-            <div class="flex mb-1">
-              <span class="w-36 font-medium opacity-70 ">Service Charge</span>
-              <span class="flex-grow font-bold">: {serviceCharge}</span>
+            <div className="flex mb-1">
+              <span className="w-36 font-medium opacity-70 ">
+                Service Charge
+              </span>
+              <span className="flex-grow font-bold">: {serviceCharge}</span>
             </div>
-            <div class="flex mb-1">
-              <span class="w-36 font-medium opacity-70 ">Payment Due</span>
-              <span class="flex-grow font-bold">: {paymentDue}</span>
+            <div className="flex mb-1">
+              <span className="w-36 font-medium opacity-70 ">Payment Due</span>
+              <span className="flex-grow font-bold">: {paymentDue}</span>
             </div>
           </div>
         </div>

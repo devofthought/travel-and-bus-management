@@ -10,6 +10,11 @@ const Navbar = () => {
   // const [myProfile, setMyProfile] = useState({});
   // const router = useRouter();
   // const statePath = router.query.state?.path;
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setDropdownOpen(!isDropdownOpen);
+  };
 
   const handleSignOut = () => {
     // const path = statePath || "/login";
@@ -57,26 +62,26 @@ const Navbar = () => {
     <div
       className={`z-50 border-b-1 border-solid border-blue-200 z-999 fixed w-full top-0 ${
         stickyNav
-          ? "sticky shadow-md border-b-0 sticky__body bg-white"
+          ? "sticky shadow-md border-b-0 duration-700 ease-in-out bg-white"
           : "bg-gradient-to-r from-green-500 to-blue-500"
       }`}
     >
       <div className="main-container">
         <div
-          className={`navbar-wrapper__body  ${
-            stickyNav ? "sticky__body" : ""
+          className={`navbar-wrapper__body flex flex-row items-center justify-between text-white h-full ${
+            stickyNav ? "duration-700 ease-in-out" : ""
           } py-2 md:py-3`}
         >
           <div className="inherit md:hidden">
             <Link href="/">
               <Image
                 alt="Logo"
-                className="w-10 rounded-full border-2 border-blue-500"
+                className="w-10 md:w-12 h-10 md:h-12 rounded-full border-2 border-blue-500"
                 src="https://i.ibb.co/Smm15yx/bus-vector.jpg"
                 decoding="async"
                 loading="lazy"
-                width={300}
-                height={300}
+                width={48}
+                height={48}
               />
             </Link>
           </div>
@@ -85,12 +90,12 @@ const Navbar = () => {
               <Link href="/">
                 <Image
                   alt="Logo"
-                  className="w-12 rounded-full border-2 border-blue-500"
+                  className="w-10 md:w-12 h-10 md:h-12 rounded-full border-2 border-blue-500"
                   src="https://i.ibb.co/Smm15yx/bus-vector.jpg"
                   decoding="async"
                   loading="lazy"
-                  width={300}
-                  height={300}
+                  width={48}
+                  height={48}
                 />
               </Link>
             </li>
@@ -99,7 +104,7 @@ const Navbar = () => {
                 styles={`px-2 py-[2px] sm:px-3 sm:py-1 font-semibold border-2 rounded-lg ${
                   stickyNav ? "border-blue-500 secondary-text" : "text-white"
                 }`}
-                textStyle={`btn-text px-2`}
+                textStyle={`px-2`}
                 btnName="Bus"
               />
             </Link>
@@ -108,7 +113,7 @@ const Navbar = () => {
                 styles={`px-2 py-[2px] sm:px-3 sm:py-1 font-semibold border-2 rounded-lg ${
                   stickyNav ? "border-blue-500 secondary-text" : "text-white"
                 }`}
-                textStyle={`btn-text px-2`}
+                textStyle={`px-2`}
                 btnName="Reserve Bus"
               />
             </Link>
@@ -120,66 +125,80 @@ const Navbar = () => {
                 styles={`px-2 py-[2px] md:px-3 md:py-1 font-semibold border-2 rounded-lg primary-bg text-white ${
                   stickyNav ? "border-green-500" : ""
                 }`}
-                textStyle={`btn-text px-2`}
+                textStyle={`px-2`}
                 btnName="Login"
               />
             </Link>
-            <Image
-              alt="avatar"
-              onClick={() => setIsOpen(true)}
-              className={`w-10 md:w-12 rounded-full border-2 border-green-500 p-[2px] bg-white`}
-              src="https://i.ibb.co/nrtwzQd/avatar-boy.webp"
-              decoding="async"
-              loading="lazy"
-              width={300}
-              height={300}
-            />
-          </div>
-          {/* Sidebar  */}
-          <div className={`sidebar-wrapper ${isOpen ? "open" : ""}`}>
-            <div className={`sidebar ${isOpen ? "" : "closeAnimation"}`}>
-              <div className="sidebar__header">
-                <div className="header__logoArea">
-                  <Link href="/">
-                    <Image
-                      alt="avatar"
-                      onClick={() => setIsOpen(true)}
-                      className={`w-10 sm:w-12 rounded-full border-2 border-green-500 p-[2px] bg-white`}
-                      src="https://i.ibb.co/Smm15yx/bus-vector.jpg"
-                      decoding="async"
-                      loading="lazy"
-                      width={300}
-                      height={300}
-                    />
-                  </Link>
-                </div>
-                <div className="header__closeButton">
-                  <button onClick={() => setIsOpen(false)} className="button">
-                    <AiOutlineClose className="button-icon" />
-                  </button>
-                </div>
+            <div className="relative inline-block text-left">
+              <div>
+                <button
+                  type="button"
+                  className="border-gray-800 rounded-full flex items-center justify-center"
+                  id="menu-button"
+                  aria-expanded={isDropdownOpen}
+                  aria-haspopup="true"
+                  onClick={toggleDropdown}
+                >
+                  <Image
+                    alt="avatar"
+                    className={`w-10 md:w-12 h-10 md:h-12 rounded-full p-[2px] bg-white`}
+                    src="https://i.ibb.co/nrtwzQd/avatar-boy.webp"
+                    decoding="async"
+                    loading="lazy"
+                    width={48}
+                    height={48}
+                  />
+                </button>
               </div>
-              <div className="sidebar__body">
-                <li className="body__menu">
-                  <Link href="/bus">Bus</Link>
-                </li>
-                <li className="body__menu">
-                  <Link href="/reserve-bus">Reserve Bus</Link>
-                </li>
-                {/* {myProfile?.email ? ( */}
-                <li className="body__menu">
-                  <Link href="#" onClick={() => handleSignOut()}>
-                    Logout
-                  </Link>
-                </li>
-                {/* ) : ( */}
-                <li className="body__menu">
-                  <Link href="/login">Login</Link>
-                </li>
-                {/* )} */}
-              </div>
+              {isDropdownOpen && (
+                <div
+                  className="absolute right-0 z-50 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-green-500 ring-opacity-5 focus:outline-none"
+                  role="menu"
+                  aria-orientation="vertical"
+                  aria-labelledby="menu-button"
+                  tabIndex="-1"
+                >
+                  <div className="py-1" role="none">
+                    <Link
+                      href="/reserve-bus"
+                      className="text-gray-700 hover:bg-gray-200 block px-4 py-2 text-sm"
+                      role="menuitem"
+                      tabIndex="-1"
+                      id="menu-item-0"
+                    >
+                      Dashboard
+                    </Link>
+                    <Link
+                      href="/bus"
+                      className="text-gray-700 hover:bg-gray-200 block px-4 py-2 text-sm"
+                      role="menuitem"
+                      tabIndex="-1"
+                      id="menu-item-0"
+                    >
+                      Bus
+                    </Link>
+                    <Link
+                      href="/reserve-bus"
+                      className="text-gray-700 hover:bg-gray-200 block px-4 py-2 text-sm"
+                      role="menuitem"
+                      tabIndex="-1"
+                      id="menu-item-0"
+                    >
+                      Reserve Bus
+                    </Link>
+                    <Link
+                      href="#"
+                      className="text-gray-700 hover:bg-gray-200 block px-4 py-2 text-sm"
+                      role="menuitem"
+                      tabIndex="-1"
+                      id="menu-item-0"
+                    >
+                      Sign out
+                    </Link>
+                  </div>
+                </div>
+              )}
             </div>
-            <div className="sidebar__backdrop"></div>
           </div>
         </div>
       </div>

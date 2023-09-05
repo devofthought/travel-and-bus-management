@@ -1,18 +1,64 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { SortOrder } from 'mongoose'
+import mongoose, { SortOrder } from 'mongoose'
 import { paginationHelper } from '../../../helper/paginationHelper'
 import { IGenericResponse } from '../../../interfaces/common'
 import { IPaginationOptions } from '../../../interfaces/pagination'
 import httpStatus from 'http-status'
 import ApiError from '../../../errors/ApiError'
-import { IIncident, IIncidentFilter } from './incident.interface'
+import {
+  IIncident,
+  IIncidentFilter,
+  IIncidentResponse,
+} from './incident.interface'
 import { Incident } from './incident.model'
 import { incidentSearchableFields } from './incident.constants'
+import { Bus } from '../bus/bus.model'
 
 const createAnIncident = async (
   payload: IIncident
-): Promise<IIncident | null> => {
-  const newIncident = await Incident.create(payload)
+): Promise<IIncidentResponse | null> => {
+  const incidentData = { ...payload }
+  let newIncidentData = null
+  const session = await mongoose.startSession()
+  try {
+    session.startTransaction()
+
+    const getBusInfo = await Bus.findOne({ bus_code: payload.bus_code })
+    if (!getBusInfo) {
+      throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to this bus')
+    }
+
+    incidentData.bus_id = getBusInfo._id.toString()
+    const newIncident = await Incident.create([incidentData], { session }) // return a array
+    if (!newIncident.length) {
+      throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create a driver')
+    }
+    newIncidentData = newIncident[0]
+
+    if (newIncident[0].servicing_status === 'on-servicing') {
+      await Bus.findOneAndUpdate(
+        { bus_code: payload.bus_code },
+        { availability_status: 'servicing' },
+        { session, new: true }
+      )
+    } else if (newIncident[0].servicing_status === 'pending') {
+      await Bus.findOneAndUpdate(
+        { bus_code: payload.bus_code },
+        { availability_status: 'rest' },
+        { session, new: true }
+      )
+    }
+
+    await session.commitTransaction()
+    await session.endSession()
+  } catch (error) {
+    await session.abortTransaction()
+    await session.endSession()
+    throw error
+  }
+  const newIncident = await Incident.findById(newIncidentData._id).populate(
+    'bus_id'
+  )
   if (!newIncident) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create Incident')
   }

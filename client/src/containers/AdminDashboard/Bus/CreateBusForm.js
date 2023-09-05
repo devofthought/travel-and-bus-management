@@ -1,16 +1,44 @@
 import { Form, Button, Select, Input, Upload } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { useState } from "react";
-import dayjs from "dayjs";
-import { isRejected } from "@reduxjs/toolkit";
+import { useEffect, useState } from "react";
+import { useAddBusMutation } from "@/redux/bus/busApi";
 
 const CreateBusForm = () => {
-  const [data, setData] = useState([]);
-  const onFinish = (values) => {
-    console.log({ values });
-    setData({
-      ...values,
-    });
+  const initialData = {
+    model: "Vlvo x99",
+    brand: "",
+    bus_image: "",
+    inner_image: "",
+    outer_image: "",
+    total_seats: "",
+    availability_status: "",
+  };
+  const [form] = Form.useForm();
+  form.setFieldsValue(initialData);
+  const [AddBus, { BusResponse: response, error, isLoading }] =
+    useAddBusMutation();
+
+  // useEffect(() => {
+  //   form.setFieldsValue(initialData);
+  // }, [BusResponse]);
+
+  const onFinish = async (values) => {
+    // console.log(values);
+    let formData = new FormData();
+    values.bus_image
+      ? formData.append("bus_image", values?.bus_image[0]?.originFileObj)
+      : formData.append("bus_image", "");
+    values.inner_image
+      ? formData.append("bus_image", values?.inner_image[0]?.originFileObj)
+      : formData.append("bus_image", "");
+    values.outer_image
+      ? formData.append("bus_image", values?.outer_image[0]?.originFileObj)
+      : formData.append("bus_image", "");
+    formData.append("availability_status", values.availability_status);
+    formData.append("brand_name", values.brand);
+    formData.append("model", values.model);
+    formData.append("total_seats", values.total_seats);
+    await AddBus(formData);
   };
 
   const uploadButton = (
@@ -35,9 +63,12 @@ const CreateBusForm = () => {
         autoComplete="off"
         layout="vertical"
         onFinish={onFinish}
+        // initialValue={initialData} // Set the initial values here
+        // form={form}
         onFinishFailed={(error) => {
           console.log({ error });
         }}
+        hasFeedback
       >
         <Form.Item
           name="model"
@@ -71,14 +102,14 @@ const CreateBusForm = () => {
 
         <Form.Item
           label="Bus Image"
-          name="image"
+          name="bus_image"
           valuePropName="fileList"
           getValueFromEvent={(event) => {
             return event?.fileList;
           }}
           rules={[
             {
-              required: true,
+              required: false,
               message: "Profile picture",
             },
             {
@@ -93,6 +124,7 @@ const CreateBusForm = () => {
               },
             },
           ]}
+          hasFeedback
         >
           <Upload
             listType="picture-card"
@@ -120,7 +152,7 @@ const CreateBusForm = () => {
           }}
           rules={[
             {
-              required: true,
+              required: false,
               message: "Profile picture",
             },
             {
@@ -135,6 +167,7 @@ const CreateBusForm = () => {
               },
             },
           ]}
+          hasFeedback
         >
           <Upload
             listType="picture-card"
@@ -162,7 +195,7 @@ const CreateBusForm = () => {
           }}
           rules={[
             {
-              required: true,
+              required: false,
               message: "Profile picture",
             },
             {
@@ -177,6 +210,7 @@ const CreateBusForm = () => {
               },
             },
           ]}
+          hasFeedback
         >
           <Upload
             listType="picture-card"
@@ -196,7 +230,7 @@ const CreateBusForm = () => {
         </Form.Item>
 
         <Form.Item
-          name="seats"
+          name="total_seats"
           label="Bus seats"
           requiredMark="require"
           rules={[
@@ -205,6 +239,7 @@ const CreateBusForm = () => {
               message: "bus seats is required",
             },
           ]}
+          hasFeedback
         >
           <Select placeholder="Select trip Driver code">
             <Select.Option value="30">30 seats bus</Select.Option>
@@ -214,6 +249,25 @@ const CreateBusForm = () => {
           </Select>
         </Form.Item>
 
+        <Form.Item
+          name="availability_status"
+          label="Bus status"
+          requiredMark="require"
+          rules={[
+            {
+              required: true,
+              message: "bus status is required",
+            },
+          ]}
+          hasFeedback
+        >
+          <Select placeholder="Select bus status">
+            <Select.Option value="transit">transit</Select.Option>
+            <Select.Option value="discontinue">discontinue</Select.Option>
+            <Select.Option value="servicing">servicing</Select.Option>
+            <Select.Option value="rest">rest</Select.Option>
+          </Select>
+        </Form.Item>
         <Form.Item wrapperCol={{ span: 24 }}>
           <Button block type="primary" htmlType="submit">
             Submit
