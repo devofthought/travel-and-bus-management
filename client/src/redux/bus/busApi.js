@@ -10,7 +10,19 @@ const busApi = apiSlice.injectEndpoints({
       query: ({ busId }) => `/buses/${busId}`,
       providesTags: ["bus"],
     }),
+    addBus: builder.mutation({
+      query: (body) => ({
+        url: "/buses",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["bus"], // automatic-data fetching
+    }),
   }),
 });
 
-export const { useGetAllBusQuery, useGetSingleBusDetailsQuery } = busApi;
+export const {
+  useGetAllBusQuery,
+  useGetSingleBusDetailsQuery,
+  useAddBusMutation,
+} = busApi;

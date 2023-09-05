@@ -11,6 +11,7 @@ import { generatedBusCode } from './bus.utils'
 import { Bus } from './bus.model'
 
 const createBus = async (payload: IBus): Promise<IBusResponse> => {
+  // console.log(payload)
   const bus_code = await generatedBusCode() // generated bus code
   payload.bus_code = bus_code
   const newBus = await Bus.create(payload)
