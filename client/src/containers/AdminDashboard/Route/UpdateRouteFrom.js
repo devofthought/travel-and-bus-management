@@ -38,7 +38,7 @@ const UpdateRouteForm = ({ editingRoute, resetEditing }) => {
       Swal.fire({
         position: "center",
         icon: "error",
-        title: `${updateError?.data?.message}`,
+        title: `${updateError?.data?.errorMessage[0]?.message}`,
         showConfirmButton: false,
         timer: 1500,
       });

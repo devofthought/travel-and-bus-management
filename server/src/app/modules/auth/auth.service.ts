@@ -15,7 +15,7 @@ import { User } from '../user/user.model'
 import {
   IRefreshTokenResponse,
   IUserLogin,
-  IUserLoginResponse
+  IUserLoginResponse,
 } from './auth.interface'
 
 // oauthj cilent code
@@ -92,7 +92,6 @@ const createTraveler = async (payload: IUser): Promise<any> => {
   }
   return { result: newUserAllData, refreshToken, accessToken }
 }
-
 
 const createDriver = async (payload: IDriver): Promise<any> => {
   const driverData = { ...payload }
@@ -224,7 +223,6 @@ const login = async (payload: IUserLogin): Promise<IUserLoginResponse> => {
     refreshToken,
   }
 }
-
 
 const refreshToken = async (token: string): Promise<IRefreshTokenResponse> => {
   let verifiedToken = null

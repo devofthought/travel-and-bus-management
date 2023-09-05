@@ -3,7 +3,6 @@ import { useState } from "react";
 import { EditOutlined } from "@ant-design/icons";
 
 const DriverList = ({ data }) => {
-  console.log(data);
   const [isEditing, setIsEditing] = useState(false);
   const [editingDriver, setEditingDriver] = useState(null);
   const columns = [

@@ -62,12 +62,13 @@ const RouteListTable = ({ data }) => {
       title: "Edit details",
       render: (routeData) => {
         return (
-          <div style={{ color: "orange", marginLeft: "20px" }}>
+          <div>
             <>
               <EditOutlined
                 onClick={() => {
                   onEditTrip(routeData);
                 }}
+                style={{ color: "orange", marginLeft: "20px" }}
               />
               <DeleteOutlined
                 onClick={() => {

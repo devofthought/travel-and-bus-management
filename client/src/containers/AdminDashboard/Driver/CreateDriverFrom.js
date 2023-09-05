@@ -1,16 +1,55 @@
+import { useAddDriverMutation } from "@/redux/driver/driverApi";
 import { Form, Button, Select, InputNumber, Input } from "antd";
-import { useState } from "react";
-import dayjs from "dayjs";
+import { useEffect } from "react";
+import Swal from "sweetalert2";
 
-const CreateDriverForm = () => {
-  const [data, setData] = useState([]);
+const initialData = {
+  Name: "",
+  address: "",
+  age: 0,
+  driving_license: "",
+  driving_status: "",
+  email: "",
+  phone: "",
+  years_experience: 0,
+};
 
-  const onFinish = (values) => {
-    setData({
-      ...values,
-    });
+const CreateDriverForm = ({ driverInfo, setDriverInfo }) => {
+  setDriverInfo(initialData);
+  const [
+    AddDriver,
+    { data: addResponse, error: addError, isLoading: addIsLoading },
+  ] = useAddDriverMutation();
+
+  const onFinish = async (values) => {
+    setDriverInfo(values);
+    await AddDriver(values);
   };
-  console.log(data);
+
+  const [form] = Form.useForm();
+  form.setFieldsValue(driverInfo);
+
+  useEffect(() => {
+    console.log(addError);
+    if (addResponse?.success) {
+      setDriverInfo(initialData);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: `${addResponse?.message}`,
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    } else {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: `${addError?.data?.errorMessage[0]?.message}`,
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    }
+  }, [addResponse, addError]);
 
   return (
     <div
@@ -19,6 +58,7 @@ const CreateDriverForm = () => {
       }}
     >
       <Form
+        form={form}
         autoComplete="off"
         layout="vertical"
         onFinish={onFinish}
@@ -27,8 +67,8 @@ const CreateDriverForm = () => {
         }}
       >
         <Form.Item
-          name="Name"
-          label="name"
+          name="name"
+          label="Name"
           rules={[
             {
               required: true,
@@ -55,6 +95,7 @@ const CreateDriverForm = () => {
               max: 60,
             },
           ]}
+          hasFeedback
         >
           <InputNumber
             formatter={(values) =>
@@ -123,6 +164,7 @@ const CreateDriverForm = () => {
               max: 20,
             },
           ]}
+          hasFeedback
         >
           <InputNumber
             formatter={(values) =>
@@ -135,7 +177,12 @@ const CreateDriverForm = () => {
         <Form.Item
           name="driving_status"
           label="Driving Status"
-          requiredMark="require"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+          hasFeedback
         >
           <Select placeholder="Select trip Driver code">
             <Select.Option value="on-trip">on-trip</Select.Option>
@@ -154,6 +201,7 @@ const CreateDriverForm = () => {
             },
             { whitespace: true },
           ]}
+          hasFeedback
         >
           <Input.TextArea
             style={{ height: 120, resize: "none" }}
@@ -162,8 +210,13 @@ const CreateDriverForm = () => {
         </Form.Item>
 
         <Form.Item wrapperCol={{ span: 24 }}>
-          <Button block type="primary" htmlType="submit">
-            Submit
+          <Button
+            disabled={addIsLoading ? true : false}
+            block
+            type="primary"
+            htmlType="submit"
+          >
+            {addIsLoading ? "Loading..." : "Submit"}
           </Button>
         </Form.Item>
       </Form>
