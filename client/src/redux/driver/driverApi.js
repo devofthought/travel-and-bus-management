@@ -10,8 +10,19 @@ const driverApi = apiSlice.injectEndpoints({
       query: ({ driverId }) => `/driver/${driverId}`,
       providesTags: ["driver"],
     }),
+    addDriver: builder.mutation({
+      query: (body) => ({
+        url: "/auth/admin/create-driver",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["driver"],
+    }),
   }),
 });
 
-export const { useGetAllDriverQuery, useGetSingleDriverDetailsQuery } =
-  driverApi;
+export const {
+  useGetAllDriverQuery,
+  useGetSingleDriverDetailsQuery,
+  useAddDriverMutation,
+} = driverApi;

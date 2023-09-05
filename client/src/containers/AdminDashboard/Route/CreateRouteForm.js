@@ -1,5 +1,5 @@
 import { Form, Button, Input, InputNumber } from "antd";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useAddRouteMutation } from "@/redux/route/routeApi";
 import Swal from "sweetalert2";
 const initialData = {
@@ -8,7 +8,6 @@ const initialData = {
   distance: 0,
 };
 const CreateRouteForm = () => {
-  const [data, setData] = useState([]);
   const [
     AddRoute,
     { data: addResponse, error: addError, isLoading: addIsLoading },

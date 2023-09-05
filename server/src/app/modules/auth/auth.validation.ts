@@ -31,9 +31,11 @@ const createDriverZodSchema = z.object({
     email: z.string({
       required_error: 'email is required',
     }),
-    phone: z.string({
-      required_error: 'phone is required',
-    }),
+    phone: z
+      .string({
+        required_error: 'phone is required',
+      })
+      .optional(),
     driving_license: z.string({
       required_error: 'Driving License code is required',
     }),
