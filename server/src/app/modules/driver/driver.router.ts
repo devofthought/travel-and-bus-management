@@ -5,12 +5,12 @@ import { DriverValidation } from './driver.validation'
 
 const router = express.Router()
 
-router.get('/:id', DriverController.getSingleDriver)
+router.get('/', DriverController.getAllDrivers)
 router.patch(
   '/:id',
   validateRequest(DriverValidation.updateDriverZodSchema),
   DriverController.updateDriver
 )
-router.get('/', DriverController.getAllDrivers)
+router.get('/:id', DriverController.getSingleDriver)
 
 export const DriverRouter = router

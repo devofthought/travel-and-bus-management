@@ -1,25 +1,28 @@
+import { useGetAllRouteQuery } from "@/redux/route/routeApi";
 import { Table, Typography } from "antd";
-import { useState } from "react";
 
 const RouteTable = () => {
-  const [dataSource, setDataSource] = useState([]);
-
+  const { data } = useGetAllRouteQuery();
   const columns = [
     {
       title: "Sr.",
       dataIndex: "sr",
       minWidth: 200,
+      render: (text, record, index) => {
+        return `${index + 1}`;
+      },
     },
     {
       title: "Route Code",
       dataIndex: "route_code",
       minWidth: 200,
+      sorter: (a, b) => a.route_code - b.route_code,
     },
     {
       title: "From",
       dataIndex: "from",
       minWidth: 200,
-      sorter: (a, b) => a.availability_status - b.availability_status,
+      sorter: (a, b) => a.from - b.from,
     },
     {
       title: "To",
@@ -30,6 +33,7 @@ const RouteTable = () => {
       title: "Distance",
       dataIndex: "distance",
       minWidth: 200,
+      sorter: (a, b) => a.distance - b.distance,
     },
   ];
   return (
@@ -37,7 +41,7 @@ const RouteTable = () => {
       <Typography.Title level={4}>Route</Typography.Title>
       <Table
         columns={columns}
-        dataSource={dataSource}
+        dataSource={data?.data}
         pagination={{
           pageSize: 5,
         }}
