@@ -1,8 +1,13 @@
 import { Table, Modal, Avatar } from "antd";
-import { useState } from "react";
-import { EditOutlined } from "@ant-design/icons";
+import { useEffect, useState } from "react";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import UpdateDriverForm from "./UpdateDriverForm";
+import { useDeleteDriverMutation } from "@/redux/driver/driverApi";
+import Swal from "sweetalert2";
 
 const DriverList = ({ data }) => {
+  const [deleteDriver, { data: response, error, isLoading }] =
+    useDeleteDriverMutation();
   const [isEditing, setIsEditing] = useState(false);
   const [editingDriver, setEditingDriver] = useState(null);
   const columns = [
@@ -75,13 +80,19 @@ const DriverList = ({ data }) => {
     {
       key: "5",
       title: "Update Info",
-      render: (TravelerData) => {
+      render: (travelerData) => {
         return (
           <div style={{ color: "red", marginLeft: "20px" }}>
             <EditOutlined
               onClick={() => {
-                onEditTrip(TravelerData);
+                onEditDriver(travelerData);
               }}
+            />
+            <DeleteOutlined
+              onClick={() => {
+                onDeleteDriver(travelerData);
+              }}
+              style={{ color: "red", marginLeft: 12 }}
             />
           </div>
         );
@@ -89,14 +100,47 @@ const DriverList = ({ data }) => {
     },
   ];
 
-  const onEditTrip = (TravelerData) => {
+  const onDeleteDriver = (travelerData) => {
+    Modal.confirm({
+      title: "Are you sure, you want to delete this driver record?",
+      okText: "Yes",
+      okType: "danger",
+      onOk: () => {
+        deleteDriver(travelerData._id);
+      },
+    });
+  };
+
+  const onEditDriver = (travelerData) => {
+    console.log(travelerData);
     setIsEditing(true);
-    setEditingDriver({ ...TravelerData });
+    setEditingDriver({ ...travelerData });
   };
   const resetEditing = () => {
     setIsEditing(false);
     setEditingDriver(null);
   };
+
+  useEffect(() => {
+    if (response?.success) {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: `${response?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } else {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: `${error?.data?.errorMessage[0]?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  }, [response, error]);
+
   return (
     <div className="App">
       <header className="App-header">
@@ -110,12 +154,14 @@ const DriverList = ({ data }) => {
             resetEditing();
           }}
           onOk={() => {
-            /* add there your logic on edit trip */
             resetEditing();
           }}
+          footer={null}
         >
-          {/* <UpdateTripForm editingDriver={editingDriver} /> */}
-          <h1>here will be a form for edit Driver info</h1>
+          <UpdateDriverForm
+            editingDriver={editingDriver}
+            resetEditing={resetEditing}
+          ></UpdateDriverForm>
         </Modal>
       </header>
     </div>
