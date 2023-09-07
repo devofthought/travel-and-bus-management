@@ -1,4 +1,5 @@
 export const trips_status = ['pending', 'on-processing', 'completed']
+export const active_status = ['active', 'inactive']
 export const tripSearchableFields = ['ticket_price', 'bus_code', 'route_code']
 export const tripFilterableFields = [
   'route_code',
