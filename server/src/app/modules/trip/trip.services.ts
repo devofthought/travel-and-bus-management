@@ -293,3 +293,42 @@ export const TripService = {
   getSingleTrip,
   getUpComingTrip,
 }
+
+
+/* 
+const { from, to, departure_time } = req.query;
+
+// Aggregate pipeline
+const pipeline = [
+  {
+    $match: {
+      $and: [
+        { from: from },
+        { to: to },
+      ],
+    },
+  },
+  {
+    $lookup: {
+      from: 'trips', // Assuming your trips collection is named 'trips'
+      localField: '_id',
+      foreignField: 'route_id',
+      as: 'trips',
+    },
+  },
+  {
+    $unwind: '$trips',
+  },
+  {
+    $match: {
+      'trips.departure_time': departure_time,
+    },
+  },
+];
+
+// Execute the aggregation pipeline
+const result = await Route.aggregate(pipeline);
+
+// The result will contain trips that match both route_id and departure_time
+
+*/
