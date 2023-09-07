@@ -63,7 +63,7 @@ const getAllDrivers = async (
 }
 
 const getSingleDriver = async (id: string): Promise<IDriver | null> => {
-  const result = await Driver.findOne({ id })
+  const result = await Driver.findById(id)
   return result
 }
 
@@ -71,15 +71,19 @@ const updateDriver = async (
   id: string,
   payload: Partial<IDriver>
 ): Promise<IDriver | null> => {
-  const isExist = await Driver.findOne({ id })
+  const isExist = await Driver.findById(id)
 
   if (!isExist) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Driver not found')
   }
 
-  const result = await Driver.findOneAndUpdate({ id }, payload, {
+  const result = await Driver.findByIdAndUpdate(id, payload, {
     new: true,
   })
+
+  if (!result) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Driver not updated')
+  }
   return result
 }
 

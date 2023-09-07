@@ -6,8 +6,12 @@ const driverApi = apiSlice.injectEndpoints({
       query: () => `/driver`,
       providesTags: ["driver"],
     }),
+    getAllAvailabilityDriver: builder.query({
+      query: (status) => `/driver?driving_status=${status}`,
+      providesTags: ["driver"],
+    }),
     getSingleDriverDetails: builder.query({
-      query: ({ driverId }) => `/driver/${driverId}`,
+      query: (driverId) => `/driver/${driverId}`,
       providesTags: ["driver"],
     }),
     addDriver: builder.mutation({
@@ -18,11 +22,29 @@ const driverApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["driver"],
     }),
+    deleteDriver: builder.mutation({
+      query: (driver_id) => ({
+        url: `/driver/${driver_id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["driver"],
+    }),
+    updateDriver: builder.mutation({
+      query: ({ driver_id, body }) => ({
+        url: `/driver/${driver_id}`,
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: ["driver"],
+    }),
   }),
 });
 
 export const {
   useGetAllDriverQuery,
+  useGetAllAvailabilityDriverQuery,
   useGetSingleDriverDetailsQuery,
   useAddDriverMutation,
+  useUpdateDriverMutation,
+  useDeleteDriverMutation,
 } = driverApi;

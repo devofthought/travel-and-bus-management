@@ -28,4 +28,5 @@ export const routeSchema = new Schema<IRoute, RouteModel>(
   }
 )
 
+
 export const Route = model<IRoute, RouteModel>('Route', routeSchema)

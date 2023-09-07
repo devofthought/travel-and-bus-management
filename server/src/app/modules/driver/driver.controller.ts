@@ -16,7 +16,7 @@ const getAllDrivers: RequestHandler = catchAsync(async (req, res) => {
   sendResponse<IDriver[]>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Driver retrived successfully',
+    message: 'Driver retrieved successfully',
     meta: result.meta,
     data: result.data,
   })
