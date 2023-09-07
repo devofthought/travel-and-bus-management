@@ -7,7 +7,7 @@ import {
   PlusOutlined,
 } from "@ant-design/icons";
 
-const SecondaryBanner = () => {
+const SecondaryBanner = ({openDashboard, setOpenDashboard}) => {
   const isLoggedIn = true;
 
   // modal
@@ -43,7 +43,7 @@ const SecondaryBanner = () => {
   );
   return (
     <Card
-      className="bg-gradient-to-r from-blue-500 to-purple-500 text-white text-center py-12"
+      className="bg-gradient-to-r from-blue-500 to-purple-500 text-white text-center py-12 pt-32"
       style={{ borderRadius: "10px" }}
     >
       <div className="container ">
@@ -73,7 +73,7 @@ const SecondaryBanner = () => {
                 <p>name</p>
                 <p>example@gmail.com</p>
                 <button
-                  size="small"
+                  onClick={() => setOpenDashboard(!openDashboard)}
                   className="bg-white hover:bg-gray-200 text-blue-500 font-semibold py-0.5 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 mt-2"
                 >
                   Details
@@ -193,7 +193,12 @@ const SecondaryBanner = () => {
             </Form.Item>
 
             <Form.Item wrapperCol={{ span: 24 }} className="w-full mb-0">
-              <Button className="w-full bg-blue-500" block type="primary" htmlType="submit">
+              <Button
+                className="w-full bg-blue-500"
+                block
+                type="primary"
+                htmlType="submit"
+              >
                 Submit
               </Button>
             </Form.Item>
