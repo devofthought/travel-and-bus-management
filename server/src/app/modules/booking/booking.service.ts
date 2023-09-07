@@ -20,6 +20,17 @@ const createBooking = async (bookingData: BookingCreateDTO) => {
     user_id,
     seat: ["A1","A2","A3"],
     */
+    /* 
+    let userInfo;
+    if(bookingData.user_email && bookingData.user_name){
+     const userExist = await User.findOne({user_email: bookingData.user_email})
+     if(userExist){
+         userInfo = await authService.createTraveller({user_email: bookingData.user_email, user_name: bookingData.user_name});
+     } else{
+         userInfo = userExist;
+     }
+    }
+    */
     let newBooking = [];
     for (let i = 0; i < bookingData.booking_seat.length; i++) {
         const revisedBookingData = {

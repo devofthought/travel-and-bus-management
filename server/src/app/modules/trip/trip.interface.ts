@@ -13,6 +13,7 @@ export type ITrip = {
   trips_status: 'pending' | 'completed' | 'on-processing'
   driver_id: Types.ObjectId | IDriver
   createdAt: Date
+  active_status: 'active' | 'inactive'
 }
 
 export type ITripResponse = {
@@ -23,6 +24,7 @@ export type ITripResponse = {
   ticket_price: number
   trips_status: 'pending' | 'completed' | 'on-processing'
   driver_id?: Types.ObjectId | IDriver
+  active_status: 'active' | 'inactive'
 }
 
 export type TripModel = Model<ITrip, Record<string, unknown>>
