@@ -6,6 +6,10 @@ const busApi = apiSlice.injectEndpoints({
       query: () => `/buses`,
       providesTags: ["bus"],
     }),
+    getAllAvailabilityBus: builder.query({
+      query: (status) => `/buses?availability_status=${status}`,
+      providesTags: ["bus"],
+    }),
     getSingleBusDetails: builder.query({
       query: ({ busId }) => `/buses/${busId}`,
       providesTags: ["bus"],
@@ -23,6 +27,7 @@ const busApi = apiSlice.injectEndpoints({
 
 export const {
   useGetAllBusQuery,
+  useGetAllAvailabilityBusQuery,
   useGetSingleBusDetailsQuery,
   useAddBusMutation,
 } = busApi;
