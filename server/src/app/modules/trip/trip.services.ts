@@ -7,39 +7,30 @@ import { Booking } from '../booking/booking.model'
 import { Bus } from '../bus/bus.model'
 import { Driver } from '../driver/driver.model'
 import { Route } from '../route/route.model'
-import {
-  tripSearchableFields
-} from './trip.constants'
-import {
-  ITrip,
-  ITripFilter,
-  ITripResponse
-} from './trip.interface'
+import { tripSearchableFields } from './trip.constants'
+import { ITrip, ITripFilter, ITripResponse } from './trip.interface'
 import { Trip } from './trip.model'
 
 const createTrip = async (payload: ITrip): Promise<ITripResponse | null> => {
   const driver = await Driver.findById(payload.driver_id)
   const bus = await Bus.findOne({ bus_code: payload.bus_code })
-  if (!driver) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Driver not found')
+  const route = await Route.findOne({ route_code: payload.route_code })
+  if (!route) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Route is not found')
   }
-
-  if (!bus) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Bus not found')
-  }
-
-  if (driver.driving_status !== 'ready') {
+  payload.route_id = route._id.toString()
+  if (!driver || driver.driving_status !== 'ready') {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Driver is not available')
   }
-
-  if (bus.availability_status !== 'standBy') {
+  if (!bus || bus.availability_status !== 'standBy') {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Bus is not available')
   }
-
+  payload.bus_id = bus._id.toString()
   if (payload.trips_status !== 'pending') {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Not able to create a past trip')
   }
 
+  payload.active_status = 'active'
   // generate student id
   let newTripObject = null
   const session = await mongoose.startSession()
@@ -59,7 +50,6 @@ const createTrip = async (payload: ITrip): Promise<ITripResponse | null> => {
       { availability_status: 'transit' },
       { session, new: true }
     )
-
     await Driver.findOneAndUpdate(
       { _id: newTripObject.driver_id },
       { driving_status: 'on-trip' },
@@ -77,7 +67,7 @@ const createTrip = async (payload: ITrip): Promise<ITripResponse | null> => {
   if (newTripObject) {
     finalTrip = await Trip.findById(newTripObject._id)
       .populate('driver_id')
-      .populate('bus_code')
+      .populate('bus_id')
       .populate('route_id')
   }
   return finalTrip
@@ -218,26 +208,26 @@ const getAllTrip = async (
     .skip(skip)
     .limit(limit)
 
-
-  let result2 = [];
+  let result2 = []
   for (let trip of result) {
-    const bus = await Bus.findOne({ bus_code: trip.bus_code })
-      .select('_id model total_seats'); // find bus_id and bus_model
-    const route = await Route.findById(trip.route_id); // find to and from
+    const bus = await Bus.findOne({ bus_code: trip.bus_code }).select(
+      '_id model total_seats'
+    ) // find bus_id and bus_model
+    const route = await Route.findById(trip.route_id) // find to and from
     const bookedSeatsArray = await Booking.aggregate([
       {
         $group: {
           _id: null,
-          booked_seats: { $push: '$booked_seat' }
-        }
+          booked_seats: { $push: '$booked_seat' },
+        },
       },
       {
         $project: {
           _id: 0,
-          booked_seats: 1
-        }
-      }
-    ]); // create an array of booked_seats
+          booked_seats: 1,
+        },
+      },
+    ]) // create an array of booked_seats
 
     result2.push({
       bus_id: bus?._id,
@@ -249,7 +239,9 @@ const getAllTrip = async (
       from: route?.from,
       to: route?.to,
       fare: trip.ticket_price,
-      available_seat: bus?.total_seats && bus?.total_seats - bookedSeatsArray[0].booked_seats.length,
+      available_seat:
+        bus?.total_seats &&
+        bus?.total_seats - bookedSeatsArray[0].booked_seats.length,
       total_seat: bus?.total_seats,
     })
   }
@@ -293,7 +285,6 @@ export const TripService = {
   getSingleTrip,
   getUpComingTrip,
 }
-
 
 /* 
 const { from, to, departure_time } = req.query;

@@ -25,6 +25,11 @@ export const tripSchema = new Schema<ITrip, TripModel>(
       ref: 'Bus',
       required: true,
     },
+    bus_id: {
+      type: Schema.Types.ObjectId,
+      ref: 'Bus',
+      required: true,
+    },
     ticket_price: {
       type: Number,
       required: true,

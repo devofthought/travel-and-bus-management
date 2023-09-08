@@ -8,7 +8,7 @@ const driverApi = apiSlice.injectEndpoints({
     }),
     getAllAvailabilityDriver: builder.query({
       query: (status) => `/driver?driving_status=${status}`,
-      providesTags: ["driver"],
+      providesTags: ["driver", "trip"],
     }),
     getSingleDriverDetails: builder.query({
       query: (driverId) => `/driver/${driverId}`,
