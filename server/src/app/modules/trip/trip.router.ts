@@ -12,6 +12,7 @@ router.post(
   validateRequest(TripValidation.createTripZodSchema),
   TripController.createTrip
 )
+router.get('/update-able-trip', TripController.getAllUpdateAbleTrip)
 
 router.patch(
   '/:id',

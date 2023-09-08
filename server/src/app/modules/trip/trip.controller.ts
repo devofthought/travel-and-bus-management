@@ -71,10 +71,28 @@ const getSingleTrip = catchAsync(async (req: Request, res: Response) => {
     data: result,
   })
 })
+
+const getAllUpdateAbleTrip = catchAsync(async (req: Request, res: Response) => {
+  const filters = pick(req.query, tripFilterableFields)
+  const paginationOptions = pick(req.query, paginationFields)
+  const result = await TripService.getAllUpdateAbleTrip(
+    filters,
+    paginationOptions
+  )
+
+  sendResponse<ITripResponse[]>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'All Update able Trip retrieved successfully!',
+    meta: result.meta,
+    data: result.data,
+  })
+})
 export const TripController = {
   createTrip,
   updateTrip,
   getAllTrip,
   getSingleTrip,
   getUpComingTrip,
+  getAllUpdateAbleTrip,
 }
