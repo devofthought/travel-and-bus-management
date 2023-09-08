@@ -7,12 +7,12 @@ const tripApi = apiSlice.injectEndpoints({
       providesTags: ["trip"],
     }),
     getSingleTripDetails: builder.query({
-      query: (trip_id) => `/trip/${trip_id}`,
+      query: (trip_id) => `/trips/${trip_id}`,
       providesTags: ["trip"],
     }),
     addTrip: builder.mutation({
       query: (body) => ({
-        url: "/trip",
+        url: "/trips",
         method: "POST",
         body,
       }),
@@ -20,14 +20,14 @@ const tripApi = apiSlice.injectEndpoints({
     }),
     deleteTrip: builder.mutation({
       query: (trip_id) => ({
-        url: `/trip/${trip_id}`,
+        url: `/trips/${trip_id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["trip"],
     }),
     updateTrip: builder.mutation({
       query: ({ trip_id, body }) => ({
-        url: `/trip/${trip_id}`,
+        url: `/trips/${trip_id}`,
         method: "PATCH",
         body,
       }),

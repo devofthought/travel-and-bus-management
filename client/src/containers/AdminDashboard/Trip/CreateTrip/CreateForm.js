@@ -1,41 +1,76 @@
 import { Form, Button, Select, InputNumber, DatePicker } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { useGetAllRouteQuery } from "@/redux/route/routeApi";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { useGetAllAvailabilityBusQuery } from "@/redux/bus/busApi";
 import { BsBusFront } from "react-icons/bs";
 import { useGetAllAvailabilityDriverQuery } from "@/redux/driver/driverApi";
+import { BiTrip, BiUser } from "react-icons/bi";
+import { useAddTripMutation } from "@/redux/trip/tripApi";
+import Swal from "sweetalert2";
+
+const initialData = {
+  route_code: "",
+  bus_code: "",
+  departure_time: "",
+  arrival_time: "",
+  driver_id: "",
+  route_code: "",
+  ticket_price: 0,
+};
 
 const CreateTripForm = () => {
-  const [data, setData] = useState([]);
   const { data: routeData, isLoading: routeIsLoading } = useGetAllRouteQuery();
   const { data: driveData, isLoading: driverIsLoading } =
     useGetAllAvailabilityDriverQuery("ready");
   const { data: busData, isLoading: busIsLoading } =
     useGetAllAvailabilityBusQuery("standBy");
+  const [
+    AddTrip,
+    { data: addResponse, error: addError, isLoading: addIsLoading },
+  ] = useAddTripMutation();
   const onFinish = (values) => {
     // Convert date and time to a single datetime format
     const departureDateTime = dayjs(values.departure_time).format(
-      "YYYY-MM-DD HH:mm:ss"
+      "YYYY-MM-DDTHH:mm:ss.sss"
     );
+    // Update values with the formatted date time values
     const arrivalDateTime = dayjs(values.arrival_time).format(
-      "YYYY-MM-DD HH:mm:ss"
+      "YYYY-MM-DDTHH:mm:ss.sss"
     );
 
-    // Update values with the formatted datetime values
-    setData({
+    AddTrip({
       ...values,
+      trips_status: "pending",
       departure_time: departureDateTime,
       arrival_time: arrivalDateTime,
     });
   };
 
-  // console.log(routeData?.data);
-  // console.log(busData?.data);
-  // console.log(driveData?.data);
+  useEffect(() => {
+    if (addResponse?.success) {
+      form.setFieldsValue(initialData);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: `${addResponse?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } else {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: `${addError?.data?.errorMessage[0]?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  }, [addResponse, addError]);
 
-  console.log(data);
+  const [form] = Form.useForm();
+  form.setFieldsValue(initialData);
   return (
     <div
       style={{
@@ -43,6 +78,7 @@ const CreateTripForm = () => {
       }}
     >
       <Form
+        form={form}
         autoComplete="off"
         layout="vertical"
         onFinish={onFinish}
@@ -55,6 +91,9 @@ const CreateTripForm = () => {
             {routeData?.data?.map((rt, index) => (
               <Select.Option key={rt._id} value={`${rt?.route_code}`}>
                 <span className="flex items-center">
+                  <span className="ps-2 pe-2">
+                    <BiTrip />
+                  </span>
                   {rt?.from}
                   <span className="ps-3 pe-3">
                     <AiOutlineArrowRight />
@@ -115,7 +154,7 @@ const CreateTripForm = () => {
               <Select.Option key={bs._id} value={`${bs?._id}`}>
                 <span className="flex items-center">
                   <span className="ps-2 pe-2">
-                    <BsBusFront />
+                    <BiUser />
                   </span>
                   <span className="ps-2 pe-2 capitalize">{bs?.name}</span>
                   <span className="ps-2 pe-2">{bs?.email}</span>
@@ -149,8 +188,13 @@ const CreateTripForm = () => {
         </Form.Item>
 
         <Form.Item wrapperCol={{ span: 24 }}>
-          <Button block type="primary" htmlType="submit">
-            Submit
+          <Button
+            disabled={addIsLoading ? true : false}
+            block
+            type="primary"
+            htmlType="submit"
+          >
+            {addIsLoading ? "Loading..." : "Submit"}
           </Button>
         </Form.Item>
       </Form>
