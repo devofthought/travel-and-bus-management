@@ -25,6 +25,11 @@ const tripApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["trip"],
     }),
+    getAllUpdateAbleTrip: builder.query({
+      query: ({ status, statusTwo }) =>
+        `/trips/update-able-trip?trips_status=${status}&trips_status=${statusTwo}`,
+      providesTags: ["trip"],
+    }),
     updateTrip: builder.mutation({
       query: ({ trip_id, body }) => ({
         url: `/trips/${trip_id}`,
@@ -42,4 +47,5 @@ export const {
   useAddTripMutation,
   useDeleteTripMutation,
   useUpdateTripMutation,
+  useGetAllUpdateAbleTripQuery,
 } = tripApi;

@@ -73,6 +73,62 @@ const createTrip = async (payload: ITrip): Promise<ITripResponse | null> => {
   return finalTrip
 }
 
+const getAllUpdateAbleTrip = async (
+  filters: ITripFilter,
+  paginationOptions: IPaginationOptions
+) => {
+  const { searchTerm, ...filtersData } = filters
+
+  const andConditions = []
+
+  if (searchTerm) {
+    andConditions.push({
+      $or: tripSearchableFields?.map((field: any) => ({
+        [field]: {
+          $regex: searchTerm,
+          $options: 'i',
+        },
+      })),
+    })
+  }
+
+  if (Object.keys(filtersData).length) {
+    andConditions.push({
+      $and: Object.entries(filtersData).map(([field, value]) => ({
+        [field]: value,
+      })),
+    })
+  }
+
+  const { page, limit, skip, sortBy, sortOrder } =
+    paginationHelper.calculatePagination(paginationOptions)
+
+  const sortCondition: '' | { [key: string]: SortOrder } = sortBy &&
+    sortOrder && { [sortBy]: sortOrder }
+
+  const whereCondition =
+    andConditions?.length > 0 ? { $and: andConditions } : {}
+
+  const result = await Trip.find(whereCondition)
+    .sort(sortCondition)
+    .skip(skip)
+    .limit(limit)
+    .populate('driver_id')
+    .populate('bus_id')
+    .populate('route_id')
+
+  const total = await Trip.countDocuments(whereCondition)
+
+  return {
+    meta: {
+      page,
+      limit,
+      total,
+    },
+    data: result,
+  }
+}
+
 /*
  * change previous bus status
  * change pervious driver status
@@ -284,6 +340,7 @@ export const TripService = {
   getAllTrip,
   getSingleTrip,
   getUpComingTrip,
+  getAllUpdateAbleTrip,
 }
 
 /* 
