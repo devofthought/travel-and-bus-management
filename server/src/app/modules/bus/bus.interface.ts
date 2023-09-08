@@ -19,11 +19,11 @@ export type IBusResponse = {
   available_seats: number
   bus_code: string
   availability_status:
-    | 'transit'
-    | 'discontinue'
-    | 'servicing'
-    | 'standBy'
-    | 'rest'
+  | 'transit'
+  | 'discontinue'
+  | 'servicing'
+  | 'standBy'
+  | 'rest'
   brand_name: string
   model: string
   bus_image?: ImageMetaData
@@ -35,7 +35,11 @@ export type IBus = {
   total_seats: number
   available_seats: number
   bus_code: string
-  availability_status: 'transit' | 'discontinue' | 'servicing' | 'standBy'
+  availability_status: Array<{
+    status: 'transit' | 'discontinue' | 'servicing' | 'standBy';
+    date?: string;
+  }>,
+  // availability_status: 'transit' | 'discontinue' | 'servicing' | 'standBy'
   brand_name: string
   model: string
   bus_image?: ImageMetaData

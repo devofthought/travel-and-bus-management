@@ -11,7 +11,11 @@ export type IDriver = {
   years_experience: number
   address: string
   joining_date: string
-  driving_status: 'on-trip' | 'rest' | 'ready' | 'sick'
+  driving_status: Array<{
+    status: 'on-trip' | 'rest' | 'ready' | 'sick';
+    date?: string;
+  }>,
+  // driving_status: 'on-trip' | 'rest' | 'ready' | 'sick'
 }
 
 export type DriverModel = Model<IDriver, Record<string, unknown>>

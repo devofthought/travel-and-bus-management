@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import httpStatus from 'http-status'
 import { SortOrder } from 'mongoose'
+import ApiError from '../../../errors/ApiError'
 import { paginationHelper } from '../../../helper/paginationHelper'
 import { IGenericResponse } from '../../../interfaces/common'
 import { IPaginationOptions } from '../../../interfaces/pagination'
-import { IDriver, IDriverFilter } from './driver.interface'
 import { driverSearchableFields } from './driver.constants'
+import { IDriver, IDriverFilter } from './driver.interface'
 import { Driver } from './driver.model'
-import httpStatus from 'http-status'
-import ApiError from '../../../errors/ApiError'
 
 const getAllDrivers = async (
   filters: IDriverFilter,
@@ -92,3 +92,42 @@ export const DriverService = {
   getSingleDriver,
   updateDriver,
 }
+
+
+/* 
+// Function to assign drivers based on input date
+function assignDrivers(drivers: Driver[], inputDate: string) {
+  const assignedDrivers: Driver[] = [];
+  const standbyDrivers: Driver[] = [];
+
+  drivers.forEach((driver) => {
+    const isOccupied = driver.availability_status.some(
+      (status) => status.date === inputDate
+    );
+
+    if (isOccupied) {
+      assignedDrivers.push(driver);
+    } else {
+      standbyDrivers.push(driver);
+    }
+  });
+
+  return { assignedDrivers, standbyDrivers };
+}
+
+// Input date to check driver availability
+const inputDate = "2023-09-08";
+
+// Assign drivers based on the input date
+const { assignedDrivers, standbyDrivers } = assignDrivers(drivers, inputDate);
+
+console.log("Assigned Drivers:");
+assignedDrivers.forEach((driver) => {
+  console.log(`Driver ${driver.id}: ${driver.name}`);
+});
+
+console.log("\nStandby Drivers:");
+standbyDrivers.forEach((driver) => {
+  console.log(`Driver ${driver.id}: ${driver.name}`);
+});
+*/

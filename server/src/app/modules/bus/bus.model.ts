@@ -13,11 +13,29 @@ export const busSchema = new Schema<IBus, BusModel>(
       required: true,
       unique: true,
     },
-    availability_status: {
-      type: String,
-      required: true,
-      enum: availability_status,
-    },
+    // availability_status: {
+    //   type: String,
+    //   required: true,
+    //   enum: availability_status,
+    // },
+    /* 
+    export const availability_status = [
+  'transit',
+  'discontinue',
+  'servicing',
+  'standBy',
+  'rest',
+]
+    */
+    availability_status: [
+      {
+        status: {
+          type: String,
+          enum: availability_status,
+        },
+        date: new Date().toString(),
+      }
+    ],
     brand_name: {
       type: String,
       required: true,
