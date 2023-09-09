@@ -8,6 +8,11 @@ export const driverSchema = new Schema<IDriver, DriverModel>(
       type: String,
       required: true,
     },
+    driver_code: {
+      type: String,
+      required: true,
+      unique: true,
+    },
     image: {
       type: String,
     },
@@ -55,7 +60,7 @@ export const driverSchema = new Schema<IDriver, DriverModel>(
           enum: driving_status,
         },
         date: new Date().toString(),
-      }
+      },
     ],
   },
   {
