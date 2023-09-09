@@ -141,6 +141,7 @@ const updateTrip = async (
   id: string,
   payload: Partial<ITrip>
 ): Promise<ITripResponse | null> => {
+  console.log(payload)
   const isExist = await Trip.findById(id)
   if (!isExist) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Trip not found!')
@@ -156,14 +157,11 @@ const updateTrip = async (
   }
   if (payload.bus_code) {
     const bus = await Bus.findOne({ bus_code: payload.bus_code })
-    if (!bus) {
-      throw new ApiError(httpStatus.BAD_REQUEST, 'Bus not found')
-    }
-    if (bus.availability_status !== 'standBy') {
+    if (!bus || bus.availability_status !== 'standBy') {
       throw new ApiError(httpStatus.BAD_REQUEST, 'Bus is not available')
     }
   }
-  // generate student id
+
   let newTripObject = null
   const session = await mongoose.startSession()
   try {
@@ -171,14 +169,14 @@ const updateTrip = async (
     if (payload.bus_code) {
       await Bus.findOneAndUpdate(
         { bus_code: isExist.bus_code },
-        { availability_status: 'rest' },
+        { availability_status: 'standBy' },
         { session, new: true }
       )
     }
     if (payload.driver_id) {
       await Driver.findOneAndUpdate(
         { _id: isExist.driver_id },
-        { driving_status: 'rest' },
+        { driving_status: 'ready' },
         { session, new: true }
       )
     }

@@ -1,10 +1,11 @@
-import { Button, Table, Modal, Input } from "antd";
+import { Table, Modal } from "antd";
 import { useState } from "react";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import UpdateTripForm from "./UpdateForm";
+import { BiTrip } from "react-icons/bi";
+import { AiOutlineArrowRight } from "react-icons/ai";
 
 const UpdateTripTable = ({ data }) => {
-  console.log(data);
   const [isEditing, setIsEditing] = useState(false);
   const [editingTrip, setEditingTrip] = useState(null);
   const columns = [
@@ -22,19 +23,27 @@ const UpdateTripTable = ({ data }) => {
       minWidth: 200,
     },
     {
-      title: "From",
+      title: "route Code",
       dataIndex: "route_id",
       minWidth: 200,
       render: (route_id) => {
-        return <p className="capitalize">{route_id?.from}</p>;
-      },
-    },
-    {
-      title: "To",
-      dataIndex: "route_id",
-      minWidth: 200,
-      render: (route_id) => {
-        return <p className="capitalize">{route_id?.to}</p>;
+        return (
+          <>
+            <p className="capitalize">{route_id?.route_code}</p>
+            <p className="capitalize">
+              <span className="flex items-center">
+                <span className="pe-2">
+                  <BiTrip />
+                </span>
+                {route_id?.from}
+                <span className="ps-2 pe-2">
+                  <AiOutlineArrowRight />
+                </span>
+                {route_id?.to}
+              </span>
+            </p>
+          </>
+        );
       },
     },
     {
@@ -42,7 +51,7 @@ const UpdateTripTable = ({ data }) => {
       dataIndex: "route_id",
       minWidth: 200,
       render: (route_id) => {
-        return <p>{route_id?.distance} Km</p>;
+        return <p>{route_id?.distance} K.m</p>;
       },
     },
     {
@@ -110,12 +119,12 @@ const UpdateTripTable = ({ data }) => {
                 onEditTrip(tripData);
               }}
             />
-            <DeleteOutlined
+            {/* <DeleteOutlined
               onClick={() => {
                 onDeleteTrip(tripData);
               }}
               style={{ color: "red", marginLeft: 12 }}
-            />
+            /> */}
           </>
         );
       },
@@ -155,11 +164,14 @@ const UpdateTripTable = ({ data }) => {
             resetEditing();
           }}
           onOk={() => {
-            /* add there your logic on edit trip */
             resetEditing();
           }}
+          footer={null}
         >
-          <UpdateTripForm editingTrip={editingTrip} />
+          <UpdateTripForm
+            editingTrip={editingTrip}
+            resetEditing={resetEditing}
+          />
         </Modal>
       </header>
     </div>
