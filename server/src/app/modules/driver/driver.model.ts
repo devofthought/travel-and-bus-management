@@ -53,7 +53,7 @@ export const driverSchema = new Schema<IDriver, DriverModel>(
     //   required: true,
     //   enum: driving_status,
     // },
-    driving_status: [
+    availability_status: [
       {
         status: {
           type: String,

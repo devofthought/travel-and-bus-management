@@ -3,6 +3,7 @@ import mongoose, { SortOrder } from 'mongoose'
 import ApiError from '../../../errors/ApiError'
 import { paginationHelper } from '../../../helper/paginationHelper'
 import { IPaginationOptions } from '../../../interfaces/pagination'
+import { VariantCreation } from '../../../utils/utilities'
 import { Booking } from '../booking/booking.model'
 import { Bus } from '../bus/bus.model'
 import { Driver } from '../driver/driver.model'
@@ -12,17 +13,17 @@ import { ITrip, ITripFilter, ITripResponse } from './trip.interface'
 import { Trip } from './trip.model'
 
 const createTrip = async (payload: ITrip): Promise<ITripResponse | null> => {
-  const driver = await Driver.findById(payload.driver_id)
-  const bus = await Bus.findOne({ bus_code: payload.bus_code })
+  const driver = await VariantCreation.findAvailabilityByDepartureTime({ driver_code: payload.driver_code }, payload.departure_time, Driver);
+  const bus = await VariantCreation.findAvailabilityByDepartureTime({ bus_code: payload.bus_code }, payload.departure_time, Bus);
   const route = await Route.findOne({ route_code: payload.route_code })
   if (!route) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Route is not found')
   }
   payload.route_id = route._id.toString()
-  if (!driver || driver.driving_status !== 'ready') {
+  if (driver) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Driver is not available')
   }
-  if (!bus || bus.availability_status !== 'standBy') {
+  if (bus) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Bus is not available')
   }
   payload.bus_id = bus._id.toString()
@@ -47,12 +48,12 @@ const createTrip = async (payload: ITrip): Promise<ITripResponse | null> => {
 
     await Bus.findOneAndUpdate(
       { bus_code: newTripObject.bus_code },
-      { availability_status: 'transit' },
+      { $push: { availability_status: { status: 'transit', date: newTripObject.departure_time } } },
       { session, new: true }
     )
     await Driver.findOneAndUpdate(
       { _id: newTripObject.driver_id },
-      { driving_status: 'on-trip' },
+      { $push: { availability_status: { status: 'on-trip', date: newTripObject.departure_time } } },
       { session, new: true }
     )
 

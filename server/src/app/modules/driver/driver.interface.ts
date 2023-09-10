@@ -12,7 +12,7 @@ export type IDriver = {
   years_experience: number
   address: string
   joining_date: string
-  driving_status: Array<{
+  availability_status: Array<{
     status: 'on-trip' | 'rest' | 'ready' | 'sick'
     date?: string
   }>
