@@ -148,8 +148,8 @@ const updateTrip = async (
     throw new ApiError(httpStatus.BAD_REQUEST, 'Trip not found!')
   }
   if (payload.driver_id) {
-    const driver = await Driver.findById(payload.driver_id)
-    if (!driver) {
+    const driver = await VariantCreation.findAvailabilityByDepartureTime({ driver_code: payload.driver_code }, payload.departure_time, Driver);
+    if (driver) {
       throw new ApiError(httpStatus.BAD_REQUEST, 'Driver not found')
     }
     if (driver.driving_status !== 'ready') {
@@ -157,8 +157,8 @@ const updateTrip = async (
     }
   }
   if (payload.bus_code) {
-    const bus = await Bus.findOne({ bus_code: payload.bus_code })
-    if (!bus || bus.availability_status !== 'standBy') {
+    const bus = await VariantCreation.findAvailabilityByDepartureTime({ bus_code: payload.bus_code }, payload.departure_time, Bus);
+    if (bus) {
       throw new ApiError(httpStatus.BAD_REQUEST, 'Bus is not available')
     }
   }

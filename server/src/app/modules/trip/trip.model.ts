@@ -28,7 +28,6 @@ export const tripSchema = new Schema<ITrip, TripModel>(
     bus_id: {
       type: Schema.Types.ObjectId,
       ref: 'Bus',
-      required: true,
     },
     ticket_price: {
       type: Number,
@@ -41,6 +40,10 @@ export const tripSchema = new Schema<ITrip, TripModel>(
     },
     driver_id: {
       type: Schema.Types.ObjectId,
+      ref: 'Driver',
+    },
+    driver_code: {
+      type: String,
       ref: 'Driver',
       required: true,
     },
