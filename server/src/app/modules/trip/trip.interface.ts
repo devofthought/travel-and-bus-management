@@ -9,10 +9,11 @@ export type ITrip = {
   departure_time: string
   arrival_time: string
   bus_code: string
-  bus_id: Types.ObjectId | IRoute | string
+  bus_id?: Types.ObjectId | IRoute | string
   ticket_price: number
   trips_status: 'pending' | 'completed' | 'on-processing'
-  driver_id: Types.ObjectId | IDriver
+  driver_code: string
+  driver_id?: Types.ObjectId | IDriver
   createdAt: Date
   active_status: 'active' | 'inactive'
 }

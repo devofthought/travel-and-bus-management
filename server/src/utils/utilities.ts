@@ -67,7 +67,7 @@ const availabilityUpdater = async (
 };
 
 
-const findAvailabilityByDepartureTime = async (payload: any, departureTime: string, modelName: any) => {
+const findAvailabilityByDepartureTime = async (payload: any, departureTime: any, modelName: any) => {
     try {
         const pipeline = [
             {
