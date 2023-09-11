@@ -5,8 +5,6 @@ import { AiOutlineClose } from "react-icons/ai";
 import Button from "../UI/Button";
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [stickyNav, setStickyNav] = useState(false);
   // const [myProfile, setMyProfile] = useState({});
   // const router = useRouter();
   // const statePath = router.query.state?.path;
@@ -45,43 +43,25 @@ const Navbar = () => {
   //   }
   // };
 
-  const handleScroll = () => {
-    setStickyNav(window.pageYOffset > 5);
-  };
-
-  useEffect(() => {
-    // fetchMyProfile();
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
   return (
     <div
-      className={`z-50 border-b-1 border-solid border-blue-200 z-999 fixed w-full top-0 ${
-        stickyNav
-          ? "sticky shadow-md border-b-0 duration-700 ease-in-out bg-white"
-          : "bg-gradient-to-r from-green-500 to-blue-500"
+      className={`z-50 z-999 w-full top-0 sticky shadow-sm border-b-0 duration-700 ease-in-out  backdrop-blur-xl opacity-70"
       }`}
     >
       <div className="main-container">
         <div
-          className={`navbar-wrapper__body flex flex-row items-center justify-between text-white h-full ${
-            stickyNav ? "duration-700 ease-in-out" : ""
-          } py-2 md:py-3`}
+          className={`navbar-wrapper__body flex flex-row items-center justify-between text-white h-full  py-2 md:py-3`}
         >
           <div className="inherit md:hidden">
             <Link href="/">
               <Image
                 alt="Logo"
-                className="w-10 md:w-12 h-10 md:h-12 rounded-full border-2 border-blue-500"
+                className="w-12 md:w-14 h-12 md:h-14 rounded-full "
                 src="https://i.ibb.co/Smm15yx/bus-vector.jpg"
                 decoding="async"
                 loading="lazy"
-                width={48}
-                height={48}
+                width={200}
+                height={200}
               />
             </Link>
           </div>
@@ -90,28 +70,28 @@ const Navbar = () => {
               <Link href="/">
                 <Image
                   alt="Logo"
-                  className="w-10 md:w-12 h-10 md:h-12 rounded-full border-2 border-blue-500"
+                  className="w-10 md:w-14 h-10 md:h-14 rounded-full"
                   src="https://i.ibb.co/Smm15yx/bus-vector.jpg"
                   decoding="async"
                   loading="lazy"
-                  width={48}
-                  height={48}
+                  width={400}
+                  height={400}
                 />
               </Link>
             </li>
             <Link href="bus">
               <Button
-                styles={`px-2 py-[2px] sm:px-3 sm:py-1 font-semibold border-2 rounded-lg ${
-                  stickyNav ? "border-blue-500 secondary-text" : "text-white"
-                }`}
+                styles={`px-2 py-[2px] sm:px-3 sm:py-1 font-semibold text-gray-800 rounded-lg hover:bg-[#f0f0f0] duration-500`}
                 textStyle={`px-2`}
                 btnName="Bus"
               />
             </Link>
-            <Link href="/reserve-bus">
+            <Link
+              href="/reserve-bus"
+              className="hover:bg-[#f0f0f0] rounded-lg duration-500"
+            >
               <Button
-                styles={`px-2 py-[2px] sm:px-3 sm:py-1 font-semibold border-2 rounded-lg ${
-                  stickyNav ? "border-blue-500 secondary-text" : "text-white"
+                styles={`px-2 py-[2px] sm:px-3 sm:py-1 font-semibold text-gray-800 hover:bg-[#f0f0f0]" 
                 }`}
                 textStyle={`px-2`}
                 btnName="Reserve Bus"
@@ -122,9 +102,7 @@ const Navbar = () => {
           <div className="flex items-center gap-4">
             <Link href="/login">
               <Button
-                styles={`px-2 py-[2px] md:px-3 md:py-1 font-semibold border-2 rounded-lg primary-bg text-white ${
-                  stickyNav ? "border-green-500" : ""
-                }`}
+                styles={`px-2 py-[2px] md:px-3 md:py-1 font-semibold border-2 rounded-lg bg-[#d84e55] text-white `}
                 textStyle={`px-2`}
                 btnName="Login"
               />
@@ -141,12 +119,12 @@ const Navbar = () => {
                 >
                   <Image
                     alt="avatar"
-                    className={`w-10 md:w-12 h-10 md:h-12 rounded-full p-[2px] bg-white`}
+                    className={`w-10 h-10 rounded-full p-[2px] bg-white cursor-pointer`}
                     src="https://i.ibb.co/nrtwzQd/avatar-boy.webp"
                     decoding="async"
                     loading="lazy"
-                    width={48}
-                    height={48}
+                    width={300}
+                    height={300}
                   />
                 </button>
               </div>
@@ -161,7 +139,7 @@ const Navbar = () => {
                   <div className="py-1" role="none">
                     <Link
                       href="/reserve-bus"
-                      className="text-gray-700 hover:bg-gray-200 block px-4 py-2 text-sm"
+                      className="text-gray-600 hover:bg-[#f3f4f9] block px-4 py-2 text-base duration-300"
                       role="menuitem"
                       tabIndex="-1"
                       id="menu-item-0"
@@ -170,7 +148,7 @@ const Navbar = () => {
                     </Link>
                     <Link
                       href="/bus"
-                      className="text-gray-700 hover:bg-gray-200 block px-4 py-2 text-sm"
+                      className="text-gray-600 hover:bg-[#f3f4f9] block px-4 py-2 text-base duration-300"
                       role="menuitem"
                       tabIndex="-1"
                       id="menu-item-0"
@@ -179,7 +157,7 @@ const Navbar = () => {
                     </Link>
                     <Link
                       href="/reserve-bus"
-                      className="text-gray-700 hover:bg-gray-200 block px-4 py-2 text-sm"
+                      className="text-gray-600 hover:bg-[#f3f4f9] block px-4 py-2 text-base duration-300"
                       role="menuitem"
                       tabIndex="-1"
                       id="menu-item-0"
@@ -188,7 +166,7 @@ const Navbar = () => {
                     </Link>
                     <Link
                       href="#"
-                      className="text-gray-700 hover:bg-gray-200 block px-4 py-2 text-sm"
+                      className="text-gray-600 hover:bg-[#f3f4f9] block px-4 py-2 text-base duration-300"
                       role="menuitem"
                       tabIndex="-1"
                       id="menu-item-0"
