@@ -5,6 +5,7 @@ import ApiError from '../../../errors/ApiError'
 import { paginationHelper } from '../../../helper/paginationHelper'
 import { IGenericResponse } from '../../../interfaces/common'
 import { IPaginationOptions } from '../../../interfaces/pagination'
+import { VariantCreation } from '../../../utils/utilities'
 import { driverSearchableFields } from './driver.constants'
 import { IDriver, IDriverFilter } from './driver.interface'
 import { Driver } from './driver.model'
@@ -87,10 +88,17 @@ const updateDriver = async (
   return result
 }
 
+const getAvailableDriver = async (date: string): Promise<IDriver[] | null> => {
+  const allDriver = await Driver.find({});
+  const result = VariantCreation.availabilityDivider(allDriver, date).standbyElements;
+  return result;
+}
+
 export const DriverService = {
   getAllDrivers,
   getSingleDriver,
   updateDriver,
+  getAvailableDriver,
 }
 
 

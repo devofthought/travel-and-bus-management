@@ -5,6 +5,7 @@ import ApiError from '../../../errors/ApiError'
 import { paginationHelper } from '../../../helper/paginationHelper'
 import { IGenericResponse } from '../../../interfaces/common'
 import { IPaginationOptions } from '../../../interfaces/pagination'
+import { VariantCreation } from '../../../utils/utilities'
 import { busSearchableFields } from './bus.constants'
 import { IBus, IBusFilter, IBusResponse } from './bus.interface'
 import { Bus } from './bus.model'
@@ -110,12 +111,19 @@ const deleteBus = async (id: string): Promise<IBus | null> => {
   return result
 }
 
+const getAvailableBus = async (date: string): Promise<IBus[] | null> => {
+  const allBuses = await Bus.find({});
+  const result = VariantCreation.availabilityDivider(allBuses, date).standbyElements;
+  return result;
+}
+
 export const BusService = {
   createBus,
   getAllBus,
   getSingleBus,
   updateBus,
   deleteBus,
+  getAvailableBus,
 }
 
 
