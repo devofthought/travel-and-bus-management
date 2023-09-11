@@ -56,7 +56,7 @@ const FAQ = () => {
         <h1 className="break-words font-montserrat font-normal mb-4 text-4xl leading-7 text-gray-700">
           Frequently Asked Questions
         </h1>
-        <div className="h-[2px] md:h-1 w-[160px] secondary-bg mx--right mt-2"></div>
+        <div className="h-[2px] md:h-1 w-[160px] bg-[#d84e55] mx-right mt-[10px]"></div>
       </div>
       <div className="flex">{renderOptions()}</div>
       <CollapseComponent data={faqDataMap[selectedOption]} />
