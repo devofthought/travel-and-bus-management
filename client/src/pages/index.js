@@ -5,7 +5,7 @@ import Review from "@/containers/HomePage/Review";
 import SaySomething from "@/containers/HomePage/SaySomething";
 import WhatWeOffer from "@/containers/HomePage/WhatWeOffer";
 import Banner from "@/containers/Banner";
-import Technologies from "@/containers/Technologies";
+import Technologies from "@/containers/HomePage/Technologies";
 import React from "react";
 import RootLayout from "@/layouts/RootLayout";
 

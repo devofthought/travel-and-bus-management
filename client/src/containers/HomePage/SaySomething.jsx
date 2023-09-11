@@ -19,7 +19,7 @@ const SaySomething = () => {
           <h1 className="font-bold text-center text-2xl md:text-3xl lg:text-4xl">
             Say Something
           </h1>
-          <div className="h-[2px] md:h-1 w-[160px] secondary-bg mx-auto mt-4"></div>
+          <div className="h-[2px] md:h-1 w-[160px] bg-[#d84e55] mx-auto mt-[10px]"></div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <div>
@@ -35,7 +35,7 @@ const SaySomething = () => {
         <div className="w-44 mx-auto">
           <Button
             type="submit"
-            styles="flex justify-center items-center border-none w-full h-12 secondary-bg text-center mt-5 rounded-lg text-lg text-white"
+            styles="flex justify-center items-center border-none w-full h-12 bg-[#d84e55]  text-center mt-5 rounded-lg text-lg text-white"
             btnName="Submit"
           />
         </div>

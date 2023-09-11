@@ -16,7 +16,7 @@ const ReserveABus = () => {
         <h1 className="font-bold text-center text-2xl md:text-3xl lg:text-4xl">
           Do You Want To Go Picnic? <br /> Reserve a Full Bus
         </h1>
-        <div className="h-[2px] md:h-1 w-[160px] secondary-bg mx-auto mt-2"></div>
+        <div className="h-[2px] md:h-1 w-[160px] bg-[#d84e55] mx-auto mt-[10px]"></div>
       </div>
       <div>
         <Row
@@ -47,7 +47,7 @@ const ReserveABus = () => {
                 </div>
                 <button
                   type="submit"
-                  className="border-none h-16 secondary-bg text-center w-full mt-5 rounded-lg text-lg text-white"
+                  className="border-none h-16 bg-[#d84e55] cursor-pointer text-center w-full mt-5 rounded-lg text-lg text-white"
                 >
                   Reserving Request
                 </button>

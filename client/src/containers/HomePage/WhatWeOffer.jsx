@@ -52,7 +52,7 @@ const WhatWeOffer = () => {
         <h1 className="font-bold text-center text-2xl md:text-3xl lg:text-4xl">
           What We Offer For You
         </h1>
-        <div className="h-[2px] md:h-1 w-[160px] secondary-bg mx-auto mt-2"></div>
+        <div className="h-[2px] md:h-1 w-[160px] bg-[#d84e55] mx-auto mt-[10px]"></div>
       </div>
       <div>
         <Row

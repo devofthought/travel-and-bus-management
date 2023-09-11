@@ -425,14 +425,14 @@ const Trip = () => {
                       <h4 className="text-[#5b2192] text-2xl font-semibold text-center">
                         SEAT INFORMATION:
                       </h4>
-                      <table class="w-10/12 lg:w-1/2 mx-auto mt-5">
+                      <table className="w-10/12 lg:w-1/2 mx-auto mt-5">
                         <thead className="bg-gray-100">
                           <tr className="text-gray-600 border-b-4">
                             <th align="left" className="px-2 py-1">
                               Seats
                             </th>
                             <th
-                              class="d-none d-sm-table-cell px-2 py-1"
+                              className="d-none d-sm-table-cell px-2 py-1"
                               align="left"
                             >
                               Class
