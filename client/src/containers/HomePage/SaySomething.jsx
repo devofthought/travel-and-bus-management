@@ -70,7 +70,7 @@ const SaySomething = () => {
             />
           </form>
         </div>
-        <div className="w-full md:w-[50%] flex flex-col justify-center gap-6">
+        <div className="w-full md:w-[50%] flex flex-col justify-center gap-6 text-gray-800">
           <div className="py-6" style={{ borderBottom: "1px solid lightgray" }}>
             <div
               className="border-l-red-500 px-4"
