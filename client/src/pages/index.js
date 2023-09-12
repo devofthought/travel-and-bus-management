@@ -8,6 +8,7 @@ import Banner from "@/containers/Banner";
 import Technologies from "@/containers/HomePage/Technologies";
 import React from "react";
 import RootLayout from "@/layouts/RootLayout";
+import OurExclusiveOffer from "@/containers/HomePage/OurExclusiveOffer";
 
 const HomePage = () => {
   return (
@@ -16,6 +17,7 @@ const HomePage = () => {
       <Technologies />
       <WhatWeOffer />
       <ReserveABus />
+      <OurExclusiveOffer></OurExclusiveOffer>
       <Review />
       <FAQ />
       <OurBuses />
