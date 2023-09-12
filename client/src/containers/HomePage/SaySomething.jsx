@@ -11,35 +11,101 @@ const SaySomething = () => {
 
   return (
     <div className="main-container mt-10">
-      <form
-        className="border-[1px] shadow-lg hover:shadow-xl rounded px-4 sm:px-8 pt-6 pb-8 mb-4"
-        onSubmit={handleSubmit}
-      >
-        <div className=" mb-10">
-          <h1 className="font-bold text-center text-2xl md:text-3xl lg:text-4xl">
-            Say Something
+      <div className="flex flex-col md:flex-row gap-6 lg:gap-14">
+        <div className="w-full md:w-[50%] md:px-4">
+          <h1 className="break-words font-montserrat font-semibold mb-4 text-4xl leading-7 text-gray-800">
+            Let's stay connected
           </h1>
-          <div className="h-[2px] md:h-1 w-[160px] bg-[#d84e55] mx-auto mt-[10px]"></div>
+          <p className="text-gray-600 text-md mt-4 lg:mt-6 mb-8 lg:mb-10">
+            We are always looking for new opportunities to work together. We are
+            always looking for new opportunities to work together.
+          </p>
+          <form className="flex flex-col gap-6">
+            <div className="flex justify-between gap-4">
+              <input
+                type="text"
+                id="firstName"
+                placeholder="First Name"
+                className="font-sans appearance-none border-2 border-gray-400 border-t-gray-100 border-l-gray-50 rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-green-500 focus:shadow-outline"
+              />
+              <input
+                type="text"
+                id="lastName"
+                placeholder="Last Name"
+                className="font-sans appearance-none border-2 border-gray-400 border-t-gray-100 border-l-gray-50 rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-green-500 focus:shadow-outline"
+              />
+            </div>
+            <input
+              type="text"
+              id="email"
+              placeholder="Email"
+              className="font-sans appearance-none border-2 border-gray-400 border-t-gray-100 border-l-gray-50 rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-green-500 focus:shadow-outline"
+            />
+            <div className="flex justify-between gap-4">
+              <input
+                type="text"
+                id="phone"
+                placeholder="Phone"
+                className="font-sans appearance-none border-2 border-gray-400 border-t-gray-100 border-l-gray-50 rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-green-500 focus:shadow-outline"
+              />
+              <input
+                type="text"
+                id="subject"
+                placeholder="Subject"
+                className="font-sans appearance-none border-2 border-gray-400 border-t-gray-100 border-l-gray-50 rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-green-500 focus:shadow-outline"
+              />
+            </div>
+            <textarea
+              className="font-sans resize-y rounded-md w-full min-h-[150px] p-3 border-2 border-gray-400  text-gray-700 leading-tight focus:outline-green-500 focus:shadow-outline"
+              placeholder="Type Your Message"
+            ></textarea>
+            <label className="cursor-pointer">
+              <input type="checkbox" className="" /> Save my information for
+              later use
+            </label>
+            <Button
+              styles="bg-green-500 hover:bg-green-600 rounded-md font-semibold py-3 w-36 text-white flex justify-center items-center"
+              btnName="SEND MESSAGE"
+              textStyle=""
+            />
+          </form>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-          <div>
-            <Input className="h-14 text-lg" placeholder="Name" />
+        <div className="w-full md:w-[50%] flex flex-col justify-center gap-6">
+          <div className="py-6" style={{ borderBottom: "1px solid lightgray" }}>
+            <div
+              className="border-l-red-500 px-4"
+              style={{ borderLeft: "4px solid" }}
+            >
+              <p>Email Us:</p>
+              <h4 className="text-xl font-bold underline mt-2">
+                Info@gmail.com
+              </h4>
+            </div>
           </div>
-          <div>
-            <Input className="h-14 text-lg" placeholder="Email" />
+          <div className="py-6" style={{ borderBottom: "1px solid lightgray" }}>
+            <div
+              className="border-l-green-500 px-4"
+              style={{ borderLeft: "4px solid" }}
+            >
+              <p>Call Us:</p>
+              <h4 className="text-xl font-bold underline mt-2">
+                (406) 555-0120
+              </h4>
+            </div>
+          </div>
+          <div className="py-6" style={{ borderBottom: "1px solid lightgray" }}>
+            <div
+              className="border-l-blue-500 px-4"
+              style={{ borderLeft: "4px solid" }}
+            >
+              <p>Office Address:</p>
+              <h4 className="text-xl font-bold mt-2">
+                1901 Thornridge Cir, Shiloh, Hawaii 81063
+              </h4>
+            </div>
           </div>
         </div>
-        <div className="mt-5">
-          <TextArea className="h-44 text-lg" placeholder="Your Words" />
-        </div>
-        <div className="w-44 mx-auto">
-          <Button
-            type="submit"
-            styles="flex justify-center items-center border-none w-full h-12 bg-[#d84e55]  text-center mt-5 rounded-lg text-lg text-white"
-            btnName="Submit"
-          />
-        </div>
-      </form>
+      </div>
     </div>
   );
 };
