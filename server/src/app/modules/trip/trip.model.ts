@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose'
+import { active_status, trips_status } from './trip.constants'
 import { ITrip, TripModel } from './trip.interface'
-import { trips_status } from './trip.constants'
 export const tripSchema = new Schema<ITrip, TripModel>(
   {
     route_code: {
@@ -25,19 +25,32 @@ export const tripSchema = new Schema<ITrip, TripModel>(
       ref: 'Bus',
       required: true,
     },
+    bus_id: {
+      type: Schema.Types.ObjectId,
+      ref: 'Bus',
+    },
     ticket_price: {
       type: Number,
+      required: true,
+    },
+    active_status: {
+      type: String,
+      required: true,
+      enum: active_status,
+    },
+    driver_id: {
+      type: Schema.Types.ObjectId,
+      ref: 'Driver',
+    },
+    driver_code: {
+      type: String,
+      ref: 'Driver',
       required: true,
     },
     trips_status: {
       type: String,
       required: true,
       enum: trips_status,
-    },
-    driver_id: {
-      type: Schema.Types.ObjectId,
-      ref: 'Driver',
-      required: true,
     },
   },
   {

@@ -35,7 +35,7 @@ const BusListTable = ({ data }) => {
       dataIndex: "bus_image",
       minWidth: 200,
       render: (bus_image) => {
-        return <Avatar shape="square" size={64} src={bus_image} />;
+        return <Avatar shape="square" size={64} src={bus_image?.avatar} />;
       },
     },
     {
@@ -43,7 +43,7 @@ const BusListTable = ({ data }) => {
       dataIndex: "inner_image",
       minWidth: 200,
       render: (inner_image) => {
-        return <Avatar shape="square" size={64} src={inner_image} />;
+        return <Avatar shape="square" size={64} src={inner_image?.avatar} />;
       },
     },
     {
@@ -51,7 +51,7 @@ const BusListTable = ({ data }) => {
       dataIndex: "outer_image",
       minWidth: 200,
       render: (outer_image) => {
-        return <Avatar shape="square" size={64} src={outer_image} />;
+        return <Avatar shape="square" size={64} src={outer_image?.avatar} />;
       },
     },
     {
@@ -86,10 +86,10 @@ const BusListTable = ({ data }) => {
     },
     {
       title: "Seats",
-      dataIndex: "available_seats",
+      dataIndex: "total_seats",
       minWidth: 200,
-      render: (seats) => {
-        return <p>{seats} Seats</p>;
+      render: (total_seats) => {
+        return <p>{total_seats} Seats</p>;
       },
     },
     {

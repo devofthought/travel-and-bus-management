@@ -15,7 +15,7 @@ const offerData = [
     id: 2,
     icon: <MdOutlineDiscount className="" size={48}></MdOutlineDiscount>,
     title: "Discount & Promo",
-    style: "md:-mt-10 text-white primary-bg",
+    style: "md:-mt-10 secondary-bg text-white",
     des: " Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorum nemo distinctio dignissimos animi magnam, facere iste earum voluptatem labore corporis? Praesentium dolor ad facilis nisi",
   },
   {
@@ -34,7 +34,7 @@ const offerData = [
     id: 5,
     icon: <AiOutlineSafety className="" size={48}></AiOutlineSafety>,
     title: "Safety Guarantee",
-    style: "md:-mt-10 text-white secondary-bg",
+    style: "md:-mt-10 secondary-bg text-white",
     des: " Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorum nemo distinctio dignissimos animi magnam, facere iste earum voluptatem labore corporis? Praesentium dolor ad facilis nisi",
   },
   {
@@ -52,7 +52,7 @@ const WhatWeOffer = () => {
         <h1 className="font-bold text-center text-2xl md:text-3xl lg:text-4xl">
           What We Offer For You
         </h1>
-        <div className="h-[2px] md:h-1 w-[160px] secondary-bg mx-auto mt-2"></div>
+        <div className="h-[2px] md:h-1 w-[160px] bg-[#d84e55] mx-auto mt-[10px]"></div>
       </div>
       <div>
         <Row
@@ -73,7 +73,7 @@ const WhatWeOffer = () => {
               lg={8}
             >
               <div
-                className={`p-10 mb-8 rounded-2xl shadow-xl bg-white hover:bg-blue-500 hover:text-white ${data?.style}`}
+                className={`p-10 mb-8 rounded-2xl shadow-xl ${data?.style} hover:bg-blue-500 hover:text-white `}
               >
                 <div className="">{data?.icon}</div>
                 <h1 className="text-2xl font-bold mt-6 ">{data?.title}</h1>

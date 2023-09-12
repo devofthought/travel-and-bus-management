@@ -14,11 +14,11 @@ const CreateTripContainer = () => {
         <div className="w-full md:w-1/3 bg-white text-white p-5 border-2 border-sky-500 rounded bg-slate-200">
           <CreateTripForm />
         </div>
-        <DriverTable />
+        {/* <DriverTable /> */}
       </div>
       <div className="flex flex-col md:flex-row gap-6">
-        <BusTable />
-        <RouteTable />
+        {/* <BusTable /> */}
+        {/* <RouteTable /> */}
       </div>
     </>
   );

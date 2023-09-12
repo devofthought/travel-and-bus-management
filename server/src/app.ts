@@ -36,7 +36,7 @@ app.use((req: Request, res: Response) => {
   res.status(httpStatus.NOT_FOUND).json({
     success: false,
     message: 'API not found',
-    errorMessages: [
+    errorMessage: [
       {
         path: req.originalUrl,
         message: 'API not found',

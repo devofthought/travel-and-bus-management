@@ -1,14 +1,12 @@
 import React from "react";
-import { Col, DatePicker, Row, Input } from "antd";
+import { DatePicker, Input } from "antd";
 import moment from "moment";
 import { useRouter } from "next/router";
 import { MdOutlineLocationOn, MdSwapHoriz } from "react-icons/md";
+import { BsCalendarDate, BsBusFront } from "react-icons/bs";
+import { TbBusStop } from "react-icons/tb";
 
 const SearchBar = () => {
-  const onChange = (date, dateString) => {
-    console.log(date, dateString);
-  };
-
   const disabledDate = (current) => {
     // Disable dates before today
     return current && current < moment().startOf("day");
@@ -33,86 +31,51 @@ const SearchBar = () => {
   return (
     <div className="search-bar">
       <form onSubmit={(e) => handleSearchTrip(e)}>
-        {/* <Row className="bg-indigo-400 p-4 z-50 rounded-lg" gutter={[16, 16]}>
-          <Col span={6}>
-            <Input name="from" className="p-2" placeholder="From" required />
-          </Col>
-          <Col span={6}>
-            <Input name="to" className="p-2" placeholder="To" required />
-          </Col>
-          <Col span={6}>
-            <DatePicker
-              name="date"
-              className="p-2"
-              onChange={onChange}
-              disabledDate={disabledDate}
-            />
-          </Col>
-          <Col span={6}>
-            <button
-              className="w-full h-full bg-blue-950 hover:bg-blue-400 hover:text-slate-950 border border-blue-400 font-semibold rounded-md text-white"
-              type="submit"
-            >
-              Search
-            </button>
-          </Col>
-        </Row> */}
-        <div className="w-9/12 mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 items-center gap-5 justify-between bg-white rounded-lg p-8 shadow-lg">
-          <div class="relative rounded-md shadow-sm w-full h-full">
-            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-              <span class="text-gray-500 sm:text-sm">
-                <MdOutlineLocationOn />
-              </span>
-            </div>
-            <input
-              type="text"
+        <div
+          className="w-11/12 sm:w-9/12 mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 items-center justify-center bg-white p-5 lg:p-0 lg:shadow-lg lg:h-[112px]"
+          style={{ borderRadius: "36px" }}
+        >
+          <div className="relative w-full h-full p-5 lg:p-0">
+            <Input
               name="from"
-              id="from"
-              className="py-3 block w-full h-full rounded-md border-0 pl-8 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
+              size="large"
+              className="py-3 w-full rounded-none h-full border-0 sm:pl-0 lg:pl-8  sm:pr-10 lg:pr-20 text-gray-900 placeholder:text-gray-400 sm:text-lg font-semibold sm:leading-6 lg:rounded-l-[36px] cursor-pointer"
               placeholder="From"
-              required
+              prefix={<BsBusFront className="text-2xl text-gray-500 mr-2" />}
             />
             <div
-              className="w-7 h-7 p-1 pointer-events-none absolute -bottom-6 right-[42%] sm:top-[6px] sm:-right-[24px] lg:top-[10px] bg-white  z-10 text-green-500 flex items-center justify-center rounded-full"
+              className="w-8 h-8 p-1 absolute -bottom-2 right-[42%] sm:top-[28px] sm:-right-[17px] lg:top-[42px] bg-white z-10 text-gray-500 flex items-center justify-center rounded-full cursor-pointer hover:shadow-lg"
               style={{ border: "1px solid lightgray" }}
             >
-              <MdSwapHoriz />
+              <MdSwapHoriz className="text-2xl " />
             </div>
           </div>
-          <div class="relative rounded-md shadow-sm w-full h-full">
-            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-              <span class="text-gray-500 sm:text-sm">
-                <MdOutlineLocationOn />
-              </span>
-            </div>
-            <input
-              type="text"
+          <div className="relative w-full h-full ">
+            <Input
+              size="large"
               name="to"
-              id="to"
-              className="py-3 block w-full h-full rounded-md border-0 pl-8 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
+              className="py-3 w-full h-full border-y-0 border-x-0 sm:border-x sm:border-r-0 lg:border-r sm:border-r-slate-200 lg:border-x-slate-200  pl-8 sm:pr-10 lg:pr-20 text-gray-900  rounded-none  placeholder:text-gray-400 sm:text-lg font-semibold sm:leading-6 cursor-pointer "
               placeholder="To"
-              required
+              prefix={<TbBusStop className="text-2xl text-gray-500 mr-2" />}
             />
           </div>
-          <div class="relative rounded-md shadow-sm w-full h-full">
-            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-              <span class="text-gray-500 sm:text-sm">
-                <MdOutlineLocationOn />
-              </span>
-            </div>
+          <div className="relative w-full h-full p-5 lg:p-0">
             <DatePicker
               input
               name="date"
-              placeholder="Select date"
-              className="py-3 rounded-md w-full h-full"
+              placeholder="Date"
+              className="py-3 w-full h-full border-0 sm:pl-0 lg:pl-8 sm:pr-10 lg:pr-20 text-gray-900 placeholder:text-gray-400  font-semibold sm:leading-6 rounded-none cursor-pointer "
               disabledDate={disabledDate}
+              suffixIcon={
+                <BsCalendarDate className="text-2xl text-gray-500 " />
+              }
             />
           </div>
           <button
-            className="border-[1px] border-gray-200 p-3 h-full bg-blue-400 font-semibold rounded-md text-white"
+            className="border-none p-3 h-full text-lg sm:text-xl  bg-[#d84e55] sm:font-bold  rounded-2xl lg:rounded-none lg:rounded-r-[36px] text-white cursor-pointer leading-6 "
             type="submit"
           >
-            Search
+            SEARCH BUSES
           </button>
         </div>
       </form>

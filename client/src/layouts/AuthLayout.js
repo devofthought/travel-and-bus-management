@@ -1,48 +1,42 @@
-import React, { useEffect, useState } from 'react';
-import { Radio } from 'antd';
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
+import Link from "next/link";
 
 const AuthLayout = ({ children }) => {
-    const router = useRouter();
-    const [radioOption, setRadioOption] = useState('login');
+  const router = useRouter();
 
-    const onChange = ({ target: { value } }) => {
-        console.log('radio checked', value);
-        setRadioOption(value);
-    };
-
-    useEffect(() => {
-        if (radioOption === 'login') {
-            router.push('/login');
-        } else {
-            router.push('/signup');
-        }
-    }, [radioOption]);
-
-    const options = [
-        {
-        label: 'Login',
-        value: 'login',
-        },
-        {
-        label: 'Register',
-        value: 'register',
-        }
-    ];
-
-    return (
-        <div className='flex justify-center min-h-screen bg-slate-600'>
-            <div className='grid justify-center my-12 p-24 bg-slate-50 border-solid border-2 border-slate-900'>
-            <Radio.Group
-                className='flex justify-center mb-10'
-                options={options}
-                onChange={onChange}
-                value={radioOption}
-                optionType="button"
-                buttonStyle="solid"
-            />
-                {children}
-            </div>
+  return (
+    <div className="flex justify-center items-center min-h-screen bg-slate-600">
+      <div className="w-4/12 h-auto p-10 rounded-xl bg-slate-50 border-solid border-2 border-slate-900">
+        <div className="bg-gray-200 flex p-2 items-center rounded mb-10">
+          <div className="w-1/2 text-center  cursor-pointer ">
+            <button
+              className={`w-full  p-2 border-none rounded text-base font-semibold ${
+                router.pathname === "/login"
+                  ? "bg-white shadow-md"
+                  : "bg-gray-200"
+              }`}
+            >
+              <Link className="text-black" href={"/login"}>
+                Log In
+              </Link>
+            </button>
+          </div>
+          <div className="w-1/2 text-center  cursor-pointer">
+            <button
+              className={`w-full  p-2 border-none rounded text-base font-semibold ${
+                router.pathname === "/signup"
+                  ? "bg-white shadow-md"
+                  : "bg-gray-200"
+              }`}
+            >
+              <Link className="text-black" href={"/signup"}>
+                Sign Up
+              </Link>
+            </button>
+          </div>
+        </div>
+        {children}
+      </div>
     </div>
   );
 };

@@ -1,16 +1,23 @@
-import { Table, Modal, Avatar } from "antd";
-import { useState } from "react";
-import { EditOutlined } from "@ant-design/icons";
+import { Table, Modal } from "antd";
+import { useEffect, useState } from "react";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { useDeleteIncidentMutation } from "@/redux/incident/incidentApi";
+import UpdateIncidentForm from "./UpdateIncidentForm";
+import Swal from "sweetalert2";
 
-const IncidentListTable = () => {
+const incidentListTable = ({ data }) => {
+  const [deleteIncident, { data: response, error, isLoading }] =
+    useDeleteIncidentMutation();
   const [isEditing, setIsEditing] = useState(false);
   const [editingIncident, setEditingIncident] = useState(null);
-  const [dataSource, setDataSource] = useState(demoData);
   const columns = [
     {
       title: "Sr.",
       dataIndex: "sr",
       minWidth: 200,
+      render: (text, record, index) => {
+        return `${index + 1}`;
+      },
     },
     {
       title: "Bus code",
@@ -19,10 +26,10 @@ const IncidentListTable = () => {
     },
     {
       title: "Seats",
-      dataIndex: "seats",
+      dataIndex: "avaliable_seats",
       minWidth: 200,
-      render: (seats) => {
-        return <p>{seats} Seats</p>;
+      render: (avaliable_seats) => {
+        return <p>{avaliable_seats} Seats</p>;
       },
     },
     {
@@ -46,13 +53,20 @@ const IncidentListTable = () => {
     {
       key: "5",
       title: "Edit details",
-      render: (BusData) => {
+      render: (incidentData) => {
         return (
-          <div style={{ color: "red", marginLeft: "20px" }}>
+          <div>
             <EditOutlined
               onClick={() => {
-                onEditTrip(BusData);
+                onEditIncident(incidentData);
               }}
+              style={{ color: "orange", marginLeft: "20px" }}
+            />
+            <DeleteOutlined
+              onClick={() => {
+                onDeleteIncident(incidentData);
+              }}
+              style={{ color: "red", marginLeft: 12 }}
             />
           </div>
         );
@@ -60,20 +74,51 @@ const IncidentListTable = () => {
     },
   ];
 
-  const onEditTrip = (BusData) => {
+  const onDeleteIncident = (incidentData) => {
+    Modal.confirm({
+      title: "Are you sure, you want to delete this incident record?",
+      okText: "Yes",
+      okType: "danger",
+      onOk: () => {
+        deleteIncident(incidentData._id);
+      },
+    });
+  };
+
+  const onEditIncident = (incidentData) => {
     setIsEditing(true);
-    setEditingIncident({ ...BusData });
+    setEditingIncident({ ...incidentData });
   };
   const resetEditing = () => {
     setIsEditing(false);
     setEditingIncident(null);
   };
+
+  useEffect(() => {
+    if (response?.success) {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: `${response?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } else {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: `${error?.data?.errorMessage[0]?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  }, [response, error]);
   return (
     <div className="App">
       <header className="App-header">
-        <Table columns={columns} dataSource={dataSource}></Table>
+        <Table columns={columns} dataSource={data}></Table>
         <Modal
-          title="Edit Incident details"
+          title="Edit route details"
           open={isEditing}
           okText="Save"
           centered
@@ -81,43 +126,18 @@ const IncidentListTable = () => {
             resetEditing();
           }}
           onOk={() => {
-            /* add there your logic on edit trip */
             resetEditing();
           }}
+          footer={null}
         >
-          {/* <UpdateTripForm editingIncident={editingIncident} /> */}
-          <h1>here will be a form for edit Incident details</h1>
+          <UpdateIncidentForm
+            editingIncident={editingIncident}
+            resetEditing={resetEditing}
+          ></UpdateIncidentForm>
         </Modal>
       </header>
     </div>
   );
 };
 
-export default IncidentListTable;
-
-const demoData = [
-  {
-    sr: 1,
-    bus_code: "ABC123",
-    seats: 30,
-    cost: 150,
-    description: "A comfortable bus with air conditioning",
-    servicing_status: "on-servicing",
-  },
-  {
-    sr: 2,
-    bus_code: "XYZ789",
-    seats: 40,
-    cost: 200,
-    description: "Luxury bus with reclining seats",
-    servicing_status: "done",
-  },
-  {
-    sr: 3,
-    bus_code: "DEF456",
-    seats: 25,
-    cost: 120,
-    description: "Economical bus for budget travelers",
-    servicing_status: "pending",
-  },
-];
+export default incidentListTable;

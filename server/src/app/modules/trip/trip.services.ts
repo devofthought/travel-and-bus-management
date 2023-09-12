@@ -3,43 +3,35 @@ import mongoose, { SortOrder } from 'mongoose'
 import ApiError from '../../../errors/ApiError'
 import { paginationHelper } from '../../../helper/paginationHelper'
 import { IPaginationOptions } from '../../../interfaces/pagination'
+import { VariantCreation } from '../../../utils/utilities'
 import { Booking } from '../booking/booking.model'
 import { Bus } from '../bus/bus.model'
 import { Driver } from '../driver/driver.model'
 import { Route } from '../route/route.model'
-import {
-  tripSearchableFields
-} from './trip.constants'
-import {
-  ITrip,
-  ITripFilter,
-  ITripResponse
-} from './trip.interface'
+import { tripSearchableFields } from './trip.constants'
+import { ITrip, ITripFilter, ITripResponse } from './trip.interface'
 import { Trip } from './trip.model'
 
 const createTrip = async (payload: ITrip): Promise<ITripResponse | null> => {
-  const driver = await Driver.findById(payload.driver_id)
-  const bus = await Bus.findOne({ bus_code: payload.bus_code })
-  if (!driver) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Driver not found')
+  const driver = await VariantCreation.findAvailabilityByDepartureTime({ driver_code: payload.driver_code }, payload.departure_time, Driver);
+  const bus = await VariantCreation.findAvailabilityByDepartureTime({ bus_code: payload.bus_code }, payload.departure_time, Bus);
+  const route = await Route.findOne({ route_code: payload.route_code })
+  if (!route) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Route is not found')
   }
-
-  if (!bus) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Bus not found')
-  }
-
-  if (driver.driving_status !== 'ready') {
+  payload.route_id = route._id.toString()
+  if (driver) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Driver is not available')
   }
-
-  if (bus.availability_status !== 'standBy') {
+  if (bus) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Bus is not available')
   }
-
+  payload.bus_id = bus._id.toString()
   if (payload.trips_status !== 'pending') {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Not able to create a past trip')
   }
 
+  payload.active_status = 'active'
   // generate student id
   let newTripObject = null
   const session = await mongoose.startSession()
@@ -56,13 +48,12 @@ const createTrip = async (payload: ITrip): Promise<ITripResponse | null> => {
 
     await Bus.findOneAndUpdate(
       { bus_code: newTripObject.bus_code },
-      { availability_status: 'transit' },
+      { $push: { availability_status: { status: 'transit', date: newTripObject.departure_time } } },
       { session, new: true }
     )
-
     await Driver.findOneAndUpdate(
       { _id: newTripObject.driver_id },
-      { driving_status: 'on-trip' },
+      { $push: { availability_status: { status: 'on-trip', date: newTripObject.departure_time } } },
       { session, new: true }
     )
 
@@ -77,10 +68,66 @@ const createTrip = async (payload: ITrip): Promise<ITripResponse | null> => {
   if (newTripObject) {
     finalTrip = await Trip.findById(newTripObject._id)
       .populate('driver_id')
-      .populate('bus_code')
+      .populate('bus_id')
       .populate('route_id')
   }
   return finalTrip
+}
+
+const getAllUpdateAbleTrip = async (
+  filters: ITripFilter,
+  paginationOptions: IPaginationOptions
+) => {
+  const { searchTerm, ...filtersData } = filters
+
+  const andConditions = []
+
+  if (searchTerm) {
+    andConditions.push({
+      $or: tripSearchableFields?.map((field: any) => ({
+        [field]: {
+          $regex: searchTerm,
+          $options: 'i',
+        },
+      })),
+    })
+  }
+
+  if (Object.keys(filtersData).length) {
+    andConditions.push({
+      $and: Object.entries(filtersData).map(([field, value]) => ({
+        [field]: value,
+      })),
+    })
+  }
+
+  const { page, limit, skip, sortBy, sortOrder } =
+    paginationHelper.calculatePagination(paginationOptions)
+
+  const sortCondition: '' | { [key: string]: SortOrder } = sortBy &&
+    sortOrder && { [sortBy]: sortOrder }
+
+  const whereCondition =
+    andConditions?.length > 0 ? { $and: andConditions } : {}
+
+  const result = await Trip.find(whereCondition)
+    .sort(sortCondition)
+    .skip(skip)
+    .limit(limit)
+    .populate('driver_id')
+    .populate('bus_id')
+    .populate('route_id')
+
+  const total = await Trip.countDocuments(whereCondition)
+
+  return {
+    meta: {
+      page,
+      limit,
+      total,
+    },
+    data: result,
+  }
 }
 
 /*
@@ -95,13 +142,14 @@ const updateTrip = async (
   id: string,
   payload: Partial<ITrip>
 ): Promise<ITripResponse | null> => {
+  console.log(payload)
   const isExist = await Trip.findById(id)
   if (!isExist) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Trip not found!')
   }
   if (payload.driver_id) {
-    const driver = await Driver.findById(payload.driver_id)
-    if (!driver) {
+    const driver = await VariantCreation.findAvailabilityByDepartureTime({ driver_code: payload.driver_code }, payload.departure_time, Driver);
+    if (driver) {
       throw new ApiError(httpStatus.BAD_REQUEST, 'Driver not found')
     }
     if (driver.driving_status !== 'ready') {
@@ -109,15 +157,12 @@ const updateTrip = async (
     }
   }
   if (payload.bus_code) {
-    const bus = await Bus.findOne({ bus_code: payload.bus_code })
-    if (!bus) {
-      throw new ApiError(httpStatus.BAD_REQUEST, 'Bus not found')
-    }
-    if (bus.availability_status !== 'standBy') {
+    const bus = await VariantCreation.findAvailabilityByDepartureTime({ bus_code: payload.bus_code }, payload.departure_time, Bus);
+    if (bus) {
       throw new ApiError(httpStatus.BAD_REQUEST, 'Bus is not available')
     }
   }
-  // generate student id
+
   let newTripObject = null
   const session = await mongoose.startSession()
   try {
@@ -125,14 +170,14 @@ const updateTrip = async (
     if (payload.bus_code) {
       await Bus.findOneAndUpdate(
         { bus_code: isExist.bus_code },
-        { availability_status: 'rest' },
+        { availability_status: 'standBy' },
         { session, new: true }
       )
     }
     if (payload.driver_id) {
       await Driver.findOneAndUpdate(
         { _id: isExist.driver_id },
-        { driving_status: 'rest' },
+        { driving_status: 'ready' },
         { session, new: true }
       )
     }
@@ -218,26 +263,26 @@ const getAllTrip = async (
     .skip(skip)
     .limit(limit)
 
-
-  let result2 = [];
+  let result2 = []
   for (let trip of result) {
-    const bus = await Bus.findOne({ bus_code: trip.bus_code })
-      .select('_id model total_seats'); // find bus_id and bus_model
-    const route = await Route.findById(trip.route_id); // find to and from
+    const bus = await Bus.findOne({ bus_code: trip.bus_code }).select(
+      '_id model total_seats'
+    ) // find bus_id and bus_model
+    const route = await Route.findById(trip.route_id) // find to and from
     const bookedSeatsArray = await Booking.aggregate([
       {
         $group: {
           _id: null,
-          booked_seats: { $push: '$booked_seat' }
-        }
+          booked_seats: { $push: '$booked_seat' },
+        },
       },
       {
         $project: {
           _id: 0,
-          booked_seats: 1
-        }
-      }
-    ]); // create an array of booked_seats
+          booked_seats: 1,
+        },
+      },
+    ]) // create an array of booked_seats
 
     result2.push({
       bus_id: bus?._id,
@@ -249,7 +294,9 @@ const getAllTrip = async (
       from: route?.from,
       to: route?.to,
       fare: trip.ticket_price,
-      available_seat: bus?.total_seats && bus?.total_seats - bookedSeatsArray[0].booked_seats.length,
+      available_seat:
+        bus?.total_seats &&
+        bus?.total_seats - bookedSeatsArray[0].booked_seats.length,
       total_seat: bus?.total_seats,
     })
   }
@@ -292,4 +339,43 @@ export const TripService = {
   getAllTrip,
   getSingleTrip,
   getUpComingTrip,
+  getAllUpdateAbleTrip,
 }
+
+/* 
+const { from, to, departure_time } = req.query;
+
+// Aggregate pipeline
+const pipeline = [
+  {
+    $match: {
+      $and: [
+        { from: from },
+        { to: to },
+      ],
+    },
+  },
+  {
+    $lookup: {
+      from: 'trips', // Assuming your trips collection is named 'trips'
+      localField: '_id',
+      foreignField: 'route_id',
+      as: 'trips',
+    },
+  },
+  {
+    $unwind: '$trips',
+  },
+  {
+    $match: {
+      'trips.departure_time': departure_time,
+    },
+  },
+];
+
+// Execute the aggregation pipeline
+const result = await Route.aggregate(pipeline);
+
+// The result will contain trips that match both route_id and departure_time
+
+*/

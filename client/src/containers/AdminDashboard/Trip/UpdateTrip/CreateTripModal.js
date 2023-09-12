@@ -18,6 +18,7 @@ const CreateTripModal = () => {
         open={modal2Open}
         onOk={() => setModal2Open(false)}
         onCancel={() => setModal2Open(false)}
+        footer={null}
       >
         <CreateTripForm />
       </Modal>

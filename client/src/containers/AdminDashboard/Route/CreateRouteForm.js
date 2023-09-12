@@ -1,30 +1,46 @@
-import { Form, Button, Select, Input, Upload, InputNumber } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
-import { useState } from "react";
-import dayjs from "dayjs";
-import { isRejected } from "@reduxjs/toolkit";
-
+import { Form, Button, Input, InputNumber } from "antd";
+import { useEffect } from "react";
+import { useAddRouteMutation } from "@/redux/route/routeApi";
+import Swal from "sweetalert2";
+const initialData = {
+  from: "",
+  to: "",
+  distance: 0,
+};
 const CreateRouteForm = () => {
-  const [data, setData] = useState([]);
-  const onFinish = (values) => {
-    console.log({ values });
-    setData({
-      ...values,
-    });
+  const [
+    AddRoute,
+    { data: addResponse, error: addError, isLoading: addIsLoading },
+  ] = useAddRouteMutation();
+  const onFinish = async (values) => {
+    // console.log({ values });
+    await AddRoute(values);
   };
 
-  const uploadButton = (
-    <div>
-      <PlusOutlined />
-      <div
-        style={{
-          marginTop: 8,
-        }}
-      >
-        Upload
-      </div>
-    </div>
-  );
+  useEffect(() => {
+    if (addResponse?.success) {
+      form.setFieldsValue(initialData);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: `${addResponse?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } else {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: `${addError?.data?.errorMessage[0]?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  }, [addResponse, addError]);
+
+  const [form] = Form.useForm();
+  form.setFieldsValue(initialData);
+
   return (
     <div
       style={{
@@ -32,6 +48,7 @@ const CreateRouteForm = () => {
       }}
     >
       <Form
+        form={form}
         autoComplete="off"
         layout="vertical"
         onFinish={onFinish}
@@ -94,8 +111,13 @@ const CreateRouteForm = () => {
         </Form.Item>
 
         <Form.Item wrapperCol={{ span: 24 }}>
-          <Button block type="primary" htmlType="submit">
-            Submit
+          <Button
+            disabled={addIsLoading ? true : false}
+            block
+            type="primary"
+            htmlType="submit"
+          >
+            {addIsLoading ? "Loading..." : "Submit"}
           </Button>
         </Form.Item>
       </Form>

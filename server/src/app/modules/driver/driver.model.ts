@@ -1,12 +1,17 @@
 import { Schema, model } from 'mongoose'
-import { IDriver, DriverModel } from './driver.interface'
 import { driving_status } from './driver.constants'
+import { DriverModel, IDriver } from './driver.interface'
 
 export const driverSchema = new Schema<IDriver, DriverModel>(
   {
     name: {
       type: String,
       required: true,
+    },
+    driver_code: {
+      type: String,
+      required: true,
+      unique: true,
     },
     image: {
       type: String,
@@ -40,11 +45,23 @@ export const driverSchema = new Schema<IDriver, DriverModel>(
       type: String,
       required: true,
     },
-    driving_status: {
-      type: String,
-      required: true,
-      enum: driving_status,
-    },
+    /* 
+    export const driving_status = ['on-trip', 'rest', 'ready', 'sick']
+    */
+    // driving_status: {
+    //   type: String,
+    //   required: true,
+    //   enum: driving_status,
+    // },
+    availability_status: [
+      {
+        status: {
+          type: String,
+          enum: driving_status,
+        },
+        date: new Date().toString(),
+      },
+    ],
   },
   {
     timestamps: true,

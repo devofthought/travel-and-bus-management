@@ -15,8 +15,9 @@ import { User } from '../user/user.model'
 import {
   IRefreshTokenResponse,
   IUserLogin,
-  IUserLoginResponse
+  IUserLoginResponse,
 } from './auth.interface'
+import { generatedDriverCode } from '../driver/driver.utils'
 
 // oauthj cilent code
 const cilent = new OAuth2Client(
@@ -93,15 +94,17 @@ const createTraveler = async (payload: IUser): Promise<any> => {
   return { result: newUserAllData, refreshToken, accessToken }
 }
 
-
 const createDriver = async (payload: IDriver): Promise<any> => {
   const driverData = { ...payload }
+  const driver_code = await generatedDriverCode() // generated bus code
+
   let newDriverData = null
   const session = await mongoose.startSession()
   try {
     session.startTransaction()
     //array
     driverData.joining_date = new Date().toISOString()
+    driverData.driver_code = driver_code
     const newDriver = await Driver.create([driverData], { session })
     if (!newDriver.length) {
       throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create a driver')
@@ -224,7 +227,6 @@ const login = async (payload: IUserLogin): Promise<IUserLoginResponse> => {
     refreshToken,
   }
 }
-
 
 const refreshToken = async (token: string): Promise<IRefreshTokenResponse> => {
   let verifiedToken = null

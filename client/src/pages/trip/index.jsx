@@ -128,14 +128,97 @@ const Trip = () => {
     },
   ];
 
+  const getSingleTrip = {
+    id: "BUS123",
+    bus_id: "BUS123",
+    bus_model: "Volvo B7R",
+    driver_id: "DRV456",
+    traveling_date: "2023-09-15",
+    departure_time: "08:00 AM",
+    arrival_time: "03:30 PM",
+    from: "City A",
+    to: "City B",
+    fare: 1500,
+    seat_type: "AC",
+    available_seat: 10,
+    total_seat: 40,
+    seats: [
+      { name: "A1", isAvailable: true },
+      { name: "A2", isAvailable: true },
+      { name: "A" },
+      { name: "A3", isAvailable: true },
+      { name: "A4", isAvailable: true },
+      { name: "B1", isAvailable: false },
+      { name: "B2", isAvailable: true },
+      { name: "B" },
+      { name: "B3", isAvailable: true },
+      { name: "B4", isAvailable: true },
+      { name: "C1", isAvailable: true },
+      { name: "C2", isAvailable: true },
+      { name: "C" },
+      { name: "C3", isAvailable: false },
+      { name: "C4", isAvailable: false },
+      { name: "D1", isAvailable: false },
+      { name: "D2", isAvailable: false },
+      { name: "D" },
+      { name: "D3", isAvailable: true },
+      { name: "D4", isAvailable: true },
+      { name: "E1", isAvailable: false },
+      { name: "E2", isAvailable: false },
+      { name: "E" },
+      { name: "E3", isAvailable: true },
+      { name: "E4", isAvailable: true },
+      { name: "F1", isAvailable: true },
+      { name: "F2", isAvailable: true },
+      { name: "F" },
+      { name: "F3", isAvailable: true },
+      { name: "F4", isAvailable: true },
+      { name: "G1", isAvailable: true },
+      { name: "G2", isAvailable: true },
+      { name: "G" },
+      { name: "G3", isAvailable: true },
+      { name: "G4", isAvailable: true },
+      { name: "H1", isAvailable: true },
+      { name: "H2", isAvailable: true },
+      { name: "H" },
+      { name: "H3", isAvailable: true },
+      { name: "H4", isAvailable: true },
+      { name: "I1", isAvailable: true },
+      { name: "I2", isAvailable: true },
+      { name: "I" },
+      { name: "I3", isAvailable: true },
+      { name: "I4", isAvailable: true },
+      { name: "J1", isAvailable: true },
+      { name: "J2", isAvailable: true },
+      { name: "J" },
+      { name: "J3", isAvailable: true },
+      { name: "J4", isAvailable: true },
+    ],
+    reviews: [
+      { rating: 4.5, review: "" },
+      { rating: 4.7, review: "" },
+    ],
+  };
+
+  const [selectedSeats, setSelectedSeats] = useState([]);
+  const handleSelectSeat = (seat) => {
+    if (selectedSeats?.includes(seat)) {
+      setSelectedSeats(
+        selectedSeats.filter((selectedSeat) => selectedSeat !== seat)
+      );
+    }
+    if (!selectedSeats?.includes(seat) && selectedSeats?.length < 4) {
+      setSelectedSeats([...selectedSeats, seat]);
+    }
+  };
+  console.log(selectedSeats);
+
   const filterTripData = getAllTrip?.filter(
     (trip, index) =>
       trip?.from.toLocaleLowerCase().includes(from?.toLocaleLowerCase()) &&
       trip?.to.toLocaleLowerCase().includes(to?.toLocaleLowerCase()) &&
       trip?.traveling_date === date
   );
-  console.log(selectedBusId);
-  console.log(filterTripData);
 
   return (
     <div className=" bg-gray-100">
@@ -292,153 +375,64 @@ const Trip = () => {
                         <GiSteeringWheel className="w-10 h-10 text-gray-400" />
                       </div>
                       <div className="w-full grid grid-cols-5 gap-1 sm:gap-2">
-                        <span className="flex justify-center items-center">
-                          <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
-                        </span>
-                        <span className="flex justify-center items-center">
-                          <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
-                        </span>
-                        <span></span>
-                        <span className="flex justify-center items-center">
-                          <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
-                        </span>
-                        <span className="flex justify-center items-center">
-                          <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
-                        </span>
-
-                        <span className="flex justify-center items-center">
-                          <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
-                        </span>
-                        <span className="flex justify-center items-center">
-                          <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
-                        </span>
-                        <span></span>
-                        <span className="flex justify-center items-center">
-                          <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
-                        </span>
-                        <span className="flex justify-center items-center">
-                          <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
-                        </span>
-
-                        <span className="flex justify-center items-center">
-                          <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
-                        </span>
-                        <span className="flex justify-center items-center">
-                          <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
-                        </span>
-                        <span></span>
-                        <span className="flex justify-center items-center">
-                          <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
-                        </span>
-                        <span className="flex justify-center items-center">
-                          <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
-                        </span>
-
-                        <span className="flex justify-center items-center">
-                          <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
-                        </span>
-                        <span className="flex justify-center items-center">
-                          <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
-                        </span>
-                        <span></span>
-                        <span className="flex justify-center items-center">
-                          <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
-                        </span>
-                        <span className="flex justify-center items-center">
-                          <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
-                        </span>
-
-                        <span className="flex justify-center items-center">
-                          <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
-                        </span>
-                        <span className="flex justify-center items-center">
-                          <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
-                        </span>
-                        <span></span>
-                        <span className="flex justify-center items-center">
-                          <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
-                        </span>
-                        <span className="flex justify-center items-center">
-                          <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
-                        </span>
-
-                        <span className="flex justify-center items-center">
-                          <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
-                        </span>
-                        <span className="flex justify-center items-center">
-                          <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
-                        </span>
-                        <span></span>
-                        <span className="flex justify-center items-center">
-                          <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
-                        </span>
-                        <span className="flex justify-center items-center">
-                          <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
-                        </span>
-
-                        <span className="flex justify-center items-center">
-                          <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
-                        </span>
-                        <span className="flex justify-center items-center">
-                          <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
-                        </span>
-                        <span></span>
-                        <span className="flex justify-center items-center">
-                          <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
-                        </span>
-                        <span className="flex justify-center items-center">
-                          <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
-                        </span>
-
-                        <span className="flex justify-center items-center">
-                          <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
-                        </span>
-                        <span className="flex justify-center items-center">
-                          <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
-                        </span>
-                        <span></span>
-                        <span className="flex justify-center items-center">
-                          <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
-                        </span>
-                        <span className="flex justify-center items-center">
-                          <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
-                        </span>
-
-                        <span>
-                          <br />
-                        </span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-
-                        <span className="flex justify-center items-center">
-                          <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
-                        </span>
-                        <span className="flex justify-center items-center">
-                          <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
-                        </span>
-                        <span></span>
-                        <span className="flex justify-center items-center">
-                          <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
-                        </span>
-                        <span className="flex justify-center items-center">
-                          <MdChair className="w-10 h-10 mx-auto text-gray-400 cursor-pointer" />
-                        </span>
+                        {getSingleTrip?.seats?.map((seat, index) => {
+                          if (
+                            seat?.name === "A" ||
+                            seat?.name === "B" ||
+                            seat?.name === "C" ||
+                            seat?.name === "D" ||
+                            seat?.name === "E" ||
+                            seat?.name === "F" ||
+                            seat?.name === "G" ||
+                            seat?.name === "H" ||
+                            seat?.name === "I" ||
+                            seat?.name === "J"
+                          ) {
+                            return <span key={index}></span>;
+                          } else {
+                            return (
+                              <button
+                                key={index}
+                                className={`flex justify-center items-center border-none bg-white ${
+                                  seat?.isAvailable === false
+                                    ? "cursor-not-allowed"
+                                    : "cursor-pointer hover:bg-gray-200 rounded-lg"
+                                }`}
+                                disabled={seat?.isAvailable === false && true}
+                              >
+                                <MdChair
+                                  onClick={() => handleSelectSeat(seat?.name)}
+                                  className={`w-10 h-10 mx-auto ${
+                                    seat?.isAvailable
+                                      ? `${
+                                          selectedSeats[0] === seat?.name ||
+                                          selectedSeats[1] === seat?.name ||
+                                          selectedSeats[2] === seat?.name ||
+                                          selectedSeats[3] === seat?.name
+                                            ? "text-[#9cd27c]"
+                                            : "text-gray-400"
+                                        }`
+                                      : "text-[#ff9090]"
+                                  }`}
+                                />
+                              </button>
+                            );
+                          }
+                        })}
                       </div>
                     </div>
                     <div className="flex-1 p-4">
                       <h4 className="text-[#5b2192] text-2xl font-semibold text-center">
                         SEAT INFORMATION:
                       </h4>
-                      <table class="w-10/12 lg:w-1/2 mx-auto mt-5">
+                      <table className="w-10/12 lg:w-1/2 mx-auto mt-5">
                         <thead className="bg-gray-100">
                           <tr className="text-gray-600 border-b-4">
                             <th align="left" className="px-2 py-1">
                               Seats
                             </th>
                             <th
-                              class="d-none d-sm-table-cell px-2 py-1"
+                              className="d-none d-sm-table-cell px-2 py-1"
                               align="left"
                             >
                               Class
@@ -449,21 +443,20 @@ const Trip = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td className="py-2">B-3</td>
-                            <td class="d-none d-sm-table-cell py-2">E-Class</td>
-                            <td className="py-2">৳ 680.00</td>
-                          </tr>
-                          <tr>
-                            <td className="py-2">B-2</td>
-                            <td class="d-none d-sm-table-cell py-2">E-Class</td>
-                            <td className="py-2">৳ 680.00</td>
-                          </tr>
+                          {selectedSeats?.map((seat, index) => (
+                            <tr key={index}>
+                              <td className="py-2">{seat}</td>
+                              <td className="d-none d-sm-table-cell py-2">
+                                E-Class
+                              </td>
+                              <td className="py-2">৳ {trip?.fare}</td>
+                            </tr>
+                          ))}
                         </tbody>
                       </table>
                       <div>
                         <h4 className="text-center mt-4 text-lg font-semibold ">
-                          Total: ৳ 1360.00
+                          Total: ৳ {selectedSeats?.length * trip?.fare}
                         </h4>
                       </div>
                       <div className="border p-4 rounded-lg mt-10 w-full md:w-10/12 mx-auto">
