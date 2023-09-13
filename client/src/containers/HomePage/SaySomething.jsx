@@ -26,37 +26,37 @@ const SaySomething = () => {
                 type="text"
                 id="firstName"
                 placeholder="First Name"
-                className="font-sans appearance-none border-2 border-gray-400 border-t-gray-100 border-l-gray-50 rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-green-500 focus:shadow-outline"
+                className="font-sans appearance-none border-2 border-gray-400 border-t-gray-100 border-l-gray-50 rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-[#d84e55] focus:shadow-outline"
               />
               <input
                 type="text"
                 id="lastName"
                 placeholder="Last Name"
-                className="font-sans appearance-none border-2 border-gray-400 border-t-gray-100 border-l-gray-50 rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-green-500 focus:shadow-outline"
+                className="font-sans appearance-none border-2 border-gray-400 border-t-gray-100 border-l-gray-50 rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-[#d84e55] focus:shadow-outline"
               />
             </div>
             <input
               type="text"
               id="email"
               placeholder="Email"
-              className="font-sans appearance-none border-2 border-gray-400 border-t-gray-100 border-l-gray-50 rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-green-500 focus:shadow-outline"
+              className="font-sans appearance-none border-2 border-gray-400 border-t-gray-100 border-l-gray-50 rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-[#d84e55] focus:shadow-outline"
             />
             <div className="flex justify-between gap-4">
               <input
                 type="text"
                 id="phone"
                 placeholder="Phone"
-                className="font-sans appearance-none border-2 border-gray-400 border-t-gray-100 border-l-gray-50 rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-green-500 focus:shadow-outline"
+                className="font-sans appearance-none border-2 border-gray-400 border-t-gray-100 border-l-gray-50 rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-[#d84e55] focus:shadow-outline"
               />
               <input
                 type="text"
                 id="subject"
                 placeholder="Subject"
-                className="font-sans appearance-none border-2 border-gray-400 border-t-gray-100 border-l-gray-50 rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-green-500 focus:shadow-outline"
+                className="font-sans appearance-none border-2 border-gray-400 border-t-gray-100 border-l-gray-50 rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-[#d84e55] focus:shadow-outline"
               />
             </div>
             <textarea
-              className="font-sans resize-y rounded-md w-full min-h-[150px] p-3 border-2 border-gray-400  text-gray-700 leading-tight focus:outline-green-500 focus:shadow-outline"
+              className="font-sans resize-y rounded-md w-full min-h-[150px] p-3 border-2 border-gray-400  text-gray-700 leading-tight focus:outline-[#d84e55] focus:shadow-outline"
               placeholder="Type Your Message"
             ></textarea>
             <label className="cursor-pointer">
@@ -64,7 +64,7 @@ const SaySomething = () => {
               later use
             </label>
             <Button
-              styles="bg-green-500 hover:bg-green-600 rounded-md font-semibold py-3 w-36 text-white flex justify-center items-center"
+              styles="bg-[#d84e55] rounded-md font-semibold py-3 w-36 text-white flex justify-center items-center "
               btnName="SEND MESSAGE"
               textStyle=""
             />

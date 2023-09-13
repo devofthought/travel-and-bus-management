@@ -10,7 +10,7 @@ const Banner = ({ handleSearchTrip }) => {
         style={{ position: "relative", height: "500px" }}
       >
         <div
-          className="absolute bg-center bg-cover sm:bg-contain bg-no-repeat z-10 flex justify-center items-center"
+          className="absolute bg-center bg-cover sm:bg-contain lg:bg-cover bg-no-repeat z-10 flex justify-center items-center"
           style={{
             backgroundImage: `url("/images/HomeBannerImg.png")`,
             inset: "0px",
