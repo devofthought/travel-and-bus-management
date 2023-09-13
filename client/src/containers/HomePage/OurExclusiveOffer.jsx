@@ -23,7 +23,7 @@ const OurExclusiveOffer = () => {
           <div className="mt-10">
             <Tabs>
               <TabList className="flex items-center cursor-pointer">
-                <Tab className="text-2xl font-bold  bg-[#EDEEF9] outline-none  focus:text-[#d84e55] focus:underline rounded-md py-3 px-5">
+                <Tab className="text-2xl font-bold  bg-[#EDEEF9] outline-none focus:border-l-4 focus:border-red-500 rounded-md py-3 px-5">
                   Book Bus Tickets
                 </Tab>
                 <Tab className="text-2xl font-bold  bg-[#EDEEF9] outline-none  focus:text-[#d84e55] focus:underline rounded-md py-3 px-5 ml-6">
@@ -36,7 +36,7 @@ const OurExclusiveOffer = () => {
                   <div
                     data-aos="fade-right"
                     data-aos-offset="300"
-                    data-aos-easing="ease-in-sine"
+                    // data-aos-easing="ease-in-sine"
                     className=""
                   >
                     <p className="mt-6 text-xl">
