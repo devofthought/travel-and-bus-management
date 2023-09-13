@@ -22,7 +22,7 @@ const SearchBar = () => {
     to = e.target.to.value;
     date = e.target.date.value;
 
-    // console.log(from, to, date);
+    console.log(from, to, date);
     if (from.length > 0 && to.length > 0 && date.length > 0) {
       router.push(`/trip?from=${from}&to=${to}&date=${date}`);
     }
