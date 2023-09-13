@@ -127,7 +127,7 @@ const ReserveABus = () => {
             </div>
           </Col>
           <Col className="gutter-row" xs={24} sm={24} md={24} lg={12}>
-            <Carousel autoplay>
+            <Carousel dotPosition="right" fade autoplay>
               <div>
                 <Image
                   src="https://assets.volvo.com/is/image/VolvoInformationTechnologyAB/1860x1050-Volvo-7900-S-Charge-front45?size=1280,720&scl=1"
