@@ -46,7 +46,7 @@ const OurExclusiveOffer = () => {
                   <div
                     data-aos="fade-right"
                     data-aos-offset="300"
-                    data-aos-easing="ease-in-sine"
+                    // data-aos-easing="ease-in-sine"
                     className=""
                   >
                     <p className="mt-6 text-xl">

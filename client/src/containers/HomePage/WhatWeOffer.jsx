@@ -15,7 +15,7 @@ const offerData = [
     id: 2,
     icon: <MdOutlineDiscount className="" size={48}></MdOutlineDiscount>,
     title: "Discount & Promo",
-    style: "md:-mt-10 secondary-bg text-white",
+    style: "md:-mt-10 bg-custom-gradient text-white",
     des: " Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorum nemo distinctio dignissimos animi magnam, facere iste earum voluptatem labore corporis? Praesentium dolor ad facilis nisi",
   },
   {
@@ -34,7 +34,7 @@ const offerData = [
     id: 5,
     icon: <AiOutlineSafety className="" size={48}></AiOutlineSafety>,
     title: "Safety Guarantee",
-    style: "md:-mt-10 secondary-bg text-white",
+    style: "md:-mt-10 bg-custom-gradient text-white",
     des: " Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorum nemo distinctio dignissimos animi magnam, facere iste earum voluptatem labore corporis? Praesentium dolor ad facilis nisi",
   },
   {
@@ -73,7 +73,7 @@ const WhatWeOffer = () => {
               lg={8}
             >
               <div
-                className={`p-10 mb-8 rounded-2xl shadow-xl ${data?.style} hover:bg-blue-500 hover:text-white `}
+                className={`p-10 mb-8 rounded-2xl shadow-xl ${data?.style} hover:bg-custom-gradient hover:text-white `}
               >
                 <div className="">{data?.icon}</div>
                 <h1 className="text-2xl font-bold mt-6 ">{data?.title}</h1>
