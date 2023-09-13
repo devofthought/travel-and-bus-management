@@ -54,6 +54,14 @@ a {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.auth-bg{
+  background-image: url('../../public/highway.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: rgba(0, 0, 0, 0.6);
+  background-blend-mode: overlay;
+}
+
 /* ##################### Main Container ##################### */
 .main-container {
   width: 90%;
