@@ -20,7 +20,7 @@ const LoginForm = () => {
     >
       <label className=" font-medium">Email Address</label>
       <Form.Item
-        className="w-full h-10 mb-4"
+        className="w-full h-8 mb-4"
         name="email"
         rules={[
           {
@@ -29,7 +29,7 @@ const LoginForm = () => {
           },
         ]}
       >
-        <Input className="h-10 mt-1" />
+        <Input className="h-8 mt-1" />
       </Form.Item>
 
       <label className=" font-medium">Password</label>
@@ -42,15 +42,15 @@ const LoginForm = () => {
           },
         ]}
       >
-        <Input.Password className="h-10 mt-1" />
+        <Input.Password className="h-8 mt-1" />
       </Form.Item>
-      <p className="text-right text-sm secondary-text cursor-pointer -mt-5 w-full mb-5 hover:underline">
+      <p className="text-right text-sm text-black cursor-pointer -mt-5 w-full mb-5 hover:underline">
         Forget your password
       </p>
 
       <Form.Item>
         <Button
-          className="border-solid font-semibold w-full py-5 flex justify-center items-center"
+          className="border-solid bg-[#d84e55] font-semibold w-full py-5 -mb-6 flex justify-center items-center"
           type="primary"
           htmlType="submit"
         >
