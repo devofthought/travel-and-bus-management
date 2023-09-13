@@ -5,7 +5,7 @@ import SignUpForm from "@/containers/SignupPage/SignupForm";
 const SignUp = () => {
   return (
     <>
-      <h1 className="text-4xl text-center font-bold mb-10">Register</h1>
+      <h1 className="text-4xl text-center font-bold mb-6">Register</h1>
       <SocialLogin></SocialLogin>
       <SignUpForm></SignUpForm>
     </>
