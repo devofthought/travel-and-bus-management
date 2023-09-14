@@ -12,6 +12,21 @@
   }
 }
 
+.custom-segmented-button {
+  background-color: #ddd !important;
+  border-radius: 0px !important;
+}
+
+.ant-segmented-item {
+  border-radius: 0px !important;
+}
+
+.ant-segmented-item-selected {
+  background-color: #d84e55 !important;
+  color: white !important;
+  border-radius: 0px !important;
+}
+
 :root {
   scroll-behavior: smooth;
 }

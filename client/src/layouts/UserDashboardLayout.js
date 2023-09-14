@@ -179,6 +179,7 @@ const UserDashboardLayout = () => {
                 size="large"
                 block
                 options={segmentOptions}
+                className="custom-segmented-button" // Add this line to apply the custom class
                 onChange={(value) => setSelectedOption(value)}
               />
               {selectedOption === "My tour & trips" && (

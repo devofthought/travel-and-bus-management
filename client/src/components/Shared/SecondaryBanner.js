@@ -50,7 +50,7 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
         borderRadius: "10px",
       }}
     >
-      <div className="container ">
+      <div className="container mx-auto">
         <h1 className="text-4xl font-bold">Welcome to Our Bus Booking App</h1>
         <p className="mt-4 text-lg">
           Discover comfortable and convenient bus journeys for your travels.
@@ -73,9 +73,9 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
                   icon={<EditOutlined />}
                 />
               </div>
-              <div className="text-left ml-2">
-                <p>name</p>
-                <p>example@gmail.com</p>
+              <div className="text-left ml-3">
+                <h3 className="text-slate-900">Mr. Full Name</h3>
+                <p className="text-slate-900">example@gmail.com</p>
                 <button
                   onClick={() => setOpenDashboard(!openDashboard)}
                   className="bg-[#d84e55] hover:bg-[#d84e55] cursor-pointer text-white font-semibold py-1 px-4 shadow-md hover:shadow-lg transition duration-300 mt-2 border-0 rounded-md"
@@ -198,7 +198,7 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
 
             <Form.Item wrapperCol={{ span: 24 }} className="w-full mb-0">
               <Button
-                className="w-full bg-blue-500"
+                className="w-full bg-[#d84e55]"
                 block
                 type="primary"
                 htmlType="submit"
