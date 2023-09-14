@@ -225,9 +225,9 @@ const Trip = () => {
       <Navbar />
       <Banner />
 
-      {filterTripData &&
-        filterTripData?.length > 0 &&
-        filterTripData?.map((trip, index) => (
+      {getAllTrip &&
+        getAllTrip?.length > 0 &&
+        getAllTrip?.map((trip, index) => (
           <div
             className="main-container border border-[#5b2192] rounded-md"
             style={{
