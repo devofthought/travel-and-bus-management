@@ -366,15 +366,15 @@ const Trip = () => {
                       </span>
                     </li>
                   </ul>
-                  <div className="flex flex-col md:flex-row p-4 mt-4">
+                  <div className="flex flex-col md:flex-row sm:p-4 mt-4">
                     <div
-                      className="rounded-sm p-2 w-[280px] sm:w-[300px] md:w-[320px] mx-auto"
+                      className="rounded-sm p-2 w-[280px] h-[434px] mx-auto"
                       style={{ border: "1px solid lightgray" }}
                     >
-                      <div className="flex justify-end p-4 border-b border-[90%] mb-4">
-                        <GiSteeringWheel className="w-10 h-10 text-gray-400" />
+                      <div className="flex justify-end p-2 border-b border-[90%] mb-4">
+                        <GiSteeringWheel className="w-8 h-8 text-gray-400" />
                       </div>
-                      <div className="w-full grid grid-cols-5 gap-1 sm:gap-2">
+                      <div className="w-full grid grid-cols-5 gap-2">
                         {getSingleTrip?.seats?.map((seat, index) => {
                           if (
                             seat?.name === "A" ||
@@ -402,7 +402,7 @@ const Trip = () => {
                               >
                                 <MdChair
                                   onClick={() => handleSelectSeat(seat?.name)}
-                                  className={`w-10 h-10 mx-auto ${
+                                  className={`w-7 h-7 mx-auto ${
                                     seat?.isAvailable
                                       ? `${
                                           selectedSeats[0] === seat?.name ||
@@ -421,7 +421,7 @@ const Trip = () => {
                         })}
                       </div>
                     </div>
-                    <div className="flex-1 p-4">
+                    <div className="flex-1 mt-10 sm:mt-0 sm:p-4">
                       <h4 className="text-[#5b2192] text-2xl font-semibold text-center">
                         SEAT INFORMATION:
                       </h4>
@@ -459,7 +459,7 @@ const Trip = () => {
                           Total: ৳ {selectedSeats?.length * trip?.fare}
                         </h4>
                       </div>
-                      <div className="border p-4 rounded-lg mt-10 w-full md:w-10/12 mx-auto">
+                      <div className="border rounded-lg mt-10 w-10/12 lg:w-1/2 mx-auto">
                         <form className="flex flex-col gap-4">
                           <input
                             type="text"
