@@ -79,22 +79,23 @@ const Navbar = () => {
                 />
               </Link>
             </li>
-            <Link href="bus">
-              <Button
-                styles={`px-2 py-[2px] sm:px-3 sm:py-1 font-semibold text-gray-800 rounded-lg hover:bg-[#f0f0f0] duration-500`}
-                textStyle={`px-2`}
-                btnName="Bus"
-              />
-            </Link>
+
             <Link
-              href="/reserve-bus"
+              href="#reserveBus"
               className="hover:bg-[#f0f0f0] rounded-lg duration-500"
             >
               <Button
-                styles={`px-2 py-[2px] sm:px-3 sm:py-1 font-semibold text-gray-800 hover:bg-[#f0f0f0]" 
+                styles={`px-2 py-[2px] sm:px-5 sm:py-1 font-semibold text-gray-800 hover:bg-[#f0f0f0] rounded-md hover:rounded-md" 
                 }`}
                 textStyle={`px-2`}
                 btnName="Reserve Bus"
+              />
+            </Link>
+            <Link href="">
+              <Button
+                styles={`px-2 py-[2px] sm:px-5 sm:py-1 font-semibold text-gray-800 rounded-md hover:bg-[#f0f0f0] duration-500`}
+                textStyle={`px-2`}
+                btnName="Blogs"
               />
             </Link>
           </div>
@@ -102,7 +103,7 @@ const Navbar = () => {
           <div className="flex items-center gap-4">
             <Link href="/login">
               <Button
-                styles={`px-2 py-[2px] md:px-3 md:py-1 font-semibold border-2 rounded-lg bg-[#d84e55] text-white `}
+                styles={`px-2 py-[2px] md:px-5 md:py-1 font-semibold border-2 rounded-md bg-[#d84e55] text-white `}
                 textStyle={`px-2`}
                 btnName="Login"
               />
@@ -138,7 +139,7 @@ const Navbar = () => {
                 >
                   <div className="py-1" role="none">
                     <Link
-                      href="/reserve-bus"
+                      href="/dashboard"
                       className="text-gray-600 hover:bg-[#f3f4f9] block px-4 py-2 text-base duration-300"
                       role="menuitem"
                       tabIndex="-1"
@@ -147,16 +148,25 @@ const Navbar = () => {
                       Dashboard
                     </Link>
                     <Link
-                      href="/bus"
+                      href="/user-dashboard"
                       className="text-gray-600 hover:bg-[#f3f4f9] block px-4 py-2 text-base duration-300"
                       role="menuitem"
                       tabIndex="-1"
                       id="menu-item-0"
                     >
-                      Bus
+                      User Dashboard
                     </Link>
                     <Link
-                      href="/reserve-bus"
+                      href=""
+                      className="text-gray-600 hover:bg-[#f3f4f9] block px-4 py-2 text-base duration-300"
+                      role="menuitem"
+                      tabIndex="-1"
+                      id="menu-item-0"
+                    >
+                      Blogs
+                    </Link>
+                    <Link
+                      href="#reserveBus"
                       className="text-gray-600 hover:bg-[#f3f4f9] block px-4 py-2 text-base duration-300"
                       role="menuitem"
                       tabIndex="-1"

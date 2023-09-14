@@ -47,7 +47,7 @@ const offerData = [
 
 const WhatWeOffer = () => {
   return (
-    <div className="main-container">
+    <div className="main-container mt-36 lg:mt-44">
       <div className="mb-10 md:mb-28">
         <h1 className="font-bold text-center text-2xl md:text-3xl lg:text-4xl">
           What We Offer For You
