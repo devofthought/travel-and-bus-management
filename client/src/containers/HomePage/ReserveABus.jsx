@@ -33,8 +33,8 @@ const onFinishFailed = (errorInfo) => {
 
 const ReserveABus = () => {
   return (
-    <div className="main-container py-10">
-      <div className=" mb-10">
+    <div className="main-container py-36 lg:py-44" id="reserveBus">
+      <div className="mb-10">
         <h1 className="font-bold text-center text-2xl md:text-3xl lg:text-4xl">
           Do You Want To Go Picnic? <br /> Reserve a Full Bus
         </h1>

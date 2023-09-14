@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 const UserDashboardLayout = () => {
   const segmentOptions = ["My tour & trips", "Upcoming booking", "Reviews"];
   const [selectedOption, setSelectedOption] = useState("");
-  const [openDashboard, setOpenDashboard] = useState(false);
+  const [openDashboard, setOpenDashboard] = useState(true);
 
   useEffect(() => {
     setSelectedOption("My tour & trips");
@@ -172,23 +172,27 @@ const UserDashboardLayout = () => {
           setOpenDashboard={setOpenDashboard}
         />
 
-        {openDashboard && (
-          <div className="w-2/3 mx-auto mt-20">
-            <Segmented
-              size="large"
-              block
-              options={segmentOptions}
-              onChange={(value) => setSelectedOption(value)}
-            />
-            {selectedOption === "My tour & trips" && (
-              <MyTourAndTripsTable data={myTourAndTripData} />
-            )}
-            {selectedOption === "Upcoming booking" && (
-              <UpcomingBookingTable data={upcomingBookingData} />
-            )}
-            {selectedOption === "Reviews" && <ReviewTable data={reviewData} />}
-          </div>
-        )}
+        <div className="min-h-[500px]">
+          {openDashboard && (
+            <div className="w-2/3 mx-auto mt-20">
+              <Segmented
+                size="large"
+                block
+                options={segmentOptions}
+                onChange={(value) => setSelectedOption(value)}
+              />
+              {selectedOption === "My tour & trips" && (
+                <MyTourAndTripsTable data={myTourAndTripData} />
+              )}
+              {selectedOption === "Upcoming booking" && (
+                <UpcomingBookingTable data={upcomingBookingData} />
+              )}
+              {selectedOption === "Reviews" && (
+                <ReviewTable data={reviewData} />
+              )}
+            </div>
+          )}
+        </div>
       </div>
     </>
   );

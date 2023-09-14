@@ -7,7 +7,7 @@ import {
   PlusOutlined,
 } from "@ant-design/icons";
 
-const SecondaryBanner = ({openDashboard, setOpenDashboard}) => {
+const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
   const isLoggedIn = true;
 
   // modal
@@ -43,15 +43,19 @@ const SecondaryBanner = ({openDashboard, setOpenDashboard}) => {
   );
   return (
     <Card
-      className="bg-gradient-to-r from-blue-500 to-purple-500 text-white text-center py-12 pt-32"
-      style={{ borderRadius: "10px" }}
+      className="bg-center bg-cover sm:bg-contain lg:bg-cover bg-no-repeat z-10 text-gray-700 text-center py-12 pt-32 h-[500px]"
+      style={{
+        backgroundImage: `url("/images/HomeBannerImg.png")`,
+        inset: "0px",
+        borderRadius: "10px",
+      }}
     >
       <div className="container ">
         <h1 className="text-4xl font-bold">Welcome to Our Bus Booking App</h1>
         <p className="mt-4 text-lg">
           Discover comfortable and convenient bus journeys for your travels.
         </p>
-        <div className="flex justify-between items-center w-2/3 mx-auto mt-10">
+        <div className="flex justify-between items-center w-2/3 mx-auto mt-10 backdrop-blur-xl opacity-100  p-5 rounded-3xl">
           {isLoggedIn ? (
             <div className="flex items-start">
               <div className="relative w-16">
@@ -74,7 +78,7 @@ const SecondaryBanner = ({openDashboard, setOpenDashboard}) => {
                 <p>example@gmail.com</p>
                 <button
                   onClick={() => setOpenDashboard(!openDashboard)}
-                  className="bg-white hover:bg-gray-200 text-blue-500 font-semibold py-0.5 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 mt-2"
+                  className="bg-[#d84e55] hover:bg-[#d84e55] cursor-pointer text-white font-semibold py-1 px-4 shadow-md hover:shadow-lg transition duration-300 mt-2 border-0 rounded-md"
                 >
                   Details
                 </button>
@@ -82,7 +86,7 @@ const SecondaryBanner = ({openDashboard, setOpenDashboard}) => {
             </div>
           ) : (
             <div className="flex items-center justify-between">
-              <button className="bg-white hover:bg-gray-200 text-blue-500 font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-300">
+              <button className="bg-[#d84e55] hover:bg-[#d84e55] cursor-pointer text-white font-semibold py-2 px-4 shadow-md hover:shadow-lg transition duration-300  border-0 rounded-md">
                 Login
               </button>
 
@@ -101,7 +105,7 @@ const SecondaryBanner = ({openDashboard, setOpenDashboard}) => {
             </div>
           )}
 
-          <button className="bg-white hover:bg-gray-200 text-blue-500 font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-300">
+          <button className="bg-[#d84e55] hover:bg-[#d84e55] cursor-pointer text-white font-semibold py-2 px-4 shadow-md hover:shadow-lg transition duration-300  border-0 rounded-md">
             Modify Search
           </button>
         </div>

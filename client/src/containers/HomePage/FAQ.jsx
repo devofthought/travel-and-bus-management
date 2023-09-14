@@ -51,7 +51,7 @@ const FAQ = () => {
   };
 
   return (
-    <div className="main-container">
+    <div className="main-container my-36 lg:my-44">
       <div className="mb-10">
         <h1 className="break-words font-montserrat font-normal mb-4 text-4xl leading-7 text-gray-700">
           Frequently Asked Questions
