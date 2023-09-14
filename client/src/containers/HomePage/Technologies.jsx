@@ -19,7 +19,7 @@ const Technologies = () => {
     slidesToShow: 5,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 2000,
+    autoplaySpeed: 1000,
     pauseOnHover: true,
     responsive: [
       {
@@ -62,7 +62,10 @@ const Technologies = () => {
         <ul className="container">
           <Slider {...settings}>
             {icons.map((icon, index) => (
-              <div className="flex justify-center items-center rounded-xl cursor-auto" key={index}>
+              <div
+                className="flex justify-center items-center rounded-xl cursor-auto"
+                key={index}
+              >
                 <Image
                   src={icon}
                   alt={icon}

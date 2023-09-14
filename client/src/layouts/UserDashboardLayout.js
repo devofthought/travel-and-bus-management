@@ -8,12 +8,8 @@ import { useEffect, useState } from "react";
 
 const UserDashboardLayout = () => {
   const segmentOptions = ["My tour & trips", "Upcoming booking", "Reviews"];
-  const [selectedOption, setSelectedOption] = useState("");
+  const [selectedOption, setSelectedOption] = useState("My tour & trips");
   const [openDashboard, setOpenDashboard] = useState(true);
-
-  useEffect(() => {
-    setSelectedOption("My tour & trips");
-  }, []);
 
   const myTourAndTripData = [
     {
