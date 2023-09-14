@@ -3,6 +3,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Rate } from "antd";
 import { BiSolidUserCircle } from "react-icons/bi";
+import SectionTitle from "@/components/Shared/SectionTitle";
 
 const reviewData = [
   {
@@ -81,14 +82,9 @@ const Review = () => {
   };
 
   return (
-    <div className="main-container my-36 lg:my-44">
-      <div className=" mb-6">
-        <h1 className="font-bold text-center text-2xl md:text-3xl lg:text-4xl">
-          What Our Clients Say
-        </h1>
-        <div className="h-[2px] md:h-1 w-[160px] bg-[#d84e55] mx-auto mt-[10px] "></div>
-      </div>
-      <div className="mb-10 px-2 md:px-0">
+    <div className="main-container my-32 lg:my-36">
+      <SectionTitle title={"What Our Client Say"}></SectionTitle>
+      <div className="px-2 md:px-0">
         <Slider {...settings}>
           {reviewData.map((data, index) => (
             <div key={index}>

@@ -16,10 +16,10 @@ const ExclusiveOffer = () => {
   }, []);
 
   return (
-    <div className="main-container mb-36 lg:mb-44">
+    <div className="main-container my-32 lg:my-36">
       <div className="flex flex-col md:flex-row">
         <div className="w-full md:w-1/2">
-          <p className="text-2xl text-center md:text-left md:text-5xl">
+          <p className="text-center md:text-left text-2xl md:text-3xl lg:text-4xl">
             NOW, <span className="font-bold">GET MORE THAN JUST BUS</span>{" "}
             TICKETS WITH DHRUTO!
           </p>
