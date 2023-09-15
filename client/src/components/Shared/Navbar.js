@@ -84,16 +84,16 @@ const Navbar = () => {
               href="#reserveBus"
               className="hover:bg-[#f0f0f0] rounded-lg duration-500"
             >
-              <Button btnName="Reserve Bus" styles="py-1 px-3"></Button>
+              <Button btnName="Reserve Bus" styles="py-2 px-3"></Button>
             </Link>
             <Link href="">
-              <Button btnName="Blogs" styles="py-1 px-3"></Button>
+              <Button btnName="Blogs" styles="py-2 px-3"></Button>
             </Link>
           </div>
           {/* Right side menu */}
           <div className="flex items-center gap-4">
             <Link href="/login">
-              <Button btnName="Login" styles="py-1 px-3"></Button>
+              <Button btnName="Login" styles="py-2 px-3"></Button>
             </Link>
             <div className="relative inline-block text-left">
               <div>
