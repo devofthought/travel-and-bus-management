@@ -1,11 +1,12 @@
 import Image from "next/image";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
-import { Button } from "antd";
+// import { Button } from "antd";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect, useState } from "react";
 import { Segmented } from "antd";
+import Button from "@/components/UI/Button";
 
 const ExclusiveOffer = () => {
   const segmentOptions = ["Tour & Travel", "Booking Bus"];
@@ -50,12 +51,17 @@ const ExclusiveOffer = () => {
                     Airport Transfers
                   </h1>
 
-                  <Button
+                  {/* <Button
                     className="mt-6 py-6 px-14 text-center text-lg md:text-xl flex bg-[#d84e55] items-center"
                     type="primary"
                   >
                     Buy Bus Tickets
-                  </Button>
+                  </Button> */}
+                  <Button
+                    btnName="Buy Bus Tickets"
+                    styles="w-1/2 mt-6 py-2 "
+                    textStyle={true}
+                  ></Button>
                 </div>
                 <div data-aos="zoom-in" className="md:-mt-20">
                   <Image
@@ -92,11 +98,10 @@ const ExclusiveOffer = () => {
                     Hassle- free customer support
                   </h1>
                   <Button
-                    className="mt-6 py-6 px-14 text-center text-lg md:text-xl flex bg-[#d84e55] items-center"
-                    type="primary"
-                  >
-                    Buy Train Tickets
-                  </Button>
+                    btnName="Buy Train Tickets"
+                    styles="w-1/2 mt-6 py-2 "
+                    textStyle={true}
+                  ></Button>
                 </div>
                 <div
                   data-aos="zoom-in"

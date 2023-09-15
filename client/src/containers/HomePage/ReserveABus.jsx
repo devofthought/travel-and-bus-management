@@ -1,16 +1,8 @@
-import {
-  Col,
-  Row,
-  Input,
-  Carousel,
-  DatePicker,
-  Select,
-  Form,
-  Button,
-} from "antd";
+import { Col, Row, Input, Carousel, DatePicker, Select, Form } from "antd";
 import Image from "next/image";
 import moment from "moment";
 import SectionTitle from "@/components/Shared/SectionTitle";
+import Button from "@/components/UI/Button";
 
 const dateFormatList = ["DD/MM/YYYY", "DD/MM/YY", "DD-MM-YYYY", "DD-MM-YY"];
 
@@ -111,12 +103,17 @@ const ReserveABus = () => {
                   </Form.Item>
                 </div>
                 <Form.Item>
-                  <Button
+                  {/* <Button
                     htmlType="submit"
                     className="border-none h-14 bg-[#d84e55] cursor-pointer text-center w-full mt-2 rounded-lg text-lg text-white"
                   >
                     Reserving Request
-                  </Button>
+                  </Button> */}
+                  <Button
+                    btnName="Reserving Request"
+                    styles="w-full  py-2 "
+                    textStyle={true}
+                  ></Button>
                 </Form.Item>
               </Form>
             </div>

@@ -1,4 +1,5 @@
-import { Button, Form, Input } from "antd";
+import { Form, Input } from "antd";
+import Button from "@/components/UI/Button";
 
 const SignUpForm = () => {
   const onFinish = (values) => {
@@ -81,13 +82,18 @@ const SignUpForm = () => {
       </Form.Item>
 
       <Form.Item>
-        <Button
+        {/* <Button
           className="border-solid bg-[#d84e55] font-semibold w-full py-5 -mb-6 flex justify-center mt-1 items-center"
           type="primary"
           htmlType="submit"
         >
           Sign up
-        </Button>
+        </Button> */}
+        <Button
+          btnName="Sign up"
+          styles="w-full py-2"
+          textStyle={true}
+        ></Button>
       </Form.Item>
     </Form>
   );
