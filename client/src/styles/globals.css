@@ -63,26 +63,17 @@ a {
 
 /* ##################### Common Colors ##################### */
 .primary-text {
-  color: #22c55e;
+  color: #d84e55;
 }
 .secondary-text {
-  color: #3b83f6;
+  color: #f1f0f2;
 }
 .primary-bg {
-  background: #22c55e;
+  background: #d84e55;
 }
 .secondary-bg {
-  background: #3b83f6;
+  background: #f1f0f2;
 }
-
-.secondary-bg-hover:hover {
-  background: #3b83f6;
-  color: #fff;
-  transition: 300ms;
-  --tw-bg-opacity: 0.2;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-}
-
 .auth-bg {
   background-image: url("../../public/highway.jpg");
   background-repeat: no-repeat;

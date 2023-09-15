@@ -8,6 +8,7 @@ import {
   RefundFQA,
   TicketFQA,
 } from "@/utils/data/faqData";
+import SectionTitle from "@/components/Shared/SectionTitle";
 
 const FAQ = () => {
   const [selectedOption, setSelectedOption] = useState("General");
@@ -51,13 +52,8 @@ const FAQ = () => {
   };
 
   return (
-    <div className="main-container my-36 lg:my-44">
-      <div className="mb-10">
-        <h1 className="break-words font-montserrat font-normal mb-4 text-4xl leading-7 text-gray-700">
-          Frequently Asked Questions
-        </h1>
-        <div className="h-[2px] md:h-1 w-[160px] bg-[#d84e55] mx-right mt-[10px]"></div>
-      </div>
+    <div className="main-container my-32 lg:my-36">
+      <SectionTitle title={"Frequently Asked Questions"}></SectionTitle>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-y-2 mb-4">
         {renderOptions()}
       </div>

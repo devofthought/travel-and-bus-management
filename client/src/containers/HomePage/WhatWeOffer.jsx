@@ -4,6 +4,7 @@ import { FiSmartphone, FiAward } from "react-icons/fi";
 import { BsCardChecklist } from "react-icons/bs";
 import { BiSupport } from "react-icons/bi";
 import { MdOutlineDiscount } from "react-icons/md";
+import SectionTitle from "@/components/Shared/SectionTitle";
 const offerData = [
   {
     id: 1,
@@ -47,13 +48,14 @@ const offerData = [
 
 const WhatWeOffer = () => {
   return (
-    <div className="main-container mt-36 lg:mt-44">
-      <div className="mb-10 md:mb-28">
+    <div className="main-container my-32 lg:my-36">
+      {/* <div className="mb-10 md:mb-28">
         <h1 className="font-bold text-center text-2xl md:text-3xl lg:text-4xl">
           What We Offer For You
         </h1>
         <div className="h-[2px] md:h-1 w-[160px] bg-[#d84e55] mx-auto mt-[10px]"></div>
-      </div>
+      </div> */}
+      <SectionTitle title="What We Offer For You" mb={20}></SectionTitle>
       <div>
         <Row
           gutter={{
@@ -73,7 +75,7 @@ const WhatWeOffer = () => {
               lg={8}
             >
               <div
-                className={`p-10 mb-8 rounded-2xl shadow-xl ${data?.style} hover:bg-custom-gradient hover:text-white `}
+                className={`p-10 mt-8 rounded-2xl shadow-xl ${data?.style} hover:bg-custom-gradient hover:text-white `}
               >
                 <div className="">{data?.icon}</div>
                 <h1 className="text-2xl font-bold mt-6 ">{data?.title}</h1>

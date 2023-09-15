@@ -3,6 +3,7 @@ import BookingDetailsCard from "@/containers/PaymentPage/BookingDetailsCard";
 import PassengerDetailsCard from "@/containers/PaymentPage/PassengerDetailsCard";
 import PaymentDetailsCard from "@/containers/PaymentPage/PaymentDetailsCard";
 import PaymentMethodCard from "@/containers/PaymentPage/PaymentMethodCard";
+import RootLayout from "@/layouts/RootLayout";
 
 //! fake data for payment page
 const data = {
@@ -27,10 +28,10 @@ const Payment = () => {
     <>
       <div className="main-container">
         <div className=" my-10">
-          <h1 className="font-bold text-center text-5xl">
+          <h1 className="font-bold text-center text-4xl">
             Preview Your Booking Information
           </h1>
-          <div className="h-1 w-[200px] secondary-bg mx-auto mt-4"></div>
+          <div className="h-1 w-[200px] primary-bg mx-auto mt-3"></div>
         </div>
         <BookingDetailsCard data={data}></BookingDetailsCard>
         <div className="mt-8 flex flex-col md:flex-row gap-5">
@@ -45,9 +46,12 @@ const Payment = () => {
           </div>
         </div>
       </div>
-      <Footer></Footer>
     </>
   );
 };
 
 export default Payment;
+
+Payment.getLayout = function getLayout(page) {
+  return <RootLayout>{page}</RootLayout>;
+};

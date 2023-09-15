@@ -10,7 +10,7 @@ const SaySomething = () => {
   };
 
   return (
-    <div className="main-container mb-36 lg:mb-44">
+    <div className="main-container my-32 lg:my-36">
       <div className="flex flex-col md:flex-row gap-6 lg:gap-14">
         <div className="w-full md:w-[50%] md:px-4">
           <h1 className="break-words font-montserrat font-semibold mb-4 text-4xl leading-7 text-gray-800">
@@ -59,11 +59,16 @@ const SaySomething = () => {
               className="font-sans resize-y rounded-md w-full min-h-[150px] p-3 border-2 border-gray-400  text-gray-700 leading-tight focus:outline-[#d84e55] focus:shadow-outline"
               placeholder="Type Your Message"
             ></textarea>
-            <Button
+            {/* <Button
               styles="bg-[#d84e55] rounded-md font-semibold py-3 w-36 text-white flex justify-center items-center "
               btnName="SEND MESSAGE"
               textStyle=""
-            />
+            /> */}
+            <Button
+              btnName="Send Message"
+              styles="w-full py-2 "
+              textStyle={true}
+            ></Button>
           </form>
         </div>
         <div className="w-full md:w-[50%] flex flex-col justify-center gap-6 text-gray-800">
