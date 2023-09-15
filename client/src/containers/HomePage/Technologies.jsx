@@ -19,8 +19,8 @@ const Technologies = () => {
     slidesToShow: 5,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 2000,
-    pauseOnHover: true,
+    autoplaySpeed: 1000,
+    pauseOnHover: false,
     responsive: [
       {
         breakpoint: 1024,
@@ -53,10 +53,10 @@ const Technologies = () => {
   return (
     <div className="main-container my-36 lg:my-44">
       <div className="mb-6 md:mb-10">
-        <h1 className="font-bold text-center text-2xl md:text-3xl lg:text-4xl">
+        <h1 className="font-bold text-center font-montserrat text-2xl md:text-3xl lg:text-4xl">
           Technologies Used
         </h1>
-        <div className="h-[2px] md:h-1 w-[160px] bg-[#d84e55] mx-auto mt-[10px]"></div>
+        <div className="h-[2px] md:h-1 w-[160px] red-bg mx-auto mt-[10px]"></div>
       </div>
       <div>
         <ul className="container">

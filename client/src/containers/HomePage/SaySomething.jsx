@@ -60,7 +60,7 @@ const SaySomething = () => {
               placeholder="Type Your Message"
             ></textarea>
             <Button
-              styles="bg-[#d84e55] rounded-md font-semibold py-3 w-36 text-white flex justify-center items-center "
+              styles="red-bg rounded-md font-semibold py-3 w-36 text-white flex justify-center items-center "
               btnName="SEND MESSAGE"
               textStyle=""
             />
@@ -80,7 +80,7 @@ const SaySomething = () => {
           </div>
           <div className="py-6" style={{ borderBottom: "1px solid lightgray" }}>
             <div
-              className="border-l-green-500 px-4"
+              className="border-l-gray-500 px-4"
               style={{ borderLeft: "4px solid" }}
             >
               <p>Call Us:</p>
@@ -91,7 +91,7 @@ const SaySomething = () => {
           </div>
           <div className="py-6" style={{ borderBottom: "1px solid lightgray" }}>
             <div
-              className="border-l-blue-500 px-4"
+              className="border-l-red-500 px-4"
               style={{ borderLeft: "4px solid" }}
             >
               <p>Office Address:</p>

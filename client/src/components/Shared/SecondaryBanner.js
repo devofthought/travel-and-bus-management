@@ -78,7 +78,7 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
                 <p className="text-slate-900">example@gmail.com</p>
                 <button
                   onClick={() => setOpenDashboard(!openDashboard)}
-                  className="bg-[#d84e55] hover:bg-[#d84e55] cursor-pointer text-white font-semibold py-1 px-4 shadow-md hover:shadow-lg transition duration-300 mt-2 border-0 rounded-md"
+                  className="red-bg hover:red-bg cursor-pointer text-white font-semibold py-1 px-4 shadow-md hover:shadow-lg transition duration-300 mt-2 border-0 rounded-md"
                 >
                   Details
                 </button>
@@ -86,7 +86,7 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
             </div>
           ) : (
             <div className="flex items-center justify-between">
-              <button className="bg-[#d84e55] hover:bg-[#d84e55] cursor-pointer text-white font-semibold py-2 px-4 shadow-md hover:shadow-lg transition duration-300  border-0 rounded-md">
+              <button className="red-bg hover:red-bg cursor-pointer text-white font-semibold py-2 px-4 shadow-md hover:shadow-lg transition duration-300  border-0 rounded-md">
                 Login
               </button>
 
@@ -105,7 +105,7 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
             </div>
           )}
 
-          <button className="bg-[#d84e55] hover:bg-[#d84e55] cursor-pointer text-white font-semibold py-2 px-4 shadow-md hover:shadow-lg transition duration-300  border-0 rounded-md">
+          <button className="red-bg hover:red-bg cursor-pointer text-white font-semibold py-2 px-4 shadow-md hover:shadow-lg transition duration-300  border-0 rounded-md">
             Modify Search
           </button>
         </div>
@@ -198,7 +198,7 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
 
             <Form.Item wrapperCol={{ span: 24 }} className="w-full mb-0">
               <Button
-                className="w-full bg-[#d84e55]"
+                className="w-full red-bg"
                 block
                 type="primary"
                 htmlType="submit"

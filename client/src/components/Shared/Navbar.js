@@ -103,7 +103,7 @@ const Navbar = () => {
           <div className="flex items-center gap-4">
             <Link href="/login">
               <Button
-                styles={`px-2 py-[2px] md:px-5 md:py-1 font-semibold border-2 rounded-md bg-[#d84e55] text-white `}
+                styles={`px-2 py-[2px] md:px-5 md:py-1 font-semibold border-2 rounded-md red-bg text-white `}
                 textStyle={`px-2`}
                 btnName="Login"
               />

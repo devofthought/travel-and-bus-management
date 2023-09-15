@@ -31,7 +31,7 @@ const FAQ = () => {
         key={option}
         className={`px-4 py-2 cursor-pointer ${
           selectedOption === option
-            ? "bg-[#d84e55] text-white"
+            ? "red-bg text-white"
             : "bg-gray-200 text-gray-700 hover:bg-gray-300 hover:border-b-4 hover:border-indigo-500"
         }`}
         onClick={() => handleChange(option)}
@@ -56,7 +56,7 @@ const FAQ = () => {
         <h1 className="break-words font-montserrat font-normal mb-4 text-4xl leading-7 text-gray-700">
           Frequently Asked Questions
         </h1>
-        <div className="h-[2px] md:h-1 w-[160px] bg-[#d84e55] mx-right mt-[10px]"></div>
+        <div className="h-[2px] md:h-1 w-[160px] red-bg mx-right mt-[10px]"></div>
       </div>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-y-2 mb-4">
         {renderOptions()}

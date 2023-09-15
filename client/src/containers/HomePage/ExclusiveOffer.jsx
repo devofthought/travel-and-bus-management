@@ -51,7 +51,7 @@ const ExclusiveOffer = () => {
                   </h1>
 
                   <Button
-                    className="mt-6 py-6 px-14 text-center text-lg md:text-xl flex bg-[#d84e55] items-center"
+                    className="mt-6 py-6 px-14 text-center text-lg md:text-xl flex red-bg items-center"
                     type="primary"
                   >
                     Buy Bus Tickets
@@ -92,7 +92,7 @@ const ExclusiveOffer = () => {
                     Hassle- free customer support
                   </h1>
                   <Button
-                    className="mt-6 py-6 px-14 text-center text-lg md:text-xl flex bg-[#d84e55] items-center"
+                    className="mt-6 py-6 px-14 text-center text-lg md:text-xl flex red-bg items-center"
                     type="primary"
                   >
                     Buy Train Tickets

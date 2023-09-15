@@ -56,7 +56,7 @@ const OurBuses = () => {
         <h1 className="font-bold text-center text-2xl md:text-3xl lg:text-4xl">
           Our Top Buses
         </h1>
-        <div className="h-[2px] md:h-1 w-[160px] bg-[#d84e55] mx-auto mt-[10px] "></div>
+        <div className="h-[2px] md:h-1 w-[160px] red-bg mx-auto mt-[10px] "></div>
       </div>
       <div className="mb-10 px-2 md:px-0">
         <Slider {...settings}>

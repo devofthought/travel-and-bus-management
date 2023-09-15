@@ -17,7 +17,7 @@ class MyDocument extends Document {
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
           <link
-            href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Merienda&family=Montserrat&family=Saira&family=Ubuntu&display=swap"
             rel="stylesheet"
           />
         </Head>

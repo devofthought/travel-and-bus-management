@@ -50,7 +50,7 @@ const LoginForm = () => {
 
       <Form.Item>
         <Button
-          className="border-solid bg-[#d84e55] font-semibold w-full py-5 -mb-6 flex justify-center items-center"
+          className="border-solid red-bg font-semibold w-full py-5 -mb-6 flex justify-center items-center"
           type="primary"
           htmlType="submit"
         >

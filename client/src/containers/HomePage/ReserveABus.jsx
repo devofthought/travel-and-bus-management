@@ -38,7 +38,7 @@ const ReserveABus = () => {
         <h1 className="font-bold text-center text-2xl md:text-3xl lg:text-4xl">
           Do You Want To Go Picnic? <br /> Reserve a Full Bus
         </h1>
-        <div className="h-[2px] md:h-1 w-[160px] bg-[#d84e55] mx-auto mt-[10px]"></div>
+        <div className="h-[2px] md:h-1 w-[160px] red-bg mx-auto mt-[10px]"></div>
       </div>
       <div>
         <Row
@@ -118,7 +118,7 @@ const ReserveABus = () => {
                 <Form.Item>
                   <Button
                     htmlType="submit"
-                    className="border-none h-14 bg-[#d84e55] cursor-pointer text-center w-full mt-2 rounded-lg text-lg text-white"
+                    className="border-none h-14 red-bg cursor-pointer text-center w-full mt-2 rounded-lg text-lg text-white"
                   >
                     Reserving Request
                   </Button>
