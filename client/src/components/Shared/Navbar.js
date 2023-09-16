@@ -84,29 +84,16 @@ const Navbar = () => {
               href="#reserveBus"
               className="hover:bg-[#f0f0f0] rounded-lg duration-500"
             >
-              <Button
-                styles={`px-2 py-[2px] sm:px-5 sm:py-1 font-semibold text-gray-800 hover:bg-[#f0f0f0] rounded-md hover:rounded-md" 
-                }`}
-                textStyle={`px-2`}
-                btnName="Reserve Bus"
-              />
+              <Button btnName="Reserve Bus" styles="py-2 px-3"></Button>
             </Link>
             <Link href="">
-              <Button
-                styles={`px-2 py-[2px] sm:px-5 sm:py-1 font-semibold text-gray-800 rounded-md hover:bg-[#f0f0f0] duration-500`}
-                textStyle={`px-2`}
-                btnName="Blogs"
-              />
+              <Button btnName="Blogs" styles="py-2 px-3"></Button>
             </Link>
           </div>
           {/* Right side menu */}
           <div className="flex items-center gap-4">
             <Link href="/login">
-              <Button
-                styles={`px-2 py-[2px] md:px-5 md:py-1 font-semibold border-2 rounded-md red-bg text-white `}
-                textStyle={`px-2`}
-                btnName="Login"
-              />
+              <Button btnName="Login" styles="py-2 px-3"></Button>
             </Link>
             <div className="relative inline-block text-left">
               <div>

@@ -1,12 +1,15 @@
 import React from "react";
 
-const Button = ({ styles, btnName, textStyle }) => {
+const Button = ({ styles, btnName }) => {
   return (
-    <div className={`${styles} cursor-pointer`}>
-      <div className={(textStyle && "flex items-center justify-center") || ""}>
+    <>
+      <button
+        type="submit"
+        className={`${styles} primary-bg text-white border-none rounded-[5px] cursor-pointer text-center`}
+      >
         {btnName}
-      </div>
-    </div>
+      </button>
+    </>
   );
 };
 

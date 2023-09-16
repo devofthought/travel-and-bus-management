@@ -2,6 +2,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Image from "next/image";
+import SectionTitle from "@/components/Shared/SectionTitle";
 
 const reviewData = [
   "https://assets.volvo.com/is/image/VolvoInformationTechnologyAB/1860x1050-Volvo-7900-S-Charge-front45?size=1280,720&scl=1",
@@ -51,13 +52,8 @@ const OurBuses = () => {
   };
 
   return (
-    <div className="main-container my-36 lg:my-44">
-      <div className="mb-6">
-        <h1 className="font-bold text-center text-2xl md:text-3xl lg:text-4xl">
-          Our Top Buses
-        </h1>
-        <div className="h-[2px] md:h-1 w-[160px] red-bg mx-auto mt-[10px] "></div>
-      </div>
+    <div className="main-container my-32 lg:my-36">
+      <SectionTitle title={"Our Top Buses"}></SectionTitle>
       <div className="mb-10 px-2 md:px-0">
         <Slider {...settings}>
           {reviewData.map((data, index) => (

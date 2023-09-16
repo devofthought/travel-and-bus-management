@@ -2,8 +2,8 @@ const PassengerDetailsCard = (data) => {
   const { name, phone, email } = data.data;
   return (
     <div>
-      <div className="bg-gray-200 p-5 rounded-lg">
-        <h1 className="text-2xl font-semibold secondary-text">
+      <div className="secondary-bg p-5 rounded-lg">
+        <h1 className="text-2xl font-semibold primary-text">
           Passenger Details :
         </h1>
         <div className="bg-white p-3 mt-3 rounded-lg">
