@@ -72,7 +72,7 @@ const SearchBar = () => {
             />
           </div>
           <button
-            className="border-none p-3 h-full text-lg sm:text-xl  bg-[#d84e55] sm:font-bold  rounded-2xl lg:rounded-none lg:rounded-r-[36px] text-white cursor-pointer leading-6 "
+            className="border-none p-3 h-full text-lg sm:text-xl  red-bg sm:font-bold  rounded-2xl lg:rounded-none lg:rounded-r-[36px] text-white cursor-pointer leading-6 "
             type="submit"
           >
             SEARCH BUSES

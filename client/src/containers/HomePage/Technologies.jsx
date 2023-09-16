@@ -20,8 +20,8 @@ const Technologies = () => {
     slidesToShow: 5,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 2000,
-    pauseOnHover: true,
+    autoplaySpeed: 1000,
+    pauseOnHover: false,
     responsive: [
       {
         breakpoint: 1024,

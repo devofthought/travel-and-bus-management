@@ -32,7 +32,7 @@ const FAQ = () => {
         key={option}
         className={`px-4 py-2 cursor-pointer ${
           selectedOption === option
-            ? "bg-[#d84e55] text-white"
+            ? "red-bg text-white"
             : "bg-gray-200 text-gray-700 hover:bg-gray-300 hover:border-b-4 hover:border-indigo-500"
         }`}
         onClick={() => handleChange(option)}

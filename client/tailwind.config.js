@@ -9,6 +9,12 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        montserrat: ["Montserrat", "sans"],
+        saira: ["Saira", "sans-serif"],
+        ubuntu: ["Ubuntu"],
+        merienda: ["Merienda"],
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":

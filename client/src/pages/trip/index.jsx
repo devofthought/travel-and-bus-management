@@ -321,7 +321,7 @@ const Trip = () => {
                     onClick={() => handleSelectBus(trip?.id)}
                   >
                     <Button
-                      styles={`w-32 px-2 py-[2px] md:px-3 md:py-1 font-semibold border-2 rounded-md bg-[#D84E55] text-white`}
+                      styles={`w-32 px-2 py-[2px] md:px-3 md:py-1 font-semibold border-2 rounded-md red-bg text-white`}
                       textStyle={`btn-text px-2`}
                       btnName="View Seats"
                     />

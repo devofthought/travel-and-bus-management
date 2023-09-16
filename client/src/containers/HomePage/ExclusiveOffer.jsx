@@ -50,7 +50,6 @@ const ExclusiveOffer = () => {
                   <h1 className="text-base md:text-xl mt-3">
                     Airport Transfers
                   </h1>
-
                   {/* <Button
                     className="mt-6 py-6 px-14 text-center text-lg md:text-xl flex bg-[#d84e55] items-center"
                     type="primary"
