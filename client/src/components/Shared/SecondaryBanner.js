@@ -6,6 +6,7 @@ import {
   GoogleOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
+import MainButton from "../UI/Button";
 
 const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
   const isLoggedIn = true;
@@ -78,7 +79,7 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
                 <p className="text-slate-900">example@gmail.com</p>
                 <button
                   onClick={() => setOpenDashboard(!openDashboard)}
-                  className="bg-[#d84e55] hover:bg-[#d84e55] cursor-pointer text-white font-semibold py-1 px-4 shadow-md hover:shadow-lg transition duration-300 mt-2 border-0 rounded-md"
+                  className="primary-bg cursor-pointer text-white font-medium py-1 px-4 shadow-md hover:shadow-lg transition duration-300 mt-2 border-0 rounded-[5px]"
                 >
                   Details
                 </button>
@@ -105,9 +106,7 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
             </div>
           )}
 
-          <button className="bg-[#d84e55] hover:bg-[#d84e55] cursor-pointer text-white font-semibold py-2 px-4 shadow-md hover:shadow-lg transition duration-300  border-0 rounded-md">
-            Modify Search
-          </button>
+          <MainButton styles="py-2 px-4" btnName="Modify Search"></MainButton>
         </div>
       </div>
       <Modal
@@ -197,14 +196,7 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
             </Form.Item>
 
             <Form.Item wrapperCol={{ span: 24 }} className="w-full mb-0">
-              <Button
-                className="w-full bg-[#d84e55]"
-                block
-                type="primary"
-                htmlType="submit"
-              >
-                Submit
-              </Button>
+              <MainButton btnName={"Submit"} styles="w-full py-2"></MainButton>
             </Form.Item>
           </Form>
         </div>

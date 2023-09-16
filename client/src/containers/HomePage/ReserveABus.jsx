@@ -103,16 +103,9 @@ const ReserveABus = () => {
                   </Form.Item>
                 </div>
                 <Form.Item>
-                  {/* <Button
-                    htmlType="submit"
-                    className="border-none h-14 bg-[#d84e55] cursor-pointer text-center w-full mt-2 rounded-lg text-lg text-white"
-                  >
-                    Reserving Request
-                  </Button> */}
                   <Button
                     btnName="Reserving Request"
-                    styles="w-full  py-2 "
-                    textStyle={true}
+                    styles="w-full py-3"
                   ></Button>
                 </Form.Item>
               </Form>

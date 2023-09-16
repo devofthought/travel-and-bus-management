@@ -53,12 +53,6 @@ const OurBuses = () => {
 
   return (
     <div className="main-container my-32 lg:my-36">
-      {/* <div className="mb-6">
-        <h1 className="font-bold text-center text-2xl md:text-3xl lg:text-4xl">
-          Our Top Buses
-        </h1>
-        <div className="h-[2px] md:h-1 w-[160px] bg-[#d84e55] mx-auto mt-[10px] "></div>
-      </div> */}
       <SectionTitle title={"Our Top Buses"}></SectionTitle>
       <div className="mb-10 px-2 md:px-0">
         <Slider {...settings}>
