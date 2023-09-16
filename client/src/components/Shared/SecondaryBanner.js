@@ -87,7 +87,7 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
             </div>
           ) : (
             <div className="flex items-center justify-between">
-              <button className="red-bg hover:red-bg cursor-pointer text-white font-semibold py-2 px-4 shadow-md hover:shadow-lg transition duration-300  border-0 rounded-md">
+              <button className="primary-bg hover:primary-bg cursor-pointer text-white font-semibold py-2 px-4 shadow-md hover:shadow-lg transition duration-300  border-0 rounded-md">
                 Login
               </button>
 
