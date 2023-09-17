@@ -1,6 +1,6 @@
 # [Project name]()
 
-_Thrives on connectivity and convenience, the transportation industry is at the forefront of transforming the way people travel. Welcome to “project name”, your ultimate solution for streamlined bus ticket booking and efficient bus agency management._
+_Thrives on connectivity and convenience, the transportation industry is at the forefront of transforming the way people travel. Welcome to “Dhruto travel”, your ultimate solution for streamlined bus ticket booking and efficient bus agency management._
 
 ### Description
 
