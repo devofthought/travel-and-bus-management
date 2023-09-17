@@ -1,7 +1,8 @@
 import { useAddDriverMutation } from "@/redux/driver/driverApi";
-import { Form, Button, Select, InputNumber, Input } from "antd";
+import { Form, Select, InputNumber, Input } from "antd";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
+import MainButton from "@/components/UI/Button";
 
 const initialData = {
   Name: "",
@@ -98,6 +99,7 @@ const CreateDriverForm = ({ driverInfo, setDriverInfo }) => {
           hasFeedback
         >
           <InputNumber
+            className="w-full"
             formatter={(values) =>
               `${values}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
             }
@@ -167,6 +169,7 @@ const CreateDriverForm = ({ driverInfo, setDriverInfo }) => {
           hasFeedback
         >
           <InputNumber
+            className="w-full"
             formatter={(values) =>
               `${values}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
             }
@@ -210,14 +213,15 @@ const CreateDriverForm = ({ driverInfo, setDriverInfo }) => {
         </Form.Item>
 
         <Form.Item wrapperCol={{ span: 24 }}>
-          <Button
+          {/* <Button
             disabled={addIsLoading ? true : false}
             block
             type="primary"
             htmlType="submit"
           >
             {addIsLoading ? "Loading..." : "Submit"}
-          </Button>
+          </Button> */}
+          <MainButton btnName="Submit" styles="w-full py-3"></MainButton>
         </Form.Item>
       </Form>
     </div>
