@@ -10,7 +10,7 @@ const SaySomething = () => {
   };
 
   return (
-    <div className="main-container mb-36 lg:mb-44">
+    <div className="main-container my-32 lg:my-36">
       <div className="flex flex-col md:flex-row gap-6 lg:gap-14">
         <div className="w-full md:w-[50%] md:px-4">
           <h1 className="break-words font-montserrat font-semibold mb-4 text-4xl leading-7 text-gray-800">
@@ -59,11 +59,7 @@ const SaySomething = () => {
               className="font-sans resize-y rounded-md w-full min-h-[150px] p-3 border-2 border-gray-400  text-gray-700 leading-tight focus:outline-[#d84e55] focus:shadow-outline"
               placeholder="Type Your Message"
             ></textarea>
-            <Button
-              styles="bg-[#d84e55] rounded-md font-semibold py-3 w-36 text-white flex justify-center items-center "
-              btnName="SEND MESSAGE"
-              textStyle=""
-            />
+            <Button btnName="Send Message" styles="w-full py-3"></Button>
           </form>
         </div>
         <div className="w-full md:w-[50%] flex flex-col justify-center gap-6 text-gray-800">
@@ -80,7 +76,7 @@ const SaySomething = () => {
           </div>
           <div className="py-6" style={{ borderBottom: "1px solid lightgray" }}>
             <div
-              className="border-l-green-500 px-4"
+              className="border-l-gray-500 px-4"
               style={{ borderLeft: "4px solid" }}
             >
               <p>Call Us:</p>
@@ -91,7 +87,7 @@ const SaySomething = () => {
           </div>
           <div className="py-6" style={{ borderBottom: "1px solid lightgray" }}>
             <div
-              className="border-l-blue-500 px-4"
+              className="border-l-red-500 px-4"
               style={{ borderLeft: "4px solid" }}
             >
               <p>Office Address:</p>

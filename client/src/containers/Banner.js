@@ -6,8 +6,8 @@ const Banner = ({ handleSearchTrip }) => {
   return (
     <>
       <div
-        className="relative mb-36 top-12"
-        style={{ position: "relative", height: "500px" }}
+        className="relative mb-36 top-12 h-[65vh]"
+        style={{ position: "relative" }}
       >
         <div
           className="absolute bg-center bg-cover sm:bg-contain lg:bg-cover bg-no-repeat z-10 flex justify-center items-center"
@@ -18,10 +18,7 @@ const Banner = ({ handleSearchTrip }) => {
         >
           <div className="sm:mb-32">
             <div className=" text-gray-900 text-center  ">
-              <h1
-                className="text-xl sm:text-2xl lg:text-4xl font-bold mb-[100px] sm:mb-0"
-                // style={{ fontFamily: "Montserrat" }}
-              >
+              <h1 className="text-xl sm:text-2xl lg:text-4xl  mb-[100px] sm:mb-0">
                 Book with Ease, Travel with Speed
               </h1>
             </div>

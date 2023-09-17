@@ -1,6 +1,7 @@
 import React from "react";
 import { Image } from "antd";
 import Slider from "react-slick";
+import SectionTitle from "@/components/Shared/SectionTitle";
 
 const Technologies = () => {
   const icons = [
@@ -20,7 +21,7 @@ const Technologies = () => {
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 1000,
-    pauseOnHover: true,
+    pauseOnHover: false,
     responsive: [
       {
         breakpoint: 1024,
@@ -51,13 +52,8 @@ const Technologies = () => {
   };
 
   return (
-    <div className="main-container my-36 lg:my-44">
-      <div className="mb-6 md:mb-10">
-        <h1 className="font-bold text-center text-2xl md:text-3xl lg:text-4xl">
-          Technologies Used
-        </h1>
-        <div className="h-[2px] md:h-1 w-[160px] bg-[#d84e55] mx-auto mt-[10px]"></div>
-      </div>
+    <div className="main-container my-32 lg:my-36">
+      <SectionTitle title="Technologies Used"></SectionTitle>
       <div>
         <ul className="container">
           <Slider {...settings}>

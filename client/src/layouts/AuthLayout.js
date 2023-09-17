@@ -15,7 +15,7 @@ const AuthLayout = ({ children }) => {
               <button
                 className={`w-full  p-2 border-none rounded text-sm font-semibold ${
                   router.pathname === "/login"
-                    ? "bg-[#d84e55] shadow-md text-white"
+                    ? "primary-bg shadow-md text-white"
                     : "bg-gray-200"
                 }`}
               >
@@ -33,7 +33,7 @@ const AuthLayout = ({ children }) => {
               <button
                 className={`w-full  p-2 border-none rounded text-sm font-semibold ${
                   router.pathname === "/signup"
-                    ? "bg-[#d84e55] shadow-md text-white"
+                    ? "primary-bg shadow-md text-white"
                     : "bg-gray-200"
                 }`}
               >

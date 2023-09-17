@@ -42,8 +42,8 @@ const PaymentMethodCard = () => {
   };
 
   return (
-    <div className="bg-gray-200 p-5 rounded-lg">
-      <h2 className="text-2xl font-semibold secondary-text">
+    <div className="secondary-bg p-5 rounded-lg">
+      <h2 className="text-2xl font-semibold primary-text">
         Select Payment Method :
       </h2>
       <div>
@@ -69,11 +69,13 @@ const PaymentMethodCard = () => {
             selectedValue === "sslcommerz" ? handleSslcommerz : handleStripe
           }
           disabled={isButtonDisabled}
-          className={`w-full text-lg text-white mt-7 text-center h-12 ${
-            isButtonDisabled ? "bg-blue-300 cursor-not-allowed" : "secondary-bg"
+          className={`w-full text-lg text-white mt-7 border-none text-center h-12 ${
+            isButtonDisabled
+              ? "bg-red-300 cursor-not-allowed"
+              : "primary-bg cursor-pointer"
           } rounded`}
         >
-          Proceed To Pay
+          Continue To Pay
         </button>
       </div>
     </div>

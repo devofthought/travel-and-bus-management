@@ -32,11 +32,11 @@ const OurExclusiveOffer = () => {
               <TabList className="flex flex-col md:flex-row items-center cursor-pointer">
                 <Tab
                   onClick={handleButtonToggle}
-                  className="text-lg md:text-2xl font-bold  bg-[#EDEEF9] outline-none  focus:text-[#d84e55] rounded-md py-3 px-5"
+                  className="text-lg md:text-2xl font-bold  bg-[#EDEEF9] outline-none  focus:primary-text rounded-md py-3 px-5"
                 >
                   Book Bus Tickets
                 </Tab>
-                <Tab className="text-lg md:text-2xl font-bold  bg-[#EDEEF9] outline-none  focus:text-[#d84e55] rounded-md py-3 px-5 mt-6 md:mt-0 md:ml-6">
+                <Tab className="text-lg md:text-2xl font-bold  bg-[#EDEEF9] outline-none  focus:primary-text rounded-md py-3 px-5 mt-6 md:mt-0 md:ml-6">
                   Book Train Tickets
                 </Tab>
               </TabList>
@@ -57,7 +57,7 @@ const OurExclusiveOffer = () => {
                     <h1 className="text-xl mt-4">Airport Transfers</h1>
 
                     <Button
-                      className="mt-6 py-6 px-14 text-center text-lg md:text-xl flex bg-[#d84e55] items-center"
+                      className="mt-6 py-6 px-14 text-center text-lg md:text-xl flex primary-bg items-center"
                       type="primary"
                     >
                       Buy Bus Tickets
@@ -97,7 +97,7 @@ const OurExclusiveOffer = () => {
                       Hassle- free customer support
                     </h1>
                     <Button
-                      className="mt-6 py-6 px-14 text-center text-lg md:text-xl flex bg-[#d84e55] items-center"
+                      className="mt-6 py-6 px-14 text-center text-lg md:text-xl flex primary-bg items-center"
                       type="primary"
                     >
                       Buy Train Tickets

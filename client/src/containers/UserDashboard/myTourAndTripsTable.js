@@ -130,7 +130,7 @@ const MyTourAndTripsTable = ({ data }) => {
         onCancel={handleCancel}
         footer={[
           <Button
-            className="w-full bg-[#d84e55]"
+            className="w-full primary-bg"
             type="primary"
             onClick={handleSubmit}
           >

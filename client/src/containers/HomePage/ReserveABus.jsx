@@ -1,24 +1,10 @@
-import {
-  Col,
-  Row,
-  Input,
-  Carousel,
-  DatePicker,
-  Select,
-  Form,
-  Button,
-} from "antd";
+import { Col, Row, Input, Carousel, DatePicker, Select, Form } from "antd";
 import Image from "next/image";
 import moment from "moment";
+import SectionTitle from "@/components/Shared/SectionTitle";
+import Button from "@/components/UI/Button";
 
 const dateFormatList = ["DD/MM/YYYY", "DD/MM/YY", "DD-MM-YYYY", "DD-MM-YY"];
-
-// const busImages = [
-//   "https://assets.volvo.com/is/image/VolvoInformationTechnologyAB/1860x1050-Volvo-7900-S-Charge-front45?size=1280,720&scl=1",
-//   "https://assets.volvo.com/is/image/VolvoInformationTechnologyAB/1860x1050-Volvo-8900-front45?size=1280,720&scl=1",
-//   "https://assets.volvo.com/is/image/VolvoInformationTechnologyAB/1860x1050-Volvo-7900-Electric-front45?size=1280,720&scl=1",
-//   "https://assets.volvo.com/is/image/VolvoInformationTechnologyAB/1860x1050-Volvo-9700DD-front45?size=1280,720&scl=1",
-// ];
 
 const disabledDate = (current) => {
   // Can not select days before today
@@ -33,13 +19,14 @@ const onFinishFailed = (errorInfo) => {
 
 const ReserveABus = () => {
   return (
-    <div className="main-container py-36 lg:py-44" id="reserveBus">
-      <div className="mb-10">
-        <h1 className="font-bold text-center text-2xl md:text-3xl lg:text-4xl">
-          Do You Want To Go Picnic? <br /> Reserve a Full Bus
-        </h1>
-        <div className="h-[2px] md:h-1 w-[160px] bg-[#d84e55] mx-auto mt-[10px]"></div>
-      </div>
+    <div className="main-container my-32 lg:my-36" id="reserveBus">
+      <SectionTitle
+        title={
+          <>
+            Do You Want To Go Picnic? <br /> Reserve a Full Bus
+          </>
+        }
+      ></SectionTitle>
       <div>
         <Row
           className="flex items-center"
@@ -117,11 +104,9 @@ const ReserveABus = () => {
                 </div>
                 <Form.Item>
                   <Button
-                    htmlType="submit"
-                    className="border-none h-14 bg-[#d84e55] cursor-pointer text-center w-full mt-2 rounded-lg text-lg text-white"
-                  >
-                    Reserving Request
-                  </Button>
+                    btnName="Reserving Request"
+                    styles="w-full py-3"
+                  ></Button>
                 </Form.Item>
               </Form>
             </div>
