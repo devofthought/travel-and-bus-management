@@ -2,6 +2,7 @@ import { Form, Button, Select, Input, Upload } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import { useAddBusMutation } from "@/redux/bus/busApi";
+import MainButton from "@/components/UI/Button";
 
 const CreateBusForm = () => {
   const initialData = {
@@ -129,6 +130,7 @@ const CreateBusForm = () => {
           <Upload
             listType="picture-card"
             maxCount={1}
+            style={{width: '100%'}}
             beforeUpload={(file) => {
               return new Promise((resolve, reject) => {
                 if (file.size > 2000000) {
@@ -269,9 +271,7 @@ const CreateBusForm = () => {
           </Select>
         </Form.Item>
         <Form.Item wrapperCol={{ span: 24 }}>
-          <Button block type="primary" htmlType="submit">
-            Submit
-          </Button>
+          <MainButton btnName="Submit" styles="w-full py-3"></MainButton>
         </Form.Item>
       </Form>
     </div>

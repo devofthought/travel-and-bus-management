@@ -9,6 +9,7 @@ import { useGetAllAvailabilityDriverQuery } from "@/redux/driver/driverApi";
 import { BiTrip, BiUser } from "react-icons/bi";
 import { useAddTripMutation } from "@/redux/trip/tripApi";
 import Swal from "sweetalert2";
+import MainButton from "@/components/UI/Button";
 
 const initialData = {
   route_code: "",
@@ -115,7 +116,11 @@ const CreateTripForm = () => {
             },
           ]}
         >
-          <DatePicker showTime placeholder="Select Departure Date" />
+          <DatePicker
+            className="w-full "
+            showTime
+            placeholder="Select Departure Date"
+          />
         </Form.Item>
 
         <Form.Item
@@ -128,7 +133,11 @@ const CreateTripForm = () => {
             },
           ]}
         >
-          <DatePicker showTime placeholder="Select Arrival Date" />
+          <DatePicker
+            className="w-full"
+            showTime
+            placeholder="Select Arrival Date"
+          />
         </Form.Item>
 
         <Form.Item name="bus_code" label="Bus code" requiredMark="require">
@@ -183,19 +192,21 @@ const CreateTripForm = () => {
             formatter={(values) =>
               `৳ ${values}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
             }
+            className="w-full"
             placeholder="Type trip fare"
           />
         </Form.Item>
 
         <Form.Item wrapperCol={{ span: 24 }}>
-          <Button
+          {/* <Button
             disabled={addIsLoading ? true : false}
             block
             type="primary"
             htmlType="submit"
           >
             {addIsLoading ? "Loading..." : "Submit"}
-          </Button>
+          </Button> */}
+          <MainButton btnName="Submit" styles="w-full py-3"></MainButton>
         </Form.Item>
       </Form>
     </div>
