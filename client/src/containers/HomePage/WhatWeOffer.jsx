@@ -1,5 +1,5 @@
-import { Button, Col, Modal, Row } from "antd";
-import { AiOutlineSafety, AiOutlineArrowRight } from "react-icons/ai";
+import { Col, Row } from "antd";
+import { AiOutlineSafety } from "react-icons/ai";
 import { FiSmartphone, FiAward } from "react-icons/fi";
 import { BsCardChecklist } from "react-icons/bs";
 import { BiSupport } from "react-icons/bi";
@@ -20,7 +20,7 @@ const offerData = [
     id: 2,
     icon: <MdOutlineDiscount className="" size={48}></MdOutlineDiscount>,
     title: "Discount & Promo",
-    style: "md:-mt-10 bg-custom-gradient text-white",
+    style: "lg:-mt-10 lg:bg-custom-gradient lg:text-white",
     des: "Discounts and promotions are a boon for customers, offering a multitude of benefits that enhance their shopping experience. At the core, these incentives translate into tangible cost savings, allowing customers to make purchases at a reduced price, thereby achieving value for their hard-earned money.",
   },
   {
@@ -39,7 +39,7 @@ const offerData = [
     id: 5,
     icon: <AiOutlineSafety className="" size={48}></AiOutlineSafety>,
     title: "Safety Guarantee",
-    style: "md:-mt-10 bg-custom-gradient text-white",
+    style: "lg:-mt-10 lg:bg-custom-gradient lg:text-white",
     des: "A safety guarantee is a paramount commitment made by a bus service company to prioritize and ensure the safety of its passengers, staff, and the community at large. It serves as a foundational element, illustrating the company's dedication to creating a secure environment and mitigating risks associated with transportation.",
   },
   {
@@ -78,14 +78,14 @@ const WhatWeOffer = () => {
             <>
               <Col
                 key={data.id}
-                className="gutter-row "
+                className="gutter-row"
                 xs={24}
                 sm={24}
                 md={12}
                 lg={8}
               >
                 <div
-                  className={`p-10 mt-8 rounded-2xl shadow-xl ${data?.style} hover:bg-custom-gradient hover:text-white `}
+                  className={`p-10 mt-10 h-96 rounded-2xl shadow-xl ${data?.style} hover:bg-custom-gradient hover:text-white `}
                 >
                   <div className="">{data?.icon}</div>
                   <h1 className="text-2xl font-bold mt-6 ">{data?.title}</h1>

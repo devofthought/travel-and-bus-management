@@ -74,9 +74,6 @@ a {
 .secondary-bg {
   background: #f1f0f2;
 }
-.red-bg {
-  background-color: #d84e55;
-}
 .secondary-bg-hover:hover {
   background: #3b83f6;
   color: #fff;

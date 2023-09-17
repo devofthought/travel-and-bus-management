@@ -1,6 +1,6 @@
 const SectionTitle = ({ title, mb }) => {
   return (
-    <div className={mb ? `md:mb-20` : "mb-6 md:mb-10"}>
+    <div className={mb ? `lg:mb-20` : "mb-6 md:mb-10"}>
       <h1 className="font-bold text-center text-2xl md:text-3xl lg:text-4xl">
         {title}
       </h1>

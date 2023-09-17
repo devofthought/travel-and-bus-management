@@ -82,18 +82,7 @@ const SignUpForm = () => {
       </Form.Item>
 
       <Form.Item>
-        {/* <Button
-          className="border-solid bg-[#d84e55] font-semibold w-full py-5 -mb-6 flex justify-center mt-1 items-center"
-          type="primary"
-          htmlType="submit"
-        >
-          Sign up
-        </Button> */}
-        <Button
-          btnName="Sign up"
-          styles="w-full py-2"
-          textStyle={true}
-        ></Button>
+        <Button btnName="Sign up" styles="w-full py-2"></Button>
       </Form.Item>
     </Form>
   );
