@@ -1,71 +1,54 @@
 /* eslint-disable @typescript-eslint/no-this-alias */
-import mongoose from 'mongoose';
-import { IUser, UserModel } from './user.interface';
-import { role } from './user.constants';
-import bcrypt from 'bcrypt';
-import config from '../../../config';
-const { Schema } = mongoose;
+import mongoose, { model } from 'mongoose'
+import bcrypt from 'bcrypt'
+import { IUser, UserModel } from './user.interface'
+import config from '../../../config'
+import { role } from './user.constants'
+const { Schema } = mongoose
 
-const userSchema = new Schema<IUser, UserModel>(
-  {
-    password: {
-      type: String,
-      required: true,
-      select: 0,
-    },
-    role: {
-      type: String,
-      enum: role,
-    },
-    name: {
-      type: String,
-      required: true,
-    },
-    phone: {
-      type: String,
-      required: true,
-    },
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-  },
-  {
-    timestamps: true,
-    toJSON: {
-      virtuals: true,
-      transform: function (doc, ret) {
-        delete ret.password; // Exclude password field from the response
-      },
-    },
-  }
-);
+const userSchema = new Schema<IUser>({
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  role: { type: String, enum: role, required: true },
+  admin_id: { type: Schema.Types.ObjectId, ref: 'Admin' },
+  traveler_id: { type: Schema.Types.ObjectId, ref: 'Traveler' },
+  driver_id: { type: Schema.Types.ObjectId, ref: 'Driver' },
+})
 
 userSchema.methods.isUserExist = async function (
   email: string
 ): Promise<Pick<IUser, 'role' | 'password' | '_id'> | null> {
-  return await User.findOne(
+  const user = await User.findOne(
     { email: email },
     { _id: 1, role: 1, password: 1 }
-  ).select('+password');
-};
+  ).select('+password')
+
+  if (user) {
+    return {
+      _id: user._id.toString(),
+      role: user.role,
+      password: user.password,
+    }
+  }
+
+  return null
+}
 
 userSchema.methods.isPasswordMatch = function (
   givenPassword: string,
   savedPassword: string
 ): Promise<boolean> {
-  return bcrypt.compare(givenPassword, savedPassword);
-};
+  return bcrypt.compare(givenPassword, savedPassword)
+}
 
 userSchema.pre('save', async function (next) {
   // hash the password before saving into the database
-  const user = this;
+  const user = this
   user.password = await bcrypt.hash(
     user.password,
     Number(config.bcrypt_salt_rounds)
-  );
-  next();
-});
+  )
+  next()
+})
 
-export const User = mongoose.model<IUser, UserModel>('User', userSchema);
+export const User = model<IUser, UserModel>('User', userSchema)

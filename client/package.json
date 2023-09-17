@@ -1,5 +1,5 @@
 {
-  "name": "client",
+  "name": "ticket",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,12 +9,29 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.5",
+    "@stripe/stripe-js": "^2.1.0",
     "antd": "^5.8.4",
-    "autoprefixer": "10.4.15",
-    "next": "13.4.19",
-    "postcss": "8.4.28",
+    "aos": "^3.0.0-beta.6",
+    "autoprefixer": "10.4.14",
+    "dayjs": "^1.11.9",
+    "eslint": "8.45.0",
+    "eslint-config-next": "13.4.12",
+    "moment": "^2.29.4",
+    "monent": "^0.0.2-security",
+    "next": "13.4.12",
+    "postcss": "8.4.27",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "tailwindcss": "3.3.3"
+    "react-hot-toast": "^2.4.1",
+    "react-icons": "^4.10.1",
+    "react-redux": "^8.1.1",
+    "react-router-dom": "^6.15.0",
+    "react-slick": "^0.29.0",
+    "react-tabs": "^6.0.2",
+    "slick-carousel": "^1.8.1",
+    "stripe": "^13.4.0",
+    "sweetalert2": "^11.7.27",
+    "tailwindcss": "^3.3.3"
   }
 }

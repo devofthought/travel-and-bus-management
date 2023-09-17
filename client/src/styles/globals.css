@@ -1,8 +1,40 @@
-@import "./tailwindConfig.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .bg-custom-gradient {
+    background-image: linear-gradient(
+      71.04deg,
+      rgb(204, 35, 44) -6.92%,
+      rgb(216, 78, 85)
+    );
+  }
+}
+
+.custom-segmented-button {
+  background-color: #ddd !important;
+  border-radius: 0px !important;
+}
+
+.ant-segmented-item {
+  border-radius: 0px !important;
+}
+
+.ant-segmented-item-selected {
+  background-color: #d84e55 !important;
+  color: white !important;
+  border-radius: 0px !important;
+}
+
+:root {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+  font-family: -apple-system, BlinkMacSystemFont, "Ubuntu", "Segoe UI", "Roboto",
+    "Oxygen", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -13,33 +45,53 @@ code {
     monospace;
 }
 
+ul {
+  list-style: none;
+}
+li {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+}
+
 * {
   margin: 0;
   padding: 0;
-  font-weight: 500 !important;
+  box-sizing: border-box;
 }
-a {
-  text-decoration: none !important;
+
+/* ##################### Common Colors ##################### */
+.primary-text {
+  color: #d84e55;
 }
-ul {
-  margin: 0 !important;
-  padding: 0 !important;
+.secondary-text {
+  color: #f1f0f2;
 }
-p {
-  margin: 0;
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
-  margin-left: 0;
-  margin-right: 0;
+.primary-bg {
+  background: #d84e55;
 }
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p {
-  margin-top: 0 !important;
-  margin: 0 !important;
-  margin-bottom: 0 !important;
+.secondary-bg {
+  background: #f1f0f2;
+}
+.secondary-bg-hover:hover {
+  background: #3b83f6;
+  color: #fff;
+  transition: 300ms;
+  --tw-bg-opacity: 0.2;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+.auth-bg {
+  background-image: url("../../public/highway.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: rgba(0, 0, 0, 0.6);
+  background-blend-mode: overlay;
+}
+
+/* ##################### Main Container ##################### */
+.main-container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
 }

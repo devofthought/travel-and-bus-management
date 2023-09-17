@@ -1,28 +1,34 @@
 /* eslint-disable no-unused-vars */
-import { Model } from 'mongoose';
+
+import { Model } from 'mongoose'
 
 export type IUser = {
-  _id: string;
-  password: string;
-  role: 'user' | 'admin';
-  name: string;
-  email: string;
-  phone: string;
-};
+  _id: string
+  email: string
+  password: string
+  role: 'admin' | 'traveler' | 'driver'
+  admin_id?: string
+  traveler_id?: string
+  driver_id?: string
+}
 
 export type IUserMethods = {
   isUserExist(
     email: string
-  ): Promise<Pick<IUser, 'role' | 'password' | '_id'> | null>;
+  ): Promise<Pick<IUser, 'role' | 'password' | '_id'> | null>
 
-  isPasswordMatch(givenPassword: string, savedPassword: string): boolean;
-};
+  isPasswordMatch(givenPassword: string, savedPassword: string): boolean
+}
 
-export type UserModel = Model<IUser, Record<string, unknown>, IUserMethods>;
+export type UserModel = Model<IUser, Record<string, unknown>, IUserMethods>
 
 export type IUserFilter = {
-  searchTerm?: string;
-  role?: string;
-  phoneNumber?: string;
-  address?: string;
-};
+  searchTerm?: string
+  _id?: string
+  email?: string
+  passwor?: string
+  role?: 'admin' | 'traveler' | 'driver'
+  admin_id?: string
+  traveler_id?: string
+  driver_id?: string
+}
