@@ -63,7 +63,7 @@ const WhatWeOffer = () => {
   };
 
   return (
-    <div className="main-container my-32 lg:my-36">
+    <div className="main-container mt-32 lg:mt-36">
       <SectionTitle title="What We Offer For You" mb={20}></SectionTitle>
       <div>
         <Row
