@@ -37,10 +37,11 @@ function SideBar() {
 
   return (
     <Menu
-      theme="light"
+      theme="dark"
       defaultSelectedKeys={["1"]}
       mode="inline"
       selectedKeys={[selectedKeys]}
+      collapsed={false}
     >
       {renderMenuItems(filterMenus)}
     </Menu>

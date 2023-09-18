@@ -25,7 +25,7 @@ const AdminDashboardLayout = ({ children }) => {
         }}
       >
         {collapsed || (
-          <div className="flex justify-center items-center h-16 rounded-xl mx-2 my-3 shadow-md duration-700">
+          <div className="flex justify-center items-center h-16 rounded-xl mx-2 my-3 duration-700">
             <h3 className="text-2xl">Dhruto Travel</h3>
           </div>
         )}

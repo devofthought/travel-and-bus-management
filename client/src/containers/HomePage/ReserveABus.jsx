@@ -19,7 +19,7 @@ const onFinishFailed = (errorInfo) => {
 
 const ReserveABus = () => {
   return (
-    <div className="main-container my-32 lg:my-36" id="reserveBus">
+    <div className="main-container py-32 lg:py-36" id="reserveBus">
       <SectionTitle
         title={
           <>
