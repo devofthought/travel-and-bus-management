@@ -69,34 +69,24 @@ const availabilityUpdater = async (
 
 const findAvailabilityByDepartureTime = async (payload: any, departureTime: any, modelName: any) => {
     try {
-        const pipeline = [
-            {
-                $match: payload
-            },
-            {
-                $project: {
-                    hasAvailabilityForDepartureTime: {
-                        $in: [
-                            departureTime,
-                            "$availability_status.date" // Assuming your date field is named "date"
-                        ]
-                    }
-                }
-            }
-        ];
+        // Use the find method to search for documents that match the payload
+        const documents = await modelName.find(payload);
 
-        const result = await modelName.aggregate(pipeline);
+        // Check if any of the documents have availability for departureTime
+        const hasAvailabilityForDepartureTime = documents.some((document: any) =>
+            document.availability_status.some((status: any) => status.date === departureTime)
+        );
 
-        if (result.length > 0) {
-            const { hasAvailabilityForDepartureTime } = result[0];
-            return hasAvailabilityForDepartureTime;
+        if (hasAvailabilityForDepartureTime) {
+            return true;
         } else {
-            throw new Error(`element with code is not found`);
+            return false;
         }
     } catch (error) {
         throw error;
     }
 };
+
 
 
 export const VariantCreation = {

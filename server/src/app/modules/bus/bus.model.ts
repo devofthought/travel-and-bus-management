@@ -33,7 +33,7 @@ export const busSchema = new Schema<IBus, BusModel>(
           type: String,
           enum: availability_status,
         },
-        date: new Date().toString(),
+        date: String,
       }
     ],
     brand_name: {
