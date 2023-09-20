@@ -2,6 +2,7 @@ import { Form, Button, Select, Input, InputNumber } from "antd";
 import { useEffect } from "react";
 import { useAddIncidentMutation } from "@/redux/incident/incidentApi";
 import Swal from "sweetalert2";
+import MainButton from "@/components/UI/Button";
 const initialData = {
   bus_code: "",
   servicing_status: "",
@@ -58,42 +59,80 @@ const CreateIncidentForm = () => {
           console.log({ error });
         }}
       >
+        <label className="text-base font-medium">
+          <span className="primary-text">*</span> Bus Code
+        </label>
         <Form.Item
+          className="mt-2 mb-4"
           name="bus_code"
-          label="Bus Code"
           rules={[
             {
               required: true,
-              message: "Please enter Bus code",
+              message: "Please Enter Bus code",
             },
             { whitespace: true },
           ]}
           hasFeedback
         >
-          <Input placeholder="Type Bus code" />
+          <Input className="h-10" placeholder="Type Bus code" />
         </Form.Item>
+        <div className="flex flex-col lg:flex-row gap-x-5 justify-between">
+          <div className="w-full lg:w-1/2">
+            <label className="text-base font-medium">
+              <span className="primary-text">*</span> Servicing Status
+            </label>
+            <Form.Item
+              className="mt-2 mb-4"
+              name="servicing_status"
+              requiredMark="require"
+              rules={[
+                {
+                  required: true,
+                  message: "bus servicing status is required",
+                },
+              ]}
+            >
+              <Select size="large" placeholder="Select servicing status">
+                <Select.Option value="pending">pending</Select.Option>
+                <Select.Option value="done">done</Select.Option>
+                <Select.Option value="on-servicing">on-servicing</Select.Option>
+              </Select>
+            </Form.Item>
+          </div>
+          <div className="w-full lg:w-1/2">
+            <label className="text-base font-medium">
+              <span className="primary-text">*</span> Cost
+            </label>
+            <Form.Item
+              className="mt-2 mb-4"
+              name="cost"
+              rules={[
+                {
+                  required: true,
+                },
+                {
+                  type: "number",
+                  message: "Please enter cost of servicing",
+                  min: 0,
+                  max: 10000,
+                },
+              ]}
+            >
+              <InputNumber
+                className="h-10 w-full flex items-center"
+                formatter={(values) =>
+                  `৳ ${values}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                }
+                placeholder="Type cost"
+              />
+            </Form.Item>
+          </div>
+        </div>
 
+        <label className="text-base font-medium">Description</label>
         <Form.Item
-          name="servicing_status"
-          label="Servicing status"
-          requiredMark="require"
-          rules={[
-            {
-              required: true,
-              message: "bus servicing status is required",
-            },
-          ]}
-        >
-          <Select placeholder="Select servicing status">
-            <Select.Option value="pending">pending</Select.Option>
-            <Select.Option value="done">done</Select.Option>
-            <Select.Option value="on-servicing">on-servicing</Select.Option>
-          </Select>
-        </Form.Item>
-
-        <Form.Item
+          className="mt-2 mb-6"
           name="description"
-          label="Description"
           rules={[
             {
               required: false,
@@ -108,37 +147,16 @@ const CreateIncidentForm = () => {
           />
         </Form.Item>
 
-        <Form.Item
-          name="cost"
-          label="Cost"
-          rules={[
-            {
-              required: true,
-            },
-            {
-              type: "number",
-              message: "Please enter cost of servicing",
-              min: 0,
-              max: 10000,
-            },
-          ]}
-        >
-          <InputNumber
-            formatter={(values) =>
-              `৳ ${values}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-            }
-            placeholder="Type cost"
-          />
-        </Form.Item>
-        <Form.Item wrapperCol={{ span: 24 }}>
-          <Button
+        <Form.Item className="mb-2" wrapperCol={{ span: 24 }}>
+          {/* <Button
             disabled={addIsLoading ? true : false}
             block
             type="primary"
             htmlType="submit"
           >
             {addIsLoading ? "Loading..." : "Submit"}
-          </Button>
+          </Button> */}
+          <MainButton btnName="Submit" styles="w-full py-3"></MainButton>
         </Form.Item>
       </Form>
     </div>

@@ -1,4 +1,5 @@
-import { Button, Form, Input } from "antd";
+import { Form, Input } from "antd";
+import Button from "@/components/UI/Button";
 
 const SignUpForm = () => {
   const onFinish = (values) => {
@@ -16,7 +17,7 @@ const SignUpForm = () => {
     >
       <label className=" font-medium">First Name</label>
       <Form.Item
-        className="w-full h-10 mb-4"
+        className="w-full h-8 mb-4"
         name="firstName"
         rules={[
           {
@@ -25,11 +26,11 @@ const SignUpForm = () => {
           },
         ]}
       >
-        <Input className="h-10 mt-1" />
+        <Input className="h-8 mt-1" />
       </Form.Item>
       <label className=" font-medium">Last Name</label>
       <Form.Item
-        className="w-full h-10 mb-4"
+        className="w-full h-8 mb-4"
         name="lastName"
         rules={[
           {
@@ -38,11 +39,11 @@ const SignUpForm = () => {
           },
         ]}
       >
-        <Input className="h-10 mt-1" />
+        <Input className="h-8 mt-1" />
       </Form.Item>
       <label className=" font-medium">Email Address</label>
       <Form.Item
-        className="w-full h-10 mb-4"
+        className="w-full h-8 mb-4"
         name="email"
         rules={[
           {
@@ -51,11 +52,11 @@ const SignUpForm = () => {
           },
         ]}
       >
-        <Input className="h-10 mt-1" />
+        <Input className="h-8 mt-1" />
       </Form.Item>
       <label className=" font-medium">Password</label>
       <Form.Item
-        className="w-full h-10 mb-4"
+        className="w-full h-8 mb-4"
         name="password"
         rules={[
           {
@@ -64,7 +65,7 @@ const SignUpForm = () => {
           },
         ]}
       >
-        <Input.Password className="h-10 mt-1" />
+        <Input.Password className="h-8 mt-1" />
       </Form.Item>
 
       <label className=" font-medium">Confirm Password</label>
@@ -77,17 +78,11 @@ const SignUpForm = () => {
           },
         ]}
       >
-        <Input.Password className="h-10 mt-1" />
+        <Input.Password className="h-8 mt-1" />
       </Form.Item>
 
       <Form.Item>
-        <Button
-          className="border-solid font-semibold w-full py-5 flex justify-center mt-1 items-center"
-          type="primary"
-          htmlType="submit"
-        >
-          Sign up
-        </Button>
+        <Button btnName="Sign up" styles="w-full py-2"></Button>
       </Form.Item>
     </Form>
   );

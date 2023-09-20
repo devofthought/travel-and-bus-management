@@ -26,7 +26,6 @@ const createTrip = async (payload: ITrip): Promise<ITripResponse | null> => {
   if (bus) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Bus is not available')
   }
-  payload.bus_id = bus._id.toString()
   if (payload.trips_status !== 'pending') {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Not able to create a past trip')
   }
@@ -152,7 +151,7 @@ const updateTrip = async (
     if (driver) {
       throw new ApiError(httpStatus.BAD_REQUEST, 'Driver not found')
     }
-    if (driver.driving_status !== 'ready') {
+    if (driver) {
       throw new ApiError(httpStatus.BAD_REQUEST, 'Driver is not available')
     }
   }
@@ -296,7 +295,7 @@ const getAllTrip = async (
       fare: trip.ticket_price,
       available_seat:
         bus?.total_seats &&
-        bus?.total_seats - bookedSeatsArray[0].booked_seats.length,
+        bus?.total_seats - bookedSeatsArray[0]?.booked_seats?.length,
       total_seat: bus?.total_seats,
     })
   }
@@ -330,7 +329,8 @@ const getSingleTrip = async (id: string): Promise<ITrip | null> => {
  * */
 
 const getUpComingTrip = async () => {
-  return null
+  const result = await Trip.find({ trips_status: "pending" })
+  return result
 }
 
 export const TripService = {

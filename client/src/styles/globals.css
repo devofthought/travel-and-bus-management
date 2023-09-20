@@ -2,10 +2,39 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .bg-custom-gradient {
+    background-image: linear-gradient(
+      71.04deg,
+      rgb(204, 35, 44) -6.92%,
+      rgb(216, 78, 85)
+    );
+  }
+}
+
+.custom-segmented-button {
+  background-color: #ddd !important;
+  border-radius: 0px !important;
+}
+
+.ant-segmented-item {
+  border-radius: 0px !important;
+}
+
+.ant-segmented-item-selected {
+  background-color: #d84e55 !important;
+  color: white !important;
+  border-radius: 0px !important;
+}
+
+:root {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+  font-family: -apple-system, BlinkMacSystemFont, "Ubuntu", "Segoe UI", "Roboto",
+    "Oxygen", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -34,24 +63,30 @@ a {
 
 /* ##################### Common Colors ##################### */
 .primary-text {
-  color: #22c55e;
+  color: #d84e55;
 }
 .secondary-text {
-  color: #3b83f6;
+  color: #f1f0f2;
 }
 .primary-bg {
-  background: #22c55e;
+  background: #d84e55;
 }
 .secondary-bg {
-  background: #3b83f6;
+  background: #f1f0f2;
 }
-
 .secondary-bg-hover:hover {
   background: #3b83f6;
   color: #fff;
   transition: 300ms;
   --tw-bg-opacity: 0.2;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+.auth-bg {
+  background-image: url("../../public/highway.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: rgba(0, 0, 0, 0.6);
+  background-blend-mode: overlay;
 }
 
 /* ##################### Main Container ##################### */

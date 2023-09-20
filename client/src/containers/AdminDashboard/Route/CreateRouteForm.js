@@ -2,6 +2,8 @@ import { Form, Button, Input, InputNumber } from "antd";
 import { useEffect } from "react";
 import { useAddRouteMutation } from "@/redux/route/routeApi";
 import Swal from "sweetalert2";
+import MainButton from "@/components/UI/Button";
+
 const initialData = {
   from: "",
   to: "",
@@ -56,9 +58,12 @@ const CreateRouteForm = () => {
           console.log({ error });
         }}
       >
+        <label className="text-base font-medium">
+          <span className="primary-text">*</span> Form
+        </label>
         <Form.Item
           name="from"
-          label="From"
+          className="mt-2 mb-4"
           rules={[
             {
               required: true,
@@ -68,12 +73,15 @@ const CreateRouteForm = () => {
           ]}
           hasFeedback
         >
-          <Input placeholder="Type From" />
+          <Input className="h-10" placeholder="Type From" />
         </Form.Item>
+        <label className="text-base font-medium">
+          <span className="primary-text">*</span> To
+        </label>
 
         <Form.Item
           name="to"
-          label="To"
+          className="mt-2 mb-4"
           rules={[
             {
               required: true,
@@ -83,12 +91,14 @@ const CreateRouteForm = () => {
           ]}
           hasFeedback
         >
-          <Input placeholder="Type To" />
+          <Input className="h-10" placeholder="Type To" />
         </Form.Item>
-
+        <label className="text-base font-medium">
+          <span className="primary-text">*</span> Distance
+        </label>
         <Form.Item
           name="distance"
-          label="Distance"
+          className="mt-2 mb-6"
           rules={[
             {
               required: true,
@@ -103,6 +113,7 @@ const CreateRouteForm = () => {
           hasFeedback
         >
           <InputNumber
+            className="h-10 w-full flex items-center"
             formatter={(values) =>
               `${values}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
             }
@@ -110,15 +121,16 @@ const CreateRouteForm = () => {
           />
         </Form.Item>
 
-        <Form.Item wrapperCol={{ span: 24 }}>
-          <Button
+        <Form.Item className="mb-2" wrapperCol={{ span: 24 }}>
+          {/* <Button
             disabled={addIsLoading ? true : false}
             block
             type="primary"
             htmlType="submit"
           >
             {addIsLoading ? "Loading..." : "Submit"}
-          </Button>
+          </Button> */}
+          <MainButton btnName="Submit" styles="w-full py-3"></MainButton>
         </Form.Item>
       </Form>
     </div>

@@ -22,7 +22,7 @@ const SearchBar = () => {
     to = e.target.to.value;
     date = e.target.date.value;
 
-    // console.log(from, to, date);
+    console.log(from, to, date);
     if (from.length > 0 && to.length > 0 && date.length > 0) {
       router.push(`/trip?from=${from}&to=${to}&date=${date}`);
     }
@@ -72,7 +72,7 @@ const SearchBar = () => {
             />
           </div>
           <button
-            className="border-none p-3 h-full text-lg sm:text-xl  bg-[#d84e55] sm:font-bold  rounded-2xl lg:rounded-none lg:rounded-r-[36px] text-white cursor-pointer leading-6 "
+            className="border-none p-3 h-full text-lg sm:text-xl  primary-bg sm:font-bold  rounded-2xl lg:rounded-none lg:rounded-r-[36px] text-white cursor-pointer leading-6 "
             type="submit"
           >
             SEARCH BUSES

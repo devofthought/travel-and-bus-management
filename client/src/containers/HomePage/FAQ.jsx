@@ -8,6 +8,7 @@ import {
   RefundFQA,
   TicketFQA,
 } from "@/utils/data/faqData";
+import SectionTitle from "@/components/Shared/SectionTitle";
 
 const FAQ = () => {
   const [selectedOption, setSelectedOption] = useState("General");
@@ -29,9 +30,9 @@ const FAQ = () => {
     return options.map((option) => (
       <label
         key={option}
-        className={`flex-1 text-center py-4 cursor-pointer mb-6 ${
+        className={`px-4 py-2 cursor-pointer ${
           selectedOption === option
-            ? "bg-[#d84e55] text-white"
+            ? "primary-bg text-white"
             : "bg-gray-200 text-gray-700 hover:bg-gray-300 hover:border-b-4 hover:border-indigo-500"
         }`}
         onClick={() => handleChange(option)}
@@ -51,14 +52,11 @@ const FAQ = () => {
   };
 
   return (
-    <div className="main-container">
-      <div className="mb-10">
-        <h1 className="break-words font-montserrat font-normal mb-4 text-4xl leading-7 text-gray-700">
-          Frequently Asked Questions
-        </h1>
-        <div className="h-[2px] md:h-1 w-[160px] bg-[#d84e55] mx-right mt-[10px]"></div>
+    <div className="main-container my-32 lg:my-36">
+      <SectionTitle title={"Frequently Asked Questions"}></SectionTitle>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-y-2 mb-4">
+        {renderOptions()}
       </div>
-      <div className="flex">{renderOptions()}</div>
       <CollapseComponent data={faqDataMap[selectedOption]} />
     </div>
   );

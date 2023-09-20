@@ -1,6 +1,8 @@
-import { Col, Row, Input, Carousel, DatePicker } from "antd";
+import { Col, Row, Input, Carousel, DatePicker, Select, Form } from "antd";
 import Image from "next/image";
 import moment from "moment";
+import SectionTitle from "@/components/Shared/SectionTitle";
+import Button from "@/components/UI/Button";
 
 const dateFormatList = ["DD/MM/YYYY", "DD/MM/YY", "DD-MM-YYYY", "DD-MM-YY"];
 
@@ -8,16 +10,23 @@ const disabledDate = (current) => {
   // Can not select days before today
   return current && current < moment().startOf("day");
 };
+const onFinish = (values) => {
+  console.log("Success:", values);
+};
+const onFinishFailed = (errorInfo) => {
+  console.log("Failed:", errorInfo);
+};
 
 const ReserveABus = () => {
   return (
-    <div className="main-container py-10">
-      <div className=" mb-10">
-        <h1 className="font-bold text-center text-2xl md:text-3xl lg:text-4xl">
-          Do You Want To Go Picnic? <br /> Reserve a Full Bus
-        </h1>
-        <div className="h-[2px] md:h-1 w-[160px] bg-[#d84e55] mx-auto mt-[10px]"></div>
-      </div>
+    <div className="main-container my-32 lg:my-36" id="reserveBus">
+      <SectionTitle
+        title={
+          <>
+            Do You Want To Go Picnic? <br /> Reserve a Full Bus
+          </>
+        }
+      ></SectionTitle>
       <div>
         <Row
           className="flex items-center"
@@ -25,73 +34,121 @@ const ReserveABus = () => {
         >
           <Col className="gutter-row" xs={24} sm={24} md={24} lg={12}>
             <div>
-              <form>
-                <div className="grid grid-cols-2 gap-5">
-                  <div>
-                    <Input className="h-16 text-lg" placeholder="From" />
-                  </div>
-                  <div>
-                    <Input className="h-16 text-lg" placeholder="To" />
-                  </div>
-                  <div>
-                    <Input className="h-16 text-lg" placeholder="Bus Type" />
-                  </div>
-                  <div>
+              <Form
+                name="basic"
+                onFinish={onFinish}
+                onFinishFailed={onFinishFailed}
+                autoComplete="off"
+              >
+                <div className="grid grid-cols-2 gap-x-5">
+                  <Form.Item
+                    className="h-10"
+                    name="from"
+                    rules={[
+                      { required: true, message: "Please input your From!" },
+                    ]}
+                  >
+                    <Input className="h-10 text-lg" placeholder="From" />
+                  </Form.Item>
+                  <Form.Item
+                    name="to"
+                    rules={[
+                      { required: true, message: "Please input your To!" },
+                    ]}
+                  >
+                    <Input className="h-10 text-lg" placeholder="To" />
+                  </Form.Item>
+
+                  <Form.Item
+                    name="busType"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please select your Bus Type!",
+                      },
+                    ]}
+                  >
+                    <Select
+                      size="large"
+                      className=" text-lg w-full"
+                      placeholder="Bus Type"
+                      options={[
+                        {
+                          value: "ac",
+                          label: "AC",
+                        },
+                        {
+                          value: "non-ac",
+                          label: "Non AC",
+                        },
+                      ]}
+                    />
+                  </Form.Item>
+
+                  <Form.Item
+                    name="journeyDate"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please select your Journey Date!",
+                      },
+                    ]}
+                  >
                     <DatePicker
-                      className="h-16 text-lg w-full"
+                      className="h-10 text-lg w-full"
                       placeholder="Journey Date"
                       disabledDate={disabledDate}
                       format={dateFormatList}
                     />
-                  </div>
+                  </Form.Item>
                 </div>
-                <button
-                  type="submit"
-                  className="border-none h-16 bg-[#d84e55] cursor-pointer text-center w-full mt-5 rounded-lg text-lg text-white"
-                >
-                  Reserving Request
-                </button>
-              </form>
+                <Form.Item>
+                  <Button
+                    btnName="Reserving Request"
+                    styles="w-full py-3"
+                  ></Button>
+                </Form.Item>
+              </Form>
             </div>
           </Col>
           <Col className="gutter-row" xs={24} sm={24} md={24} lg={12}>
-            <Carousel autoplay>
+            <Carousel dotPosition="right" fade autoplay>
               <div>
                 <Image
-                  src="/bus-2546383_1280.jpg"
+                  src="https://assets.volvo.com/is/image/VolvoInformationTechnologyAB/1860x1050-Volvo-7900-S-Charge-front45?size=1280,720&scl=1"
                   alt="Description of the image"
                   className="w-full"
-                  width={650}
-                  height={230}
+                  width={550}
+                  height={250}
                 />
               </div>
               <div>
                 <h3>
                   <Image
-                    src="/bus-2546383_1280.jpg"
+                    src="https://assets.volvo.com/is/image/VolvoInformationTechnologyAB/1860x1050-Volvo-8900-front45?size=1280,720&scl=1"
                     alt="Description of the image"
                     className="w-full"
-                    width={600}
-                    height={230}
+                    width={500}
+                    height={250}
                   />
                 </h3>
               </div>
               <div>
                 <Image
-                  src="/bus-2546383_1280.jpg"
+                  src="https://assets.volvo.com/is/image/VolvoInformationTechnologyAB/1860x1050-Volvo-7900-Electric-front45?size=1280,720&scl=1"
                   alt="Description of the image"
                   className="w-full"
-                  width={650}
-                  height={230}
+                  width={550}
+                  height={250}
                 />
               </div>
               <div>
                 <Image
-                  src="/bus-2546383_1280.jpg"
+                  src="https://assets.volvo.com/is/image/VolvoInformationTechnologyAB/1860x1050-Volvo-9700DD-front45?size=1280,720&scl=1"
                   alt="Description of the image"
                   className="w-full"
-                  width={650}
-                  height={230}
+                  width={550}
+                  height={250}
                 />
               </div>
             </Carousel>

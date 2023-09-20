@@ -225,21 +225,21 @@ const Trip = () => {
       <Navbar />
       <Banner />
 
-      {filterTripData &&
-        filterTripData?.length > 0 &&
-        filterTripData?.map((trip, index) => (
+      {getAllTrip &&
+        getAllTrip?.length > 0 &&
+        getAllTrip?.map((trip, index) => (
           <div
             className="main-container border border-[#5b2192] rounded-md"
             style={{
-              marginTop: "50px",
+              marginTop: "20px",
             }}
           >
             <div className="bg-white rounded-md">
-              <ul className="flex items-center justify-between p-4 rounded-md">
+              <ul className="flex items-center justify-between px-4 py-2 rounded-md">
                 <li className="w-[50%] md:w-[30%] lg:w-[25%] pr-7 border-t-0 border-l-0 border-b-0 border-r border-dashed">
                   <div>
                     <div className="search_bus-name__AN5TP">
-                      <h6 className="text-md md:text-lg lg:text-xl text-[#5b2192] font-semibold uppercase">
+                      <h6 className="text-sm md:text-lg lg:text-xl text-[#5b2192] font-semibold uppercase">
                         {trip?.bus_model}
                       </h6>
                       <p className="flex gap-1">
@@ -312,7 +312,7 @@ const Trip = () => {
                     <p>{trip?.available_seat}</p>
                   </div>
                 </li>
-                <li className="flex-1 p-7 text-right justify-end">
+                <li className="flex-1 p- text-right justify-end">
                   <h3 className="text-lg md:text-xl lg-text-2xl font-semibold text-[#5b2192] mb-2">
                     ৳{trip?.fare}
                   </h3>
@@ -321,7 +321,7 @@ const Trip = () => {
                     onClick={() => handleSelectBus(trip?.id)}
                   >
                     <Button
-                      styles={`w-32 px-2 py-[2px] md:px-3 md:py-1 font-semibold border-2 rounded-lg primary-bg text-white`}
+                      styles={`w-32 px-2 py-[2px] md:px-3 md:py-1 font-semibold border-2 rounded-md primary-bg text-white`}
                       textStyle={`btn-text px-2`}
                       btnName="View Seats"
                     />
@@ -335,46 +335,188 @@ const Trip = () => {
                   <ul className="flex flex-wrap justify-around items-center gap-2 text-xs">
                     <li className="flex flex-col lg:flex-row justify-between items-center gap-2">
                       <span>
-                        <MdChair className="w-8 h-8 text-[#686666]" />
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="28"
+                          height="28"
+                          viewBox="0 0 100 100"
+                        >
+                          <rect
+                            x="10"
+                            y="10"
+                            width="80"
+                            height="80"
+                            rx="3"
+                            ry="3"
+                            fill="#fff"
+                            stroke="#000"
+                            stroke-width="1"
+                          />
+                          <rect
+                            x="4"
+                            y="76"
+                            width="93"
+                            height="20"
+                            rx="5"
+                            ry="5"
+                            fill="#fff"
+                            stroke="#000"
+                            stroke-width="1"
+                          />
+                          <rect
+                            x="2"
+                            y="30"
+                            width="16"
+                            height="65"
+                            rx="5"
+                            ry="5"
+                            fill="#fff"
+                            stroke="#000"
+                            stroke-width="1"
+                          />
+                          <rect
+                            x="83"
+                            y="30"
+                            width="16"
+                            height="65"
+                            rx="5"
+                            ry="5"
+                            fill="#fff"
+                            stroke="#000"
+                            stroke-width="1"
+                          />
+                        </svg>
                       </span>
-                      <span className="ms-2 font-semibold text-[#686666]">
-                        Blocked
-                      </span>
-                    </li>
-                    <li className="flex flex-col lg:flex-row justify-between items-center gap-2">
-                      <span>
-                        <MdChair className="w-8 h-8 text-gray-400" />
-                      </span>
-                      <span className="ms-2 font-semibold text-gray-400">
+                      <span className="lg:ms-2 font-semibold text-gray-400">
                         Available
                       </span>
                     </li>
                     <li className="flex flex-col lg:flex-row justify-between items-center gap-2">
                       <span>
-                        <MdChair className="w-8 h-8 text-[#9cd27c]" />
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="28"
+                          height="28"
+                          viewBox="0 0 100 100"
+                        >
+                          <rect
+                            x="10"
+                            y="10"
+                            width="80"
+                            height="80"
+                            rx="3"
+                            ry="3"
+                            fill="#22C55E"
+                            stroke="#000"
+                            stroke-width="1"
+                          />
+                          <rect
+                            x="4"
+                            y="76"
+                            width="93"
+                            height="20"
+                            rx="5"
+                            ry="5"
+                            fill="#22C55E"
+                            stroke="#000"
+                            stroke-width="1"
+                          />
+                          <rect
+                            x="2"
+                            y="30"
+                            width="16"
+                            height="65"
+                            rx="5"
+                            ry="5"
+                            fill="#22C55E"
+                            stroke="#000"
+                            stroke-width="1"
+                          />
+                          <rect
+                            x="83"
+                            y="30"
+                            width="16"
+                            height="65"
+                            rx="5"
+                            ry="5"
+                            fill="#22C55E"
+                            stroke="#000"
+                            stroke-width="1"
+                          />
+                        </svg>
                       </span>
-                      <span className="ms-2 font-semibold text-[#9cd27c]">
+                      <span className="lg:ms-2 font-semibold text-[#22C55E]">
                         Selected
                       </span>
                     </li>
                     <li className="flex flex-col lg:flex-row justify-between items-center gap-2">
                       <span>
-                        <MdChair className="w-8 h-8 text-[#ff9090]" />
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="28"
+                          height="28"
+                          viewBox="0 0 100 100"
+                        >
+                          <rect
+                            x="10"
+                            y="10"
+                            width="80"
+                            height="80"
+                            rx="3"
+                            ry="3"
+                            fill="#ff9090"
+                            stroke="#000"
+                            stroke-width="1"
+                          />
+                          <rect
+                            x="4"
+                            y="76"
+                            width="93"
+                            height="20"
+                            rx="5"
+                            ry="5"
+                            fill="#ff9090"
+                            stroke="#000"
+                            stroke-width="1"
+                          />
+                          <rect
+                            x="2"
+                            y="30"
+                            width="16"
+                            height="65"
+                            rx="5"
+                            ry="5"
+                            fill="#ff9090"
+                            stroke="#000"
+                            stroke-width="1"
+                          />
+                          <rect
+                            x="83"
+                            y="30"
+                            width="16"
+                            height="65"
+                            rx="5"
+                            ry="5"
+                            fill="#ff9090"
+                            stroke="#000"
+                            stroke-width="1"
+                          />
+                        </svg>
                       </span>
-                      <span className="ms-2 font-semibold text-[#ff9090]">
+                      <span className="lg:ms-2 font-semibold text-[#ff9090]">
                         Sold
                       </span>
                     </li>
                   </ul>
-                  <div className="flex flex-col md:flex-row p-4 mt-4">
+                  <div className="flex flex-col md:flex-row sm:p-4 mt-4 mx-0 sm:mx-20">
                     <div
-                      className="rounded-sm p-2 w-[280px] sm:w-[300px] md:w-[320px] mx-auto"
+                      className="rounded-sm p-2 w-[240px] h-[434px] mx-auto"
                       style={{ border: "1px solid lightgray" }}
                     >
-                      <div className="flex justify-end p-4 border-b border-[90%] mb-4">
-                        <GiSteeringWheel className="w-10 h-10 text-gray-400" />
+                      <div className="flex justify-end p-2 border-b border-[90%] mb-4">
+                        <GiSteeringWheel className="w-8 h-8 text-gray-400" />
                       </div>
-                      <div className="w-full grid grid-cols-5 gap-1 sm:gap-2">
+                      <div className="w-full grid grid-cols-5 gap-2">
                         {getSingleTrip?.seats?.map((seat, index) => {
                           if (
                             seat?.name === "A" ||
@@ -391,18 +533,22 @@ const Trip = () => {
                             return <span key={index}></span>;
                           } else {
                             return (
-                              <button
+                              <div
                                 key={index}
-                                className={`flex justify-center items-center border-none bg-white ${
+                                className={`flex items-center justify-center border-none bg-white ${
                                   seat?.isAvailable === false
                                     ? "cursor-not-allowed"
-                                    : "cursor-pointer hover:bg-gray-200 rounded-lg"
+                                    : "cursor-pointer rounded-lg"
                                 }`}
                                 disabled={seat?.isAvailable === false && true}
                               >
-                                <MdChair
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="28"
+                                  height="28"
+                                  viewBox="0 0 100 100"
                                   onClick={() => handleSelectSeat(seat?.name)}
-                                  className={`w-10 h-10 mx-auto ${
+                                  className={`${
                                     seat?.isAvailable
                                       ? `${
                                           selectedSeats[0] === seat?.name ||
@@ -414,14 +560,103 @@ const Trip = () => {
                                         }`
                                       : "text-[#ff9090]"
                                   }`}
-                                />
-                              </button>
+                                >
+                                  <rect
+                                    x="10"
+                                    y="10"
+                                    width="80"
+                                    height="80"
+                                    rx="3"
+                                    ry="3"
+                                    fill={`${
+                                      seat?.isAvailable
+                                        ? `${
+                                            selectedSeats[0] === seat?.name ||
+                                            selectedSeats[1] === seat?.name ||
+                                            selectedSeats[2] === seat?.name ||
+                                            selectedSeats[3] === seat?.name
+                                              ? "#22C55E"
+                                              : "#fff"
+                                          }`
+                                        : "#ff9090"
+                                    }`}
+                                    stroke="#000"
+                                    stroke-width="1"
+                                  />
+                                  <rect
+                                    x="4"
+                                    y="76"
+                                    width="93"
+                                    height="20"
+                                    rx="5"
+                                    ry="5"
+                                    fill={`${
+                                      seat?.isAvailable
+                                        ? `${
+                                            selectedSeats[0] === seat?.name ||
+                                            selectedSeats[1] === seat?.name ||
+                                            selectedSeats[2] === seat?.name ||
+                                            selectedSeats[3] === seat?.name
+                                              ? "#22C55E"
+                                              : "#fff"
+                                          }`
+                                        : "#ff9090"
+                                    }`}
+                                    stroke="#000"
+                                    stroke-width="1"
+                                  />
+                                  <rect
+                                    x="2"
+                                    y="30"
+                                    width="16"
+                                    height="65"
+                                    rx="5"
+                                    ry="5"
+                                    fill={`${
+                                      seat?.isAvailable
+                                        ? `${
+                                            selectedSeats[0] === seat?.name ||
+                                            selectedSeats[1] === seat?.name ||
+                                            selectedSeats[2] === seat?.name ||
+                                            selectedSeats[3] === seat?.name
+                                              ? "#22C55E"
+                                              : "#fff"
+                                          }`
+                                        : "#ff9090"
+                                    }`}
+                                    stroke="#000"
+                                    stroke-width="1"
+                                  />
+                                  <rect
+                                    x="83"
+                                    y="30"
+                                    width="16"
+                                    height="65"
+                                    rx="5"
+                                    ry="5"
+                                    fill={`${
+                                      seat?.isAvailable
+                                        ? `${
+                                            selectedSeats[0] === seat?.name ||
+                                            selectedSeats[1] === seat?.name ||
+                                            selectedSeats[2] === seat?.name ||
+                                            selectedSeats[3] === seat?.name
+                                              ? "#22C55E"
+                                              : "#fff"
+                                          }`
+                                        : "#ff9090"
+                                    }`}
+                                    stroke="#000"
+                                    stroke-width="1"
+                                  />
+                                </svg>
+                              </div>
                             );
                           }
                         })}
                       </div>
                     </div>
-                    <div className="flex-1 p-4">
+                    <div className="flex-1 mt-10 sm:mt-0 sm:p-4">
                       <h4 className="text-[#5b2192] text-2xl font-semibold text-center">
                         SEAT INFORMATION:
                       </h4>
@@ -459,7 +694,7 @@ const Trip = () => {
                           Total: ৳ {selectedSeats?.length * trip?.fare}
                         </h4>
                       </div>
-                      <div className="border p-4 rounded-lg mt-10 w-full md:w-10/12 mx-auto">
+                      <div className="border rounded-lg mt-10 w-10/12 lg:w-1/2 mx-auto">
                         <form className="flex flex-col gap-4">
                           <input
                             type="text"

@@ -4,7 +4,7 @@ import { Radio } from "antd";
 import { Table } from "antd";
 import React, { useState } from "react";
 import { Input } from "antd";
-const { TextArea } = Input;
+import { EditOutlined } from "@ant-design/icons";
 
 const MyTourAndTripsTable = ({ data }) => {
   // * * * * * * * * for modal * * * * * * * *
@@ -115,12 +115,11 @@ const MyTourAndTripsTable = ({ data }) => {
           "✅"
         ) : (
           <span className="cursor-pointer" onClick={showModal}>
-            {"⁉️"}
+            <EditOutlined />
           </span>
         )
       )
     );
-
 
   return (
     <>
@@ -131,7 +130,7 @@ const MyTourAndTripsTable = ({ data }) => {
         onCancel={handleCancel}
         footer={[
           <Button
-            className="w-full bg-[#1677ff]"
+            className="w-full primary-bg"
             type="primary"
             onClick={handleSubmit}
           >

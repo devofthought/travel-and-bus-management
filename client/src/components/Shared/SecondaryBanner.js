@@ -6,8 +6,9 @@ import {
   GoogleOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
+import MainButton from "../UI/Button";
 
-const SecondaryBanner = ({openDashboard, setOpenDashboard}) => {
+const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
   const isLoggedIn = true;
 
   // modal
@@ -43,15 +44,19 @@ const SecondaryBanner = ({openDashboard, setOpenDashboard}) => {
   );
   return (
     <Card
-      className="bg-gradient-to-r from-blue-500 to-purple-500 text-white text-center py-12 pt-32"
-      style={{ borderRadius: "10px" }}
+      className="bg-center bg-cover sm:bg-contain lg:bg-cover bg-no-repeat z-10 text-gray-700 text-center py-12 pt-32 h-[500px]"
+      style={{
+        backgroundImage: `url("/images/HomeBannerImg.png")`,
+        inset: "0px",
+        borderRadius: "10px",
+      }}
     >
-      <div className="container ">
+      <div className="container mx-auto">
         <h1 className="text-4xl font-bold">Welcome to Our Bus Booking App</h1>
         <p className="mt-4 text-lg">
           Discover comfortable and convenient bus journeys for your travels.
         </p>
-        <div className="flex justify-between items-center w-2/3 mx-auto mt-10">
+        <div className="flex justify-between items-center w-2/3 mx-auto mt-10 backdrop-blur-xl opacity-100  p-5 rounded-3xl">
           {isLoggedIn ? (
             <div className="flex items-start">
               <div className="relative w-16">
@@ -69,12 +74,12 @@ const SecondaryBanner = ({openDashboard, setOpenDashboard}) => {
                   icon={<EditOutlined />}
                 />
               </div>
-              <div className="text-left ml-2">
-                <p>name</p>
-                <p>example@gmail.com</p>
+              <div className="text-left ml-3">
+                <h3 className="text-slate-900">Mr. Full Name</h3>
+                <p className="text-slate-900">example@gmail.com</p>
                 <button
                   onClick={() => setOpenDashboard(!openDashboard)}
-                  className="bg-white hover:bg-gray-200 text-blue-500 font-semibold py-0.5 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 mt-2"
+                  className="primary-bg cursor-pointer text-white font-medium py-1 px-4 shadow-md hover:shadow-lg transition duration-300 mt-2 border-0 rounded-[5px]"
                 >
                   Details
                 </button>
@@ -82,7 +87,7 @@ const SecondaryBanner = ({openDashboard, setOpenDashboard}) => {
             </div>
           ) : (
             <div className="flex items-center justify-between">
-              <button className="bg-white hover:bg-gray-200 text-blue-500 font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-300">
+              <button className="primary-bg hover:primary-bg cursor-pointer text-white font-semibold py-2 px-4 shadow-md hover:shadow-lg transition duration-300  border-0 rounded-md">
                 Login
               </button>
 
@@ -101,9 +106,7 @@ const SecondaryBanner = ({openDashboard, setOpenDashboard}) => {
             </div>
           )}
 
-          <button className="bg-white hover:bg-gray-200 text-blue-500 font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-300">
-            Modify Search
-          </button>
+          <MainButton styles="py-2 px-4" btnName="Modify Search"></MainButton>
         </div>
       </div>
       <Modal
@@ -193,14 +196,7 @@ const SecondaryBanner = ({openDashboard, setOpenDashboard}) => {
             </Form.Item>
 
             <Form.Item wrapperCol={{ span: 24 }} className="w-full mb-0">
-              <Button
-                className="w-full bg-blue-500"
-                block
-                type="primary"
-                htmlType="submit"
-              >
-                Submit
-              </Button>
+              <MainButton btnName={"Submit"} styles="w-full py-2"></MainButton>
             </Form.Item>
           </Form>
         </div>
