@@ -23,4 +23,6 @@ router.delete('/:bus_code', BusController.deleteBus)
 
 router.post('/get-available-buses', BusController.getAvailableBusController)
 
+router.post('/seat-view-for-booking', BusController.seatViewForBookingController);
+
 export const BusRoutes = router
