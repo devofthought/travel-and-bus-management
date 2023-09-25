@@ -121,6 +121,18 @@ const getAvailableBusController: RequestHandler = catchAsync(async (req, res) =>
   })
 })
 
+const seatViewForBookingController: RequestHandler = catchAsync(async (req, res) => {
+  const result = await BusService.seatViewForBooking(req.body.id);
+
+  sendResponse<any>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'booking info of buses fetched successfully',
+    data: result,
+  })
+})
+
+
 export const BusController = {
   createBus,
   getAllBus,
@@ -128,4 +140,5 @@ export const BusController = {
   updateBus,
   deleteBus,
   getAvailableBusController,
+  seatViewForBookingController,
 }

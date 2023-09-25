@@ -169,6 +169,7 @@ export const BusService = {
   updateBus,
   deleteBus,
   getAvailableBus,
+  seatViewForBooking,
 }
 
 
