@@ -21,7 +21,7 @@ const availabilityDivider = (elements: any, inputDate: string) => {
 
     elements.forEach((element: any) => {
         const isOccupied = element.availability_status.some(
-            (status: any) => status.date === inputDate
+            (status: any) => VariantCreation.extractDateFromTimestamp(status.date) === inputDate
         );
 
         if (isOccupied) {
@@ -87,10 +87,19 @@ const findAvailabilityByDepartureTime = async (payload: any, departureTime: any,
     }
 };
 
+const extractDateFromTimestamp = (timestamp: any) => {
+    const dateObject = new Date(timestamp);
+    const year = dateObject.getFullYear();
+    const month = String(dateObject.getMonth() + 1).padStart(2, '0');
+    const day = String(dateObject.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+};
+
 
 
 export const VariantCreation = {
     availabilityDivider,
     availabilityUpdater,
     findAvailabilityByDepartureTime,
+    extractDateFromTimestamp,
 };

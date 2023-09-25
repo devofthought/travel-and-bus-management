@@ -15,7 +15,7 @@ export type IBusFilter = {
 }
 
 export type IBusResponse = {
-  total_seats: number
+  total_seats: Array<string>
   available_seats: number
   bus_code: string
   availability_status:
@@ -32,7 +32,7 @@ export type IBusResponse = {
 }
 
 export type IBus = {
-  total_seats: number
+  total_seats: Array<string>
   available_seats: number
   bus_code: string
   availability_status: Array<{

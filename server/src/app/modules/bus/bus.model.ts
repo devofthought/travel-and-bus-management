@@ -4,10 +4,11 @@ import { BusModel, IBus } from './bus.interface'
 
 export const busSchema = new Schema<IBus, BusModel>(
   {
-    total_seats: {
+    total_seats: Array,
+    /* total_seats: {
       type: Number,
       required: true,
-    },
+    }, */
     bus_code: {
       type: String,
       required: true,

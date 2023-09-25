@@ -1,11 +1,11 @@
-import catchAsync from '../../../shared/catchAsync'
-import sendResponse from '../../../shared/sendResponse'
-import httpStatus from 'http-status'
 import { RequestHandler } from 'express'
-import { pick } from '../../../shared/pick'
+import httpStatus from 'http-status'
 import { paginationFields } from '../../../constants/pagination'
-import { IDriver } from './driver.interface'
+import catchAsync from '../../../shared/catchAsync'
+import { pick } from '../../../shared/pick'
+import sendResponse from '../../../shared/sendResponse'
 import { driverFilterableFields } from './driver.constants'
+import { IDriver } from './driver.interface'
 import { DriverService } from './driver.service'
 
 const getAllDrivers: RequestHandler = catchAsync(async (req, res) => {
@@ -47,8 +47,21 @@ const updateDriver: RequestHandler = catchAsync(async (req, res) => {
   })
 })
 
+
+const getAvailabledriverController: RequestHandler = catchAsync(async (req, res) => {
+  const result = await DriverService.getAvailableDriver(req.body.departure_time);
+
+  sendResponse<any>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Available drivers fetched successfully',
+    data: result,
+  })
+})
+
 export const DriverController = {
   getAllDrivers,
   getSingleDriver,
   updateDriver,
+  getAvailabledriverController,
 }

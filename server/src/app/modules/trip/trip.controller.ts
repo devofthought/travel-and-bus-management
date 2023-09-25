@@ -87,6 +87,21 @@ const getAllUpdateAbleTrip = catchAsync(async (req: Request, res: Response) => {
     data: result.data,
   })
 })
+
+
+const getTripsByUsersController = catchAsync(async (req: Request, res: Response) => {
+  const result = await TripService.getTripByUser(req.body);
+
+  sendResponse<ITripResponse[]>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'All route wise Trip retrieved successfully!',
+    // meta: result?.meta,
+    data: result.data,
+  })
+})
+
+
 export const TripController = {
   createTrip,
   updateTrip,
@@ -94,4 +109,5 @@ export const TripController = {
   getSingleTrip,
   getUpComingTrip,
   getAllUpdateAbleTrip,
+  getTripsByUsersController,
 }
