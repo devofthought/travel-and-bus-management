@@ -1,5 +1,4 @@
 import { z } from 'zod'
-import { driving_status } from '../driver/driver.constants'
 
 const createTravelerZodSchema = z.object({
   body: z
@@ -45,9 +44,19 @@ const createDriverZodSchema = z.object({
     address: z.string({
       required_error: 'address is required',
     }),
-    driving_status: z.enum([...driving_status] as [string, ...string[]], {
-      required_error: 'driving status is required',
-    }),
+    availability_status: z
+      .array(
+        z.object({
+          // Define properties inside the availability_status object
+          date: z.string({
+            required_error: 'Availability status date is required',
+          }),
+          status: z.string({
+            required_error: 'Availability status is required',
+          }),
+        })
+      )
+      .optional(),
   }),
 })
 

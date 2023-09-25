@@ -1,13 +1,12 @@
+import { Request, RequestHandler, Response } from 'express'
 import httpStatus from 'http-status'
-import { Request, Response } from 'express'
-import sendResponse from '../../../shared/sendResponse'
-import { BusService } from './bus.services'
+import cloudinary from '../../../config/cloudinary'
+import { paginationFields } from '../../../constants/pagination'
 import catchAsync from '../../../shared/catchAsync'
 import { pick } from '../../../shared/pick'
+import sendResponse from '../../../shared/sendResponse'
 import { busFilterableFields } from './bus.constants'
-import { paginationFields } from '../../../constants/pagination'
-import { IBusResponse } from './bus.interface'
-import cloudinary from '../../../config/cloudinary'
+import { BusService } from './bus.services'
 
 const createBus = catchAsync(async (req: Request, res: Response) => {
   const bus = { ...req.body }
@@ -65,7 +64,7 @@ const getAllBus = catchAsync(async (req: Request, res: Response) => {
   const paginationOptions = pick(req.query, paginationFields)
   const result = await BusService.getAllBus(filters, paginationOptions)
 
-  sendResponse<IBusResponse[]>(res, {
+  sendResponse<any[]>(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'All bus retrieved successfully !',
@@ -78,7 +77,7 @@ const getSingleBus = catchAsync(async (req: Request, res: Response) => {
   const bus_code = req.params.bus_code
   const result = await BusService.getSingleBus(bus_code)
 
-  sendResponse<IBusResponse>(res, {
+  sendResponse<any>(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Bus data retrieved successfully!',
@@ -91,7 +90,7 @@ const updateBus = catchAsync(async (req: Request, res: Response) => {
   const updatedData = req.body
   const result = await BusService.updateBus(bus_code, updatedData)
 
-  sendResponse<IBusResponse>(res, {
+  sendResponse<any>(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Bus updated successfully!',
@@ -103,10 +102,21 @@ const deleteBus = catchAsync(async (req: Request, res: Response) => {
   const bus_code = req.params.bus_code
   const result = await BusService.deleteBus(bus_code)
 
-  sendResponse<IBusResponse>(res, {
+  sendResponse<any>(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Bus deleted successfully!',
+    data: result,
+  })
+})
+
+const getAvailableBusController: RequestHandler = catchAsync(async (req, res) => {
+  const result = await BusService.getAvailableBus(req.body.departure_time);
+
+  sendResponse<any>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Available buses fetched successfully',
     data: result,
   })
 })
@@ -117,4 +127,5 @@ export const BusController = {
   getSingleBus,
   updateBus,
   deleteBus,
+  getAvailableBusController,
 }

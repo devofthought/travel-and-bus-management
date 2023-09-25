@@ -22,4 +22,6 @@ router.patch(
 
 router.get('/:id', TripController.getSingleTrip)
 
+router.post('/get-trips-by-users', TripController.getTripsByUsersController)
+
 export const TripRoutes = router
