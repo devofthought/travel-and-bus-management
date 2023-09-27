@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'zod'
 
 const createBusZodSchema = z.object({
   body: z.object({
@@ -40,8 +40,7 @@ const createBusZodSchema = z.object({
       })
       .optional(),
   }),
-});
-
+})
 
 const updateBusZodSchema = z.object({
   body: z.object({
@@ -83,7 +82,21 @@ const updateBusZodSchema = z.object({
   }),
 })
 
+const CheckBusAvailableZodSchema = z.object({
+  body: z.object({
+    departure_time: z.string({
+      required_error: 'Brand name is required',
+    }),
+    arrival_time: z
+      .string({
+        required_error: 'Brand name is required',
+      })
+      .optional(),
+  }),
+})
+
 export const BusValidation = {
   createBusZodSchema,
   updateBusZodSchema,
+  CheckBusAvailableZodSchema,
 }

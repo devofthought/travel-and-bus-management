@@ -13,6 +13,10 @@ router.patch(
 )
 router.get('/:id', DriverController.getSingleDriver)
 
-router.post('/get-available-drivers', DriverController.getAvailabledriverController)
+router.post(
+  '/get-available-drivers',
+  validateRequest(DriverValidation.CheckDriverAvailableZodSchema),
+  DriverController.getAvailableDriverController
+)
 
 export const DriverRouter = router

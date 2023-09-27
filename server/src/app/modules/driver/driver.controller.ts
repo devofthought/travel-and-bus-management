@@ -47,21 +47,24 @@ const updateDriver: RequestHandler = catchAsync(async (req, res) => {
   })
 })
 
+const getAvailableDriverController: RequestHandler = catchAsync(
+  async (req, res) => {
+    const result = await DriverService.getAvailableDriver(
+      req.body.departure_time
+    )
 
-const getAvailabledriverController: RequestHandler = catchAsync(async (req, res) => {
-  const result = await DriverService.getAvailableDriver(req.body.departure_time);
-
-  sendResponse<any>(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: 'Available drivers fetched successfully',
-    data: result,
-  })
-})
+    sendResponse<any>(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Available drivers fetched successfully',
+      data: result,
+    })
+  }
+)
 
 export const DriverController = {
   getAllDrivers,
   getSingleDriver,
   updateDriver,
-  getAvailabledriverController,
+  getAvailableDriverController,
 }
