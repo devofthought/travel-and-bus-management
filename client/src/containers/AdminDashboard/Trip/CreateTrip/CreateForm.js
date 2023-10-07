@@ -1,4 +1,4 @@
-import { Form, Button, Select, InputNumber, DatePicker } from "antd";
+import { Form, Select, InputNumber, DatePicker } from "antd";
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { useGetAllRouteQuery } from "@/redux/route/routeApi";
@@ -42,7 +42,7 @@ const CreateTripForm = () => {
   ] = useAddTripMutation();
 
   const onFinish = (values) => {
-    // Convert date and time to a single date-time format
+    // * Convert date and time to a single date-time format
     const departureDateTime = dayjs(values.departure_time).format(
       "YYYY-MM-DDTHH:mm:ss.sss"
     );
@@ -51,8 +51,13 @@ const CreateTripForm = () => {
       "YYYY-MM-DDTHH:mm:ss.sss"
     );
 
+    const driver = driveData?.data?.find(
+      (driver) => driver._id === values.driver_id
+    );
+
     AddTrip({
       ...values,
+      driver_code: driver?.driver_code,
       trips_status: "pending",
       departure_time: departureDateTime,
       arrival_time: arrivalDateTime,
@@ -60,7 +65,6 @@ const CreateTripForm = () => {
   };
 
   const handleValuesChange = (changedValues) => {
-    console.log("Changed Values:", changedValues);
     if (changedValues.hasOwnProperty("departure_time")) {
       const departureDateTime = dayjs(changedValues.departure_time).format(
         "YYYY-MM-DDTHH:mm:ss.sss"
@@ -96,7 +100,7 @@ const CreateTripForm = () => {
   }, [addResponse, addError]);
 
   const [form] = Form.useForm();
-  form.setFieldsValue(initialData);
+
   return (
     <div
       style={{
