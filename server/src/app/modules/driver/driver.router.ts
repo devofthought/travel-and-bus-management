@@ -1,6 +1,6 @@
 import express from 'express'
-import { DriverController } from './driver.controller'
 import validateRequest from '../../middlewares/validateRequest'
+import { DriverController } from './driver.controller'
 import { DriverValidation } from './driver.validation'
 
 const router = express.Router()
@@ -12,5 +12,11 @@ router.patch(
   DriverController.updateDriver
 )
 router.get('/:id', DriverController.getSingleDriver)
+
+router.post(
+  '/get-available-drivers',
+  validateRequest(DriverValidation.CheckDriverAvailableZodSchema),
+  DriverController.getAvailableDriverController
+)
 
 export const DriverRouter = router

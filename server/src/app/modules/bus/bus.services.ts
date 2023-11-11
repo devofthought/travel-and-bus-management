@@ -6,13 +6,14 @@ import { paginationHelper } from '../../../helper/paginationHelper'
 import { IGenericResponse } from '../../../interfaces/common'
 import { IPaginationOptions } from '../../../interfaces/pagination'
 import { VariantCreation } from '../../../utils/utilities'
+import { Booking } from '../booking/booking.model'
+import { Trip } from '../trip/trip.model'
 import { busSearchableFields } from './bus.constants'
-import { IBus, IBusFilter, IBusResponse } from './bus.interface'
+import { IBus, IBusFilter } from './bus.interface'
 import { Bus } from './bus.model'
 import { generatedBusCode } from './bus.utils'
 
-const createBus = async (payload: IBus): Promise<IBusResponse> => {
-  // console.log(payload)
+const createBus = async (payload: IBus): Promise<any> => {
   const bus_code = await generatedBusCode() // generated bus code
   payload.bus_code = bus_code
   const newBus = await Bus.create(payload)
@@ -112,9 +113,55 @@ const deleteBus = async (id: string): Promise<IBus | null> => {
 }
 
 const getAvailableBus = async (date: string): Promise<IBus[] | null> => {
-  const allBuses = await Bus.find({});
-  const result = VariantCreation.availabilityDivider(allBuses, date).standbyElements;
-  return result;
+  const allBuses = await Bus.find({})
+  const departureDate = VariantCreation.extractDateFromTimestamp(date)
+  const result = VariantCreation.availabilityDivider(
+    allBuses,
+    departureDate
+  ).standbyElements
+  return result
+}
+
+const seatViewForBooking = async (id: string): Promise<any> => {
+  const tripId = id // Replace 'your_trip_id' with the actual trip_id you want to filter by
+  const findTrip = await Trip.findById(tripId)
+  const bookedSeatsArray = await Booking.aggregate([
+    {
+      $match: {
+        trip_id: tripId, // Match collections with the specified trip_id
+      },
+    },
+    {
+      $group: {
+        _id: null,
+        booked_seats: { $push: '$booked_seat' },
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+        booked_seats: 1,
+      },
+    },
+  ])
+
+  // Assuming you have obtained 'bookedSeatsArray' and 'tripId' as described in the previous response
+  const busInfo = await Bus.findOne({ trip_id: findTrip?.bus_code }) // Assuming there's a 'trip_id' field in the Bus model
+  let availableSeats: Array<string> = []
+  const bookedSeats =
+    bookedSeatsArray.length > 0 ? bookedSeatsArray[0].booked_seats : []
+  if (busInfo) {
+    const totalSeats = busInfo.total_seats
+
+    // Create an array of available seats by filtering out the booked seats
+    availableSeats = totalSeats.filter(seat => !bookedSeats.includes(seat))
+
+    console.log('Available seats:', availableSeats)
+  } else {
+    console.log('Bus information not found for the specified trip_id.')
+  }
+
+  return { availableSeats, bookedSeats }
 }
 
 export const BusService = {
@@ -124,9 +171,8 @@ export const BusService = {
   updateBus,
   deleteBus,
   getAvailableBus,
+  seatViewForBooking,
 }
-
-
 
 /* function assignBuses(buses: Bus[], inputDate: string) {
   const assignedBuses: Bus[] = [];

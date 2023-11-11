@@ -1,11 +1,11 @@
-import { Form, Button, Select, InputNumber, DatePicker } from "antd";
+import { Form, Select, InputNumber, DatePicker } from "antd";
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { useGetAllRouteQuery } from "@/redux/route/routeApi";
 import { AiOutlineArrowRight } from "react-icons/ai";
-import { useGetAllAvailabilityBusQuery } from "@/redux/bus/busApi";
+import { useAddForGetRequestAvailableBusMutation } from "@/redux/bus/busApi";
 import { BsBusFront } from "react-icons/bs";
-import { useGetAllAvailabilityDriverQuery } from "@/redux/driver/driverApi";
+import { useAddForGetRequestAvailableDriverMutation } from "@/redux/driver/driverApi";
 import { BiTrip, BiUser } from "react-icons/bi";
 import { useAddTripMutation } from "@/redux/trip/tripApi";
 import Swal from "sweetalert2";
@@ -23,16 +23,26 @@ const initialData = {
 
 const CreateTripForm = () => {
   const { data: routeData, isLoading: routeIsLoading } = useGetAllRouteQuery();
-  const { data: driveData, isLoading: driverIsLoading } =
-    useGetAllAvailabilityDriverQuery("ready");
-  const { data: busData, isLoading: busIsLoading } =
-    useGetAllAvailabilityBusQuery("standBy");
+
+  // const { data: driveData, isLoading: driverIsLoading } = useGetAllAvailabilityDriverQuery("ready");
+
+  const [
+    AddReqForDriverAvailability,
+    { data: driveData, isLoading: driverIsLoading, error: driverError },
+  ] = useAddForGetRequestAvailableDriverMutation();
+
+  const [
+    AddReqForBusAvailability,
+    { data: busData, isLoading: busIsLoading, error: busError },
+  ] = useAddForGetRequestAvailableBusMutation();
+
   const [
     AddTrip,
     { data: addResponse, error: addError, isLoading: addIsLoading },
   ] = useAddTripMutation();
+
   const onFinish = (values) => {
-    // Convert date and time to a single datetime format
+    // * Convert date and time to a single date-time format
     const departureDateTime = dayjs(values.departure_time).format(
       "YYYY-MM-DDTHH:mm:ss.sss"
     );
@@ -41,12 +51,31 @@ const CreateTripForm = () => {
       "YYYY-MM-DDTHH:mm:ss.sss"
     );
 
+    const driver = driveData?.data?.find(
+      (driver) => driver._id === values.driver_id
+    );
+
     AddTrip({
       ...values,
+      driver_code: driver?.driver_code,
       trips_status: "pending",
       departure_time: departureDateTime,
       arrival_time: arrivalDateTime,
     });
+  };
+
+  const handleValuesChange = (changedValues) => {
+    if (changedValues.hasOwnProperty("departure_time")) {
+      const departureDateTime = dayjs(changedValues.departure_time).format(
+        "YYYY-MM-DDTHH:mm:ss.sss"
+      );
+      AddReqForBusAvailability({
+        departure_time: departureDateTime,
+      });
+      AddReqForDriverAvailability({
+        departure_time: departureDateTime,
+      });
+    }
   };
 
   useEffect(() => {
@@ -71,7 +100,7 @@ const CreateTripForm = () => {
   }, [addResponse, addError]);
 
   const [form] = Form.useForm();
-  form.setFieldsValue(initialData);
+
   return (
     <div
       style={{
@@ -83,6 +112,7 @@ const CreateTripForm = () => {
         autoComplete="off"
         layout="vertical"
         onFinish={onFinish}
+        onValuesChange={handleValuesChange}
         onFinishFailed={(error) => {
           console.log({ error });
         }}

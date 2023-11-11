@@ -14,7 +14,9 @@ import { Trip } from './trip.model'
 
 const createTrip = async (payload: ITrip): Promise<ITripResponse | null> => {
   const driver = await VariantCreation.findAvailabilityByDepartureTime({ driver_code: payload.driver_code }, payload.departure_time, Driver);
+  console.log("17")
   const bus = await VariantCreation.findAvailabilityByDepartureTime({ bus_code: payload.bus_code }, payload.departure_time, Bus);
+  console.log("19")
   const route = await Route.findOne({ route_code: payload.route_code })
   if (!route) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Route is not found')
@@ -26,7 +28,6 @@ const createTrip = async (payload: ITrip): Promise<ITripResponse | null> => {
   if (bus) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Bus is not available')
   }
-  payload.bus_id = bus._id.toString()
   if (payload.trips_status !== 'pending') {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Not able to create a past trip')
   }
@@ -45,18 +46,19 @@ const createTrip = async (payload: ITrip): Promise<ITripResponse | null> => {
     }
 
     newTripObject = newTrip[0]
-
+    console.log("49")
     await Bus.findOneAndUpdate(
       { bus_code: newTripObject.bus_code },
       { $push: { availability_status: { status: 'transit', date: newTripObject.departure_time } } },
       { session, new: true }
     )
+    console.log("55")
     await Driver.findOneAndUpdate(
       { _id: newTripObject.driver_id },
       { $push: { availability_status: { status: 'on-trip', date: newTripObject.departure_time } } },
       { session, new: true }
     )
-
+    console.log("61")
     await session.commitTransaction()
     await session.endSession()
   } catch (error) {
@@ -152,7 +154,7 @@ const updateTrip = async (
     if (driver) {
       throw new ApiError(httpStatus.BAD_REQUEST, 'Driver not found')
     }
-    if (driver.driving_status !== 'ready') {
+    if (driver) {
       throw new ApiError(httpStatus.BAD_REQUEST, 'Driver is not available')
     }
   }
@@ -190,19 +192,25 @@ const updateTrip = async (
     if (!newTrip) {
       throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to update trip')
     }
-    newTripObject = newTrip
+    newTripObject = newTrip;
+    const update = {
+      status: "transit",
+      date: payload.departure_time,
+    }
 
     if (payload.driver_id) {
       await Bus.findOneAndUpdate(
         { bus_code: newTripObject.bus_code },
-        { availability_status: 'transit' },
+        { $push: { availability_status: update } },
+        // { availability_status: 'transit' },
         { session, new: true }
       )
     }
     if (payload.driver_id) {
       await Driver.findOneAndUpdate(
         { _id: newTripObject.driver_id },
-        { driving_status: 'on-trip' },
+        { $push: { availability_status: update } },
+        // { driving_status: 'on-trip' },
         { session, new: true }
       )
     }
@@ -296,7 +304,7 @@ const getAllTrip = async (
       fare: trip.ticket_price,
       available_seat:
         bus?.total_seats &&
-        bus?.total_seats - bookedSeatsArray[0].booked_seats.length,
+        bus?.total_seats.length - bookedSeatsArray[0]?.booked_seats?.length,
       total_seat: bus?.total_seats,
     })
   }
@@ -330,8 +338,33 @@ const getSingleTrip = async (id: string): Promise<ITrip | null> => {
  * */
 
 const getUpComingTrip = async () => {
-  return null
+  const result = await Trip.find({ trips_status: "pending" })
+  return result
 }
+
+
+const getTripByUser = async (infor: any) => {
+  const { from, to, departure_time } = infor;
+  console.log(infor);
+  // Aggregate pipeline
+  const getRoute = await Route.findOne({
+    $and: [
+      { from }, { to }
+    ]
+  });
+  const result = await Trip.find({
+    $and: [
+      { route_code: getRoute?.route_code }, { departure_time }
+    ]
+  });
+  console.log(result);
+
+  return {
+    meta: {},
+    data: result,
+  };
+}
+
 
 export const TripService = {
   createTrip,
@@ -340,6 +373,7 @@ export const TripService = {
   getSingleTrip,
   getUpComingTrip,
   getAllUpdateAbleTrip,
+  getTripByUser,
 }
 
 /* 

@@ -90,7 +90,8 @@ const updateDriver = async (
 
 const getAvailableDriver = async (date: string): Promise<IDriver[] | null> => {
   const allDriver = await Driver.find({});
-  const result = VariantCreation.availabilityDivider(allDriver, date).standbyElements;
+  const departureDate = VariantCreation.extractDateFromTimestamp(date);
+  const result = VariantCreation.availabilityDivider(allDriver, departureDate).standbyElements;
   return result;
 }
 

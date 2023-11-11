@@ -8,7 +8,15 @@ const driverApi = apiSlice.injectEndpoints({
     }),
     getAllAvailabilityDriver: builder.query({
       query: (status) => `/driver?driving_status=${status}`,
-      providesTags: ["driver", "trip"],
+      providesTags: ["driver"],
+    }),
+    addForGetRequestAvailableDriver: builder.mutation({
+      query: (body) => ({
+        url: "/driver/get-available-drivers",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: [""],
     }),
     getSingleDriverDetails: builder.query({
       query: (driverId) => `/driver/${driverId}`,
@@ -47,4 +55,5 @@ export const {
   useAddDriverMutation,
   useUpdateDriverMutation,
   useDeleteDriverMutation,
+  useAddForGetRequestAvailableDriverMutation,
 } = driverApi;

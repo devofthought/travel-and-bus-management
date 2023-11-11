@@ -59,7 +59,7 @@ export const driverSchema = new Schema<IDriver, DriverModel>(
           type: String,
           enum: driving_status,
         },
-        date: new Date().toString(),
+        date: String,
       },
     ],
   },

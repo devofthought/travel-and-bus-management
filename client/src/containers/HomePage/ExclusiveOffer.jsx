@@ -17,7 +17,7 @@ const ExclusiveOffer = () => {
   }, []);
 
   return (
-    <div className="main-container my-32 lg:my-36">
+    <div className="main-container mb-32 lg:mb-36">
       <div className="flex flex-col md:flex-row">
         <div className="w-full md:w-1/2">
           <p className="text-center md:text-left text-2xl md:text-3xl lg:text-4xl">

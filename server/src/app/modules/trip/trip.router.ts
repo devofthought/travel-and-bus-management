@@ -1,11 +1,11 @@
 import express from 'express'
-import { TripValidation } from './trip.validation'
 import validateRequest from '../../middlewares/validateRequest'
 import { TripController } from './trip.controller'
+import { TripValidation } from './trip.validation'
 const router = express.Router()
 
-router.get('/', TripController.getAllTrip)
-router.get('/up-coming', TripController.getUpComingTrip)
+router.get('/', TripController.getAllTrip)//done testing
+router.get('/up-coming', TripController.getUpComingTrip)//done testing
 
 router.post(
   '/',
@@ -18,8 +18,10 @@ router.patch(
   '/:id',
   validateRequest(TripValidation.updateTripZodSchema),
   TripController.updateTrip
-)
+)//done testing
 
 router.get('/:id', TripController.getSingleTrip)
+
+router.post('/get-trips-by-users', TripController.getTripsByUsersController)
 
 export const TripRoutes = router

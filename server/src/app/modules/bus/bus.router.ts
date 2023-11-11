@@ -1,8 +1,8 @@
 import express from 'express'
-import { BusValidation } from './bus.validation'
+import multer from '../../middlewares/multer'
 import validateRequest from '../../middlewares/validateRequest'
 import { BusController } from './bus.controller'
-import multer from '../../middlewares/multer'
+import { BusValidation } from './bus.validation'
 const router = express.Router()
 
 router.get('/', BusController.getAllBus)
@@ -20,5 +20,16 @@ router.patch(
 )
 router.get('/:bus_code', BusController.getSingleBus)
 router.delete('/:bus_code', BusController.deleteBus)
+
+router.post(
+  '/get-available-buses',
+  validateRequest(BusValidation.CheckBusAvailableZodSchema),
+  BusController.getAvailableBusController
+)
+
+router.post(
+  '/seat-view-for-booking',
+  BusController.seatViewForBookingController
+)
 
 export const BusRoutes = router
