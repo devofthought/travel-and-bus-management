@@ -1,5 +1,6 @@
 import BusChart from "@/components/Charts/BusChart";
 import DriversChart from "@/components/Charts/DriversChart";
+import MonthlyDailyTrip from "@/components/Charts/MonthlyDailyTrip";
 import RoadChart from "@/components/Charts/RoadChart";
 import SellChart from "@/components/Charts/SellChart";
 import SellChartRightSide from "@/components/Charts/SellChartRightSide";
@@ -21,6 +22,9 @@ const Dashboard = () => {
           <div className="flex flex-col md:flex-row gap-5">
             <SellChart />
             <SellChartRightSide />
+          </div>
+          <div className="flex flex-col md:flex-row gap-5">
+            <MonthlyDailyTrip />
           </div>
         </div>
       )}

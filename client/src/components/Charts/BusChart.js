@@ -9,7 +9,7 @@ const BusChart = () => {
     theme: {
       monochrome: {
         enabled: true,
-        color: "#FAE659",
+        color: "#faa307",
         shadeTo: "light",
         shadeIntensity: 0.65,
       },
@@ -19,6 +19,7 @@ const BusChart = () => {
         donut: {
           labels: {
             show: true,
+            position: "top",
             total: {
               show: true,
               showAlways: true,
@@ -29,6 +30,16 @@ const BusChart = () => {
         },
       },
     },
+    responsive: [
+      {
+        breakpoint: 480,
+        options: {
+          chart: {
+            width: 240,
+          },
+        },
+      },
+    ],
     dataLabels: {
       enabled: false,
     },

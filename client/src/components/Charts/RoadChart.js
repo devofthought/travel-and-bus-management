@@ -19,6 +19,7 @@ const RoadChart = () => {
         donut: {
           labels: {
             show: true,
+            position: "top",
             total: {
               show: true,
               showAlways: true,
@@ -32,6 +33,16 @@ const RoadChart = () => {
     dataLabels: {
       enabled: false,
     },
+    responsive: [
+      {
+        breakpoint: 480,
+        options: {
+          chart: {
+            width: 240,
+          },
+        },
+      },
+    ],
     series: [12],
     labels: ["Roads"],
   };

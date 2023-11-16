@@ -19,6 +19,7 @@ const DriversChart = () => {
         donut: {
           labels: {
             show: true,
+            position: "top",
             total: {
               show: true,
               showAlways: true,
@@ -32,6 +33,16 @@ const DriversChart = () => {
     dataLabels: {
       enabled: false,
     },
+    responsive: [
+      {
+        breakpoint: 480,
+        options: {
+          chart: {
+            width: 240,
+          },
+        },
+      },
+    ],
     series: [26, 22],
     labels: ["Drivers", "Conductor"],
   };

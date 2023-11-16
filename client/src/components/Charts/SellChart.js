@@ -1,4 +1,5 @@
-import MainChart from "./MainChart";
+import dynamic from "next/dynamic";
+const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 const SellChart = () => {
   const options = {
@@ -30,9 +31,14 @@ const SellChart = () => {
   };
 
   return (
-    <div className="border border-solid border-gray-300 shadow p-4 rounded-md mt-5">
+    <div className="flex-1 border border-solid border-gray-300 shadow p-4 rounded-md mt-5">
       <h1 className="text-lg ml-4">Revenue Overview</h1>
-      <MainChart options={options} width={690} height={300} />
+      <Chart
+        options={options}
+        series={options.series}
+        type={options.chart.type}
+        height={300}
+      />
     </div>
   );
 };
