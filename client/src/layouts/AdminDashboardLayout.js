@@ -61,7 +61,7 @@ const AdminDashboardLayout = ({ children }) => {
         <Content
           style={{
             margin: "24px 16px 5px 16px" /* top | right | bottom | left */,
-            padding: 24,
+            padding: "24px 10px",
             minHeight: "calc(100vh - 185px)",
             background: colorBgContainer,
             overflowY: "scroll" /* Add vertical scrollbar */,
