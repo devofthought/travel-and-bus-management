@@ -86,7 +86,7 @@ const Navbar = () => {
             >
               <Button btnName="Reserve Bus" styles="py-2 px-3"></Button>
             </Link>
-            <Link href="">
+            <Link href="/blog">
               <Button btnName="Blogs" styles="py-2 px-3"></Button>
             </Link>
           </div>
