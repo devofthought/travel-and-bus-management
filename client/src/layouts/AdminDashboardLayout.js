@@ -4,6 +4,7 @@ import { Layout, Button, theme } from "antd";
 import SideBar from "@/components/Shared/SideBar";
 import DashboardRightBarDropDown from "@/components/Shared/DashboardRightBarDropDown";
 import Footer from "@/components/UI/Footer";
+import Link from "next/link";
 const { Header, Sider, Content } = Layout;
 
 const AdminDashboardLayout = ({ children }) => {
@@ -16,17 +17,21 @@ const AdminDashboardLayout = ({ children }) => {
     <Layout className="h-screen">
       {/************************************* sideBar *****************************************/}
       <Sider
-        width={300}
+        width={280}
         trigger={null}
         collapsible
         collapsed={collapsed}
         style={{
-          background: colorBgContainer,
+          background: "#001529",
+          maxHeight:'100vh',
+          overflowY: 'auto',
         }}
       >
         {collapsed || (
-          <div className="flex justify-center items-center h-16 rounded-xl mx-2 my-3 duration-700">
-            <h3 className="text-2xl">Dhruto Travel</h3>
+          <div className="flex justify-center items-center h-10 rounded-xl mx-2 my-3 duration-700">
+            <Link href={"/"} className="text-white text-2xl">
+              Dhruto Travel
+            </Link>
           </div>
         )}
         <SideBar />
