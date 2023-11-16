@@ -10,7 +10,7 @@ const TopLoader = () => {
       showSpinner={true}
       easing="ease"
       speed={200}
-      shadow="0 0 10px #cc232c,0 0 5px #d84e55"
+      shadow="0 0 6px #cc232c,0 0 3px #d84e55"
       zIndex={1600}
     />
   );
