@@ -1,0 +1,20 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.BusRoutes = void 0;
+const express_1 = __importDefault(require("express"));
+const multer_1 = __importDefault(require("../../middlewares/multer"));
+const validateRequest_1 = __importDefault(require("../../middlewares/validateRequest"));
+const bus_controller_1 = require("./bus.controller");
+const bus_validation_1 = require("./bus.validation");
+const router = express_1.default.Router();
+router.get('/', bus_controller_1.BusController.getAllBus);
+router.post('/', multer_1.default.array('bus_image', 3), (0, validateRequest_1.default)(bus_validation_1.BusValidation.createBusZodSchema), bus_controller_1.BusController.createBus);
+router.patch('/:bus_code', (0, validateRequest_1.default)(bus_validation_1.BusValidation.updateBusZodSchema), bus_controller_1.BusController.updateBus);
+router.get('/:bus_code', bus_controller_1.BusController.getSingleBus);
+router.delete('/:bus_code', bus_controller_1.BusController.deleteBus);
+router.post('/get-available-buses', (0, validateRequest_1.default)(bus_validation_1.BusValidation.CheckBusAvailableZodSchema), bus_controller_1.BusController.getAvailableBusController);
+router.post('/seat-view-for-booking', bus_controller_1.BusController.seatViewForBookingController);
+exports.BusRoutes = router;

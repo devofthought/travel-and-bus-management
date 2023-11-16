@@ -5,6 +5,7 @@ import SideBar from "@/components/Shared/SideBar";
 import DashboardRightBarDropDown from "@/components/Shared/DashboardRightBarDropDown";
 import Footer from "@/components/UI/Footer";
 import Link from "next/link";
+import TopLoader from "@/components/Shared/TopLoader";
 const { Header, Sider, Content } = Layout;
 
 const AdminDashboardLayout = ({ children }) => {
@@ -23,8 +24,8 @@ const AdminDashboardLayout = ({ children }) => {
         collapsed={collapsed}
         style={{
           background: "#001529",
-          maxHeight:'100vh',
-          overflowY: 'auto',
+          maxHeight: "100vh",
+          overflowY: "auto",
         }}
       >
         {collapsed || (
@@ -37,6 +38,7 @@ const AdminDashboardLayout = ({ children }) => {
         <SideBar />
       </Sider>
       <Layout>
+        <TopLoader />
         <Header
           style={{
             padding: 0,
