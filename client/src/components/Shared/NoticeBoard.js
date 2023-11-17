@@ -4,8 +4,9 @@ const NoticeBoard = () => {
     <div className="bg-[#1b4965]">
       <Marquee speed={80}>
         <p className="text-xl text-white">
-          Here, on bug/issue in the backend. Currently backend is under
-          maintenance and this website is run on the local fake data. So, dynamically function is now available now.
+          We're addressing a backend issue/bug, and the site is running on
+          local/fake-data during maintenance. So, Some dynamic functions may be
+          temporarily unavailable. Thank you.
         </p>
       </Marquee>
     </div>
