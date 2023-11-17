@@ -11,7 +11,7 @@ const SaySomething = () => {
 
   return (
     <div className="main-container my-32 lg:my-36">
-      <div className="flex flex-col md:flex-row gap-6 lg:gap-14">
+      <div className="flex flex-col md:flex-row gap-6 lg:gap-14" id="ContactUs">
         <div className="w-full md:w-[50%] md:px-4">
           <h1 className="break-words font-montserrat font-semibold mb-4 text-4xl leading-7 text-gray-800">
             Let's stay connected
