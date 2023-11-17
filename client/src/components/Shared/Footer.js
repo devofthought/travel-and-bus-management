@@ -6,6 +6,8 @@ import { BiLogoLinkedin } from "react-icons/bi";
 import Link from "next/link";
 
 const Footer = () => {
+  const date = new Date();
+  const year = date.getFullYear();
   return (
     <div className="secondary-bg mt-10">
       <footer className="main-container relative pt-8 pb-6">
@@ -21,25 +23,25 @@ const Footer = () => {
               </h5>
               <div className="mt-6 lg:mb-0 mb-6 flex">
                 <button
-                  className="border-none bg-white text-[#d300c5] text-lightBlue-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
+                  className="cursor-pointer border-none bg-white text-[#d300c5] text-lightBlue-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
                   type="button"
                 >
                   <SiInstagram className="w-full h-full p-2" />
                 </button>
                 <button
-                  className="border-none bg-white text-[#1d9bf0] text-lightBlue-600 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
+                  className="cursor-pointer border-none bg-white text-[#1d9bf0] text-lightBlue-600 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
                   type="button"
                 >
                   <TfiTwitter className="w-full h-full p-2" />
                 </button>
                 <button
-                  className="border-none bg-white text-blue-700 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
+                  className="cursor-pointer border-none bg-white text-blue-700 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
                   type="button"
                 >
                   <FaFacebookF className="w-full h-full p-2" />
                 </button>
                 <button
-                  className="border-none bg-white text-[#1d9bf0] text-blueGray-800 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
+                  className="cursor-pointer border-none bg-white text-[#1d9bf0] text-blueGray-800 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
                   type="button"
                 >
                   <BiLogoLinkedin className="w-full h-full p-[6px]" />
@@ -54,36 +56,36 @@ const Footer = () => {
                   </span>
                   <ul className="list-unstyled">
                     <li>
-                      <a
+                      <Link
                         className="text-gray-700 font-semibold block pb-2 text-sm"
-                        href="/about-us"
+                        href="/"
                       >
                         About Us
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
+                      <Link
                         className="text-gray-700 font-semibold block pb-2 text-sm"
                         href="/blog"
                       >
                         Blog
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
+                      <Link
                         className="text-gray-700 font-semibold block pb-2 text-sm"
-                        href="/bus"
+                        href="/"
                       >
                         Bus
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
+                      <Link
                         className="text-gray-700 font-semibold block pb-2 text-sm"
-                        href="/reserve-bus"
+                        href="#reserveBus"
                       >
                         Reserve Bus
-                      </a>
+                      </Link>
                     </li>
                   </ul>
                 </div>
@@ -93,36 +95,39 @@ const Footer = () => {
                   </span>
                   <ul className="list-unstyled">
                     <li>
-                      <a
+                      <Link
                         className="text-gray-700 font-semibold block pb-2 text-sm"
                         href="https://github.com/creativetimofficial/notus-js/blob/main/LICENSE.md?ref=njs-profile"
+                        target="_blank"
                       >
                         Our License
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
+                      <Link
                         className="text-gray-700 font-semibold block pb-2 text-sm"
                         href="https://creative-tim.com/terms?ref=njs-profile"
+                        target="_blank"
                       >
                         Terms &amp; Conditions
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
+                      <Link
                         className="text-gray-700 font-semibold block pb-2 text-sm"
                         href="https://creative-tim.com/privacy?ref=njs-profile"
+                        target="_blank"
                       >
                         Privacy Policy
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
+                      <Link
                         className="text-gray-700 font-semibold block pb-2 text-sm"
-                        href="https://creative-tim.com/contact-us?ref=njs-profile"
+                        href="#ContactUs"
                       >
                         Contact Us
-                      </a>
+                      </Link>
                     </li>
                   </ul>
                 </div>
@@ -133,7 +138,7 @@ const Footer = () => {
           <div className="flex flex-wrap items-center md:justify-between justify-center">
             <div className="w-full md:w-4/12 px-4 mx-auto text-center">
               <div className="text-sm text-gray-700 font-semibold py-1">
-                Copyright © <span id="get-current-year">2023 </span>
+                Copyright © <span id="get-current-year">{year}</span>
                 <Link
                   href="/"
                   className="text-gray-700 hover:text-gray-800"
