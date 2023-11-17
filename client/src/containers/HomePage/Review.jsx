@@ -8,38 +8,38 @@ import SectionTitle from "@/components/Shared/SectionTitle";
 const reviewData = [
   {
     review:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptas, omnis quas. Id placeat eius rerum velit ad saep laboriosam sunt!",
+      "I appreciated the company's commitment to passenger safety. They strictly adhered to safety protocols, ensuring a secure travel environment. This attention to safety added an extra layer of confidence for me!",
     name: "Terry Hang",
     designation: "Traveler",
     ratings: 5,
   },
   {
     review:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptas, omnis quas. Id placeat eius rerum velit ad saep laboriosam sunt!",
+      "Dhruto Travel excelled in communication. Clear instructions were provided before and during the journey. Announcements were made promptly, keeping passengers informed about upcoming stops and any relevant information!",
     name: "Luci Jeny",
     designation: "Businessman",
     ratings: 3.5,
   },
   {
     review:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptas, omnis quas. Id placeat eius rerum velit ad saep laboriosam sunt!",
-    name: "Samu Fika",
-    designation: "Traveler",
-    ratings: 4,
-  },
-  {
-    review:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptas, omnis quas. Id placeat eius rerum velit ad saep laboriosam sunt!",
+      "The bus provided a comfortable and clean environment. The seats were spacious, and the air conditioning was well-regulated. It was evident that the company prioritizes passenger comfort!",
     name: "Mick Lrsa",
     designation: "Singer",
     ratings: 4.5,
   },
   {
     review:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptas, omnis quas. Id placeat eius rerum velit ad saep laboriosam sunt!",
+      "The ticket prices were reasonable, offering good value for the services provided. I found the cost to be competitive, especially considering the quality of the journey!",
     name: "Tom Herry",
     designation: "Designer",
     ratings: 5,
+  },
+  {
+    review:
+      "Dhruto Travel impressed me with their commitment to punctuality. The bus arrived on time, and the entire journey adhered to the schedule. This reliability made planning my trip much smoother!",
+    name: "Samu Fika",
+    designation: "Traveler",
+    ratings: 4,
   },
 ];
 
@@ -97,7 +97,7 @@ const Review = () => {
                     <BiSolidUserCircle size={48}></BiSolidUserCircle>
                   </div>
                   <div className="ml-5">
-                    <h3 className="font-medium secondary-text">{data?.name}</h3>
+                    <h3 className="font-medium text-black">{data?.name}</h3>
                     <h6 className="opacity-80 text-sm">{data?.designation}</h6>
                   </div>
                 </div>

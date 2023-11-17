@@ -144,7 +144,7 @@ const Navbar = () => {
                       User Dashboard
                     </Link>
                     <Link
-                      href=""
+                      href="/blog"
                       className="text-gray-600 hover:bg-[#f3f4f9] block px-4 py-2 text-base duration-300"
                       role="menuitem"
                       tabIndex="-1"
