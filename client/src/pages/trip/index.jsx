@@ -3,7 +3,6 @@ import Navbar from "@/components/Shared/Navbar";
 import Button from "@/components/UI/Button";
 import Banner from "@/containers/Banner";
 import React, { useState } from "react";
-import { MdChair } from "react-icons/md";
 import { GiSteeringWheel } from "react-icons/gi";
 import { useRouter } from "next/router";
 
@@ -219,6 +218,11 @@ const Trip = () => {
       trip?.to.toLocaleLowerCase().includes(to?.toLocaleLowerCase()) &&
       trip?.traveling_date === date
   );
+
+  const handlePaymentPageMove = (e) => {
+    e.preventDefault();
+    router.push("/payment");
+  };
 
   return (
     <div className=" bg-gray-100">
@@ -695,7 +699,10 @@ const Trip = () => {
                         </h4>
                       </div>
                       <div className="border rounded-lg mt-10 w-10/12 lg:w-1/2 mx-auto">
-                        <form className="flex flex-col gap-4">
+                        <form
+                          onSubmit={(e) => handlePaymentPageMove(e)}
+                          className="flex flex-col gap-4"
+                        >
                           <input
                             type="text"
                             name="name"
@@ -714,6 +721,7 @@ const Trip = () => {
                             textStyle={`btn-text px-2`}
                             btnName="Proceed to pay"
                             required={true}
+                            type="submit"
                           />
                         </form>
                       </div>
