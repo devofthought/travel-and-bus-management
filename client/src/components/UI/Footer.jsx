@@ -7,6 +7,7 @@ const Footer = () => {
     <Footer
       style={{
         textAlign: "center",
+        padding: "10px 50px",
       }}
     >
       Dhruto Travel©{year} Created by dev of thought group

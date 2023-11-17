@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import { AiOutlineClose } from "react-icons/ai";
+import React, { useState } from "react";
+// import { AiOutlineClose } from "react-icons/ai";
 import Button from "../UI/Button";
 
 const Navbar = () => {
@@ -11,7 +11,7 @@ const Navbar = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
-    setDropdownOpen(!isDropdownOpen);
+    setDropdownOpen((prev) => !prev);
   };
 
   const handleSignOut = () => {
@@ -86,7 +86,7 @@ const Navbar = () => {
             >
               <Button btnName="Reserve Bus" styles="py-2 px-3"></Button>
             </Link>
-            <Link href="">
+            <Link href="/blog">
               <Button btnName="Blogs" styles="py-2 px-3"></Button>
             </Link>
           </div>

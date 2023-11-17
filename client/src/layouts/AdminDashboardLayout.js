@@ -6,6 +6,7 @@ import DashboardRightBarDropDown from "@/components/Shared/DashboardRightBarDrop
 import Footer from "@/components/UI/Footer";
 import Link from "next/link";
 import TopLoader from "@/components/Shared/TopLoader";
+import NoticeBoard from "@/components/Shared/NoticeBoard";
 const { Header, Sider, Content } = Layout;
 
 const AdminDashboardLayout = ({ children }) => {
@@ -38,6 +39,7 @@ const AdminDashboardLayout = ({ children }) => {
         <SideBar />
       </Sider>
       <Layout>
+        <NoticeBoard />
         <TopLoader />
         <Header
           style={{
