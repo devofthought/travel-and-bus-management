@@ -27,6 +27,10 @@
   scroll-behavior: smooth;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Ubuntu", "Segoe UI", "Roboto",
