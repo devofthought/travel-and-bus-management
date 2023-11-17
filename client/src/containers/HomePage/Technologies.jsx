@@ -1,7 +1,9 @@
 import React from "react";
 import { Image } from "antd";
-import Slider from "react-slick";
+// import Slider from "react-slick";
 import SectionTitle from "@/components/Shared/SectionTitle";
+import Marquee from "react-fast-marquee";
+// import { GiDividedSpiral } from "react-icons/gi";
 
 const Technologies = () => {
   const icons = [
@@ -54,7 +56,7 @@ const Technologies = () => {
   return (
     <div className="main-container my-32 lg:my-36">
       <SectionTitle title="Technologies Used"></SectionTitle>
-      <div>
+      {/* <div>
         <ul className="container">
           <Slider {...settings}>
             {icons.map((icon, index) => (
@@ -72,6 +74,22 @@ const Technologies = () => {
             ))}
           </Slider>
         </ul>
+      </div> */}
+
+      <div className="container">
+        <Marquee direction="right" speed={100}>
+          <div className="ml-10 flex justify-around gap-10 md:gap-16 items-center rounded-xl cursor-auto">
+            {icons.map((icon, index) => (
+              <Image
+                key={index}
+                src={icon}
+                alt={icon}
+                className="w-16 md:w-24 rounded-xl "
+                preview={false}
+              />
+            ))}
+          </div>
+        </Marquee>
       </div>
     </div>
   );
