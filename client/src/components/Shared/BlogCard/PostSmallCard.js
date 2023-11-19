@@ -28,7 +28,7 @@ export const PostSmallCard = ({ cardData }) => {
           ))}
         </div>
         <div className="mt-3">
-          <Link href={`/${cardData?.slug}`}>
+          <Link href={`/blog/${cardData?.slug}`}>
             <h2 className="text-lg text-white font-semibold line-clam-3 text-neutral-content hover:text-primary transition hover:duration-300 line-clamp-3">
               {cardData?.title ||
                 "The Impact of Technology on the Workplace: How Technology is Changing"}
