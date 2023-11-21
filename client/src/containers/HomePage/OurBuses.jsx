@@ -61,7 +61,7 @@ const OurBuses = () => {
               <Image
                 src={data}
                 className="object-contain w-[80%] h-full mx-auto rounded-xl"
-                height={700}
+                height={380}
                 width={700}
                 alt="bus image"
               />
