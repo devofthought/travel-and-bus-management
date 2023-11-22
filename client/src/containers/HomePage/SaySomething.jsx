@@ -69,9 +69,7 @@ const SaySomething = () => {
               style={{ borderLeft: "4px solid" }}
             >
               <p>Email Us:</p>
-              <h4 className="text-xl font-bold underline mt-2">
-                Info@gmail.com
-              </h4>
+              <h4 className="text-xl font-bold mt-2">Info@dhrutotravel.com</h4>
             </div>
           </div>
           <div className="py-6" style={{ borderBottom: "1px solid lightgray" }}>
@@ -80,9 +78,7 @@ const SaySomething = () => {
               style={{ borderLeft: "4px solid" }}
             >
               <p>Call Us:</p>
-              <h4 className="text-xl font-bold underline mt-2">
-                (406) 555-0120
-              </h4>
+              <h4 className="text-xl font-bold mt-2">(406) 555-0120</h4>
             </div>
           </div>
           <div className="py-6" style={{ borderBottom: "1px solid lightgray" }}>
@@ -92,7 +88,7 @@ const SaySomething = () => {
             >
               <p>Office Address:</p>
               <h4 className="text-xl font-bold mt-2">
-                1901 Thornridge Cir, Shiloh, Hawaii 81063
+                Gulshan, Dhaka-1212, Bangladesh
               </h4>
             </div>
           </div>
