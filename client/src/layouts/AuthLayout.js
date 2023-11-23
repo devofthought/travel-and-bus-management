@@ -32,18 +32,20 @@ const AuthLayout = ({ children }) => {
             <div className="w-1/2 text-center  cursor-pointer">
               <button
                 className={`w-full  p-2 border-none rounded text-sm font-semibold ${
-                  router.pathname === "/signup"
+                  router.pathname === "/register"
                     ? "primary-bg shadow-md text-white"
                     : "bg-gray-200"
                 }`}
               >
                 <Link
                   className={`${
-                    router.pathname === "/signup" ? "text-white" : "text-black"
+                    router.pathname === "/register"
+                      ? "text-white"
+                      : "text-black"
                   }`}
-                  href={"/signup"}
+                  href={"/register"}
                 >
-                  Sign Up
+                  Register
                 </Link>
               </button>
             </div>
