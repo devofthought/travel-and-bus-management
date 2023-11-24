@@ -174,15 +174,15 @@ Some screenshots of the project from different types of users are available in t
 
 #### The login screen:
 
-![]()
+![](./screenshots/login.png)
 
 #### The signup screen:
 
-![]()
+![](./screenshots/signup.png)
 
 #### home page:
 
-![]()![]()
+![](./screenshots/home-page.png)![]()
 
 ### user account
 
