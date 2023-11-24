@@ -20,7 +20,7 @@ export const PostSmallCard = ({ cardData }) => {
       <div className="gap-0 absolute bottom-0 rounded-md w-full z-20 p-6">
         <div className="flex flex-wrap items-center gap-1.5">
           {cardData?.category?.map((categoryData, index) => (
-            <Link href={`/category/${categoryData?.slug}`} key={index}>
+            <Link href={``} key={index}>
               <div className="px-2 py-1 bg-[#d84e55] text-white border-0 rounded-md">
                 {categoryData?.name}
               </div>
