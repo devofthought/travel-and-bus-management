@@ -1,4 +1,4 @@
-# Build a Simple Book Catalog Application using React ,Redux & Typescript (Frontend Category)
+# Build a Simple Book Catalog Application using Next.js ,Redux & Typescript (Frontend Category)
 
 ## Problem statement:
 
