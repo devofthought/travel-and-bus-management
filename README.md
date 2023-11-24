@@ -184,6 +184,10 @@ Some screenshots of the project from different types of users are available in t
 
 ![](./screenshots/home-page.png)![]()
 
+### ERD
+
+[Click Here](https://drive.google.com/file/d/1GjbnjmCYe-u9MlG96PwzlePOypFFe_3Q/view?usp=sharing)![](./screenshots/erd.png)
+
 ### user account
 
 If the database is up and running (take 2/3 min), use the following credentials to login as a user:
