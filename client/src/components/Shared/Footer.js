@@ -167,25 +167,25 @@ const Footer = () => {
             {/* social icons */}
             <div className=" flex justify-center mb-4 md:mb-0 md:justify-end w-full md:w-6/12">
               <button
-                className="cursor-pointer border-none bg-white text-black text-lightBlue-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-md outline-none focus:outline-none mr-2"
+                className="cursor-pointer border-none bg-white text-black hover:text-[#0080F7] duration-300 text-lightBlue-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-md outline-none focus:outline-none mr-2"
                 type="button"
               >
                 <IoMdMail className="w-full h-full p-2" />
               </button>
               <button
-                className="cursor-pointer border-none bg-white text-black text-lightBlue-600 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-md outline-none focus:outline-none mr-2"
+                className="cursor-pointer border-none bg-white text-black hover:text-[#1877F2] duration-300 text-lightBlue-600 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-md outline-none focus:outline-none mr-2"
                 type="button"
               >
                 <FaFacebookSquare className="w-full h-full p-2" />
               </button>
               <button
-                className="cursor-pointer border-none bg-white text-black shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-md outline-none focus:outline-none mr-2"
+                className="cursor-pointer border-none bg-white text-black hover:text-[#CD201F] duration-300 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-md outline-none focus:outline-none mr-2"
                 type="button"
               >
                 <IoLogoYoutube className="w-full h-full p-2" />
               </button>
               <button
-                className="cursor-pointer border-none bg-white text-black text-blueGray-800 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-md outline-none focus:outline-none mr-2"
+                className="cursor-pointer border-none bg-white text-black hover:text-[#0077b5] duration-300 text-blueGray-800 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-md outline-none focus:outline-none mr-2"
                 type="button"
               >
                 <FaLinkedin className="w-full h-full p-[6px]" />

@@ -2,6 +2,7 @@ import { Form, Input, message } from "antd";
 import Button from "@/components/UI/Button";
 import { useSignUpMutation } from "@/redux/user/userApi";
 import { useEffect } from "react";
+import Swal from "sweetalert2";
 
 const SignUpForm = () => {
   const [signUp, { isSuccess }] = useSignUpMutation();
@@ -10,6 +11,16 @@ const SignUpForm = () => {
 
   const onFinish = (values) => {
     // console.log("Success:", values);
+
+    // Password and Confirm_password checked
+    if (values.password !== values.confirm_password) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Password isn't Matched!",
+      });
+      return;
+    }
     const modified = {
       name: values.firstName + " " + values.lastName,
       ...values,
@@ -29,7 +40,7 @@ const SignUpForm = () => {
     if (isSuccess) {
       messageApi.open({
         type: "success",
-        content: "Registration successfull",
+        content: "Registration successful",
       });
     }
   }, [isSuccess]);
@@ -111,7 +122,7 @@ const SignUpForm = () => {
         </Form.Item>
 
         <Form.Item>
-          <Button btnName="Sign up" styles="w-full py-2"></Button>
+          <Button btnName="Register" styles="w-full py-2"></Button>
         </Form.Item>
       </Form>
     </>
