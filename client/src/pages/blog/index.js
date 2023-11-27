@@ -5,10 +5,13 @@ import { postsData } from "@/data/posts/allPostData";
 import { PostSecondBanner } from "@/containers/Blog/PostSecondBanner";
 import { PostListSingleColCard } from "@/containers/Blog/PostListSingleColCard";
 import RecentBlogSideBar from "@/containers/Blog/RecentBlogSideBar";
+import PageTitle from "@/components/Shared/PageTitle";
 
 const Blog = () => {
   return (
     <div className="py-10">
+      {/* Page Title */}
+      <PageTitle title={"Blogs"} />
       <section>
         <PostMainBanner data={postsData} />
       </section>

@@ -9,10 +9,12 @@ import Technologies from "@/containers/HomePage/Technologies";
 import React from "react";
 import RootLayout from "@/layouts/RootLayout";
 import ExclusiveOffer from "@/containers/HomePage/ExclusiveOffer";
+import PageTitle from "@/components/Shared/PageTitle";
 
 const HomePage = () => {
   return (
     <>
+      <PageTitle title={"Home"} />
       <Banner />
       <WhatWeOffer />
       <ReserveABus />

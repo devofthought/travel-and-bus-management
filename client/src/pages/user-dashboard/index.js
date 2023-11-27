@@ -1,3 +1,4 @@
+import PageTitle from "@/components/Shared/PageTitle";
 import RootLayout from "@/layouts/RootLayout";
 import UserDashboardLayout from "@/layouts/UserDashboardLayout";
 import React from "react";
@@ -5,6 +6,7 @@ import React from "react";
 const UserDashboard = () => {
   return (
     <div>
+      <PageTitle title={"Dashboard"} />
       <UserDashboardLayout />
     </div>
   );
