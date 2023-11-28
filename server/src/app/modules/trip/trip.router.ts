@@ -4,8 +4,8 @@ import { TripController } from './trip.controller'
 import { TripValidation } from './trip.validation'
 const router = express.Router()
 
-router.get('/', TripController.getAllTrip)//done testing
-router.get('/up-coming', TripController.getUpComingTrip)//done testing
+router.get('/', TripController.getAllTrip) //done testing
+router.get('/up-coming', TripController.getUpComingTrip) //done testing
 
 router.post(
   '/',
@@ -18,10 +18,14 @@ router.patch(
   '/:id',
   validateRequest(TripValidation.updateTripZodSchema),
   TripController.updateTrip
-)//done testing
+) //done testing
 
 router.get('/:id', TripController.getSingleTrip)
 
 router.post('/get-trips-by-users', TripController.getTripsByUsersController)
+router.post(
+  '/get-bus-seat-status-on-trip',
+  TripController.getBusSeatStatusOnTripController
+)
 
 export const TripRoutes = router

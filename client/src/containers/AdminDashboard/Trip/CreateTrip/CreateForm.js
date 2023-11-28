@@ -14,6 +14,7 @@ import MainButton from "@/components/UI/Button";
 const initialData = {
   route_code: "",
   bus_code: "",
+  bus_id:"",
   departure_time: "",
   arrival_time: "",
   driver_id: "",
@@ -55,9 +56,14 @@ const CreateTripForm = () => {
       (driver) => driver._id === values.driver_id
     );
 
+    const bus = busData?.data?.find(
+      (bus) => bus._id === values.bus_id
+    );
+
     AddTrip({
       ...values,
       driver_code: driver?.driver_code,
+      bus_code: bus?.bus_code,
       trips_status: "pending",
       departure_time: departureDateTime,
       arrival_time: arrivalDateTime,
@@ -170,10 +176,10 @@ const CreateTripForm = () => {
           />
         </Form.Item>
 
-        <Form.Item name="bus_code" label="Bus code" requiredMark="require">
+        <Form.Item name="bus_id" label="Bus code" requiredMark="require">
           <Select placeholder="Select trip bus code">
             {busData?.data?.map((bs) => (
-              <Select.Option key={bs._id} value={`${bs?.bus_code}`}>
+              <Select.Option key={bs._id} value={`${bs?._id}`}>
                 <span className="flex items-center">
                   <span className="ps-2 pe-2">
                     <BsBusFront />

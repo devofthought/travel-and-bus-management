@@ -69,12 +69,17 @@ const TripListContainer = () => {
       },
     },
     {
-      title: "Arr. time",
+      title: "Arr. Time",
       dataIndex: "arrival_time",
       minWidth: 200,
       sorter: (a, b) => a.arrival_time - b.arrival_time,
       render: (arrival_time) => {
-        return <p>{new Date(arrival_time).toDateString()}</p>;
+        return (
+          <>
+            <p>{new Date(arrival_time).toLocaleDateString()}</p>
+            <p>{new Date(arrival_time).toLocaleTimeString()}</p>
+          </>
+        );
       },
     },
     {
