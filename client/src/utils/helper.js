@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 export const dateFormate = (dataInput) => {
   const d = new Date(dataInput);
   const date = d?.toLocaleDateString("en-US", {
@@ -6,4 +8,28 @@ export const dateFormate = (dataInput) => {
     day: "numeric",
   });
   return date;
+};
+
+/* if date today then send search time also  */
+
+export const todayChecker = (date) => {
+  // Get the current date and time
+  const currentDate = new Date();
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth() + 1;
+  const day = currentDate.getDate();
+
+  // Format the date as a string (optional)
+  const todayDate = `${year}-${month < 10 ? "0" : ""}${month}-${
+    day < 10 ? "0" : ""
+  }${day}`;
+
+  if (todayDate === date) {
+    const arrivalDateTime = dayjs(currentDate).format(
+      "YYYY-MM-DDTHH:mm:ss.sss"
+    );
+    return arrivalDateTime;
+  } else {
+    return date;
+  }
 };
