@@ -2,9 +2,15 @@ import Footer from "@/components/Shared/Footer";
 import Navbar from "@/components/Shared/Navbar";
 import Button from "@/components/UI/Button";
 import Banner from "@/containers/Banner";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { GiSteeringWheel } from "react-icons/gi";
 import { useRouter } from "next/router";
+import {
+  useGetBusSeatStatusMutation,
+  useGetTripsByUsersMutation,
+} from "@/redux/trip/tripApi";
+import { todayChecker } from "@/utils/helper";
+import dayjs from "dayjs";
 
 const Trip = () => {
   const router = useRouter();
@@ -14,10 +20,22 @@ const Trip = () => {
 
   const [selectedBusId, setSelectedBusId] = useState("");
 
+  /*  */
+  const [
+    GetBusSeatStatus,
+    {
+      data: seatStatus,
+      error: seatStatusError,
+      isLoading: seatStatusIsLoading,
+    },
+  ] = useGetBusSeatStatusMutation();
+
   const handleSelectBus = (id) => {
+    GetBusSeatStatus({ trip_id: id });
     setSelectedBusId(id);
     console.log(id);
   };
+  console.log(seatStatus)
 
   const getAllTrip = [
     {
@@ -212,12 +230,31 @@ const Trip = () => {
   };
   console.log(selectedSeats);
 
-  const filterTripData = getAllTrip?.filter(
-    (trip, index) =>
-      trip?.from.toLocaleLowerCase().includes(from?.toLocaleLowerCase()) &&
-      trip?.to.toLocaleLowerCase().includes(to?.toLocaleLowerCase()) &&
-      trip?.traveling_date === date
-  );
+  // const filterTripData = getAllTrip?.filter(
+  //   (trip, index) =>
+  //     trip?.from.toLocaleLowerCase().includes(from?.toLocaleLowerCase()) &&
+  //     trip?.to.toLocaleLowerCase().includes(to?.toLocaleLowerCase()) &&
+  //     trip?.traveling_date === date
+  // );
+
+  /* get all the trip for server */
+  const [
+    getTripSearchByUser,
+    {
+      data: availableTrip,
+      error: availableTripError,
+      isLoading: availableTripIsLoading,
+    },
+  ] = useGetTripsByUsersMutation();
+
+  useEffect(() => {
+    getTripSearchByUser({
+      departure_time: todayChecker(date),
+      from: from,
+      to: to,
+    });
+  }, [date, to, from]);
+  // console.log(availableTrip);
 
   const handlePaymentPageMove = (e) => {
     e.preventDefault();
@@ -229,9 +266,8 @@ const Trip = () => {
       <Navbar />
       <Banner />
 
-      {getAllTrip &&
-        getAllTrip?.length > 0 &&
-        getAllTrip?.map((trip, index) => (
+      {availableTrip?.data?.length > 0 ? (
+        availableTrip?.data?.map((trip, index) => (
           <div
             className="main-container border border-[#5b2192] rounded-md"
             style={{
@@ -244,14 +280,15 @@ const Trip = () => {
                   <div>
                     <div className="search_bus-name__AN5TP">
                       <h6 className="text-sm md:text-lg lg:text-xl text-[#5b2192] font-semibold uppercase">
-                        {trip?.bus_model}
+                        {trip?.bus_id?.brand_name}&nbsp;
+                        {trip?.bus_id?.model}
                       </h6>
                       <p className="flex gap-1">
                         <span className="hidden lg:inline-flex">
-                          {trip?.bus_id}
+                          {trip?.bus_id?.bus_code}
                         </span>{" "}
                         <span className="text-xs sm:text-sm md:text-md">
-                          {trip?.seat_type}
+                          Non AC{/* {trip?.bus_id?.seat_type} */}
                         </span>
                       </p>
                     </div>
@@ -260,14 +297,18 @@ const Trip = () => {
                         <span className="hidden md:inline-block">
                           Starting Point:
                         </span>{" "}
-                        <span className="text-[#5b2192]">{trip?.from}</span>
+                        <span className="text-[#5b2192] capitalize">
+                          {trip?.route_id?.from}
+                        </span>
                       </p>
                       <span className="inline-flex md:hidden px-1">to</span>
                       <p className="flex flex-col sm:flex-row gap-1">
                         <span className="hidden md:inline-block">
                           End Point:
                         </span>{" "}
-                        <span className="text-[#5b2192]">{trip?.to} </span>
+                        <span className="text-[#5b2192] capitalize">
+                          {trip?.route_id?.to}{" "}
+                        </span>
                       </p>
                     </div>
                     <div className="flex lg:hidden gap-2">
@@ -275,15 +316,22 @@ const Trip = () => {
                         Seats Available
                       </h6>
                       <p className="text-[#5b2192] text-xs lg:text-sm">
-                        {trip?.available_seat}
+                        {trip?.seats_available}
                       </p>
                     </div>
-                    <div className="flex md:hidden gap-2">
-                      <p className="text-xs text-[#5b2192] font-semibold">
-                        {trip?.departure_time} -{" "}
+                    <div className="flex md:hidden gap-2 mt-4">
+                      <p className="text-[#5b2192] font-semibold">
+                        {/* {trip?.departure_time} */}
+                        <span className="block">
+                          {dayjs(trip?.departure_time).format("hh:mm A")}
+                        </span>
                       </p>
-                      <p className="text-xs text-[#5b2192] font-semibold">
-                        {trip?.arrival_time}
+                      <p className="text-[#5b2192] font-semibold">
+                        {/* {trip?.arrival_time} */}
+
+                        <span className="block">
+                          {dayjs(trip?.arrival_time).format("hh:mm A")}
+                        </span>
                       </p>
                     </div>
                   </div>
@@ -294,7 +342,13 @@ const Trip = () => {
                       Departure time
                     </h6>
                     <p className="text-[#5b2192] font-semibold">
-                      {trip?.departure_time}
+                      {/* {trip?.departure_time} */}
+                      <span className="block">
+                        {dayjs(trip?.departure_time).format("YYYY-MM-DD")}
+                      </span>
+                      <span className="block">
+                        {dayjs(trip?.departure_time).format("hh:mm A")}
+                      </span>
                     </p>
                   </div>
                 </li>
@@ -304,7 +358,13 @@ const Trip = () => {
                       Arrival time
                     </h6>
                     <p className="text-[#5b2192] font-semibold">
-                      {trip?.arrival_time}
+                      {/* {trip?.arrival_time} */}
+                      <span className="block">
+                        {dayjs(trip?.arrival_time).format("YYYY-MM-DD")}
+                      </span>
+                      <span className="block">
+                        {dayjs(trip?.arrival_time).format("hh:mm A")}
+                      </span>
                     </p>
                   </div>
                 </li>
@@ -313,12 +373,15 @@ const Trip = () => {
                     <h6 className="uppercase text-sm text-gray-500 font-semibold">
                       Seats Available
                     </h6>
-                    <p>{trip?.available_seat}</p>
+                    <p className="text-[#5b2192] font-semibold">
+                      {" "}
+                      {trip?.seats_available}
+                    </p>
                   </div>
                 </li>
                 <li className="flex-1 p- text-right justify-end">
                   <h3 className="text-lg md:text-xl lg-text-2xl font-semibold text-[#5b2192] mb-2">
-                    ৳{trip?.fare}
+                    ৳{trip?.ticket_price}
                   </h3>
                   <div
                     className="flex justify-end"
@@ -731,7 +794,15 @@ const Trip = () => {
               )}
             </div>
           </div>
-        ))}
+        ))
+      ) : (
+        <div className="min-h-[200px]">
+          <p className="text-3xl text-center m-auto  rounded-3xl w-fit p-5 bg-red-400 text-white">
+            No trip found on that day
+          </p>
+        </div>
+      )}
+
       <Footer />
     </div>
   );
