@@ -11,6 +11,7 @@ export type ITrip = {
   bus_code: string
   bus_id?: Types.ObjectId | IRoute | string
   ticket_price: number
+  seats_available:number
   trips_status: 'pending' | 'completed' | 'on-processing'
   driver_code: string
   driver_id?: Types.ObjectId | IDriver
@@ -37,4 +38,10 @@ export type ITripFilter = {
   ticket_price?: number
   bus_code?: string
   route_code?: string
+}
+
+export type ITripUserSearch = {
+  departure_time: string
+  to: string
+  from: string
 }

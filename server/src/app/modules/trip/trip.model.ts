@@ -33,6 +33,10 @@ export const tripSchema = new Schema<ITrip, TripModel>(
       type: Number,
       required: true,
     },
+    seats_available: {
+      type: Number,
+      required: true,
+    },
     active_status: {
       type: String,
       required: true,

@@ -101,6 +101,18 @@ const getTripsByUsersController = catchAsync(async (req: Request, res: Response)
   })
 })
 
+const getBusSeatStatusOnTripController = catchAsync(async (req: Request, res: Response) => {
+  const result = await TripService.getBusSeatStatusOnTrip(req.body);
+
+  sendResponse<any>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'All Seat status retrieved successfully!',
+    // meta: result?.meta,
+    data: result,
+  })
+})
+
 
 export const TripController = {
   createTrip,
@@ -110,4 +122,5 @@ export const TripController = {
   getUpComingTrip,
   getAllUpdateAbleTrip,
   getTripsByUsersController,
+  getBusSeatStatusOnTripController
 }
