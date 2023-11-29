@@ -8,6 +8,11 @@ const Navbar = () => {
   // const [myProfile, setMyProfile] = useState({});
   // const router = useRouter();
   // const statePath = router.query.state?.path;
+
+  const accessToken =
+    typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
+  console.log(accessToken);
+
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
