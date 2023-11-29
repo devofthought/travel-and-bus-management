@@ -1,9 +1,10 @@
+import RootLayout from "@/layouts/RootLayout";
 import { Button, Result } from "antd";
 import Link from "next/link";
 
 const PaymentFailPage = () => {
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center h-[80vh]">
       <Result
         status="error"
         title="Payment Failed"
@@ -20,3 +21,7 @@ const PaymentFailPage = () => {
 };
 
 export default PaymentFailPage;
+
+PaymentFailPage.getLayout = function getLayout(page) {
+  return <RootLayout>{page}</RootLayout>;
+};
