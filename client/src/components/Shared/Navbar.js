@@ -12,7 +12,7 @@ const Navbar = () => {
 
   const accessToken =
     typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
-  console.log(accessToken);
+  const decodedToken = jwt.decode(accessToken);
 
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 
