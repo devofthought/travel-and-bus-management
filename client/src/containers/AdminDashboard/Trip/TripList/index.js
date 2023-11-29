@@ -1,5 +1,7 @@
+"use client";
 import { useGetAllTripQuery } from "@/redux/trip/tripApi";
 import { Table, Typography } from "antd";
+import dayjs from "dayjs";
 import { useState } from "react";
 
 const TripListContainer = () => {
@@ -56,7 +58,7 @@ const TripListContainer = () => {
       minWidth: 200,
       sorter: (a, b) => a.departure_time - b.departure_time,
       render: (departure_time) => {
-        return <p>{new Date(departure_time).toLocaleDateString()}</p>;
+        return <span>{dayjs(departure_time).format("YYYY-MM-DD")}</span>;
       },
     },
     {
@@ -65,9 +67,10 @@ const TripListContainer = () => {
       minWidth: 200,
       sorter: (a, b) => a.departure_time - b.departure_time,
       render: (departure_time) => {
-        return <p>{new Date(departure_time).toLocaleTimeString()}</p>;
+        return <span>{dayjs(departure_time).format("hh:mm A")}</span>;
       },
     },
+
     {
       title: "Arr. Time",
       dataIndex: "arrival_time",
@@ -76,8 +79,8 @@ const TripListContainer = () => {
       render: (arrival_time) => {
         return (
           <>
-            <p>{new Date(arrival_time).toLocaleDateString()}</p>
-            <p>{new Date(arrival_time).toLocaleTimeString()}</p>
+            <p>{dayjs(arrival_time).format("YYYY-MM-DD")}</p>
+            <p>{dayjs(arrival_time).format("hh:mm A")}</p>
           </>
         );
       },
@@ -118,8 +121,8 @@ const demoData = [
     bus_code: "B-0002",
     driver_id: "65657d35817edc2ee5d71fe8",
     driver_code: "D-0002",
-    traveling_date: "2023-11-28T06:12:34.472Z",
-    departure_time: "2023-11-28T11:11:57.5757",
+    traveling_date: "2023-11-30T06:12:34.472Z",
+    departure_time: "2023-11-30T11:11:57.5757",
     arrival_time: "2023-11-28T14:14:18.1818",
     from: "dhaka",
     to: "sylhet",

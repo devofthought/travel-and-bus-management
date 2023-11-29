@@ -5,6 +5,8 @@ import React, { useState } from "react";
 import Button from "../UI/Button";
 import { removeFromLocalStorage } from "@/utils/localStorage";
 
+const jwt = require("jsonwebtoken");
+
 const Navbar = () => {
   // const [myProfile, setMyProfile] = useState({});
   // const router = useRouter();
@@ -12,7 +14,7 @@ const Navbar = () => {
 
   const accessToken =
     typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
-  console.log(accessToken);
+  const decodedToken = jwt.decode(accessToken);
 
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 
