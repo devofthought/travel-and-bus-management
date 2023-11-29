@@ -3,6 +3,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 // import { AiOutlineClose } from "react-icons/ai";
 import Button from "../UI/Button";
+import { removeFromLocalStorage } from "@/utils/localStorage";
 
 const Navbar = () => {
   // const [myProfile, setMyProfile] = useState({});
@@ -23,7 +24,7 @@ const Navbar = () => {
     // const path = statePath || "/login";
     // router.push(path);
     // removeFromLocalStorage("user-info");
-    // removeFromLocalStorage("access-token");
+    removeFromLocalStorage("accessToken");
     // toast.success("Successfully Signed Out!");
     // setMyProfile({});
   };
@@ -97,9 +98,11 @@ const Navbar = () => {
           </div>
           {/* Right side menu */}
           <div className="flex items-center gap-4">
-            <Link href="/login">
-              <Button btnName="Login" styles="py-2 px-3"></Button>
-            </Link>
+            {!accessToken && (
+              <Link href="/login">
+                <Button btnName="Login" styles="py-2 px-3"></Button>
+              </Link>
+            )}
             <div className="relative inline-block text-left">
               <div>
                 <button
@@ -130,24 +133,28 @@ const Navbar = () => {
                   tabIndex="-1"
                 >
                   <div className="py-1" role="none">
-                    <Link
-                      href="/dashboard"
-                      className="text-gray-600 hover:bg-[#f3f4f9] block px-4 py-2 text-base duration-300"
-                      role="menuitem"
-                      tabIndex="-1"
-                      id="menu-item-0"
-                    >
-                      Dashboard
-                    </Link>
-                    <Link
-                      href="/user-dashboard"
-                      className="text-gray-600 hover:bg-[#f3f4f9] block px-4 py-2 text-base duration-300"
-                      role="menuitem"
-                      tabIndex="-1"
-                      id="menu-item-0"
-                    >
-                      User Dashboard
-                    </Link>
+                    {decodedToken?.role === "admin" && (
+                      <Link
+                        href="/dashboard"
+                        className="text-gray-600 hover:bg-[#f3f4f9] block px-4 py-2 text-base duration-300"
+                        role="menuitem"
+                        tabIndex="-1"
+                        id="menu-item-0"
+                      >
+                        Dashboard
+                      </Link>
+                    )}
+                    {decodedToken?.role === "traveler" && (
+                      <Link
+                        href="/user-dashboard"
+                        className="text-gray-600 hover:bg-[#f3f4f9] block px-4 py-2 text-base duration-300"
+                        role="menuitem"
+                        tabIndex="-1"
+                        id="menu-item-0"
+                      >
+                        User Dashboard
+                      </Link>
+                    )}
                     <Link
                       href="/blog"
                       className="text-gray-600 hover:bg-[#f3f4f9] block px-4 py-2 text-base duration-300"
@@ -166,15 +173,18 @@ const Navbar = () => {
                     >
                       Reserve Bus
                     </Link>
-                    <Link
-                      href="#"
-                      className="text-gray-600 hover:bg-[#f3f4f9] block px-4 py-2 text-base duration-300"
-                      role="menuitem"
-                      tabIndex="-1"
-                      id="menu-item-0"
-                    >
-                      Sign out
-                    </Link>
+                    {accessToken && (
+                      <Link
+                        href="#"
+                        className="text-gray-600 hover:bg-[#f3f4f9] block px-4 py-2 text-base duration-300"
+                        role="menuitem"
+                        tabIndex="-1"
+                        id="menu-item-0"
+                        onClick={() => handleSignOut()}
+                      >
+                        Sign out
+                      </Link>
+                    )}
                   </div>
                 </div>
               )}

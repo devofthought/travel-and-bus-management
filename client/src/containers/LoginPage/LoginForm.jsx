@@ -2,6 +2,7 @@ import { Form, Input, message } from "antd";
 import Button from "@/components/UI/Button";
 import { useLoginMutation } from "@/redux/user/userApi";
 import { useEffect } from "react";
+import { saveToLocalStorage } from "@/utils/localStorage";
 
 const LoginForm = () => {
   const [login, { data: loginData, isSuccess }] = useLoginMutation();
@@ -24,10 +25,9 @@ const LoginForm = () => {
         type: "success",
         content: "Login successful",
       });
-      localStorage.setItem(
-        "accessToken",
-        loginData?.data?.accessToken && loginData?.data?.accessToken
-      );
+      if (loginData?.data?.accessToken) {
+        saveToLocalStorage("accessToken", loginData?.data?.accessToken);
+      }
     }
   }, [isSuccess]);
   return (
