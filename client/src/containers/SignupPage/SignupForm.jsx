@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import Swal from "sweetalert2";
 
 const SignUpForm = () => {
-  const [signUp, { isSuccess }] = useSignUpMutation();
+  const [signUp, { data: signUpData, isSuccess }] = useSignUpMutation();
   const [form] = Form.useForm(); // Create a form instance
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -42,6 +42,10 @@ const SignUpForm = () => {
         type: "success",
         content: "Registration successful",
       });
+      localStorage.setItem(
+        "accessToken",
+        loginData?.data?.accessToken && loginData?.data?.accessToken
+      );
     }
   }, [isSuccess]);
   return (

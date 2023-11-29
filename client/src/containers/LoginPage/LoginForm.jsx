@@ -3,9 +3,8 @@ import Button from "@/components/UI/Button";
 import { useLoginMutation } from "@/redux/user/userApi";
 import { useEffect } from "react";
 
-
 const LoginForm = () => {
-  const [login, { isSuccess }] = useLoginMutation();
+  const [login, { data: loginData, isSuccess }] = useLoginMutation();
   const [form] = Form.useForm(); // Create a form instance
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -23,8 +22,12 @@ const LoginForm = () => {
     if (isSuccess) {
       messageApi.open({
         type: "success",
-        content: "Login successfull",
+        content: "Login successful",
       });
+      localStorage.setItem(
+        "accessToken",
+        loginData?.data?.accessToken && loginData?.data?.accessToken
+      );
     }
   }, [isSuccess]);
   return (
