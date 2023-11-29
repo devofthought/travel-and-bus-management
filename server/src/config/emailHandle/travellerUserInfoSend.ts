@@ -22,17 +22,18 @@ export const travelerUserInfoSendByEmail = (message: IMessage) => {
     },
   })
 
-  const messageBody = `<div>
-        <div style="padding: 0 60px; width: 100%;">
-                    <h2>Hello! ${message.name},</h2>
-                    <br />
-                    <p>Here is your account credential of Dhruto travel</p>
-                    <p style="text-align: left; margin-left: 20px">Full Name: ${message.name}</p>
-                    <p style="text-align: left; margin-left: 20px">Register Email: ${message.email}</p>
-                    <p style="text-align: left; margin-left: 20px">Your password: ${message.password}</p>
-                    <p style="text-align: left; margin-left: 20px">Your role: ${message.role}</p>     
-        </div>
-    </div>`
+  const messageBody = 
+                    `<div>
+                          <div style="padding: 0 60px; width: 100%;">
+                          <h2>Hello! ${message.name},</h2>
+                          <br />
+                          <p>Here is your account credential of Dhruto travel</p>
+                          <p style="text-align: left; margin-left: 20px">Full Name: ${message.name}</p>
+                          <p style="text-align: left; margin-left: 20px">Register Email: ${message.email}</p>
+                          <p style="text-align: left; margin-left: 20px">Your password: ${message.password}</p>
+                          <p style="text-align: left; margin-left: 20px">Your role: ${message.role}</p>     
+                          </div>
+                    </div>`
 
   const mailOption = {
     from: 'mdkzaman2025@gmail.com',
