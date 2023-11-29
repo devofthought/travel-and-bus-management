@@ -5,7 +5,7 @@ import { TripValidation } from './trip.validation'
 const router = express.Router()
 
 router.get('/', TripController.getAllTrip) //done testing
-router.get('/up-coming', TripController.getUpComingTrip) //done testing
+router.get('/up-coming', TripController.getUpComingTrip) //done testing // for user dashboard // upcoming-trip and complete trip
 
 router.post(
   '/',

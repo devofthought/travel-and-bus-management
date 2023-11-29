@@ -22,9 +22,10 @@ const createTrip = catchAsync(async (req: Request, res: Response) => {
 })
 
 const getUpComingTrip = catchAsync(async (req: Request, res: Response) => {
-  const filters = pick(req.query, upComingTripFilterableFields)
-  const paginationOptions = pick(req.query, paginationFields)
-  const result = await TripService.getUpComingTrip(/* filters, paginationOptions */)
+  // const filters = pick(req.query, upComingTripFilterableFields)
+  // const paginationOptions = pick(req.query, paginationFields)
+  const payload = req.query
+  const result = await TripService.getUpComingTrip(payload)
 
   sendResponse<ITripResponse[]>(res, {
     statusCode: httpStatus.OK,

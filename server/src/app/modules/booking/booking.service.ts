@@ -10,7 +10,7 @@ import { User } from '../user/user.model'
 import { generateRandomPassword } from '../../../utils/utilities'
 import { travelerUserInfoSendByEmail } from '../../../config/emailHandle/travellerUserInfoSend'
 
-const getBooking = async (payload: any) => {
+const getBooking = async () => {
   const result = await Booking.find({})
   return result
 }
