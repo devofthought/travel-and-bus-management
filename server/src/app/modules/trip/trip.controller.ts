@@ -22,9 +22,10 @@ const createTrip = catchAsync(async (req: Request, res: Response) => {
 })
 
 const getUpComingTrip = catchAsync(async (req: Request, res: Response) => {
-  const filters = pick(req.query, upComingTripFilterableFields)
-  const paginationOptions = pick(req.query, paginationFields)
-  const result = await TripService.getUpComingTrip(/* filters, paginationOptions */)
+  // const filters = pick(req.query, upComingTripFilterableFields)
+  // const paginationOptions = pick(req.query, paginationFields)
+  const payload = req.query
+  const result = await TripService.getUpComingTrip(payload)
 
   sendResponse<ITripResponse[]>(res, {
     statusCode: httpStatus.OK,
@@ -101,6 +102,18 @@ const getTripsByUsersController = catchAsync(async (req: Request, res: Response)
   })
 })
 
+const getBusSeatStatusOnTripController = catchAsync(async (req: Request, res: Response) => {
+  const result = await TripService.getBusSeatStatusOnTrip(req.body);
+
+  sendResponse<any>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'All Seat status retrieved successfully!',
+    // meta: result?.meta,
+    data: result,
+  })
+})
+
 
 export const TripController = {
   createTrip,
@@ -110,4 +123,5 @@ export const TripController = {
   getUpComingTrip,
   getAllUpdateAbleTrip,
   getTripsByUsersController,
+  getBusSeatStatusOnTripController
 }

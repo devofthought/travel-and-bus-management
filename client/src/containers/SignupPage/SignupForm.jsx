@@ -3,9 +3,10 @@ import Button from "@/components/UI/Button";
 import { useSignUpMutation } from "@/redux/user/userApi";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
+import { saveToLocalStorage } from "@/utils/localStorage";
 
 const SignUpForm = () => {
-  const [signUp, { isSuccess }] = useSignUpMutation();
+  const [signUp, { data: signUpData, isSuccess }] = useSignUpMutation();
   const [form] = Form.useForm(); // Create a form instance
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -42,6 +43,9 @@ const SignUpForm = () => {
         type: "success",
         content: "Registration successful",
       });
+      if (signUpData?.data?.accessToken) {
+        saveToLocalStorage("accessToken", signUpData?.data?.accessToken);
+      }
     }
   }, [isSuccess]);
   return (

@@ -2,6 +2,7 @@ import { Model, Types } from 'mongoose'
 import { IBus } from '../bus/bus.interface'
 import { IDriver } from '../driver/driver.interface'
 import { IRoute } from '../route/route.interface'
+import { ObjectId } from 'mongoose'
 
 export type ITrip = {
   route_code: string
@@ -11,6 +12,7 @@ export type ITrip = {
   bus_code: string
   bus_id?: Types.ObjectId | IRoute | string
   ticket_price: number
+  seats_available: number
   trips_status: 'pending' | 'completed' | 'on-processing'
   driver_code: string
   driver_id?: Types.ObjectId | IDriver
@@ -38,3 +40,50 @@ export type ITripFilter = {
   bus_code?: string
   route_code?: string
 }
+
+export type ITripUserSearch = {
+  departure_time: string
+  to: string
+  from: string
+}
+
+export type IUpComingTripPayload = {
+  travel_id: string
+}
+
+export type IBooksTrip = {
+  _id: ObjectId
+  user_id: string
+  trip_id: string
+  booking_seat: string
+  status: string
+  createdAt: string
+  updatedAt: string
+}
+
+export type IRouteSP = {
+  _id: ObjectId
+  from: string
+  to: string
+  distance: number
+}
+
+export type ITripSP = {
+  _id: ObjectId
+  route_code: string
+  route_id: IRouteSP
+  departure_time: string
+  arrival_time: string
+  bus_code: string
+  bus_id: ObjectId
+  ticket_price: number
+  seats_available: number
+  active_status: string
+  driver_id: ObjectId
+  driver_code: string
+  trips_status: string
+  createdAt: Date
+  updatedAt: Date
+  __v: number
+}
+

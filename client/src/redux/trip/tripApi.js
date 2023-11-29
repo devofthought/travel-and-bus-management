@@ -38,6 +38,22 @@ const tripApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["trip"],
     }),
+    getTripsByUsers: builder.mutation({
+      query: (body) => ({
+        url: "/trips/get-trips-by-users",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["trip"],
+    }),
+    getBusSeatStatus: builder.mutation({
+      query: (body) => ({
+        url: "/trips/get-bus-seat-status-on-trip",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["trip"],
+    }),
   }),
 });
 
@@ -48,4 +64,6 @@ export const {
   useDeleteTripMutation,
   useUpdateTripMutation,
   useGetAllUpdateAbleTripQuery,
+  useGetTripsByUsersMutation,
+  useGetBusSeatStatusMutation
 } = tripApi;

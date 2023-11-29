@@ -2,10 +2,10 @@ import { Form, Input, message } from "antd";
 import Button from "@/components/UI/Button";
 import { useLoginMutation } from "@/redux/user/userApi";
 import { useEffect } from "react";
-
+import { saveToLocalStorage } from "@/utils/localStorage";
 
 const LoginForm = () => {
-  const [login, { isSuccess }] = useLoginMutation();
+  const [login, { data: loginData, isSuccess }] = useLoginMutation();
   const [form] = Form.useForm(); // Create a form instance
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -23,8 +23,11 @@ const LoginForm = () => {
     if (isSuccess) {
       messageApi.open({
         type: "success",
-        content: "Login successfull",
+        content: "Login successful",
       });
+      if (loginData?.data?.accessToken) {
+        saveToLocalStorage("accessToken", loginData?.data?.accessToken);
+      }
     }
   }, [isSuccess]);
   return (
