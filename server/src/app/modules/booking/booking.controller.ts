@@ -6,7 +6,7 @@ import { bookingService } from './booking.service';
 // Controller function to create a booking
 const createBookingController = catchAsync(async (req: Request, res: Response) => {
     const bookingData: BookingCreateDTO = req.body;
-    const newBooking = await bookingService.createBooking(req.body);
+    const newBooking = await bookingService.createBooking(bookingData);
     res.status(201).json(newBooking);
 });
 
@@ -22,10 +22,7 @@ const updateBookingController = catchAsync(async (req: Request, res: Response) =
 });
 
 const getBookingController = catchAsync(async (req: Request, res: Response) => {
-
-    const getBooking = await bookingService.getBooking(req.params);
-
-
+    const getBooking = await bookingService.getBooking();
     res.json(getBooking);
 });
 

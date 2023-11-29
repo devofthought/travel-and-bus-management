@@ -9,14 +9,30 @@ import { Bus } from '../bus/bus.model'
 import { Driver } from '../driver/driver.model'
 import { Route } from '../route/route.model'
 import { tripSearchableFields } from './trip.constants'
-import { ITrip, ITripFilter, ITripResponse, ITripUserSearch } from './trip.interface'
+import {
+  IBooksTrip,
+  ITrip,
+  ITripFilter,
+  ITripResponse,
+  ITripSP,
+  ITripUserSearch,
+  IUpComingTripPayload,
+} from './trip.interface'
 import { Trip } from './trip.model'
 
 const createTrip = async (payload: ITrip): Promise<ITripResponse | null> => {
-  const driver = await VariantCreation.findAvailabilityByDepartureTime({ driver_code: payload.driver_code }, payload.departure_time, Driver);
-  console.log("17")
-  const bus = await VariantCreation.findAvailabilityByDepartureTime({ bus_code: payload.bus_code }, payload.departure_time, Bus);
-  console.log("19")
+  const driver = await VariantCreation.findAvailabilityByDepartureTime(
+    { driver_code: payload.driver_code },
+    payload.departure_time,
+    Driver
+  )
+  console.log('17')
+  const bus = await VariantCreation.findAvailabilityByDepartureTime(
+    { bus_code: payload.bus_code },
+    payload.departure_time,
+    Bus
+  )
+  console.log('19')
   const route = await Route.findOne({ route_code: payload.route_code })
   if (!route) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Route is not found')
@@ -34,11 +50,11 @@ const createTrip = async (payload: ITrip): Promise<ITripResponse | null> => {
   }
 
   /* add available seat on the trip */
-//  const currentBus = Bus.findById(payload.bus_id)
-//  if (currentBus) {
-//   throw new ApiError(httpStatus.BAD_REQUEST, 'Bus is not available')
-// }
- payload.seats_available =  40;
+  //  const currentBus = Bus.findById(payload.bus_id)
+  //  if (currentBus) {
+  //   throw new ApiError(httpStatus.BAD_REQUEST, 'Bus is not available')
+  // }
+  payload.seats_available = 40
 
   payload.active_status = 'active'
   // generate student id
@@ -54,19 +70,33 @@ const createTrip = async (payload: ITrip): Promise<ITripResponse | null> => {
     }
 
     newTripObject = newTrip[0]
-    console.log("49")
+    console.log('49')
     await Bus.findOneAndUpdate(
       { bus_code: newTripObject.bus_code },
-      { $push: { availability_status: { status: 'transit', date: newTripObject.departure_time } } },
+      {
+        $push: {
+          availability_status: {
+            status: 'transit',
+            date: newTripObject.departure_time,
+          },
+        },
+      },
       { session, new: true }
     )
-    console.log("55")
+    console.log('55')
     await Driver.findOneAndUpdate(
       { _id: newTripObject.driver_id },
-      { $push: { availability_status: { status: 'on-trip', date: newTripObject.departure_time } } },
+      {
+        $push: {
+          availability_status: {
+            status: 'on-trip',
+            date: newTripObject.departure_time,
+          },
+        },
+      },
       { session, new: true }
     )
-    console.log("61")
+    console.log('61')
     await session.commitTransaction()
     await session.endSession()
   } catch (error) {
@@ -158,7 +188,11 @@ const updateTrip = async (
     throw new ApiError(httpStatus.BAD_REQUEST, 'Trip not found!')
   }
   if (payload.driver_id) {
-    const driver = await VariantCreation.findAvailabilityByDepartureTime({ driver_code: payload.driver_code }, payload.departure_time, Driver);
+    const driver = await VariantCreation.findAvailabilityByDepartureTime(
+      { driver_code: payload.driver_code },
+      payload.departure_time,
+      Driver
+    )
     if (driver) {
       throw new ApiError(httpStatus.BAD_REQUEST, 'Driver not found')
     }
@@ -167,7 +201,11 @@ const updateTrip = async (
     }
   }
   if (payload.bus_code) {
-    const bus = await VariantCreation.findAvailabilityByDepartureTime({ bus_code: payload.bus_code }, payload.departure_time, Bus);
+    const bus = await VariantCreation.findAvailabilityByDepartureTime(
+      { bus_code: payload.bus_code },
+      payload.departure_time,
+      Bus
+    )
     if (bus) {
       throw new ApiError(httpStatus.BAD_REQUEST, 'Bus is not available')
     }
@@ -200,9 +238,9 @@ const updateTrip = async (
     if (!newTrip) {
       throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to update trip')
     }
-    newTripObject = newTrip;
+    newTripObject = newTrip
     const update = {
-      status: "transit",
+      status: 'transit',
       date: payload.departure_time,
     }
 
@@ -354,19 +392,108 @@ const getSingleTrip = async (id: string): Promise<ITrip | null> => {
  * (must trips status pending)
  * */
 
-const getUpComingTrip = async () => {
-  const result = await Trip.find({ trips_status: "pending" })
-  return result
+// const getUpComingTrip = async (payload: IUpComingTripPayload) => {
+//   const result = await Booking.find({ user_id: payload.travel_id })
+
+//   const uniqueBookings = Object.values(
+//     result.reduce((acc, booking) => {
+//       const key = booking.trip_id
+//       if (!acc[key]) {
+//         acc[key] = booking
+//       }
+//       return acc
+//     }, {})
+//   )
+
+//   if (uniqueBookings.length === 0) {
+//     return []
+//   }
+
+//   /*  */
+//   const pendingTrip = []
+//   for (const booksTrip of uniqueBookings as IBooksTrip[]) {
+//     const trip = await Trip.findById(booksTrip.trip_id).populate({
+//       path: 'route_id',
+//       select: 'from to distance',
+//     })
+
+//     if (trip && trip.trips_status === 'pending') {
+//       const seatCount = await Booking.find({
+//         $and: [{ user_id: payload.travel_id }, { trip_id: trip._id }],
+//       })
+
+//       pendingTrip.push({
+//         from: trip.route_id.from,
+//         to: trip.route_id.to,
+//         distance: trip.route_id.distance,
+//         departure_time: trip.departure_time,
+//         arrival_time: trip.arrival_time,
+//         bus_code: trip.bus_code,
+//         fare: trip.ticket_price,
+//         payment_status: booksTrip.status,
+//         seat: seatCount.length,
+//       })
+//     }
+
+//   }
+
+//   return pendingTrip
+// }
+
+const getUpComingTrip = async (payload: any) => {
+  const bookings = await Booking.find({ user_id: payload.travel_id })
+  
+  if (bookings.length === 0) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'No trip found!')
+  }
+
+  const uniqueBookings = Array.from(
+    new Set(bookings.map(booking => booking.trip_id))
+  ).map(tripId => bookings.find(booking => booking.trip_id === tripId))
+
+  const pendingTrip = await Promise.all(
+    uniqueBookings.map(async booksTrip => {
+      if (booksTrip) {
+        const trip: ITripSP | null = await Trip.findById(
+          booksTrip.trip_id
+        ).populate({
+          path: 'route_id',
+          select: 'from to distance',
+        })
+
+        if (trip && trip.trips_status === payload.trip_status) {
+          const seatCount = await Booking.countDocuments({
+            $and: [{ user_id: payload.travel_id }, { trip_id: trip._id }],
+          })
+
+          return {
+            from: trip.route_id.from,
+            to: trip.route_id.to,
+            distance: trip.route_id.distance,
+            departure_time: trip.departure_time,
+            arrival_time: trip.arrival_time,
+            bus_code: trip.bus_code,
+            fare: trip.ticket_price,
+            payment_status: booksTrip.status,
+            seat: seatCount,
+          }
+        }
+      }
+      return null
+    })
+  )
+
+  return pendingTrip.filter(trip => trip !== null)
 }
 
 const getTripByUser = async (info: ITripUserSearch) => {
   const { from, to, departure_time } = info
   // Aggregate pipeline
   const getRoute = await Route.findOne({
-    $and: [{ from:from.toLocaleLowerCase() }, { to:to.toLocaleLowerCase() }],
+    $and: [{ from: from.toLocaleLowerCase() }, { to: to.toLocaleLowerCase() }],
   })
 
-  if(!getRoute){
+  if (!getRoute) {
     throw new ApiError(httpStatus.NOT_FOUND, 'No trip found')
   }
   /* 
@@ -409,11 +536,13 @@ const getTripByUser = async (info: ITripUserSearch) => {
   }
 }
 
-
-const getBusSeatStatusOnTrip = async (payload: { trip_id: string }): Promise<any> => {
-
-const {trip_id}= payload
-const bookingList= await Booking.find({trip_id}).select('booking_seat status')
+const getBusSeatStatusOnTrip = async (payload: {
+  trip_id: string
+}): Promise<any> => {
+  const { trip_id } = payload
+  const bookingList = await Booking.find({ trip_id }).select(
+    'booking_seat status'
+  )
   return bookingList
 }
 
@@ -425,7 +554,7 @@ export const TripService = {
   getUpComingTrip,
   getAllUpdateAbleTrip,
   getTripByUser,
-  getBusSeatStatusOnTrip
+  getBusSeatStatusOnTrip,
 }
 
 /* 

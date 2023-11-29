@@ -10,7 +10,7 @@ import { User } from '../user/user.model'
 import { generateRandomPassword } from '../../../utils/utilities'
 import { travelerUserInfoSendByEmail } from '../../../config/emailHandle/travellerUserInfoSend'
 
-const getBooking = async (payload: any) => {
+const getBooking = async () => {
   const result = await Booking.find({})
   return result
 }
@@ -54,9 +54,13 @@ const createBooking = async (bookingData: BookingCreateDTO) => {
         throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create user')
       }
       /* travel account centennial email function */
-      // travelerUserInfoSendByEmail(user)
+      travelerUserInfoSendByEmail(user)
 
       getTraveler = await Traveler.findById(newUser.traveler_id)
+    }
+
+    if(!getTraveler){
+      throw new ApiError(httpStatus.BAD_REQUEST, 'some thing is wrong! try again later.')
     }
 
     /* checking seat number is has or not in a bus */
@@ -72,7 +76,7 @@ const createBooking = async (bookingData: BookingCreateDTO) => {
       $and: [
         { trip_id },
         {
-          user_id: getTraveler!._id,
+          user_id: getTraveler._id,
         },
       ],
     }).select('booking_seat status user_id trip_id')
@@ -120,7 +124,7 @@ const createBooking = async (bookingData: BookingCreateDTO) => {
     for (let i = 0; i < bookingData.booking_seat.length; i++) {
       const revisedBookingData = {
         trip_id: bookingData.trip_id,
-        user_id: getTraveler!._id,
+        user_id: getTraveler._id,
         booking_seat: bookingData.booking_seat[i],
       }
       const booking = await Booking.create([revisedBookingData], { session })
