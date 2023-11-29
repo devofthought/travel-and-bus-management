@@ -1,19 +1,19 @@
 import { Document } from 'mongoose';
 
-export interface BookingInterface extends Document {
+export type BookingInterface = {
   user_id: string;
   trip_id: string;
   booking_seat: string;
   status: 'pending' | 'approved' | 'completed' | 'cancelled';
   payment_id?: string;
-}
+} & Document
 
-export interface BookingCreateDTO {
+export type BookingCreateDTO = {
   user_id: string;
   trip_id: string;
-  booking_seat: string;
+  booking_seat: string[];
 }
 
-export interface BookingUpdateDTO {
+export type BookingUpdateDTO = {
   status: string;
 }
