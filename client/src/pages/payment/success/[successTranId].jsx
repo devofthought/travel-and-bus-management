@@ -1,8 +1,9 @@
+import RootLayout from "@/layouts/RootLayout";
 import { Button, Result } from "antd";
 import Link from "next/link";
 const PaymentSuccessPage = () => {
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center h-[80vh]">
       <Result
         status="success"
         title="Successfully Purchased Cloud Server ECS!"
@@ -19,3 +20,7 @@ const PaymentSuccessPage = () => {
 };
 
 export default PaymentSuccessPage;
+
+PaymentSuccessPage.getLayout = function getLayout(page) {
+  return <RootLayout>{page}</RootLayout>;
+};
