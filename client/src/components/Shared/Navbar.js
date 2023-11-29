@@ -5,6 +5,8 @@ import React, { useState } from "react";
 import Button from "../UI/Button";
 import { removeFromLocalStorage } from "@/utils/localStorage";
 
+const jwt = require("jsonwebtoken");
+
 const Navbar = () => {
   // const [myProfile, setMyProfile] = useState({});
   // const router = useRouter();
