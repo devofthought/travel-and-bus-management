@@ -19,7 +19,6 @@
     "dayjs": "^1.11.9",
     "eslint": "8.45.0",
     "eslint-config-next": "13.4.12",
-    "jsonwebtoken": "^9.0.2",
     "moment": "^2.29.4",
     "monent": "^0.0.2-security",
     "next": "13.4.12",
