@@ -7,6 +7,8 @@ const SaySomething = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // console.log(e.target.value);
   };
 
   return (
@@ -20,10 +22,11 @@ const SaySomething = () => {
             We are always looking for new opportunities to work together. We are
             always looking for new opportunities to work together.
           </p>
-          <form className="flex flex-col gap-6">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-6">
             <div className="flex justify-between gap-4">
               <input
                 type="text"
+                name="firstName"
                 id="firstName"
                 placeholder="First Name"
                 className="font-sans appearance-none border-2 border-gray-400 border-t-gray-100 border-l-gray-50 rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-[#d84e55] focus:shadow-outline"
