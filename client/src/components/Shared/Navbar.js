@@ -4,8 +4,6 @@ import React, { useState } from "react";
 // import { AiOutlineClose } from "react-icons/ai";
 import Button from "../UI/Button";
 
-const jwt = require("jsonwebtoken");
-
 const Navbar = () => {
   // const [myProfile, setMyProfile] = useState({});
   // const router = useRouter();
@@ -13,7 +11,7 @@ const Navbar = () => {
 
   const accessToken =
     typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
-  const decodedToken = jwt.decode(accessToken);
+  console.log(accessToken);
 
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 
