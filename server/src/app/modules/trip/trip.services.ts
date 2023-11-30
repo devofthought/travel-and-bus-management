@@ -414,7 +414,7 @@ const getSingleTrip = async (id: string): Promise<ITrip | null> => {
 //   for (const booksTrip of uniqueBookings as IBooksTrip[]) {
 //     const trip = await Trip.findById(booksTrip.trip_id).populate({
 //       path: 'route_id',
-//       select: 'from to distance',
+//       select: 'from to distance', 
 //     })
 
 //     if (trip && trip.trips_status === 'pending') {
