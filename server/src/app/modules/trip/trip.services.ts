@@ -438,7 +438,7 @@ const getSingleTrip = async (id: string): Promise<ITrip | null> => {
 //   }
 
 //   return pendingTrip
-// }
+// } 
 
 const getUpComingTrip = async (payload: any) => {
   const bookings = await Booking.find({ user_id: payload.travel_id })
