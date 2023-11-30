@@ -172,9 +172,40 @@ const getSingleUserFeedbacks = async (
   }
 }
 
-const getApprovedFeedbacks = async (): Promise<IFeedback[] | null> => {
-  const result = await Feedback.find({ status: 'approved' })
 
+// const getApprovedFeedbacks = async (): Promise<IApprovedFeedbackResponse[] | null> => {
+//   const result = await Feedback.find({ status: 'approved' }).populate({
+//     path: 'user_id',
+//     select: 'email traveler_id',
+//     populate: [{ path: 'traveler_id', select: 'driver_code name email age' }],
+//   })
+
+//   if (result.length === 0) {
+//     throw new ApiError(httpStatus.NOT_FOUND, 'traveler is not found')
+//   }
+
+//   const approvedFeedback = []
+//   for (const feedback of result) {
+//     approvedFeedback.push({
+//       feedback_content: feedback.feedback,
+//       name: feedback.user_id?.traveler_id?.name,
+//       user_type: 'traveler',
+//       user_image: feedback.user_id?.traveler_id?.image,
+//       rating: feedback.rating,
+//       feedback_for: feedback.feedback_for,
+//     })
+//   }
+
+//   return approvedFeedback
+// }
+
+const getApprovedFeedbacks = async (): Promise<IFeedback[] | null> => {
+  const result = await Feedback.find({ status: 'approved' }).select('-status').populate({
+    path: 'user_id',
+    select: 'traveler_id',
+    populate: [{ path: 'traveler_id', select: 'name image' }],
+  })
+  
   return result
 }
 

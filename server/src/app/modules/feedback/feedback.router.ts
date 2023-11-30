@@ -5,12 +5,14 @@ import { FeedbackController } from './feedback.controller'
 const router = express.Router()
 
 router.get('/', FeedbackController.getAllFeedback) // TODO: only admin can  
-router.get('/approved-feedbacks', FeedbackController.getApprovedFeedbacks)
+router.get('/approved-feedbacks', FeedbackController.getApprovedFeedbacks) // Publish
 router.post(
   '/',
   validateRequest(FeedbackValidation.createFeedbackZodSchema),
   FeedbackController.createFeedback
 )
+
+// TODO: feedback update is not yet implemented for both (admin and user)
 router.patch(
   '/:id',
   validateRequest(FeedbackValidation.updateFeedbackZodSchema),
