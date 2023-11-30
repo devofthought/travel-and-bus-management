@@ -4,12 +4,13 @@ import { useSignUpMutation } from "@/redux/user/userApi";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
 import { saveToLocalStorage } from "@/utils/localStorage";
+import { useRouter } from "next/router";
 
 const SignUpForm = () => {
   const [signUp, { data: signUpData, isSuccess }] = useSignUpMutation();
   const [form] = Form.useForm(); // Create a form instance
   const [messageApi, contextHolder] = message.useMessage();
-
+  const router = useRouter();
   const onFinish = (values) => {
     // console.log("Success:", values);
 
@@ -46,6 +47,7 @@ const SignUpForm = () => {
       if (signUpData?.data?.accessToken) {
         saveToLocalStorage("accessToken", signUpData?.data?.accessToken);
       }
+      router.push("/");
     }
   }, [isSuccess]);
   return (
