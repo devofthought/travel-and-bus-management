@@ -8,11 +8,58 @@ import ApiError from '../../../errors/ApiError'
 import { IFeedback, IFeedbackFilter } from './feedback.interface'
 import { Feedback } from './feedback.model'
 import { feedbackSearchableFields } from './feedback.constants'
+import { User } from '../user/user.model'
+import { Trip } from '../trip/trip.model'
+import { Booking } from '../booking/booking.model'
 
 const createFeedback = async (
   payload: IFeedback
 ): Promise<IFeedback | null> => {
+  const user = await User.findById(payload.user_id)
+  if (!user) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'traveler is not found')
+  }
+
+  const trip = await Trip.findById(payload.trip_id)
+  if (!trip) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'trip is not found')
+  }
+
+  if (trip.trips_status !== 'completed') {
+    throw new ApiError(httpStatus.NOT_ACCEPTABLE, 'trip is not completed')
+  }
+
+  /* check traveler is able to add feed or not */
+  // const booking = await Booking.find({ trip_id: payload.trip_id })
+  const booking = await Booking.find({
+    $and: [{ user_id: user.traveler_id }, { trip_id: payload.trip_id }], //  TODO: user_id will be traveler_id when booking model changed.
+  })
+
+  if (booking.length === 0) {
+    throw new ApiError(
+      httpStatus.NOT_ACCEPTABLE,
+      'travel is not able to add feedback on this trip'
+    )
+  }
+
+  /* check feedback category match or not */
+  const feedback = await Feedback.find({
+    $and: [{ user_id: payload.user_id }, { trip_id: payload.trip_id }],
+  }).select('feedback_for')
+
+  const isMatch = feedback.some(
+    item => item.feedback_for === payload.feedback_for
+  )
+
+  if (isMatch) {
+    throw new ApiError(
+      httpStatus.NOT_ACCEPTABLE,
+      'already add feedback on same category'
+    )
+  }
+
   const newFeedback = await Feedback.create(payload)
+
   if (!newFeedback) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create Feedback')
   }
@@ -59,6 +106,17 @@ const getAllFeedback = async (
     .sort(sortCondition)
     .skip(skip)
     .limit(limit)
+    .populate({
+      path: 'trip_id',
+      populate: [
+        { path: 'driver_id', select: 'driver_code name email age' },
+        { path: 'route_id', select: 'from to distance' },
+      ],
+    })
+    .populate({
+      path: 'user_id',
+      select: 'email traveler_id',
+    })
 
   const total = await Feedback.countDocuments(whereCondition)
 

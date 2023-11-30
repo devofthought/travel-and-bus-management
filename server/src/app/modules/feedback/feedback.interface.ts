@@ -2,12 +2,12 @@ import { Model, Types } from 'mongoose'
 import { IUser } from '../user/user.interface'
 
 export type IFeedback = {
-  feedback_for: string
-  user_id: Types.ObjectId | IUser
+  feedback_for: 'driver' | 'bus' | 'trip'
   trip_id: Types.ObjectId
+  user_id: Types.ObjectId | IUser
   feedback: string
   rating: number
-  status: string
+  status: 'pending' | 'approved' | 'rejected'
 }
 
 export type FeedbackModel = Model<IFeedback, Record<string, unknown>>

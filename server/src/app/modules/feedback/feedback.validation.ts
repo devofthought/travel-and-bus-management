@@ -9,15 +9,18 @@ const createFeedbackZodSchema = z.object({
       required_error: 'user_id is required',
     }),
     trip_id: z.string({
-      required_error: 'trip_id  is required',
+      required_error: 'trip_id is required',
     }),
     feedback: z.string({
-      required_error: 'feedback  is required',
+      required_error: 'feedback is required',
     }),
-    rating: z.string({
-      required_error: 'rating  is required',
-    }),
-    status: z.string().optional(),
+    rating: z
+      .number({
+        required_error: 'rating is required',
+      })
+      .max(5, {
+        message: 'Rating must be at most 5',
+      }),
   }),
 })
 
