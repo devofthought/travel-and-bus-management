@@ -270,8 +270,3 @@ export const FeedbackService = {
   getApprovedFeedbacks,
   updateAdminApprovedFeedback,
 }
-
-const getFeedback = {
-  feedback_id: '656810bb8cc82b46f0eade49',
-  status: 'approved',
-}
