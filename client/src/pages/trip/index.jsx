@@ -12,6 +12,8 @@ import {
 import { todayChecker } from "@/utils/helper";
 import dayjs from "dayjs";
 import { useGetMyProfileQuery } from "@/redux/user/userApi";
+import { getSingleTrip } from "@/data/tripSearchResult";
+import BookingSeatsType from "@/components/Shared/BookingSeatsType";
 
 const Trip = () => {
   const router = useRouter();
@@ -20,6 +22,7 @@ const Trip = () => {
   const date = router.query.date;
 
   const [selectedBusId, setSelectedBusId] = useState("");
+  const [selectedSeats, setSelectedSeats] = useState([]);
 
   const accessToken =
     typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
@@ -44,189 +47,9 @@ const Trip = () => {
   const handleSelectBus = (id) => {
     GetBusSeatStatus({ trip_id: id });
     setSelectedBusId(id);
+    setSelectedSeats([]);
   };
 
-  const getAllTrip = [
-    {
-      id: "BUS123",
-      bus_id: "BUS123",
-      bus_model: "Volvo B7R",
-      driver_id: "DRV456",
-      traveling_date: "2023-09-15",
-      departure_time: "08:00 AM",
-      arrival_time: "03:30 PM",
-      from: "City A",
-      to: "City B",
-      fare: 1500,
-      seat_type: "AC",
-      available_seat: 10,
-      total_seat: 40,
-    },
-    {
-      id: "BUS456",
-      bus_id: "BUS456",
-      bus_model: "Scania K360",
-      driver_id: "DRV789",
-      traveling_date: "2023-09-16",
-      departure_time: "10:30 AM",
-      arrival_time: "06:00 PM",
-      from: "City B",
-      to: "City C",
-      fare: 1200,
-      seat_type: "AC",
-      available_seat: 20,
-      total_seat: 50,
-    },
-    {
-      id: "BUS789",
-      bus_id: "BUS789",
-      bus_model: "Mercedes-Benz Tourismo",
-      driver_id: "DRV123",
-      traveling_date: "2023-09-17",
-      departure_time: "09:00 AM",
-      arrival_time: "05:30 PM",
-      from: "City C",
-      to: "City D",
-      fare: 1800,
-      seat_type: "nonAC",
-      available_seat: 5,
-      total_seat: 35,
-    },
-    {
-      id: "BUS234",
-      bus_id: "BUS234",
-      bus_model: "MAN Lion's Coach",
-      driver_id: "DRV234",
-      traveling_date: "2023-09-18",
-      departure_time: "07:30 AM",
-      arrival_time: "04:00 PM",
-      from: "City D",
-      to: "City A",
-      fare: 1350,
-      seat_type: "AC",
-      available_seat: 15,
-      total_seat: 45,
-    },
-    {
-      id: "BUS567",
-      bus_id: "BUS567",
-      bus_model: "Iveco Crossway",
-      driver_id: "DRV567",
-      traveling_date: "2023-09-21",
-      departure_time: "11:00 AM",
-      arrival_time: "07:30 PM",
-      from: "City B",
-      to: "City D",
-      fare: 1100,
-      seat_type: "nonAC",
-      available_seat: 25,
-      total_seat: 30,
-    },
-    {
-      id: "BUS890",
-      bus_id: "BUS890",
-      bus_model: "Neoplan Skyliner",
-      driver_id: "DRV890",
-      traveling_date: "2023-09-21",
-      departure_time: "08:45 AM",
-      arrival_time: "06:15 PM",
-      from: "City A",
-      to: "City C",
-      fare: 1600,
-      seat_type: "AC",
-      available_seat: 8,
-      total_seat: 50,
-    },
-    {
-      id: "BUS345",
-      bus_id: "BUS345",
-      bus_model: "Setra S431 DT",
-      driver_id: "DRV345",
-      traveling_date: "2023-09-21",
-      departure_time: "09:15 AM",
-      arrival_time: "05:45 PM",
-      from: "City D",
-      to: "City B",
-      fare: 1250,
-      seat_type: "AC",
-      available_seat: 30,
-      total_seat: 40,
-    },
-  ];
-
-  const getSingleTrip = {
-    id: "BUS123",
-    bus_id: "BUS123",
-    bus_model: "Volvo B7R",
-    driver_id: "DRV456",
-    traveling_date: "2023-09-15",
-    departure_time: "08:00 AM",
-    arrival_time: "03:30 PM",
-    from: "City A",
-    to: "City B",
-    fare: 1500,
-    seat_type: "AC",
-    available_seat: 10,
-    total_seat: 40,
-    seats: [
-      { name: "A1", isAvailable: true },
-      { name: "A2", isAvailable: true },
-      { name: "A" },
-      { name: "A3", isAvailable: true },
-      { name: "A4", isAvailable: true },
-      { name: "B1", isAvailable: false },
-      { name: "B2", isAvailable: true },
-      { name: "B" },
-      { name: "B3", isAvailable: true },
-      { name: "B4", isAvailable: true },
-      { name: "C1", isAvailable: true },
-      { name: "C2", isAvailable: true },
-      { name: "C" },
-      { name: "C3", isAvailable: false },
-      { name: "C4", isAvailable: false },
-      { name: "D1", isAvailable: false },
-      { name: "D2", isAvailable: false },
-      { name: "D" },
-      { name: "D3", isAvailable: true },
-      { name: "D4", isAvailable: true },
-      { name: "E1", isAvailable: false },
-      { name: "E2", isAvailable: false },
-      { name: "E" },
-      { name: "E3", isAvailable: true },
-      { name: "E4", isAvailable: true },
-      { name: "F1", isAvailable: true },
-      { name: "F2", isAvailable: true },
-      { name: "F" },
-      { name: "F3", isAvailable: true },
-      { name: "F4", isAvailable: true },
-      { name: "G1", isAvailable: true },
-      { name: "G2", isAvailable: true },
-      { name: "G" },
-      { name: "G3", isAvailable: true },
-      { name: "G4", isAvailable: true },
-      { name: "H1", isAvailable: true },
-      { name: "H2", isAvailable: true },
-      { name: "H" },
-      { name: "H3", isAvailable: true },
-      { name: "H4", isAvailable: true },
-      { name: "I1", isAvailable: true },
-      { name: "I2", isAvailable: true },
-      { name: "I" },
-      { name: "I3", isAvailable: true },
-      { name: "I4", isAvailable: true },
-      { name: "J1", isAvailable: true },
-      { name: "J2", isAvailable: true },
-      { name: "J" },
-      { name: "J3", isAvailable: true },
-      { name: "J4", isAvailable: true },
-    ],
-    reviews: [
-      { rating: 4.5, review: "" },
-      { rating: 4.7, review: "" },
-    ],
-  };
-
-  const [selectedSeats, setSelectedSeats] = useState([]);
   const handleSelectSeat = (seat) => {
     if (selectedSeats?.includes(seat)) {
       setSelectedSeats(
@@ -390,256 +213,26 @@ const Trip = () => {
                   <h3 className="text-lg md:text-xl lg-text-2xl font-semibold text-[#5b2192] mb-2">
                     ৳{trip?.ticket_price}
                   </h3>
-                  <div
-                    className="flex justify-end"
-                    onClick={() => handleSelectBus(trip?.id)}
-                  >
-                    <Button
-                      styles={`w-32 px-2 py-[2px] md:px-3 md:py-1 font-semibold border-2 rounded-md primary-bg text-white`}
-                      textStyle={`btn-text px-2`}
-                      btnName="View Seats"
-                    />
+                  <div className="flex justify-end">
+                    <button
+                      className={`w-32 px-2 py-[2px] md:px-3 md:py-1 font-semibold border-2 rounded-md text-white primary-bg  border-none cursor-pointer text-center  ${
+                        trip?.id === selectedBusId
+                          ? "bg-gray-500"
+                          : "primary-bg"
+                      } `}
+                      onClick={() => handleSelectBus(trip?.id)}
+                      disabled={trip?.id === selectedBusId ? true : false}
+                    >
+                      View Seats
+                    </button>
                   </div>
-                  <a className="text-xs italic">Cancellation Policy</a>
+                  <span className="text-xs italic">Cancellation Policy</span>
                 </li>
               </ul>
               <div></div>
               {selectedBusId === trip?.id && (
                 <div className="border-l-0 border-r-0 border-b-0 border-t border-dashed border-[90%] mt-6 pt-6">
-                  <ul className="flex flex-wrap justify-around items-center gap-2 text-xs">
-                    <li className="flex flex-col lg:flex-row justify-between items-center gap-2">
-                      <span>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="28"
-                          height="28"
-                          viewBox="0 0 100 100"
-                        >
-                          <rect
-                            x="10"
-                            y="10"
-                            width="80"
-                            height="80"
-                            rx="3"
-                            ry="3"
-                            fill="#fff"
-                            stroke="#000"
-                            stroke-width="1"
-                          />
-                          <rect
-                            x="4"
-                            y="76"
-                            width="93"
-                            height="20"
-                            rx="5"
-                            ry="5"
-                            fill="#fff"
-                            stroke="#000"
-                            stroke-width="1"
-                          />
-                          <rect
-                            x="2"
-                            y="30"
-                            width="16"
-                            height="65"
-                            rx="5"
-                            ry="5"
-                            fill="#fff"
-                            stroke="#000"
-                            stroke-width="1"
-                          />
-                          <rect
-                            x="83"
-                            y="30"
-                            width="16"
-                            height="65"
-                            rx="5"
-                            ry="5"
-                            fill="#fff"
-                            stroke="#000"
-                            stroke-width="1"
-                          />
-                        </svg>
-                      </span>
-                      <span className="lg:ms-2 font-semibold text-gray-400">
-                        Available
-                      </span>
-                    </li>
-                    <li className="flex flex-col lg:flex-row justify-between items-center gap-2">
-                      <span>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="28"
-                          height="28"
-                          viewBox="0 0 100 100"
-                        >
-                          <rect
-                            x="10"
-                            y="10"
-                            width="80"
-                            height="80"
-                            rx="3"
-                            ry="3"
-                            fill="#97a5c2"
-                            stroke="#000"
-                            stroke-width="1"
-                          />
-                          <rect
-                            x="4"
-                            y="76"
-                            width="93"
-                            height="20"
-                            rx="5"
-                            ry="5"
-                            fill="#97a5c2"
-                            stroke="#000"
-                            stroke-width="1"
-                          />
-                          <rect
-                            x="2"
-                            y="30"
-                            width="16"
-                            height="65"
-                            rx="5"
-                            ry="5"
-                            fill="#97a5c2"
-                            stroke="#000"
-                            stroke-width="1"
-                          />
-                          <rect
-                            x="83"
-                            y="30"
-                            width="16"
-                            height="65"
-                            rx="5"
-                            ry="5"
-                            fill="#97a5c2"
-                            stroke="#000"
-                            stroke-width="1"
-                          />
-                        </svg>
-                      </span>
-                      <span className="lg:ms-2 font-semibold text-[#97a5c2]">
-                        Booked
-                      </span>
-                    </li>
-                    <li className="flex flex-col lg:flex-row justify-between items-center gap-2">
-                      <span>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="28"
-                          height="28"
-                          viewBox="0 0 100 100"
-                        >
-                          <rect
-                            x="10"
-                            y="10"
-                            width="80"
-                            height="80"
-                            rx="3"
-                            ry="3"
-                            fill="#22C55E"
-                            stroke="#000"
-                            stroke-width="1"
-                          />
-                          <rect
-                            x="4"
-                            y="76"
-                            width="93"
-                            height="20"
-                            rx="5"
-                            ry="5"
-                            fill="#22C55E"
-                            stroke="#000"
-                            stroke-width="1"
-                          />
-                          <rect
-                            x="2"
-                            y="30"
-                            width="16"
-                            height="65"
-                            rx="5"
-                            ry="5"
-                            fill="#22C55E"
-                            stroke="#000"
-                            stroke-width="1"
-                          />
-                          <rect
-                            x="83"
-                            y="30"
-                            width="16"
-                            height="65"
-                            rx="5"
-                            ry="5"
-                            fill="#22C55E"
-                            stroke="#000"
-                            stroke-width="1"
-                          />
-                        </svg>
-                      </span>
-                      <span className="lg:ms-2 font-semibold text-[#22C55E]">
-                        Selected
-                      </span>
-                    </li>
-                    <li className="flex flex-col lg:flex-row justify-between items-center gap-2">
-                      <span>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="28"
-                          height="28"
-                          viewBox="0 0 100 100"
-                        >
-                          <rect
-                            x="10"
-                            y="10"
-                            width="80"
-                            height="80"
-                            rx="3"
-                            ry="3"
-                            fill="#ff9090"
-                            stroke="#000"
-                            stroke-width="1"
-                          />
-                          <rect
-                            x="4"
-                            y="76"
-                            width="93"
-                            height="20"
-                            rx="5"
-                            ry="5"
-                            fill="#ff9090"
-                            stroke="#000"
-                            stroke-width="1"
-                          />
-                          <rect
-                            x="2"
-                            y="30"
-                            width="16"
-                            height="65"
-                            rx="5"
-                            ry="5"
-                            fill="#ff9090"
-                            stroke="#000"
-                            stroke-width="1"
-                          />
-                          <rect
-                            x="83"
-                            y="30"
-                            width="16"
-                            height="65"
-                            rx="5"
-                            ry="5"
-                            fill="#ff9090"
-                            stroke="#000"
-                            stroke-width="1"
-                          />
-                        </svg>
-                      </span>
-                      <span className="lg:ms-2 font-semibold text-[#ff9090]">
-                        Sold
-                      </span>
-                    </li>
-                  </ul>
+                  <BookingSeatsType />
                   <div className="flex flex-col md:flex-row sm:p-4 mt-4 mx-0 sm:mx-20">
                     <div
                       className="rounded-sm p-2 w-[240px] h-[434px] mx-auto"
