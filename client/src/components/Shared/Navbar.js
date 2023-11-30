@@ -100,11 +100,9 @@ const Navbar = () => {
           </div>
           {/* Right side menu */}
           <div className="flex items-center gap-4">
-            {!accessToken && (
-              <Link href="/login">
-                <Button btnName="Login" styles="py-2 px-3"></Button>
-              </Link>
-            )}
+            <Link href="/login">
+              <Button btnName="Login" styles="py-2 px-3"></Button>
+            </Link>
             <div className="relative inline-block text-left">
               <div>
                 <button
@@ -175,7 +173,7 @@ const Navbar = () => {
                     >
                       Reserve Bus
                     </Link>
-                    {accessToken && (
+                    {!!decodedToken?.role && (
                       <Link
                         href="#"
                         className="text-gray-600 hover:bg-[#f3f4f9] block px-4 py-2 text-base duration-300"

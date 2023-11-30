@@ -11,6 +11,7 @@ import {
 } from "@/redux/trip/tripApi";
 import { todayChecker } from "@/utils/helper";
 import dayjs from "dayjs";
+import { useGetMyProfileQuery } from "@/redux/user/userApi";
 
 const Trip = () => {
   const router = useRouter();
@@ -19,6 +20,16 @@ const Trip = () => {
   const date = router.query.date;
 
   const [selectedBusId, setSelectedBusId] = useState("");
+
+  const accessToken =
+    typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
+
+  const headers = {
+    authorization: accessToken,
+  };
+
+  const { data: getMyProfile } = useGetMyProfileQuery({ headers });
+  console.log(getMyProfile);
 
   /*  */
   const [
@@ -33,9 +44,7 @@ const Trip = () => {
   const handleSelectBus = (id) => {
     GetBusSeatStatus({ trip_id: id });
     setSelectedBusId(id);
-    console.log(id);
   };
-  console.log(seatStatus)
 
   const getAllTrip = [
     {
@@ -228,7 +237,6 @@ const Trip = () => {
       setSelectedSeats([...selectedSeats, seat]);
     }
   };
-  console.log(selectedSeats);
 
   // const filterTripData = getAllTrip?.filter(
   //   (trip, index) =>
@@ -254,7 +262,6 @@ const Trip = () => {
       to: to,
     });
   }, [date, to, from]);
-  // console.log(availableTrip);
 
   const handlePaymentPageMove = (e) => {
     e.preventDefault();
@@ -473,6 +480,64 @@ const Trip = () => {
                             height="80"
                             rx="3"
                             ry="3"
+                            fill="#97a5c2"
+                            stroke="#000"
+                            stroke-width="1"
+                          />
+                          <rect
+                            x="4"
+                            y="76"
+                            width="93"
+                            height="20"
+                            rx="5"
+                            ry="5"
+                            fill="#97a5c2"
+                            stroke="#000"
+                            stroke-width="1"
+                          />
+                          <rect
+                            x="2"
+                            y="30"
+                            width="16"
+                            height="65"
+                            rx="5"
+                            ry="5"
+                            fill="#97a5c2"
+                            stroke="#000"
+                            stroke-width="1"
+                          />
+                          <rect
+                            x="83"
+                            y="30"
+                            width="16"
+                            height="65"
+                            rx="5"
+                            ry="5"
+                            fill="#97a5c2"
+                            stroke="#000"
+                            stroke-width="1"
+                          />
+                        </svg>
+                      </span>
+                      <span className="lg:ms-2 font-semibold text-[#97a5c2]">
+                        Booked
+                      </span>
+                    </li>
+                    <li className="flex flex-col lg:flex-row justify-between items-center gap-2">
+                      <span>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="28"
+                          height="28"
+                          viewBox="0 0 100 100"
+                        >
+                          <rect
+                            x="10"
+                            y="10"
+                            width="80"
+                            height="80"
+                            rx="3"
+                            ry="3"
                             fill="#22C55E"
                             stroke="#000"
                             stroke-width="1"
@@ -600,14 +665,27 @@ const Trip = () => {
                             return <span key={index}></span>;
                           } else {
                             return (
-                              <div
+                              <button
                                 key={index}
                                 className={`flex items-center justify-center border-none bg-white ${
                                   seat?.isAvailable === false
                                     ? "cursor-not-allowed"
-                                    : "cursor-pointer rounded-lg"
+                                    : ` ${
+                                        !!seatStatus?.data?.find(
+                                          (s) => s?.booking_seat === seat?.name
+                                        )
+                                          ? "cursor-not-allowed"
+                                          : "cursor-pointer rounded-lg"
+                                      }`
                                 }`}
-                                disabled={seat?.isAvailable === false && true}
+                                disabled={
+                                  (!!seatStatus?.data?.find(
+                                    (s) => s?.booking_seat === seat?.name
+                                  )
+                                    ? true
+                                    : false) ||
+                                  (seat?.isAvailable === false && true)
+                                }
                               >
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -643,7 +721,15 @@ const Trip = () => {
                                             selectedSeats[2] === seat?.name ||
                                             selectedSeats[3] === seat?.name
                                               ? "#22C55E"
-                                              : "#fff"
+                                              : ` ${
+                                                  !!seatStatus?.data?.find(
+                                                    (s) =>
+                                                      s?.booking_seat ===
+                                                      seat?.name
+                                                  )
+                                                    ? "#97a5c2"
+                                                    : "#fff"
+                                                }`
                                           }`
                                         : "#ff9090"
                                     }`}
@@ -665,7 +751,15 @@ const Trip = () => {
                                             selectedSeats[2] === seat?.name ||
                                             selectedSeats[3] === seat?.name
                                               ? "#22C55E"
-                                              : "#fff"
+                                              : ` ${
+                                                  !!seatStatus?.data?.find(
+                                                    (s) =>
+                                                      s?.booking_seat ===
+                                                      seat?.name
+                                                  )
+                                                    ? "#97a5c2"
+                                                    : "#fff"
+                                                }`
                                           }`
                                         : "#ff9090"
                                     }`}
@@ -687,7 +781,15 @@ const Trip = () => {
                                             selectedSeats[2] === seat?.name ||
                                             selectedSeats[3] === seat?.name
                                               ? "#22C55E"
-                                              : "#fff"
+                                              : ` ${
+                                                  !!seatStatus?.data?.find(
+                                                    (s) =>
+                                                      s?.booking_seat ===
+                                                      seat?.name
+                                                  )
+                                                    ? "#97a5c2"
+                                                    : "#fff"
+                                                }`
                                           }`
                                         : "#ff9090"
                                     }`}
@@ -709,7 +811,15 @@ const Trip = () => {
                                             selectedSeats[2] === seat?.name ||
                                             selectedSeats[3] === seat?.name
                                               ? "#22C55E"
-                                              : "#fff"
+                                              : ` ${
+                                                  !!seatStatus?.data?.find(
+                                                    (s) =>
+                                                      s?.booking_seat ===
+                                                      seat?.name
+                                                  )
+                                                    ? "#97a5c2"
+                                                    : "#fff"
+                                                }`
                                           }`
                                         : "#ff9090"
                                     }`}
@@ -717,7 +827,7 @@ const Trip = () => {
                                     stroke-width="1"
                                   />
                                 </svg>
-                              </div>
+                              </button>
                             );
                           }
                         })}
@@ -751,14 +861,14 @@ const Trip = () => {
                               <td className="d-none d-sm-table-cell py-2">
                                 E-Class
                               </td>
-                              <td className="py-2">৳ {trip?.fare}</td>
+                              <td className="py-2">৳ {trip?.ticket_price}</td>
                             </tr>
                           ))}
                         </tbody>
                       </table>
                       <div>
                         <h4 className="text-center mt-4 text-lg font-semibold ">
-                          Total: ৳ {selectedSeats?.length * trip?.fare}
+                          Total: ৳ {selectedSeats?.length * trip?.ticket_price}
                         </h4>
                       </div>
                       <div className="border rounded-lg mt-10 w-10/12 lg:w-1/2 mx-auto">
