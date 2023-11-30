@@ -36,15 +36,18 @@ const getAllFeedback: RequestHandler = catchAsync(async (req, res) => {
 })
 
 const getSingleUserFeedback: RequestHandler = catchAsync(async (req, res) => {
+  const paginationOptions = pick(req.query, paginationFields)
   const result = await FeedbackService.getSingleUserFeedbacks(
-    req.params.user_id
+    req.params.user_id,
+    paginationOptions
   )
 
   sendResponse<IFeedback[]>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Feedbacks retrieved successfully!',
-    data: result,
+    message: 'Users all feedback retrieved successfully!',
+    meta: result.meta,
+    data: result.data,
   })
 })
 
@@ -72,6 +75,18 @@ const updateFeedback: RequestHandler = catchAsync(async (req, res) => {
   })
 })
 
+const updateAdminApprovedFeedback: RequestHandler = catchAsync(async (req, res) => {
+  const updatedData = req.body
+  const result = await FeedbackService.updateAdminApprovedFeedback(updatedData)
+
+  sendResponse<IFeedback>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Feedback updated successfully!',
+    data: result,
+  })
+})
+
 const deleteFeedback: RequestHandler = catchAsync(async (req, res) => {
   const result = await FeedbackService.deleteFeedback(req.params.id)
 
@@ -90,4 +105,5 @@ export const FeedbackController = {
   updateFeedback,
   deleteFeedback,
   getApprovedFeedbacks,
+  updateAdminApprovedFeedback
 }
