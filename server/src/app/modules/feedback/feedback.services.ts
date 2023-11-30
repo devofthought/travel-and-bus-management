@@ -59,7 +59,7 @@ const createFeedback = async (
   }
 
   if ('status' in payload) {
-    delete payload.status;
+    delete payload.status
   }
 
   const newFeedback = await Feedback.create(payload)
@@ -135,13 +135,41 @@ const getAllFeedback = async (
 }
 
 const getSingleUserFeedbacks = async (
-  user_id: string
-): Promise<IFeedback[] | null> => {
+  user_id: string,
+  paginationOptions: IPaginationOptions
+): Promise<IGenericResponse<IFeedback[]>> => {
+  const { page, limit, skip, sortBy, sortOrder } =
+    paginationHelper.calculatePagination(paginationOptions)
+
+  const sortCondition: '' | { [key: string]: SortOrder } = sortBy &&
+    sortOrder && { [sortBy]: sortOrder }
+
   const result = await Feedback.find({ user_id })
-  if (!result) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'Feedbacks not found!')
+    .sort(sortCondition)
+    .skip(skip)
+    .limit(limit)
+    .select('-status')
+    .populate({
+      path: 'trip_id',
+      populate: [
+        { path: 'driver_id', select: 'driver_code name email age' },
+        { path: 'route_id', select: 'from to distance' },
+      ],
+    })
+    .populate({
+      path: 'user_id',
+      select: 'email traveler_id',
+    })
+  const total = await Feedback.countDocuments({ user_id })
+
+  return {
+    meta: {
+      page,
+      limit,
+      total,
+    },
+    data: result,
   }
-  return result
 }
 
 const getApprovedFeedbacks = async (): Promise<IFeedback[] | null> => {
