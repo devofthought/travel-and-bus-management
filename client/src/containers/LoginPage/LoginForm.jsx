@@ -3,12 +3,13 @@ import Button from "@/components/UI/Button";
 import { useLoginMutation } from "@/redux/user/userApi";
 import { useEffect } from "react";
 import { saveToLocalStorage } from "@/utils/localStorage";
+import { useRouter } from "next/router";
 
 const LoginForm = () => {
   const [login, { data: loginData, isSuccess }] = useLoginMutation();
   const [form] = Form.useForm(); // Create a form instance
   const [messageApi, contextHolder] = message.useMessage();
-
+  const router = useRouter();
   const onFinish = (values) => {
     login(values);
 
@@ -18,7 +19,6 @@ const LoginForm = () => {
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
-
   useEffect(() => {
     if (isSuccess) {
       messageApi.open({
@@ -28,6 +28,7 @@ const LoginForm = () => {
       if (loginData?.data?.accessToken) {
         saveToLocalStorage("accessToken", loginData?.data?.accessToken);
       }
+      router.push("/");
     }
   }, [isSuccess]);
   return (
