@@ -18,7 +18,7 @@ const withAuth = (WrappedComponent, allowedRoles = []) => {
       router.replace("/login");
       return null;
     }
-    console.log(token);
+    console.log("Token:", token);
 
     try {
       // Verify the token
@@ -26,7 +26,13 @@ const withAuth = (WrappedComponent, allowedRoles = []) => {
         token,
         "access_token_secret_bus_management_service"
       );
-      console.log(decoded);
+      console.log("Decoded:", decoded);
+
+      if (!decoded || !decoded.role) {
+        console.error("Invalid token structure");
+        router.replace("/login");
+        return null;
+      }
 
       // Check if the user's role is allowed to access the component
       if (allowedRoles.includes(decoded.role)) {
