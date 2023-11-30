@@ -11,6 +11,7 @@ import {
 } from "@/redux/trip/tripApi";
 import { todayChecker } from "@/utils/helper";
 import dayjs from "dayjs";
+import { useGetMyProfileQuery } from "@/redux/user/userApi";
 
 const Trip = () => {
   const router = useRouter();
@@ -19,6 +20,16 @@ const Trip = () => {
   const date = router.query.date;
 
   const [selectedBusId, setSelectedBusId] = useState("");
+
+  const accessToken =
+    typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
+
+  const headers = {
+    authorization: accessToken,
+  };
+
+  const { data: getMyProfile } = useGetMyProfileQuery({ headers });
+  console.log(getMyProfile);
 
   /*  */
   const [
