@@ -4,6 +4,7 @@ import React, { useState } from "react";
 // import { AiOutlineClose } from "react-icons/ai";
 import Button from "../UI/Button";
 import { removeFromLocalStorage } from "@/utils/localStorage";
+import dynamic from "next/dynamic";
 
 const jwt = require("jsonwebtoken");
 
@@ -198,4 +199,5 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+// export default Navbar;
+export default dynamic(() => Promise.resolve(Navbar), { ssr: false });
