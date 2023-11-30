@@ -58,6 +58,10 @@ const createFeedback = async (
     )
   }
 
+  if ('status' in payload) {
+    delete payload.status;
+  }
+
   const newFeedback = await Feedback.create(payload)
 
   if (!newFeedback) {

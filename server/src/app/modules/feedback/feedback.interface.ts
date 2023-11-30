@@ -7,7 +7,7 @@ export type IFeedback = {
   user_id: Types.ObjectId | IUser
   feedback: string
   rating: number
-  status: 'pending' | 'approved' | 'rejected'
+  status?: 'pending' | 'approved' | 'rejected'
 }
 
 export type FeedbackModel = Model<IFeedback, Record<string, unknown>>
