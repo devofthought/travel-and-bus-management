@@ -11,3 +11,5 @@ export const feedbackFilterableFields = [
   'rating',
   'status',
 ]
+
+export const feedbackFor = ['driver', 'bus', 'trip']

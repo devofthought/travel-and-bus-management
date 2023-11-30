@@ -36,15 +36,18 @@ const getAllFeedback: RequestHandler = catchAsync(async (req, res) => {
 })
 
 const getSingleUserFeedback: RequestHandler = catchAsync(async (req, res) => {
+  const paginationOptions = pick(req.query, paginationFields)
   const result = await FeedbackService.getSingleUserFeedbacks(
-    req.params.user_id
+    req.params.user_id,
+    paginationOptions
   )
 
   sendResponse<IFeedback[]>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Feedbacks retrieved successfully!',
-    data: result,
+    message: 'Users all feedback retrieved successfully!',
+    meta: result.meta,
+    data: result.data,
   })
 })
 

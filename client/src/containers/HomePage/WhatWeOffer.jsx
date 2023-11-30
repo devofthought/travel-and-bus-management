@@ -85,7 +85,7 @@ const WhatWeOffer = () => {
                 lg={8}
               >
                 <div
-                  className={`p-10 mt-10 h-96 rounded-2xl shadow-xl ${data?.style} hover:bg-custom-gradient hover:text-white `}
+                  className={`p-10 mt-10 h-96 rounded-2xl border border-solid border-gray-200 shadow-xl ${data?.style} hover:bg-custom-gradient hover:text-white `}
                 >
                   <div className="">{data?.icon}</div>
                   <h1 className="text-2xl font-bold mt-6 ">{data?.title}</h1>

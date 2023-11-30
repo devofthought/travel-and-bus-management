@@ -89,7 +89,7 @@ const Navbar = () => {
             </li>
 
             <Link
-              href="#reserveBus"
+              href="/#reserveBus"
               className="hover:bg-[#f0f0f0] rounded-lg duration-500"
             >
               <Button btnName="Reserve Bus" styles="py-2 px-3"></Button>
@@ -165,7 +165,7 @@ const Navbar = () => {
                       Blogs
                     </Link>
                     <Link
-                      href="#reserveBus"
+                      href="/#reserveBus"
                       className="text-gray-600 hover:bg-[#f3f4f9] block px-4 py-2 text-base duration-300"
                       role="menuitem"
                       tabIndex="-1"

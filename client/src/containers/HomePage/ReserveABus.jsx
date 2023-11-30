@@ -1,23 +1,30 @@
 import { Col, Row, Input, Carousel, DatePicker, Select, Form } from "antd";
+// import React from "react";
 import Image from "next/image";
 import moment from "moment";
 import SectionTitle from "@/components/Shared/SectionTitle";
 import Button from "@/components/UI/Button";
-
-const dateFormatList = ["DD/MM/YYYY", "DD/MM/YY", "DD-MM-YYYY", "DD-MM-YY"];
-
-const disabledDate = (current) => {
-  // Can not select days before today
-  return current && current < moment().startOf("day");
-};
-const onFinish = (values) => {
-  console.log("Success:", values);
-};
-const onFinishFailed = (errorInfo) => {
-  console.log("Failed:", errorInfo);
-};
+import Swal from "sweetalert2";
 
 const ReserveABus = () => {
+  const dateFormatList = ["DD/MM/YYYY", "DD/MM/YY", "DD-MM-YYYY", "DD-MM-YY"];
+  const disabledDate = (current) => {
+    // Can not select days before today
+    return current && current < moment().startOf("day");
+  };
+  const [form] = Form.useForm();
+  const onFinish = (values) => {
+    console.log("Success:", values);
+    Swal.fire({
+      icon: "success",
+      title: "Good Job!",
+      text: "Your reserved bus request has been successfully sent!",
+    });
+    form.resetFields();
+  };
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
+  };
   return (
     <div className="main-container py-32 lg:py-36" id="reserveBus">
       <SectionTitle
@@ -35,6 +42,7 @@ const ReserveABus = () => {
           <Col className="gutter-row" xs={24} sm={24} md={24} lg={12}>
             <div>
               <Form
+                form={form}
                 name="basic"
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
