@@ -1,6 +1,7 @@
 import PageTitle from "@/components/Shared/PageTitle";
 import RootLayout from "@/layouts/RootLayout";
 import UserDashboardLayout from "@/layouts/UserDashboardLayout";
+import withAuth from "@/utils/withAuth";
 import React from "react";
 
 const UserDashboard = () => {
@@ -12,7 +13,7 @@ const UserDashboard = () => {
   );
 };
 
-export default UserDashboard;
+export default withAuth(UserDashboard, ["traveler"]);
 
 UserDashboard.getLayout = function getLayout(page) {
   return <RootLayout>{page}</RootLayout>;
