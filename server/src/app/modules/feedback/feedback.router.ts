@@ -12,6 +12,12 @@ router.post(
   FeedbackController.createFeedback
 )
 
+router.patch(
+  '/admin-approved-feedback',
+  validateRequest(FeedbackValidation.adminApprovedFeedbackZodSchema),
+  FeedbackController.updateAdminApprovedFeedback
+)
+
 // TODO: feedback update is not yet implemented for both (admin and user)
 router.patch(
   '/:id',

@@ -20,6 +20,10 @@ export type IFeedbackFilter = {
   status?: string
 }
 
+export type IApprovedFeedback = {
+  status: string
+  feedback_id: string
+}
 
 // export type IApprovedFeedbackResponse = {
 //   feedback_content: string,

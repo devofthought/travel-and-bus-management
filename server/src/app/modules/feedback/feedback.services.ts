@@ -5,9 +5,13 @@ import { IGenericResponse } from '../../../interfaces/common'
 import { IPaginationOptions } from '../../../interfaces/pagination'
 import httpStatus from 'http-status'
 import ApiError from '../../../errors/ApiError'
-import { IFeedback, IFeedbackFilter } from './feedback.interface'
+import {
+  IApprovedFeedback,
+  IFeedback,
+  IFeedbackFilter,
+} from './feedback.interface'
 import { Feedback } from './feedback.model'
-import { feedbackSearchableFields } from './feedback.constants'
+import { feedbackSearchableFields, feedbackStatus } from './feedback.constants'
 import { User } from '../user/user.model'
 import { Trip } from '../trip/trip.model'
 import { Booking } from '../booking/booking.model'
@@ -172,7 +176,6 @@ const getSingleUserFeedbacks = async (
   }
 }
 
-
 // const getApprovedFeedbacks = async (): Promise<IApprovedFeedbackResponse[] | null> => {
 //   const result = await Feedback.find({ status: 'approved' }).populate({
 //     path: 'user_id',
@@ -200,12 +203,14 @@ const getSingleUserFeedbacks = async (
 // }
 
 const getApprovedFeedbacks = async (): Promise<IFeedback[] | null> => {
-  const result = await Feedback.find({ status: 'approved' }).select('-status').populate({
-    path: 'user_id',
-    select: 'traveler_id',
-    populate: [{ path: 'traveler_id', select: 'name image' }],
-  })
-  
+  const result = await Feedback.find({ status: 'approved' })
+    .select('-status')
+    .populate({
+      path: 'user_id',
+      select: 'traveler_id',
+      populate: [{ path: 'traveler_id', select: 'name image' }],
+    })
+
   return result
 }
 
@@ -225,6 +230,29 @@ const updateFeedback = async (
   return result
 }
 
+const updateAdminApprovedFeedback = async (
+  payload: Partial<IApprovedFeedback>
+): Promise<IFeedback | null> => {
+  const isExist = await Feedback.findOne({ _id: payload.feedback_id })
+
+  if (!isExist) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Feedback not found!')
+  }
+
+  if (!feedbackStatus.includes(payload.status || 'none')) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Try to put wrong status!')
+  } 
+
+  const result = await Feedback.findOneAndUpdate(
+    { _id: payload.feedback_id },
+    { status: payload.status },
+    {
+      new: true,
+    }
+  )
+  return result
+}
+
 const deleteFeedback = async (id: string): Promise<IFeedback | null> => {
   const result = await Feedback.findOneAndDelete({ _id: id })
   if (!result) {
@@ -240,4 +268,10 @@ export const FeedbackService = {
   updateFeedback,
   deleteFeedback,
   getApprovedFeedbacks,
+  updateAdminApprovedFeedback,
+}
+
+const getFeedback = {
+  feedback_id: '656810bb8cc82b46f0eade49',
+  status: 'approved',
 }

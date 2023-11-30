@@ -35,7 +35,15 @@ const updateFeedbackZodSchema = z.object({
   }),
 })
 
+const adminApprovedFeedbackZodSchema = z.object({
+  body: z.object({
+    status: z.string(),
+    feedback_id: z.string(),
+  }),
+})
+
 export const FeedbackValidation = {
   createFeedbackZodSchema,
   updateFeedbackZodSchema,
+  adminApprovedFeedbackZodSchema,
 }

@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose'
 import { FeedbackModel, IFeedback } from './feedback.interface'
-import { feedbackFor } from './feedback.constants'
+import { feedbackFor, feedbackStatus } from './feedback.constants'
 
 export const feedbackSchema = new Schema<IFeedback, FeedbackModel>(
   {
@@ -29,8 +29,8 @@ export const feedbackSchema = new Schema<IFeedback, FeedbackModel>(
     },
     status: {
       type: String,
+      enum: feedbackStatus,
       default: 'pending',
-      enum: ['pending', 'approved', 'rejected'],
     },
   },
   {

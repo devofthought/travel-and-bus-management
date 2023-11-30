@@ -75,6 +75,18 @@ const updateFeedback: RequestHandler = catchAsync(async (req, res) => {
   })
 })
 
+const updateAdminApprovedFeedback: RequestHandler = catchAsync(async (req, res) => {
+  const updatedData = req.body
+  const result = await FeedbackService.updateAdminApprovedFeedback(updatedData)
+
+  sendResponse<IFeedback>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Feedback updated successfully!',
+    data: result,
+  })
+})
+
 const deleteFeedback: RequestHandler = catchAsync(async (req, res) => {
   const result = await FeedbackService.deleteFeedback(req.params.id)
 
@@ -93,4 +105,5 @@ export const FeedbackController = {
   updateFeedback,
   deleteFeedback,
   getApprovedFeedbacks,
+  updateAdminApprovedFeedback
 }
