@@ -99,6 +99,7 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
       <Modal
         title="Update Profile"
         open={open}
+        centered
         confirmLoading={confirmLoading}
         onCancel={handleCancel}
         footer={null}
