@@ -36,10 +36,12 @@ const withAuth = (WrappedComponent, allowedRoles = []) => {
 
       // Check if the user's role is allowed to access the component
       if (allowedRoles.includes(decoded.role)) {
+        console.log("allowedRoles", allowedRoles);
         return <WrappedComponent {...props} />;
       } else {
         // Redirect to unauthorized page
-        router.replace("/unauthorized");
+        // router.replace("/unauthorized");
+        router.back();
         return null;
       }
     } catch (error) {

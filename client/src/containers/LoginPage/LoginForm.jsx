@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 
 const LoginForm = () => {
   const [login, { data: loginData, isSuccess }] = useLoginMutation();
+  console.log(isSuccess, loginData)
   const [form] = Form.useForm(); // Create a form instance
   const [messageApi, contextHolder] = message.useMessage();
   const router = useRouter();
