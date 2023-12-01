@@ -126,6 +126,9 @@ const SignUpForm = () => {
         >
           <Input.Password className="h-8 mt-1" />
         </Form.Item>
+        <p className="text-right text-sm text-black cursor-pointer -mt-5 w-full mb-5 hover:underline">
+          Forget your password
+        </p>
 
         <Form.Item>
           <Button btnName="Register" styles="w-full py-2"></Button>
