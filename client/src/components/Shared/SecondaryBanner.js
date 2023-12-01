@@ -9,18 +9,25 @@ import {
 import MainButton from "../UI/Button";
 
 const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
-  const isLoggedIn = true;
-
-  // modal
+  // PROFILE UPDATE MODAL
+  const [searchModal, setSearchModal] = useState(false);
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const showModal = () => {
     setOpen(true);
   };
   const handleCancel = () => {
-    console.log("Clicked cancel button");
     setOpen(false);
   };
+  // TRIP SEARCH MODAL
+  const showTripSearchModal = () => {
+    setSearchModal(true);
+  };
+  const closedTripSearchModal = () => {
+    setSearchModal(false);
+  };
+  const [confirmLoadingTripSearchModal, setConfirmLoadingTripSearchModal] =
+    useState(false);
 
   // form
   const onFinish = (values) => {
@@ -57,58 +64,38 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
           Discover comfortable and convenient bus journeys for your travels.
         </p>
         <div className="flex justify-between items-center w-2/3 mx-auto mt-10 backdrop-blur-xl opacity-100  p-5 rounded-3xl">
-          {isLoggedIn ? (
-            <div className="flex items-start">
-              <div className="relative w-16">
-                <Avatar
-                  className="bg-gray-200 flex justify-center items-center"
-                  size={64}
-                  icon={<UserOutlined className="text-gray-600" />}
-                />
-                <Button
-                  type="primary"
-                  className="absolute bottom-0 right-0 bg-gray-400 flex justify-center items-center"
-                  shape="circle"
-                  size="small"
-                  onClick={showModal}
-                  icon={<EditOutlined />}
-                />
-              </div>
-              <div className="text-left ml-3">
-                <h3 className="text-slate-900">Mr. Full Name</h3>
-                <p className="text-slate-900">example@gmail.com</p>
-                <button
-                  onClick={() => setOpenDashboard(!openDashboard)}
-                  className="primary-bg cursor-pointer text-white font-medium py-1 px-4 shadow-md hover:shadow-lg transition duration-300 mt-2 border-0 rounded-[5px]"
-                >
-                  Details
-                </button>
-              </div>
-            </div>
-          ) : (
-            <div className="flex items-center justify-between">
-              <button className="primary-bg hover:primary-bg cursor-pointer text-white font-semibold py-2 px-4 shadow-md hover:shadow-lg transition duration-300  border-0 rounded-md">
-                Login
-              </button>
-
+          <div className="flex items-center">
+            <div className="relative w-16">
+              <Avatar
+                className="bg-gray-200 flex justify-center items-center"
+                size={64}
+                icon={<UserOutlined className="text-gray-600" />}
+              />
               <Button
                 type="primary"
+                className="absolute bottom-0 right-0 bg-gray-400 flex justify-center items-center"
                 shape="circle"
-                style={{
-                  backgroundColor: "white",
-                  color: "gray",
-                  height: "40px",
-                  width: "40px",
-                }}
-                className="font-semibold ml-3 flex justify-center items-center"
-                icon={<GoogleOutlined style={{ fontSize: "32px" }} />}
+                size="small"
+                onClick={showModal}
+                icon={<EditOutlined />}
               />
             </div>
-          )}
-
-          <MainButton styles="py-2 px-4" btnName="Modify Search"></MainButton>
+            <div className="text-left ml-3">
+              <h3 className="text-slate-900">Mr. Full Name</h3>
+              <p className="text-slate-900">example@gmail.com</p>
+            </div>
+          </div>
+          <button
+            className="primary-bg text-white border-none rounded-[5px] cursor-pointer text-center py-2 px-3"
+            onClick={showTripSearchModal}
+          >
+            Trip Search
+          </button>
+          {/* <MainButton styles="py-2 px-4" btnName="Trip Search"></MainButton> */}
         </div>
       </div>
+
+      {/* PROFILE UPDATE MODAL */}
       <Modal
         title="Update Profile"
         open={open}
@@ -199,6 +186,20 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
               <MainButton btnName={"Submit"} styles="w-full py-2"></MainButton>
             </Form.Item>
           </Form>
+        </div>
+      </Modal>
+
+      {/* TRIP SEARCH MODAL */}
+      <Modal
+        title="Trip Search"
+        open={searchModal}
+        centered
+        confirmLoading={confirmLoadingTripSearchModal}
+        onCancel={closedTripSearchModal}
+        footer={null}
+      >
+        <div className="flex justify-between flex-wrap">
+          <p>search trip</p>
         </div>
       </Modal>
     </Card>
