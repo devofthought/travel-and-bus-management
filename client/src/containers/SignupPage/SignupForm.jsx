@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import Swal from "sweetalert2";
 import { saveToLocalStorage } from "@/utils/localStorage";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 const SignUpForm = () => {
   const [signUp, { data: signUpData, isSuccess }] = useSignUpMutation();
@@ -114,18 +115,26 @@ const SignUpForm = () => {
           <Input.Password className="h-8 mt-1" />
         </Form.Item>
 
-        <label className=" font-medium">Confirm Password</label>
-        <Form.Item
-          name="confirm_password"
-          rules={[
-            {
-              required: true,
-              message: "Please input your Confirm Password!",
-            },
-          ]}
-        >
-          <Input.Password className="h-8 mt-1" />
-        </Form.Item>
+        <div>
+          <label className=" font-medium">Confirm Password</label>
+          <Form.Item
+            name="confirm_password"
+            rules={[
+              {
+                required: true,
+                message: "Please input your Confirm Password!",
+              },
+            ]}
+          >
+            <Input.Password className="h-8 mt-1" />
+          </Form.Item>
+        </div>
+
+        <div className="w-full text-right -mt-4 mb-3">
+          <Link href="/forget-password" className="hover:underline text-black">
+            Forget your password
+          </Link>
+        </div>
 
         <Form.Item>
           <Button btnName="Register" styles="w-full py-2"></Button>

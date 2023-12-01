@@ -8,6 +8,8 @@ import Link from "next/link";
 import TopLoader from "@/components/Shared/TopLoader";
 import NoticeBoard from "@/components/Shared/NoticeBoard";
 const { Header, Sider, Content } = Layout;
+import withAuth from "@/utils/withAuth";
+import dynamic from "next/dynamic";
 
 const AdminDashboardLayout = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
@@ -62,11 +64,11 @@ const AdminDashboardLayout = ({ children }) => {
         </Header>
         <Content
           style={{
-            margin: "24px 16px 5px 16px" /* top | right | bottom | left */,
+            margin: "24px 16px 5px 16px",
             padding: "24px 10px",
             minHeight: "calc(100vh - 185px)",
             background: colorBgContainer,
-            overflowY: "scroll" /* Add vertical scrollbar */,
+            overflowY: "scroll" 
           }}
           className="overflow-x-scroll md:overflow-x-hidden"
         >
@@ -77,4 +79,5 @@ const AdminDashboardLayout = ({ children }) => {
     </Layout>
   );
 };
-export default AdminDashboardLayout;
+// export default AdminDashboardLayout;
+export default dynamic(() => Promise.resolve(withAuth(AdminDashboardLayout, ["admin"])), { ssr: true });

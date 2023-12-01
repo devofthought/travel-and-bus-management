@@ -100,9 +100,6 @@ const CreateDriverForm = ({ driverInfo, setDriverInfo }) => {
         >
           <InputNumber
             className="w-full"
-            formatter={(values) =>
-              `${values}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-            }
             placeholder="Type age"
           />
         </Form.Item>
@@ -163,16 +160,16 @@ const CreateDriverForm = ({ driverInfo, setDriverInfo }) => {
               type: "number",
               message: "Please enter years experience",
               min: 0,
-              max: 20,
+              max: 30,
             },
           ]}
           hasFeedback
         >
           <InputNumber
             className="w-full"
-            formatter={(values) =>
-              `${values}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-            }
+            // formatter={(values) =>
+            //   `${values}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            // }
             placeholder="Type years"
           />
         </Form.Item>

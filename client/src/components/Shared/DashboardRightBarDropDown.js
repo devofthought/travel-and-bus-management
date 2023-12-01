@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Avatar, Dropdown, Menu } from "antd";
+import { Avatar, Button, Dropdown, Menu } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { rightSubMenus } from "@/utils/tools/rightSubMenu";
+import { CiLogin } from "react-icons/ci";
+import { removeFromLocalStorage } from "@/utils/localStorage";
 
 function renderMenuItems(items) {
   return items.map((item) => {
@@ -38,6 +40,12 @@ function DashboardRightBarDropDown() {
     rt?.permission?.includes("admin")
   );
 
+  /* LOGOUT HANDLER */
+  const handleSignOut = () => {
+    removeFromLocalStorage("accessToken");
+    router.reload();
+  };
+
   const menu = (
     <Menu
       theme="light"
@@ -46,6 +54,13 @@ function DashboardRightBarDropDown() {
       selectedKeys={[selectedKeys]}
     >
       {renderMenuItems(filterMenus)}
+      <Button
+        onClick={() => handleSignOut()}
+        className="bg-red-500 text-white w-full mt-2 flex items-center gap-2"
+      >
+        <CiLogin />
+        <span>sign out</span>
+      </Button>
     </Menu>
   );
 
