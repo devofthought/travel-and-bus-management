@@ -4,7 +4,7 @@ import MyTourAndTripsTable from "@/containers/UserDashboard/myTourAndTripsTable"
 import ReviewTable from "@/containers/UserDashboard/reviewTable";
 import UpcomingBookingTable from "@/containers/UserDashboard/upcomingBookingTable";
 import { Segmented } from "antd";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const UserDashboardLayout = () => {
   const segmentOptions = ["My tour & trips", "Upcoming booking", "Reviews"];
