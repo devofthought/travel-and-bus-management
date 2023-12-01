@@ -4,18 +4,25 @@ import { useLoginMutation } from "@/redux/user/userApi";
 import { useEffect } from "react";
 import { saveToLocalStorage } from "@/utils/localStorage";
 import { useRouter } from "next/router";
+import Swal from "sweetalert2";
 
 const LoginForm = () => {
-  const [login, { data: loginData, isSuccess }] = useLoginMutation();
-  console.log(isSuccess, loginData);
+  const [
+    login,
+    {
+      data: loginData,
+      error: loginError,
+      isLoading: loginIsLoading,
+      isSuccess,
+    },
+  ] = useLoginMutation();
+
+  console.log(isSuccess, loginData, loginError, loginIsLoading);
   const [form] = Form.useForm(); // Create a form instance
   const [messageApi, contextHolder] = message.useMessage();
   const router = useRouter();
   const onFinish = (values) => {
     login(values);
-
-    // Reset the form fields after successful submission
-    form.resetFields();
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
@@ -34,6 +41,17 @@ const LoginForm = () => {
         ); // TODO:  save it for testing.
       }
 
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: `${loginData?.message}`,
+        showConfirmButton: false,
+        timer: 2000,
+      });
+
+      // Reset the form fields after successful submission
+      form.resetFields();
+
       if (["admin", "driver"].includes(loginData?.data?.userData?.role)) {
         router.push("/dashboard");
       } else {
@@ -41,6 +59,18 @@ const LoginForm = () => {
       }
     }
   }, [isSuccess]);
+
+  useEffect(() => {
+    if (loginError?.status === 401 || loginError?.status === 404) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: `${loginError?.data?.message}`,
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    }
+  }, [loginError]);
   return (
     <>
       {contextHolder}
@@ -55,32 +85,38 @@ const LoginForm = () => {
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
-        <label className=" font-medium">Email Address</label>
+        <label className="font-medium">Email Address</label>
         <Form.Item
           className="w-full h-8 mb-4"
           name="email"
           rules={[
             {
+              type: "email",
+              message: "Your email address",
+            },
+            {
               required: true,
-              message: "Please input your valid email address!",
+              message: "The input is not valid E-mail!",
             },
           ]}
         >
           <Input className="h-8 mt-1" />
         </Form.Item>
 
-        <label className=" font-medium">Password</label>
-        <Form.Item
-          name="password"
-          rules={[
-            {
-              required: true,
-              message: "Please input your password!",
-            },
-          ]}
-        >
-          <Input.Password className="h-8 mt-1" />
-        </Form.Item>
+        <div className="pt-2">
+          <label className="font-medium">Password</label>
+          <Form.Item
+            name="password"
+            rules={[
+              {
+                required: true,
+                message: "Please input your password!",
+              },
+            ]}
+          >
+            <Input.Password className="h-8 mt-1" />
+          </Form.Item>
+        </div>
         <p className="text-right text-sm text-black cursor-pointer -mt-5 w-full mb-5 hover:underline">
           Forget your password
         </p>
