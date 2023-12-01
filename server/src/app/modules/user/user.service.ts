@@ -104,8 +104,11 @@ const getMyProfile = async (
   payload: JwtPayload | null
 ): Promise<IUser | null> => {
   let result = null
-
   result = await User.findById({ _id: payload?.id })
+    .select('-password')
+    .populate('traveler_id')
+    .populate('admin_id')
+    .populate('driver_id')
 
   return result
 }
@@ -132,7 +135,7 @@ const updateMyProfile = async (
 
   // hash the password before updating
   if (password) {
-    ; (updateUserData as any)['password'] = await bcryptHelpers.hashPassword(
+    ;(updateUserData as any)['password'] = await bcryptHelpers.hashPassword(
       password
     )
   }
@@ -146,7 +149,6 @@ const updateMyProfile = async (
   )
   return result
 }
-
 
 /* 
 const updateUserProfile = async (userId: string, updatedUserData: any): Promise<User | null> => {
@@ -172,9 +174,7 @@ export const UserService = {
   deleteUser,
   getMyProfile,
   updateMyProfile,
-};
-
-
+}
 
 /* const getUserProfile = async (payload: any) => {
   const userInfo = await User.findOne({ email: payload?.email });

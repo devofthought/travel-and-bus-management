@@ -1,14 +1,33 @@
-import { Avatar, Button, Card, Form, Input, Modal, Upload } from "antd";
-import React, { useState } from "react";
 import {
-  EditOutlined,
-  UserOutlined,
-  GoogleOutlined,
-  PlusOutlined,
-} from "@ant-design/icons";
+  Button,
+  Card,
+  Form,
+  Input,
+  InputNumber,
+  Modal,
+  Select,
+  Upload,
+} from "antd";
+import { useEffect, useState } from "react";
+import { EditOutlined, PlusOutlined } from "@ant-design/icons";
 import MainButton from "../UI/Button";
+import { useGetMyProfileQuery } from "@/redux/user/userApi";
+import Image from "next/image";
+
+const previousData = {
+  name: "",
+  email: "",
+  image: "",
+  age: "",
+  phone: "",
+};
 
 const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
+  const [userProfile, setUserProfile] = useState(previousData);
+  // USER PROFILE GET
+  const { data } = useGetMyProfileQuery();
+  // console.log(data);
+
   // PROFILE UPDATE MODAL
   const [searchModal, setSearchModal] = useState(false);
   const [open, setOpen] = useState(false);
@@ -16,6 +35,19 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
   const showModal = () => {
     setOpen(true);
   };
+
+  useEffect(() => {
+    const user = {
+      name: data?.data.traveler_id?.name,
+      email: data?.data.traveler_id?.email,
+      image: data?.data.traveler_id?.image,
+      age: data?.data.traveler_id?.age,
+      phone: data?.data.traveler_id?.phone && data?.data.traveler_id?.phone.substring(4),
+    };
+    setUserProfile({ ...user });
+  }, [data]);
+
+  console.log(userProfile);
   const handleCancel = () => {
     setOpen(false);
   };
@@ -32,9 +64,9 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
   // form
   const onFinish = (values) => {
     console.log({ values });
-    setData({
-      ...values,
-    });
+    // setData({
+    //   ...values,
+    // });
   };
 
   const uploadButton = (
@@ -49,6 +81,15 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
       </div>
     </div>
   );
+
+  const prefixSelector = (
+    <Form.Item name="prefix" noStyle>
+      <Select style={{ width: 80 }}>
+        <Option value="+880">+880</Option>
+      </Select>
+    </Form.Item>
+  );
+
   return (
     <Card
       className="bg-center bg-cover sm:bg-contain lg:bg-cover bg-no-repeat z-10 text-gray-700 text-center py-12 pt-32 h-[500px]"
@@ -66,10 +107,18 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
         <div className="flex justify-between items-center w-2/3 mx-auto mt-10 backdrop-blur-xl opacity-100  p-5 rounded-3xl">
           <div className="flex items-center">
             <div className="relative w-16">
-              <Avatar
-                className="bg-gray-200 flex justify-center items-center"
-                size={64}
-                icon={<UserOutlined className="text-gray-600" />}
+              <Image
+                alt="avatar"
+                className={`w-16 h-16 rounded-full p-[2px] bg-white cursor-pointer`}
+                src={
+                  userProfile?.image
+                    ? userProfile?.image
+                    : "/images/user-avatar.png"
+                }
+                decoding="async"
+                loading="lazy"
+                width={300}
+                height={300}
               />
               <Button
                 type="primary"
@@ -81,8 +130,8 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
               />
             </div>
             <div className="text-left ml-3">
-              <h3 className="text-slate-900">Mr. Full Name</h3>
-              <p className="text-slate-900">example@gmail.com</p>
+              <h3 className="text-slate-900 capitalize">{userProfile?.name}</h3>
+              <p className="text-slate-900">{userProfile?.email}</p>
             </div>
           </div>
           <button
@@ -109,12 +158,19 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
             autoComplete="off"
             layout="vertical"
             onFinish={onFinish}
+            initialValues={userProfile} 
             className="w-full flex flex-wrap justify-between"
             onFinishFailed={(error) => {
               console.log({ error });
             }}
           >
-            <Form.Item name="name" label="Name" className="w-[49%]" hasFeedback>
+            <Form.Item
+              name="name"
+              label="Name"
+              className="w-[49%]"
+              rules={[{ required: true, message: "Please enter your name" }]}
+              hasFeedback
+            >
               <Input placeholder="Type your name" />
             </Form.Item>
 
@@ -122,6 +178,16 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
               name="email"
               label="Email"
               className="w-[49%]"
+              rules={[
+                {
+                  type: "email",
+                  message: "The input is not valid E-mail!",
+                },
+                {
+                  required: true,
+                  message: "Please input your E-mail!",
+                },
+              ]}
               hasFeedback
             >
               <Input placeholder="Type your email" />
@@ -129,15 +195,46 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
 
             <Form.Item
               name="phone"
-              label="Phone"
+              label="Phone Number"
               className="w-[49%]"
+              rules={[
+                { required: true, message: "Please input your phone number!" },
+                {
+                  type: "number",
+                  message: "please your phone number",
+                  min: 1100000000,
+                  max: 1999999999,
+                },
+              ]}
               hasFeedback
             >
-              <Input placeholder="Type your phone number" />
+              {/* <Input addonBefore={prefixSelector} style={{ width: "100%" }} /> */}
+              <InputNumber
+                addonBefore={prefixSelector}
+                className="w-full"
+                placeholder="mobile number"
+              />
             </Form.Item>
 
-            <Form.Item name="age" label="Age" className="w-[49%]" hasFeedback>
-              <Input placeholder="Type your age" />
+            <Form.Item
+              name="age"
+              label="Age"
+              className="w-[49%]"
+              rules={[
+                {
+                  required: true,
+                  message: "Please enter your age",
+                },
+                {
+                  type: "number",
+                  message: "your age is required",
+                  min: 4,
+                  max: 100,
+                },
+              ]}
+              hasFeedback
+            >
+              <InputNumber className="w-full" placeholder="Type age" />
             </Form.Item>
 
             <Form.Item
@@ -150,7 +247,7 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
               }}
               rules={[
                 {
-                  required: true,
+                  required: false,
                   message: "Profile picture",
                 },
                 {

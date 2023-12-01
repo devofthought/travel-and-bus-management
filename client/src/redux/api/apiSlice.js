@@ -6,7 +6,7 @@ export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:5000/api/v1",
     prepareHeaders: (headers) => {
-      headers.set("authorization", getFromLocalStorage("access-token"));
+      headers.set("authorization", getFromLocalStorage("accessToken"));
       return headers;
     },
   }),
