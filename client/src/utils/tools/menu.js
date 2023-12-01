@@ -169,7 +169,6 @@ export const Menus = [
       },
     ],
   },
-
   {
     label: "Support",
     key: "380gj803d",
@@ -181,6 +180,33 @@ export const Menus = [
         key: "349jgj938hj",
         path: "/dashboard/support",
         icon: <TbBrandFeedly />,
+      },
+    ],
+  },
+  /* driver menubar */
+  {
+    label: "profile",
+    key: "adsf234f234",
+    icon: <BsBusFrontFill />,
+    permission: ["driver"],
+    children: [
+      {
+        label: "Profile",
+        key: "3214gf124f",
+        path: "/dashboard/driver/profile",
+        icon: <AiOutlinePullRequest />,
+      },
+      {
+        label: "Trip History",
+        key: "4325234f23f",
+        path: "/dashboard/driver/trip-history",
+        icon: <BiListOl />,
+      },
+      {
+        label: "Trip Upcoming",
+        key: "4325234f23f",
+        path: "/dashboard/driver/trip-upcoming",
+        icon: <BiListOl />,
       },
     ],
   },

@@ -64,11 +64,11 @@ const AdminDashboardLayout = ({ children }) => {
         </Header>
         <Content
           style={{
-            margin: "24px 16px 5px 16px" /* top | right | bottom | left */,
+            margin: "24px 16px 5px 16px",
             padding: "24px 10px",
             minHeight: "calc(100vh - 185px)",
             background: colorBgContainer,
-            overflowY: "scroll" /* Add vertical scrollbar */,
+            overflowY: "scroll" 
           }}
           className="overflow-x-scroll md:overflow-x-hidden"
         >

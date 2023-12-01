@@ -3,17 +3,18 @@ import Link from "next/link";
 import React, { useState } from "react";
 import Button from "../UI/Button";
 import {
-  getFromLocalStorage,
   removeFromLocalStorage,
 } from "@/utils/localStorage";
 import dynamic from "next/dynamic";
 import jwt from "jsonwebtoken";
+import { useRouter } from "next/router";
 
 const Navbar = () => {
+  const router = useRouter()
   const accessToken =
-    typeof window !== "undefined" ? getFromLocalStorage("accessToken") : null;
+    typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
   const decodedToken = jwt.decode(accessToken);
-  console.log(decodedToken);
+  // console.log(decodedToken);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
@@ -26,6 +27,7 @@ const Navbar = () => {
     // router.push(path);
     // removeFromLocalStorage("user-info");
     removeFromLocalStorage("accessToken");
+    router.reload("/");
     // toast.success("Successfully Signed Out!");
     // setMyProfile({});
   };

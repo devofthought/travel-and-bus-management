@@ -31,9 +31,14 @@ const LoginForm = () => {
         saveToLocalStorage(
           "dhruto-travel-credential",
           loginData?.data?.userData
-        ); // TODO: for testing i am save it.
+        ); // TODO:  save it for testing.
       }
-      router.push("/");
+
+      if (["admin", "driver"].includes(loginData?.data?.userData?.role)) {
+        router.push("/dashboard");
+      } else {
+        router.push("/");
+      }
     }
   }, [isSuccess]);
   return (
