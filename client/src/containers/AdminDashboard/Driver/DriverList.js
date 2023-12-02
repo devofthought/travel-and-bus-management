@@ -15,7 +15,7 @@ const DriverList = ({ data }) => {
       title: "Sr.",
       dataIndex: "sr",
       minWidth: 200,
-      render: (text, record, index) => {
+      render: (_text, _record, index) => {
         return `${index + 1}`;
       },
     },

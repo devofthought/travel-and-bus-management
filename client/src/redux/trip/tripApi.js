@@ -54,6 +54,11 @@ const tripApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["trip"],
     }),
+    getAllCompletedAndUpcomingTripForUser: builder.query({
+      query: ({ trip_status }) =>
+        `/trips/up-coming?trip_status=${trip_status}`,
+      providesTags: ["trip"],
+    }),
   }),
 });
 
@@ -65,5 +70,6 @@ export const {
   useUpdateTripMutation,
   useGetAllUpdateAbleTripQuery,
   useGetTripsByUsersMutation,
-  useGetBusSeatStatusMutation
+  useGetBusSeatStatusMutation,
+  useGetAllCompletedAndUpcomingTripForUserQuery
 } = tripApi;

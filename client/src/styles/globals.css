@@ -124,3 +124,14 @@ a {
 .animate-slide {
   animation: slide 2s linear infinite;
 }
+
+/*##################### custom-rate-feedback css ##################### */
+.custom-rate-feedback .ant-rate-star:not(:last-child) {
+  margin-right: 2px;
+}
+
+@media (max-width: 767px) {
+  .responsive-table-container {
+    overflow-x: auto; 
+  }
+}

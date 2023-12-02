@@ -5,9 +5,6 @@ const createFeedbackZodSchema = z.object({
     feedback_for: z.string({
       required_error: 'feedback_for is required',
     }),
-    user_id: z.string({
-      required_error: 'user_id is required',
-    }),
     trip_id: z.string({
       required_error: 'trip_id is required',
     }),
