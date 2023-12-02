@@ -2,11 +2,11 @@
 import SecondaryBanner from "@/components/Shared/SecondaryBanner";
 import MyTourAndTripsTable from "@/containers/UserDashboard/myTourAndTripsTable";
 import ReviewTable from "@/containers/UserDashboard/reviewTable";
-import UpcomingBookingTable from "@/containers/UserDashboard/upcomingBookingTable";
 import { Segmented } from "antd";
 import withAuth from "@/utils/withAuth";
 import dynamic from "next/dynamic";
 import { useState } from "react";
+import IncompleteTourAndBooking from "@/containers/UserDashboard/IncompleteTourAndBooking";
 
 const UserDashboardLayout = () => {
   const segmentOptions = [
@@ -37,7 +37,7 @@ const UserDashboardLayout = () => {
               />
               {selectedOption === "My tour history" && <MyTourAndTripsTable />}
               {selectedOption === "Incomplete tour & booking" && (
-                <UpcomingBookingTable />
+                <IncompleteTourAndBooking />
               )}
               {selectedOption === "Reviews" && (
                 <ReviewTable />

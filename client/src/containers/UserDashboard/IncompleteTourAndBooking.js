@@ -1,10 +1,9 @@
 import { Table } from "antd";
-import React from "react";
-import { useGetAllCompletedAndUpcomingTripForUserQuery } from "@/redux/trip/tripApi";
-import jwt from "jsonwebtoken";
 import dayjs from "dayjs";
+import jwt from "jsonwebtoken";
+import { useGetAllCompletedAndUpcomingTripForUserQuery } from "@/redux/trip/tripApi";
 
-const UpcomingBookingTable = () => {
+const IncompleteTourAndBooking = () => {
   const accessToken =
     typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
   const decodedToken = jwt.decode(accessToken);
@@ -106,50 +105,18 @@ const UpcomingBookingTable = () => {
     },
   ];
 
-  function createData(
-    sr,
-    from,
-    to,
-    departure_time,
-    arrival_time,
-    bus_code,
-    distance,
-    fare,
-    seats,
-    payment_status
-  ) {
-    return {
-      sr,
-      from,
-      to,
-      departure_time,
-      arrival_time,
-      bus_code,
-      distance,
-      fare,
-      seats,
-      payment_status,
-    };
-  }
-
-  const rows =
-    UpcomingTrip?.data &&
-    UpcomingTrip?.data?.map((d, i) =>
-      createData(
-        i + 1,
-        d?.from,
-        d?.to,
-        d?.departure_time,
-        d?.arrival_time,
-        d?.bus_code,
-        d?.distance,
-        d?.fare,
-        d?.seats,
-        d?.payment_status
-      )
-    );
-
-  return <Table className="mt-5" columns={columns} dataSource={rows} />;
+  return (
+    <div className="App">
+      <header className="App-header">
+        <Table
+          columns={columns}
+          dataSource={UpcomingTrip?.data}
+          pagination={{
+            pageSize: 5,
+          }}
+        ></Table>
+      </header>
+    </div>
+  );
 };
-
-export default UpcomingBookingTable;
+export default IncompleteTourAndBooking;
