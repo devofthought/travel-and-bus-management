@@ -490,7 +490,7 @@ const getTripByUser = async (info: ITripUserSearch) => {
   const { from, to, departure_time } = info
   // Aggregate pipeline
   const getRoute = await Route.findOne({
-    $and: [{ from: from.toLocaleLowerCase() }, { to: to.toLocaleLowerCase() }],
+    $and: [{ from: from.trim().toLocaleLowerCase() }, { to: to.trim().toLocaleLowerCase() }],
   })
 
   if (!getRoute) {

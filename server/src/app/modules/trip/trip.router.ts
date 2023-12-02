@@ -22,7 +22,11 @@ router.patch(
 
 router.get('/:id', TripController.getSingleTrip)
 
-router.post('/get-trips-by-users', TripController.getTripsByUsersController)
+router.post(
+  '/get-trips-by-users',
+  validateRequest(TripValidation.getTripsByUsers),
+  TripController.getTripsByUsersController
+)
 router.post(
   '/get-bus-seat-status-on-trip',
   TripController.getBusSeatStatusOnTripController
