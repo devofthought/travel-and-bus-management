@@ -15,6 +15,7 @@ import { feedbackSearchableFields, feedbackStatus } from './feedback.constants'
 import { User } from '../user/user.model'
 import { Trip } from '../trip/trip.model'
 import { Booking } from '../booking/booking.model'
+import { ENUM_USER_ROLE } from '../../../enums/user'
 
 const createFeedback = async (
   payload: IFeedback
@@ -75,6 +76,7 @@ const createFeedback = async (
 }
 
 const getAllFeedback = async (
+  payload: any,
   filters: IFeedbackFilter,
   paginationOptions: IPaginationOptions
 ): Promise<IGenericResponse<IFeedback[]>> => {
@@ -110,31 +112,77 @@ const getAllFeedback = async (
   const whereCondition =
     andConditions?.length > 0 ? { $and: andConditions } : {}
 
-  const result = await Feedback.find(whereCondition)
-    .sort(sortCondition)
-    .skip(skip)
-    .limit(limit)
-    .populate({
-      path: 'trip_id',
-      populate: [
-        { path: 'driver_id', select: 'driver_code name email age' },
-        { path: 'route_id', select: 'from to distance' },
-      ],
-    })
-    .populate({
-      path: 'user_id',
-      select: 'email traveler_id',
-    })
+  if (payload.role === ENUM_USER_ROLE.ADMIN) {
+    const result = await Feedback.find(whereCondition)
+      .sort(sortCondition)
+      .skip(skip)
+      .limit(limit)
+      .populate({
+        path: 'trip_id',
+        populate: [
+          { path: 'driver_id', select: 'driver_code name email age' },
+          { path: 'route_id', select: 'from to distance' },
+        ],
+      })
+      .populate({
+        path: 'user_id',
+        select: 'email traveler_id',
+      })
 
-  const total = await Feedback.countDocuments(whereCondition)
+    const total = await Feedback.countDocuments(whereCondition)
 
-  return {
-    meta: {
-      page,
-      limit,
-      total,
-    },
-    data: result,
+    return {
+      meta: {
+        page,
+        limit,
+        total,
+      },
+      data: result,
+    }
+  } else if (payload.role === ENUM_USER_ROLE.USER) {
+    const result = await Feedback.find({ user_id: payload.id })
+      .sort(sortCondition)
+      .skip(skip)
+      .limit(limit)
+      .select('-status')
+      .populate({
+        path: 'trip_id',
+        populate: [
+          { path: 'driver_id', select: 'driver_code name age' },
+          { path: 'route_id', select: 'from to distance' },
+        ],
+      })
+      .populate({
+        path: 'user_id',
+        select: 'email traveler_id',
+      })
+    const total = await Feedback.countDocuments({ user_id: payload.id })
+
+    return {
+      meta: {
+        page,
+        limit,
+        total,
+      },
+      data: result,
+    }
+  } else {
+    const result = await Feedback.find({})
+      .sort(sortCondition)
+      .skip(skip)
+      .limit(limit)
+      .select('-status')
+
+    const total = await Feedback.countDocuments({})
+
+    return {
+      meta: {
+        page,
+        limit,
+        total,
+      },
+      data: result,
+    }
   }
 }
 
@@ -156,7 +204,7 @@ const getSingleUserFeedbacks = async (
     .populate({
       path: 'trip_id',
       populate: [
-        { path: 'driver_id', select: 'driver_code name email age' },
+        { path: 'driver_id', select: 'driver_code name age' },
         { path: 'route_id', select: 'from to distance' },
       ],
     })
@@ -241,7 +289,7 @@ const updateAdminApprovedFeedback = async (
 
   if (!feedbackStatus.includes(payload.status || 'none')) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Try to put wrong status!')
-  } 
+  }
 
   const result = await Feedback.findOneAndUpdate(
     { _id: payload.feedback_id },
