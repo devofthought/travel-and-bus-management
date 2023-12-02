@@ -156,13 +156,16 @@ const MyTourHistoryTable = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <Table
-          columns={columns}
-          dataSource={tourHistoryData?.data}
-          pagination={{
-            pageSize: 5,
-          }}
-        ></Table>
+        <div className="responsive-table-container">
+          <Table
+            columns={columns}
+            dataSource={tourHistoryData?.data}
+            pagination={{
+              pageSize: 5,
+            }}
+            scroll={{ x: true }}
+          ></Table>
+        </div>
         <Modal
           open={open}
           title="Send A Feedback"

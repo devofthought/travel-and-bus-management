@@ -108,3 +108,9 @@ a {
 .custom-rate-feedback .ant-rate-star:not(:last-child) {
   margin-right: 2px;
 }
+
+@media (max-width: 767px) {
+  .responsive-table-container {
+    overflow-x: auto; 
+  }
+}

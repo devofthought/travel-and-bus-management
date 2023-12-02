@@ -108,13 +108,16 @@ const IncompleteTourAndBooking = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <Table
-          columns={columns}
-          dataSource={UpcomingTrip?.data}
-          pagination={{
-            pageSize: 5,
-          }}
-        ></Table>
+        <div className="responsive-table-container">
+          <Table
+            columns={columns}
+            dataSource={UpcomingTrip?.data}
+            pagination={{
+              pageSize: 5,
+            }}
+            scroll={{ x: true }}
+          ></Table>
+        </div>
       </header>
     </div>
   );
