@@ -16,6 +16,7 @@ import { getSingleTrip } from "@/data/tripSearchResult";
 import BookingSeatsType from "@/components/Shared/BookingSeatsType";
 import { IoSearchOutline } from "react-icons/io5";
 import Loader from "@/components/UI/Loader";
+import TripBanner from "@/components/Shared/TripBanner";
 
 const Trip = () => {
   const router = useRouter();
@@ -96,7 +97,7 @@ const Trip = () => {
   return (
     <div className=" bg-gray-100">
       <Navbar />
-      <Banner />
+      <TripBanner />
       {availableTripIsLoading ? (
         <Loader />
       ) : availableTrip?.data?.length > 0 ? (

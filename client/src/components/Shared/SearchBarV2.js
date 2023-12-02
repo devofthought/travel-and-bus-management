@@ -72,7 +72,7 @@ const SearchBar = () => {
           style={{ borderRadius: "36px" }}
         >
           <div className="relative w-full h-full p-5 lg:p-0">
-            <div className="relative w-full h-full flex items-center ps-8 ">
+            <div className="relative w-full h-full flex items-center lg:ps-8 ">
               <BsBusFront className="text-2xl text-gray-500 mr-2" />
               <Select
                 showSearch
@@ -96,7 +96,7 @@ const SearchBar = () => {
               <MdSwapHoriz className="text-2xl" />
             </div>
           </div>
-          <div className="relative w-full h-full flex items-center ps-8 ">
+          <div className="relative w-full h-full flex items-center lg:ps-8 ">
             <TbBusStop className="text-2xl text-gray-500 mr-2" />
             <Select
               showSearch
