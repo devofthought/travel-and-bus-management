@@ -2,11 +2,13 @@ import { Button, Modal } from "antd";
 import { Rate } from "antd";
 import { Radio } from "antd";
 import { Table } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import { useGetAllCompletedAndUpcomingTripForUserQuery } from "@/redux/trip/tripApi";
 import dayjs from "dayjs";
+import { useAddFeedBackMutation } from "@/redux/feedback/feedbackApi";
+import Swal from "sweetalert2";
 
 const MyTourHistoryTable = () => {
   const {
@@ -17,9 +19,16 @@ const MyTourHistoryTable = () => {
     trip_status: "completed",
   });
 
+  const [
+    AddFeedback,
+    { data: addResponse, error: addError, isLoading: addIsLoading },
+  ] = useAddFeedBackMutation();
+
   // * * * * * * * * for modal * * * * * * * *
   const [open, setOpen] = useState(false);
-  const showModal = () => {
+  const [tripID, setTripID] = useState("");
+  const showModal = ({ id }) => {
+    setTripID(id);
     setOpen(true);
   };
   const handleCancel = () => {
@@ -44,11 +53,37 @@ const MyTourHistoryTable = () => {
   // TODO: Handle feedback on submit
   const handleSubmit = () => {
     console.log("Feedback Type:", feedbackType);
-    console.log("Rating:", rating);
-    console.log("Feedback Text:", feedbackText);
 
-    handleCancel();
+    const feedbackReq = {
+      feedback_for: feedbackType,
+      trip_id: tripID,
+      feedback: feedbackText,
+      rating: parseInt(rating),
+    };
+
+    AddFeedback(feedbackReq);
   };
+
+  useEffect(() => {
+    if (addResponse?.statusCode === 200 || addResponse?.statusCode === 202) {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: `${addResponse?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      handleCancel();
+    } else if (addError?.status === 404 || addError?.status === 406) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: `${addError?.data?.message}`,
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    }
+  }, [addResponse, addError]);
 
   const columns = [
     {
@@ -131,13 +166,16 @@ const MyTourHistoryTable = () => {
     {
       title: "Feedback",
       dataIndex: "feedback",
-      render: (feedback) => {
+      render: (feedback, id) => {
         return (
           <span>
             {feedback === "done" ? (
               "✅"
             ) : (
-              <span onClick={showModal} className="cursor-pointer underline">
+              <span
+                onClick={() => showModal(id)}
+                className="cursor-pointer underline"
+              >
                 <EditOutlined />
               </span>
             )}

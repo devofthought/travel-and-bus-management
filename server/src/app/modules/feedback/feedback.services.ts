@@ -18,9 +18,10 @@ import { Booking } from '../booking/booking.model'
 import { ENUM_USER_ROLE } from '../../../enums/user'
 
 const createFeedback = async (
-  payload: IFeedback
+  payload: IFeedback,
+  userAuth: any
 ): Promise<IFeedback | null> => {
-  const user = await User.findById(payload.user_id)
+  const user = await User.findById(userAuth.id)
   if (!user) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'traveler is not found')
   }
@@ -49,7 +50,7 @@ const createFeedback = async (
 
   /* check feedback category match or not */
   const feedback = await Feedback.find({
-    $and: [{ user_id: payload.user_id }, { trip_id: payload.trip_id }],
+    $and: [{ user_id: user._id }, { trip_id: payload.trip_id }],
   }).select('feedback_for')
 
   const isMatch = feedback.some(
@@ -66,8 +67,13 @@ const createFeedback = async (
   if ('status' in payload) {
     delete payload.status
   }
+  const createFeedback = {
+    ...payload,
+    feedback: payload.feedback.trim(),
+    user_id: user._id,
+  }
 
-  const newFeedback = await Feedback.create(payload)
+  const newFeedback = await Feedback.create(createFeedback)
 
   if (!newFeedback) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create Feedback')

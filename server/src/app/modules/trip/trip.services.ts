@@ -471,6 +471,7 @@ const getUpComingTrip = async (payload: any, userAuth: any) => {
           })
 
           return {
+            id:trip._id,
             from: trip.route_id.from,
             to: trip.route_id.to,
             distance: trip.route_id.distance,
