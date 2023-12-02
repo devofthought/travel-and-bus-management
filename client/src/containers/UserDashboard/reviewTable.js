@@ -80,10 +80,17 @@ const ReviewTable = () => {
       title: "Stars",
       dataIndex: "rating",
       render: (rating) => {
-        return <div className="flex items-center">
-        <span>({rating})</span>
-        <Rate className="custom-rate-feedback flex ms-1" style={{ fontSize: 14 }} value={rating} disabled />
-        </div>
+        return (
+          <div className="flex items-center">
+            <span>({rating})</span>
+            <Rate
+              className="custom-rate-feedback flex ms-1"
+              style={{ fontSize: 14 }}
+              value={rating}
+              disabled
+            />
+          </div>
+        );
       },
     },
   ];
@@ -100,13 +107,16 @@ const ReviewTable = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <Table
-          columns={columns}
-          dataSource={feedBackData?.data}
-          pagination={{
-            pageSize: 5,
-          }}
-        ></Table>
+        <div className="responsive-table-container">
+          <Table
+            columns={columns}
+            dataSource={feedBackData?.data}
+            pagination={{
+              pageSize: 5,
+            }}
+            scroll={{ x: true }}
+          ></Table>
+        </div>
         <Modal
           title="Feedback Details"
           open={feedbackDetailsModelOpen}

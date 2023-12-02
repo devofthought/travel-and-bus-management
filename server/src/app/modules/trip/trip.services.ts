@@ -441,8 +441,8 @@ const getSingleTrip = async (id: string): Promise<ITrip | null> => {
 //   return pendingTrip
 // }
 
-const getUpComingTrip = async (payload: any) => {
-  const user = await User.findById(payload.user_id)
+const getUpComingTrip = async (payload: any, userAuth: any) => {
+  const user = await User.findById(userAuth.id)
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'user not found!')
   }
@@ -471,6 +471,7 @@ const getUpComingTrip = async (payload: any) => {
           })
 
           return {
+            id:trip._id,
             from: trip.route_id.from,
             to: trip.route_id.to,
             distance: trip.route_id.distance,
@@ -481,7 +482,7 @@ const getUpComingTrip = async (payload: any) => {
             trip_status: payload.trip_status,
             payment_status: booksTrip.status,
             seats: seatCount,
-            feedback:'pending'
+            feedback: 'pending',
           }
         }
       }

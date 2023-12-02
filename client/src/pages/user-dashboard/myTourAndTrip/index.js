@@ -1,4 +1,4 @@
-import MyTourAndTripsTable from "@/containers/UserDashboard/myTourAndTripsTable";
+import MyTourAndTripsTable from "@/containers/UserDashboard/myTourHistoryTable";
 import { myTourAndTripData } from "@/data/userDashboard/userDashboardData";
 import RootLayout from "@/layouts/RootLayout";
 import UserDashboardLayout from "@/layouts/UserDashboardLayout";

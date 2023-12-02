@@ -10,6 +10,7 @@ router.get('/', auth(ENUM_USER_ROLE.USER,ENUM_USER_ROLE.ADMIN), FeedbackControll
 router.get('/approved-feedbacks', FeedbackController.getApprovedFeedbacks) // Publish
 router.post(
   '/',
+  auth(ENUM_USER_ROLE.USER),
   validateRequest(FeedbackValidation.createFeedbackZodSchema),
   FeedbackController.createFeedback
 )

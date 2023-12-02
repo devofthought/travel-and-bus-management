@@ -9,7 +9,8 @@ import { FeedbackService } from './feedback.services'
 import { IFeedback } from './feedback.interface'
 
 const createFeedback: RequestHandler = catchAsync(async (req, res) => {
-  const result = await FeedbackService.createFeedback(req.body)
+  const userAuth = req.user
+  const result = await FeedbackService.createFeedback(req.body, userAuth)
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -21,7 +22,7 @@ const createFeedback: RequestHandler = catchAsync(async (req, res) => {
 const getAllFeedback: RequestHandler = catchAsync(async (req, res) => {
   const filters = pick(req.query, feedbackFilterableFields)
   const paginationOptions = pick(req.query, paginationFields)
-  const user = req.user;
+  const user = req.user
   const result = await FeedbackService.getAllFeedback(
     user,
     filters,
@@ -77,17 +78,21 @@ const updateFeedback: RequestHandler = catchAsync(async (req, res) => {
   })
 })
 
-const updateAdminApprovedFeedback: RequestHandler = catchAsync(async (req, res) => {
-  const updatedData = req.body
-  const result = await FeedbackService.updateAdminApprovedFeedback(updatedData)
+const updateAdminApprovedFeedback: RequestHandler = catchAsync(
+  async (req, res) => {
+    const updatedData = req.body
+    const result = await FeedbackService.updateAdminApprovedFeedback(
+      updatedData
+    )
 
-  sendResponse<IFeedback>(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: 'Feedback updated successfully!',
-    data: result,
-  })
-})
+    sendResponse<IFeedback>(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Feedback updated successfully!',
+      data: result,
+    })
+  }
+)
 
 const deleteFeedback: RequestHandler = catchAsync(async (req, res) => {
   const result = await FeedbackService.deleteFeedback(req.params.id)
@@ -107,5 +112,5 @@ export const FeedbackController = {
   updateFeedback,
   deleteFeedback,
   getApprovedFeedbacks,
-  updateAdminApprovedFeedback
+  updateAdminApprovedFeedback,
 }

@@ -1,12 +1,12 @@
 "use client";
 import SecondaryBanner from "@/components/Shared/SecondaryBanner";
-import MyTourAndTripsTable from "@/containers/UserDashboard/myTourAndTripsTable";
 import ReviewTable from "@/containers/UserDashboard/reviewTable";
-import UpcomingBookingTable from "@/containers/UserDashboard/upcomingBookingTable";
 import { Segmented } from "antd";
 import withAuth from "@/utils/withAuth";
 import dynamic from "next/dynamic";
 import { useState } from "react";
+import IncompleteTourAndBooking from "@/containers/UserDashboard/IncompleteTourAndBooking";
+import MyTourHistoryTable from "@/containers/UserDashboard/myTourHistoryTable";
 
 const UserDashboardLayout = () => {
   const segmentOptions = [
@@ -27,22 +27,23 @@ const UserDashboardLayout = () => {
 
         <div className="min-h-[500px]">
           {openDashboard && (
-            <div className="w-2/3 mx-auto mt-20">
+            <div className="w-4/5 md:w-2/3 mx-auto mt-20 ">
               <Segmented
                 size="large"
                 block
                 options={segmentOptions}
                 className="custom-segmented-button" // Add this line to apply the custom class
                 onChange={(value) => setSelectedOption(value)}
+                style={{ marginBottom: "10px" }}
               />
-              {selectedOption === "My tour history" && <MyTourAndTripsTable />}
-              {selectedOption === "Incomplete tour & booking" && (
-                <UpcomingBookingTable />
-              )}
-              {selectedOption === "Reviews" && (
-                <ReviewTable />
-              )}
-            </div>
+              {/* <div className="overflow-x-auto"> */}
+                {selectedOption === "My tour history" && <MyTourHistoryTable />}
+                {selectedOption === "Incomplete tour & booking" && (
+                  <IncompleteTourAndBooking />
+                )}
+                {selectedOption === "Reviews" && <ReviewTable />}
+              </div>
+            // </div>
           )}
         </div>
       </div>

@@ -2,10 +2,16 @@ import express from 'express'
 import validateRequest from '../../middlewares/validateRequest'
 import { TripController } from './trip.controller'
 import { TripValidation } from './trip.validation'
+import auth from '../../middlewares/auth'
+import { ENUM_USER_ROLE } from '../../../enums/user'
 const router = express.Router()
 
 router.get('/', TripController.getAllTrip) //done testing
-router.get('/up-coming', TripController.getUpComingTrip) //done testing // for user dashboard // upcoming-trip and complete trip
+router.get(
+  '/up-coming',
+  auth(ENUM_USER_ROLE.USER),
+  TripController.getUpComingTrip
+) //done testing // for user dashboard // upcoming-trip and complete trip
 
 router.post(
   '/',

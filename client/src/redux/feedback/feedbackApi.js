@@ -6,7 +6,15 @@ const feedBackApi = apiSlice.injectEndpoints({
       query: () => `/feedback`,
       providesTags: ["feedback"],
     }),
+    addFeedBack: builder.mutation({
+      query: (body) => ({
+        url: "/feedback",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["feedback"],
+    }),
   }),
 });
 
-export const { useGetFeedBackQuery } = feedBackApi;
+export const { useGetFeedBackQuery, useAddFeedBackMutation } = feedBackApi;

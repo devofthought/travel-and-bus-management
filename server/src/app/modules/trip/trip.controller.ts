@@ -25,7 +25,8 @@ const getUpComingTrip = catchAsync(async (req: Request, res: Response) => {
   // const filters = pick(req.query, upComingTripFilterableFields)
   // const paginationOptions = pick(req.query, paginationFields)
   const payload = req.query
-  const result = await TripService.getUpComingTrip(payload)
+  const userAuth = req.user
+  const result = await TripService.getUpComingTrip(payload, userAuth)
 
   sendResponse<ITripResponse[]>(res, {
     statusCode: httpStatus.OK,
@@ -89,31 +90,33 @@ const getAllUpdateAbleTrip = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
+const getTripsByUsersController = catchAsync(
+  async (req: Request, res: Response) => {
+    const result = await TripService.getTripByUser(req.body)
 
-const getTripsByUsersController = catchAsync(async (req: Request, res: Response) => {
-  const result = await TripService.getTripByUser(req.body);
+    sendResponse<ITripResponse[]>(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'All route wise Trip retrieved successfully!',
+      // meta: result?.meta,
+      data: result.data,
+    })
+  }
+)
 
-  sendResponse<ITripResponse[]>(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: 'All route wise Trip retrieved successfully!',
-    // meta: result?.meta,
-    data: result.data,
-  })
-})
+const getBusSeatStatusOnTripController = catchAsync(
+  async (req: Request, res: Response) => {
+    const result = await TripService.getBusSeatStatusOnTrip(req.body)
 
-const getBusSeatStatusOnTripController = catchAsync(async (req: Request, res: Response) => {
-  const result = await TripService.getBusSeatStatusOnTrip(req.body);
-
-  sendResponse<any>(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: 'All Seat status retrieved successfully!',
-    // meta: result?.meta,
-    data: result,
-  })
-})
-
+    sendResponse<any>(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'All Seat status retrieved successfully!',
+      // meta: result?.meta,
+      data: result,
+    })
+  }
+)
 
 export const TripController = {
   createTrip,
@@ -123,5 +126,5 @@ export const TripController = {
   getUpComingTrip,
   getAllUpdateAbleTrip,
   getTripsByUsersController,
-  getBusSeatStatusOnTripController
+  getBusSeatStatusOnTripController,
 }
