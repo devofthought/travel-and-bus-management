@@ -6,21 +6,15 @@ import { useState } from "react";
 import { Input } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import { useGetAllCompletedAndUpcomingTripForUserQuery } from "@/redux/trip/tripApi";
-import jwt from "jsonwebtoken";
 import dayjs from "dayjs";
 
 const MyTourHistoryTable = () => {
-  const accessToken =
-    typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
-  const decodedToken = jwt.decode(accessToken);
-
   const {
     data: tourHistoryData,
     error,
     isLoading,
   } = useGetAllCompletedAndUpcomingTripForUserQuery({
     trip_status: "completed",
-    user_id: decodedToken.id,
   });
 
   // * * * * * * * * for modal * * * * * * * *
@@ -170,6 +164,7 @@ const MyTourHistoryTable = () => {
           open={open}
           title="Send A Feedback"
           onCancel={handleCancel}
+          centered
           footer={[
             <Button
               className="w-full primary-bg"

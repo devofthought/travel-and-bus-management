@@ -55,8 +55,8 @@ const tripApi = apiSlice.injectEndpoints({
       invalidatesTags: ["trip"],
     }),
     getAllCompletedAndUpcomingTripForUser: builder.query({
-      query: ({ user_id, trip_status }) =>
-        `/trips/up-coming?user_id=${user_id}&trip_status=${trip_status}`,
+      query: ({ trip_status }) =>
+        `/trips/up-coming?trip_status=${trip_status}`,
       providesTags: ["trip"],
     }),
   }),

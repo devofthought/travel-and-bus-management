@@ -1,20 +1,14 @@
 import { Table } from "antd";
 import dayjs from "dayjs";
-import jwt from "jsonwebtoken";
 import { useGetAllCompletedAndUpcomingTripForUserQuery } from "@/redux/trip/tripApi";
 
 const IncompleteTourAndBooking = () => {
-  const accessToken =
-    typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
-  const decodedToken = jwt.decode(accessToken);
-
   const {
     data: UpcomingTrip,
     error,
     isLoading,
   } = useGetAllCompletedAndUpcomingTripForUserQuery({
     trip_status: "pending",
-    user_id: decodedToken.id,
   });
 
   const columns = [
