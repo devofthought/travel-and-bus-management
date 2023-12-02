@@ -473,6 +473,7 @@ const getUpComingTrip = async (payload: any) => {
             arrival_time: trip.arrival_time,
             bus_code: trip.bus_code,
             fare: trip.ticket_price,
+            trip_status:payload.trip_status,
             payment_status: booksTrip.status,
             seat: seatCount,
           }
