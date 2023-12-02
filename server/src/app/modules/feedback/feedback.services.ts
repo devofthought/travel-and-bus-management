@@ -36,7 +36,7 @@ const createFeedback = async (
   /* check traveler is able to add feed or not */
   // const booking = await Booking.find({ trip_id: payload.trip_id })
   const booking = await Booking.find({
-    $and: [{ user_id: user.traveler_id }, { trip_id: payload.trip_id }], //  TODO: user_id will be traveler_id when booking model changed.
+    $and: [{ travel_id: user.traveler_id }, { trip_id: payload.trip_id }],
   })
 
   if (booking.length === 0) {

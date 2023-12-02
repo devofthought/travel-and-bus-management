@@ -1,7 +1,7 @@
 import { Document } from 'mongoose'
 
 export type BookingInterface = {
-  user_id: string
+  travel_id: string
   trip_id: string
   booking_seat: string
   status: 'pending' | 'approved' | 'completed' | 'cancelled'

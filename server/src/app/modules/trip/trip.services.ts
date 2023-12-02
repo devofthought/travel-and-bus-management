@@ -393,7 +393,7 @@ const getSingleTrip = async (id: string): Promise<ITrip | null> => {
  * */
 
 // const getUpComingTrip = async (payload: IUpComingTripPayload) => {
-//   const result = await Booking.find({ user_id: payload.travel_id })
+//   const result = await Booking.find({ travel_id: payload.travel_id })
 
 //   const uniqueBookings = Object.values(
 //     result.reduce((acc, booking) => {
@@ -419,7 +419,7 @@ const getSingleTrip = async (id: string): Promise<ITrip | null> => {
 
 //     if (trip && trip.trips_status === 'pending') {
 //       const seatCount = await Booking.find({
-//         $and: [{ user_id: payload.travel_id }, { trip_id: trip._id }],
+//         $and: [{ travel_id: payload.travel_id }, { trip_id: trip._id }],
 //       })
 
 //       pendingTrip.push({
@@ -441,10 +441,9 @@ const getSingleTrip = async (id: string): Promise<ITrip | null> => {
 // } 
 
 const getUpComingTrip = async (payload: any) => {
-  const bookings = await Booking.find({ user_id: payload.travel_id })
-  
+  const bookings = await Booking.find({ travel_id: payload.travel_id })
   if (bookings.length === 0) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'No trip found!')
+    throw new ApiError(httpStatus.NOT_FOUND, 'No booking found!')
   }
 
   const uniqueBookings = Array.from(
@@ -463,7 +462,7 @@ const getUpComingTrip = async (payload: any) => {
 
         if (trip && trip.trips_status === payload.trip_status) {
           const seatCount = await Booking.countDocuments({
-            $and: [{ user_id: payload.travel_id }, { trip_id: trip._id }],
+            $and: [{ travel_id: payload.travel_id }, { trip_id: trip._id }],
           })
 
           return {
