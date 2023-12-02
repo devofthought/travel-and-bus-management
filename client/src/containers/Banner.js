@@ -1,4 +1,4 @@
-import SearchBar from "@/components/Shared/SearchBar";
+import SearchBar from "@/components/Shared/SearchBarV2";
 import React from "react";
 // import bannerImage from "../assets/HomeBannerImg.png"
 
