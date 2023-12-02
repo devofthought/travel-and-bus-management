@@ -23,10 +23,7 @@ const userApi = apiSlice.injectEndpoints({
       }),
     }),
     getMyProfile: builder.query({
-      query: ({ headers }) => ({
-        url: `/users/my-profile`,
-        headers: headers,
-      }),
+      query: () => `/users/my-profile`,
     }),
   }),
 });

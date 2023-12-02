@@ -3,6 +3,8 @@ import { Menu } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+// import jwt from "jsonwebtoken";
+// import { getFromLocalStorage } from "@/utils/localStorage";
 
 function renderMenuItems(items) {
   return items.map((item) => {
@@ -24,6 +26,9 @@ function renderMenuItems(items) {
   });
 }
 
+// const token = localStorage.getItem("accessToken");
+// const decoded = jwt.verify(token, "access_token_secret_bus_management_service");
+
 function SideBar() {
   const router = useRouter();
   const [selectedKeys, setSelectedKeys] = useState("/");
@@ -33,7 +38,9 @@ function SideBar() {
     setSelectedKeys([pathName]);
   }, [router.pathname]);
 
-  const filterMenus = Menus.filter((rt) => rt?.permission?.includes("admin"));
+  const filterMenus = Menus.filter((rt) =>
+    rt?.permission?.includes('admin')
+  );
 
   return (
     <Menu

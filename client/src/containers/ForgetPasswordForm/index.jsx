@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 import Link from "next/link";
 
-const LoginForm = () => {
+const ForgetPasswordForm = () => {
   const [
     login,
     {
@@ -74,7 +74,6 @@ const LoginForm = () => {
   }, [loginError]);
   return (
     <>
-      {contextHolder}
       <Form
         form={form}
         className=""
@@ -86,53 +85,40 @@ const LoginForm = () => {
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
-        <label className="font-medium">Email Address</label>
-        <Form.Item
-          className="w-full h-8 mb-4"
-          name="email"
-          rules={[
-            {
-              type: "email",
-              message: "Your email address",
-            },
-            {
-              required: true,
-              message: "The input is not valid E-mail!",
-            },
-          ]}
-        >
-          <Input className="h-8 mt-1" />
-        </Form.Item>
-
-        <div className="pt-2">
-          <label className="font-medium">Password</label>
+        <div>
+          <label className="font-medium">Email Address</label>
           <Form.Item
-            name="password"
+            className="w-full h-8 mb-4"
+            name="email"
             rules={[
               {
+                type: "email",
+                message: "Your email address",
+              },
+              {
                 required: true,
-                message: "Please input your password!",
+                message: "The input is not valid E-mail!",
               },
             ]}
           >
-            <Input.Password className="h-8 mt-1" />
+            <Input className="h-8 mt-1" />
           </Form.Item>
         </div>
         {/* <p className="text-right text-sm text-black cursor-pointer -mt-5 w-full mb-5 hover:underline">
           Forget your password
         </p> */}
-        <div className="w-full  text-right -mt-4 mb-3">
-          <Link href="/forget-password" className="hover:underline text-black">
-            Forget your password
+        <div className="w-full  text-right mt-3 mb-3">
+          <Link href="/login" className="hover:underline text-black">
+            already have account
           </Link>
         </div>
 
         <Form.Item>
-          <Button btnName="Log in" styles="w-full py-2"></Button>
+          <Button btnName="Reset password" styles="w-full py-2"></Button>
         </Form.Item>
       </Form>
     </>
   );
 };
 
-export default LoginForm;
+export default ForgetPasswordForm;

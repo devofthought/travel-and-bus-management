@@ -18,7 +18,7 @@ const withAuth = (WrappedComponent, allowedRoles = []) => {
       router.replace("/login");
       return null;
     }
-    console.log("Token:", token);
+    // console.log("Token:", token);
 
     try {
       // Verify the token
