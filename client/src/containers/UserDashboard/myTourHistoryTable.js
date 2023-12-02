@@ -9,7 +9,7 @@ import { useGetAllCompletedAndUpcomingTripForUserQuery } from "@/redux/trip/trip
 import jwt from "jsonwebtoken";
 import dayjs from "dayjs";
 
-const MyTourAndTripsTable = () => {
+const MyTourHistoryTable = () => {
   const accessToken =
     typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
   const decodedToken = jwt.decode(accessToken);
@@ -23,18 +23,14 @@ const MyTourAndTripsTable = () => {
     user_id: decodedToken.id,
   });
 
-  // console.log(tourHistoryData);
   // * * * * * * * * for modal * * * * * * * *
   const [open, setOpen] = useState(false);
-
   const showModal = () => {
     setOpen(true);
   };
-
   const handleCancel = () => {
     setOpen(false);
   };
-
   const [feedbackType, setFeedbackType] = useState("trip");
   const [rating, setRating] = useState(5);
   const [feedbackText, setFeedbackText] = useState("");
@@ -60,7 +56,6 @@ const MyTourAndTripsTable = () => {
     handleCancel();
   };
 
-  // * * * * * * * * for table * * * * * * * *
   const columns = [
     {
       title: "Sr.",
@@ -142,102 +137,72 @@ const MyTourAndTripsTable = () => {
     {
       title: "Feedback",
       dataIndex: "feedback",
+      render: (feedback) => {
+        return (
+          <span>
+            {feedback === "done" ? (
+              "✅"
+            ) : (
+              <span onClick={showModal} className="cursor-pointer underline">
+                <EditOutlined />
+              </span>
+            )}
+          </span>
+        );
+      },
     },
   ];
 
-  function createData(
-    sr,
-    from,
-    to,
-    distance,
-    departure_time,
-    arrival_time,
-    fare,
-    seats,
-    trip_status,
-    feedback
-  ) {
-    return {
-      sr,
-      from,
-      to,
-      distance,
-      departure_time,
-      arrival_time,
-      fare,
-      seats,
-      trip_status,
-      feedback,
-    };
-  }
-
-  const rows =
-    tourHistoryData?.data &&
-    tourHistoryData?.data?.map((d, i) =>
-      createData(
-        i + 1,
-        d?.from,
-        d?.to,
-        d?.distance,
-        d?.departure_time,
-        d?.arrival_time,
-        d?.fare,
-        d?.seats,
-        d?.trip_status,
-        d?.feedback === "done" ? (
-          "✅"
-        ) : (
-          <span className="cursor-pointer" onClick={showModal}>
-            <EditOutlined />
-          </span>
-        )
-      )
-    );
-
   return (
-    <>
-      <Table className="mt-5" columns={columns} dataSource={rows} />
-
-      {/* // TODO: feedback form handle modal and form */}
-      <Modal
-        open={open}
-        title="Send A Feedback"
-        onCancel={handleCancel}
-        footer={[
-          <Button
-            className="w-full primary-bg"
-            type="primary"
-            onClick={handleSubmit}
-          >
-            Submit
-          </Button>,
-        ]}
-      >
-        <div className="flex justify-center">
-          <Radio.Group
-            value={feedbackType}
-            onChange={handleFeedbackTypeChange}
-            size="middle"
-            buttonStyle="solid"
-          >
-            <Radio.Button value="trip">Trip</Radio.Button>
-            <Radio.Button value="bus">Bus</Radio.Button>
-            <Radio.Button value="driver">Driver</Radio.Button>
-          </Radio.Group>
-        </div>
-        <div className="mt-10 flex justify-center">
-          <Rate value={rating} onChange={handleRatingChange} />
-        </div>
-        <Input.TextArea
-          className="mt-5"
-          rows={4}
-          value={feedbackText}
-          onChange={handleFeedbackTextChange}
-          placeholder="Tell us about your experience"
-        />
-      </Modal>
-    </>
+    <div className="App">
+      <header className="App-header">
+        <Table
+          columns={columns}
+          dataSource={tourHistoryData?.data}
+          pagination={{
+            pageSize: 5,
+          }}
+        ></Table>
+        <Modal
+          open={open}
+          title="Send A Feedback"
+          onCancel={handleCancel}
+          footer={[
+            <Button
+              className="w-full primary-bg"
+              type="primary"
+              onClick={handleSubmit}
+            >
+              Submit
+            </Button>,
+          ]}
+        >
+          <div className="flex justify-center">
+            <Radio.Group
+              value={feedbackType}
+              onChange={handleFeedbackTypeChange}
+              size="middle"
+              buttonStyle="solid"
+            >
+              <Radio.Button value="trip">Trip</Radio.Button>
+              <Radio.Button value="bus">Bus</Radio.Button>
+              <Radio.Button value="driver">Driver</Radio.Button>
+            </Radio.Group>
+          </div>
+          <div className="mt-10 flex justify-center">
+            <Rate value={rating} onChange={handleRatingChange} />
+          </div>
+          <Input.TextArea
+            className="mt-5"
+            rows={4}
+            value={feedbackText}
+            onChange={handleFeedbackTextChange}
+            placeholder="Tell us about your experience"
+          />
+        </Modal>
+      </header>
+    </div>
   );
 };
 
-export default MyTourAndTripsTable;
+export default MyTourHistoryTable;
