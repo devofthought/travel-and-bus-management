@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { DatePicker, Input } from "antd";
+import { DatePicker } from "antd";
 import moment from "moment";
 import { useRouter } from "next/router";
 import { MdOutlineLocationOn, MdSwapHoriz } from "react-icons/md";
@@ -119,7 +119,8 @@ const SearchBar = () => {
               input
               name="date"
               placeholder="Date"
-              className="py-3 w-full h-full border-0 sm:pl-0 lg:pl-8 sm:pr-10 lg:pr-20 text-gray-900 placeholder:text-gray-400  font-semibold sm:leading-6 rounded-none cursor-pointer "
+              size="large"
+              className="py-3 w-full h-full border-0 sm:pl-0 lg:pl-8 sm:pr-10 lg:pr-20 text-gray-900 placeholder:text-gray-400  font-semibold sm:leading-6 rounded-none cursor-pointer"
               disabledDate={disabledDate}
               suffixIcon={
                 <BsCalendarDate className="text-2xl text-gray-500 " />

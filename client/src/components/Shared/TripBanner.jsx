@@ -17,11 +17,6 @@ const TripBanner = ({ handleSearchTrip }) => {
           }}
         >
           <div className="sm:mb-32">
-            {/* <div className=" text-gray-900 text-center  ">
-              <h1 className="text-xl sm:text-2xl lg:text-4xl  mb-[100px] sm:mb-0">
-                Book with Ease, Travel with Speed
-              </h1>
-            </div> */}
             <div className="flex justify-center mt-10">
               <div className="z-20 flex justify-center -mt-20 sm:-mt-2">
                 <SearchBar handleSearchTrip={handleSearchTrip} />
