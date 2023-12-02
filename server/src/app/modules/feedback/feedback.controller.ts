@@ -21,7 +21,9 @@ const createFeedback: RequestHandler = catchAsync(async (req, res) => {
 const getAllFeedback: RequestHandler = catchAsync(async (req, res) => {
   const filters = pick(req.query, feedbackFilterableFields)
   const paginationOptions = pick(req.query, paginationFields)
+  const user = req.user;
   const result = await FeedbackService.getAllFeedback(
+    user,
     filters,
     paginationOptions
   )

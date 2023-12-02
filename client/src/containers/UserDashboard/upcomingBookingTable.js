@@ -1,47 +1,108 @@
 import { Table } from "antd";
 import React from "react";
+import { useGetAllCompletedAndUpcomingTripForUserQuery } from "@/redux/trip/tripApi";
+import jwt from "jsonwebtoken";
+import dayjs from "dayjs";
 
-const UpcomingBookingTable = ({ data }) => {
+const UpcomingBookingTable = () => {
+  const accessToken =
+    typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
+  const decodedToken = jwt.decode(accessToken);
+
+  const {
+    data: UpcomingTrip,
+    error,
+    isLoading,
+  } = useGetAllCompletedAndUpcomingTripForUserQuery({
+    trip_status: "pending",
+    user_id: decodedToken.id,
+  });
+
   const columns = [
     {
       title: "Sr.",
       dataIndex: "sr",
+      minWidth: 200,
+      render: (_text, _record, index) => {
+        return `${index + 1}`;
+      },
     },
     {
       title: "From",
       dataIndex: "from",
+      minWidth: 200,
+      render: (from) => {
+        return <span className="capitalize">{from}</span>;
+      },
     },
     {
       title: "To",
       dataIndex: "to",
-    },
-    {
-      title: "Departure Time",
-      dataIndex: "departure_time",
-    },
-    {
-      title: "Arrival Time",
-      dataIndex: "arrival_time",
-    },
-    {
-      title: "Bus Code",
-      dataIndex: "bus_code",
+      minWidth: 200,
+      render: (from) => {
+        return <span className="capitalize">{from}</span>;
+      },
     },
     {
       title: "Distance",
       dataIndex: "distance",
+      minWidth: 200,
+      sorter: (a, b) => a.distance - b.distance,
+      render: (distance) => {
+        return <p className="lowercase">{distance} Km</p>;
+      },
+    },
+    {
+      title: "Dept. Time",
+      dataIndex: "departure_time",
+      minWidth: 200,
+      sorter: (a, b) => a.departure_time - b.departure_time,
+      render: (departure_time) => {
+        return (
+          <>
+            <p>{dayjs(departure_time).format("YYYY-MM-DD")}</p>
+            <p>{dayjs(departure_time).format("hh:mm A")}</p>
+          </>
+        );
+      },
+    },
+    {
+      title: "Arr. Time",
+      dataIndex: "arrival_time",
+      minWidth: 200,
+      sorter: (a, b) => a.arrival_time - b.arrival_time,
+      render: (arrival_time) => {
+        return (
+          <>
+            <p>{dayjs(arrival_time).format("YYYY-MM-DD")}</p>
+            <p>{dayjs(arrival_time).format("hh:mm A")}</p>
+          </>
+        );
+      },
     },
     {
       title: "Fare",
       dataIndex: "fare",
+      minWidth: 200,
+      render: (fare) => {
+        return <p>&#2547;{fare}</p>;
+      },
     },
     {
       title: "Seats",
       dataIndex: "seats",
     },
     {
+      title: "Bus Code",
+      dataIndex: "bus_code",
+    },
+    {
       title: "Payment Status",
       dataIndex: "payment_status",
+    },
+    {
+      title: "Pay Now",
+      dataIndex: "pay_now",
     },
   ];
 
@@ -72,20 +133,14 @@ const UpcomingBookingTable = ({ data }) => {
   }
 
   const rows =
-    data &&
-    data?.map((d, i) =>
+    UpcomingTrip?.data &&
+    UpcomingTrip?.data?.map((d, i) =>
       createData(
         i + 1,
         d?.from,
         d?.to,
-        new Date(d.departure_time).toLocaleTimeString("en-BD", {
-          hour: "2-digit",
-          minute: "2-digit",
-        }),
-        new Date(d.arrival_time).toLocaleTimeString("en-BD", {
-          hour: "2-digit",
-          minute: "2-digit",
-        }),
+        d?.departure_time,
+        d?.arrival_time,
         d?.bus_code,
         d?.distance,
         d?.fare,

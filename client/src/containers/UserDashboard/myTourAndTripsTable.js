@@ -2,11 +2,28 @@ import { Button, Modal } from "antd";
 import { Rate } from "antd";
 import { Radio } from "antd";
 import { Table } from "antd";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Input } from "antd";
 import { EditOutlined } from "@ant-design/icons";
+import { useGetAllCompletedAndUpcomingTripForUserQuery } from "@/redux/trip/tripApi";
+import jwt from "jsonwebtoken";
+import dayjs from "dayjs";
 
-const MyTourAndTripsTable = ({ data }) => {
+const MyTourAndTripsTable = () => {
+  const accessToken =
+    typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
+  const decodedToken = jwt.decode(accessToken);
+
+  const {
+    data: tourHistoryData,
+    error,
+    isLoading,
+  } = useGetAllCompletedAndUpcomingTripForUserQuery({
+    trip_status: "completed",
+    user_id: decodedToken.id,
+  });
+
+  // console.log(tourHistoryData);
   // * * * * * * * * for modal * * * * * * * *
   const [open, setOpen] = useState(false);
 
@@ -34,6 +51,7 @@ const MyTourAndTripsTable = ({ data }) => {
     setFeedbackText(e.target.value);
   };
 
+  // TODO: Handle feedback on submit
   const handleSubmit = () => {
     console.log("Feedback Type:", feedbackType);
     console.log("Rating:", rating);
@@ -47,22 +65,71 @@ const MyTourAndTripsTable = ({ data }) => {
     {
       title: "Sr.",
       dataIndex: "sr",
+      minWidth: 200,
+      render: (_text, _record, index) => {
+        return `${index + 1}`;
+      },
     },
     {
       title: "From",
       dataIndex: "from",
+      minWidth: 200,
+      render: (from) => {
+        return <span className="capitalize">{from}</span>;
+      },
     },
     {
       title: "To",
       dataIndex: "to",
+      minWidth: 200,
+      render: (from) => {
+        return <span className="capitalize">{from}</span>;
+      },
     },
     {
       title: "Distance",
       dataIndex: "distance",
+      minWidth: 200,
+      sorter: (a, b) => a.distance - b.distance,
+      render: (distance) => {
+        return <p className="lowercase">{distance} Km</p>;
+      },
+    },
+    {
+      title: "Dept. Time",
+      dataIndex: "departure_time",
+      minWidth: 200,
+      sorter: (a, b) => a.departure_time - b.departure_time,
+      render: (departure_time) => {
+        return (
+          <>
+            <p>{dayjs(departure_time).format("YYYY-MM-DD")}</p>
+            <p>{dayjs(departure_time).format("hh:mm A")}</p>
+          </>
+        );
+      },
+    },
+    {
+      title: "Arr. Time",
+      dataIndex: "arrival_time",
+      minWidth: 200,
+      sorter: (a, b) => a.arrival_time - b.arrival_time,
+      render: (arrival_time) => {
+        return (
+          <>
+            <p>{dayjs(arrival_time).format("YYYY-MM-DD")}</p>
+            <p>{dayjs(arrival_time).format("hh:mm A")}</p>
+          </>
+        );
+      },
     },
     {
       title: "Fare",
       dataIndex: "fare",
+      minWidth: 200,
+      render: (fare) => {
+        return <p>&#2547;{fare}</p>;
+      },
     },
     {
       title: "Seats",
@@ -83,6 +150,8 @@ const MyTourAndTripsTable = ({ data }) => {
     from,
     to,
     distance,
+    departure_time,
+    arrival_time,
     fare,
     seats,
     trip_status,
@@ -93,6 +162,8 @@ const MyTourAndTripsTable = ({ data }) => {
       from,
       to,
       distance,
+      departure_time,
+      arrival_time,
       fare,
       seats,
       trip_status,
@@ -101,13 +172,15 @@ const MyTourAndTripsTable = ({ data }) => {
   }
 
   const rows =
-    data &&
-    data?.map((d, i) =>
+    tourHistoryData?.data &&
+    tourHistoryData?.data?.map((d, i) =>
       createData(
         i + 1,
         d?.from,
         d?.to,
         d?.distance,
+        d?.departure_time,
+        d?.arrival_time,
         d?.fare,
         d?.seats,
         d?.trip_status,
@@ -124,6 +197,8 @@ const MyTourAndTripsTable = ({ data }) => {
   return (
     <>
       <Table className="mt-5" columns={columns} dataSource={rows} />
+
+      {/* // TODO: feedback form handle modal and form */}
       <Modal
         open={open}
         title="Send A Feedback"

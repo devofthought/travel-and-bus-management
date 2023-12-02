@@ -19,6 +19,7 @@ import {
   IUpComingTripPayload,
 } from './trip.interface'
 import { Trip } from './trip.model'
+import { User } from '../user/user.model'
 
 const createTrip = async (payload: ITrip): Promise<ITripResponse | null> => {
   const driver = await VariantCreation.findAvailabilityByDepartureTime(
@@ -414,7 +415,7 @@ const getSingleTrip = async (id: string): Promise<ITrip | null> => {
 //   for (const booksTrip of uniqueBookings as IBooksTrip[]) {
 //     const trip = await Trip.findById(booksTrip.trip_id).populate({
 //       path: 'route_id',
-//       select: 'from to distance', 
+//       select: 'from to distance',
 //     })
 
 //     if (trip && trip.trips_status === 'pending') {
@@ -438,10 +439,14 @@ const getSingleTrip = async (id: string): Promise<ITrip | null> => {
 //   }
 
 //   return pendingTrip
-// } 
+// }
 
 const getUpComingTrip = async (payload: any) => {
-  const bookings = await Booking.find({ travel_id: payload.travel_id })
+  const user = await User.findById(payload.user_id)
+  if (!user) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'user not found!')
+  }
+  const bookings = await Booking.find({ travel_id: user.traveler_id })
   if (bookings.length === 0) {
     throw new ApiError(httpStatus.NOT_FOUND, 'No booking found!')
   }
@@ -462,7 +467,7 @@ const getUpComingTrip = async (payload: any) => {
 
         if (trip && trip.trips_status === payload.trip_status) {
           const seatCount = await Booking.countDocuments({
-            $and: [{ travel_id: payload.travel_id }, { trip_id: trip._id }],
+            $and: [{ travel_id: user.traveler_id }, { trip_id: trip._id }],
           })
 
           return {
@@ -473,9 +478,10 @@ const getUpComingTrip = async (payload: any) => {
             arrival_time: trip.arrival_time,
             bus_code: trip.bus_code,
             fare: trip.ticket_price,
-            trip_status:payload.trip_status,
+            trip_status: payload.trip_status,
             payment_status: booksTrip.status,
-            seat: seatCount,
+            seats: seatCount,
+            feedback:'pending'
           }
         }
       }
@@ -490,7 +496,10 @@ const getTripByUser = async (info: ITripUserSearch) => {
   const { from, to, departure_time } = info
   // Aggregate pipeline
   const getRoute = await Route.findOne({
-    $and: [{ from: from.trim().toLocaleLowerCase() }, { to: to.trim().toLocaleLowerCase() }],
+    $and: [
+      { from: from.trim().toLocaleLowerCase() },
+      { to: to.trim().toLocaleLowerCase() },
+    ],
   })
 
   if (!getRoute) {
