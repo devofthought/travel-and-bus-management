@@ -102,3 +102,9 @@ a {
   max-width: 1310px;
   margin: 0 auto;
 }
+
+
+/*##################### custom-rate-feedback css ##################### */
+.custom-rate-feedback .ant-rate-star:not(:last-child) {
+  margin-right: 2px;
+}

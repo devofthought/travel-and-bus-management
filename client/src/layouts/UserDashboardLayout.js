@@ -3,7 +3,6 @@ import SecondaryBanner from "@/components/Shared/SecondaryBanner";
 import MyTourAndTripsTable from "@/containers/UserDashboard/myTourAndTripsTable";
 import ReviewTable from "@/containers/UserDashboard/reviewTable";
 import UpcomingBookingTable from "@/containers/UserDashboard/upcomingBookingTable";
-import { reviewData } from "@/data/userDashboard/userDashboardData";
 import { Segmented } from "antd";
 import withAuth from "@/utils/withAuth";
 import dynamic from "next/dynamic";
@@ -41,7 +40,7 @@ const UserDashboardLayout = () => {
                 <UpcomingBookingTable />
               )}
               {selectedOption === "Reviews" && (
-                <ReviewTable data={reviewData} />
+                <ReviewTable />
               )}
             </div>
           )}
