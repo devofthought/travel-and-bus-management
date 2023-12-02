@@ -103,6 +103,27 @@ a {
   margin: 0 auto;
 }
 
+.loading-style {
+  margin: 20px 0;
+  margin-bottom: 20px;
+  padding: 30px 50px;
+  text-align: center;
+  /* background: rgba(0, 0, 0, 0.05); */
+  border-radius: 4px;
+}
+
+@keyframes slide {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-slide {
+  animation: slide 2s linear infinite;
+}
 
 /*##################### custom-rate-feedback css ##################### */
 .custom-rate-feedback .ant-rate-star:not(:last-child) {

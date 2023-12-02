@@ -14,6 +14,8 @@ import dayjs from "dayjs";
 import { useGetMyProfileQuery } from "@/redux/user/userApi";
 import { getSingleTrip } from "@/data/tripSearchResult";
 import BookingSeatsType from "@/components/Shared/BookingSeatsType";
+import { IoSearchOutline } from "react-icons/io5";
+import Loader from "@/components/UI/Loader";
 
 const Trip = () => {
   const router = useRouter();
@@ -32,7 +34,7 @@ const Trip = () => {
   };
 
   const { data: getMyProfile } = useGetMyProfileQuery({ headers });
-  console.log(getMyProfile);
+  // console.log(getMyProfile);
 
   /*  */
   const [
@@ -95,8 +97,9 @@ const Trip = () => {
     <div className=" bg-gray-100">
       <Navbar />
       <Banner />
-
-      {availableTrip?.data?.length > 0 ? (
+      {availableTripIsLoading ? (
+        <Loader />
+      ) : availableTrip?.data?.length > 0 ? (
         availableTrip?.data?.map((trip, index) => (
           <div
             className="main-container border border-[#5b2192] rounded-md"
@@ -499,10 +502,15 @@ const Trip = () => {
           </div>
         ))
       ) : (
-        <div className="min-h-[200px]">
-          <p className="text-3xl text-center m-auto  rounded-3xl w-fit p-5 bg-red-400 text-white">
-            No trip found on that day
-          </p>
+        <div className="min-h-[200px] flex justify-center items-center">
+          <div>
+            <div className="flex justify-center items-center">
+              <IoSearchOutline size={72} color="#d84e55" />
+            </div>
+            <p className="text-3xl text-center mt-2 font-semibold primary-text">
+              No trip found on that day :(
+            </p>
+          </div>
         </div>
       )}
 
