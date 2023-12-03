@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'zod'
 
 const updateUserZodSchema = z.object({
   body: z.object({
@@ -8,8 +8,16 @@ const updateUserZodSchema = z.object({
     name: z.string().optional(),
     phone: z.string().optional(),
   }),
-});
+})
+
+const updateUserEmailUpdateZodSchema = z.object({
+  body: z.object({
+    old_email: z.string(),
+    new_email: z.string(),
+  }),
+})
 
 export const userValidation = {
   updateUserZodSchema,
-};
+  updateUserEmailUpdateZodSchema,
+}

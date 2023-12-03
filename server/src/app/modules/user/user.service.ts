@@ -10,6 +10,10 @@ import { IPaginationOptions } from '../../../interfaces/pagination'
 import { UserSearchableFields } from './user.constants'
 import { IUser, IUserFilter } from './user.interface'
 import { User } from './user.model'
+import { Admin } from '../admin/admin.modal'
+import mongoose from 'mongoose'
+import { Driver } from '../driver/driver.model'
+import { Traveler } from '../traveler/traveler.modal'
 
 const getAllUsers = async (
   filters: IUserFilter,
@@ -150,6 +154,73 @@ const updateMyProfile = async (
   return result
 }
 
+const updateUserEmail = async (
+  user: JwtPayload | null, // TODO: [note] JWT Payload
+  payload: { old_email: string; new_email: string }
+): Promise<IUser | null> => {
+  let result: IUser | null = null
+
+  const session = await mongoose.startSession()
+
+  try {
+    session.startTransaction()
+    const existingUser = await User.findOne({ _id: user?.id })
+
+    if (!existingUser) {
+      throw new ApiError(httpStatus.BAD_REQUEST, 'User not found')
+    }
+
+    if (existingUser.email !== payload.old_email) {
+      throw new ApiError(httpStatus.BAD_REQUEST, 'Wrong email')
+    }
+
+    const updateOptions = { session, new: true }
+    const updatePayload = { email: payload.new_email }
+
+    if (existingUser.role === 'admin') {
+      await Admin.findByIdAndUpdate(
+        existingUser.admin_id,
+        updatePayload,
+        updateOptions
+      )
+    } else if (existingUser.role === 'driver') {
+      await Driver.findByIdAndUpdate(
+        existingUser.driver_id,
+        updatePayload,
+        updateOptions
+      )
+    } else if (existingUser.role === 'traveler') {
+      await Traveler.findByIdAndUpdate(
+        existingUser.traveler_id,
+        updatePayload,
+        updateOptions
+      )
+    }
+
+    result = await User.findByIdAndUpdate(
+      existingUser.id,
+      updatePayload,
+      updateOptions
+    )
+
+    await session.commitTransaction()
+    await session.endSession()
+  } catch (error) {
+    await session.abortTransaction()
+    await session.endSession()
+    throw error
+  }
+
+  if (result) {
+    result = await User.findById(result._id)
+      .select('-password')
+      .populate('traveler_id')
+      .populate('driver_id')
+      .populate('admin_id')
+  }
+  return result
+}
+
 /* 
 const updateUserProfile = async (userId: string, updatedUserData: any): Promise<User | null> => {
   // Update the user's profile
@@ -174,6 +245,7 @@ export const UserService = {
   deleteUser,
   getMyProfile,
   updateMyProfile,
+  updateUserEmail,
 }
 
 /* const getUserProfile = async (payload: any) => {
