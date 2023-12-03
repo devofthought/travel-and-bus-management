@@ -2,16 +2,15 @@ import React, { useState } from "react";
 import { DatePicker } from "antd";
 import moment from "moment";
 import { useRouter } from "next/router";
-import { MdOutlineLocationOn, MdSwapHoriz } from "react-icons/md";
+import { MdSwapHoriz } from "react-icons/md";
 import { BsCalendarDate, BsBusFront } from "react-icons/bs";
 import { TbBusStop } from "react-icons/tb";
-import dayjs from "dayjs";
 import { Select } from "antd";
 
-const deptFrom = ["Dhaka", "Sylhet", "Cumilla"];
+const deptFrom = ["Dhaka", "Sylhet", "Cumilla", "chittagong"];
 const ArrTo = ["Dhaka", "Sylhet", "Cumilla", "Rajshahi"];
 
-const SearchBar = () => {
+const SearchBarV2 = () => {
   const disabledDate = (current) => {
     // Disable dates before today
     return current && current < moment().startOf("day");
@@ -28,37 +27,19 @@ const SearchBar = () => {
     setToData(value);
   }
 
+  function handleFromToSwitcher() {
+    const value = fromData;
+    setFromData(toData);
+    setToData(value);
+  }
+
   const { Option } = Select;
-  // let from = "";
-  // let to = "";
-  let date = "";
   const handleSearchTrip = (e) => {
     e.preventDefault();
-    // from = e.target?.from?.value;
-    // to = e.target?.to?.value;
-    date = e.target.date.value;
-    // console.log("date:", date);
-    /* if date today then send search time also  */
+    const date = e.target.date.value;
 
-    // Get the current date and time
-    // const currentDate = new Date();
-    // const year = currentDate.getFullYear();
-    // const month = currentDate.getMonth() + 1;
-    // const day = currentDate.getDate();
-
-    // // Format the date as a string (optional)
-    // const todayDate = `${year}-${month < 10 ? "0" : ""}${month}-${
-    //   day < 10 ? "0" : ""
-    // }${day}`;
-
-    // if (todayDate === date) {
-    //   const arrivalDateTime = dayjs(currentDate).format(
-    //     "YYYY-MM-DDTHH:mm:ss.sss"
-    //   );
-    //   console.log(fromData, toData, arrivalDateTime);
-    // } else {
-    //   console.log(fromData, toData, date);
-    // }
+    console.log(fromData, toData, date);
+    // TODO: anakan bhai:: handle error message when search field is empty
 
     if (fromData.length > 0 && toData.length > 0 && date.length > 0) {
       router.push(`/trip?from=${fromData}&to=${toData}&date=${date}`);
@@ -81,6 +62,7 @@ const SearchBar = () => {
                 size="large"
                 onChange={handleChangeFrom}
                 className="w-[80%]"
+                value={fromData}
               >
                 {deptFrom?.map((rt, index) => (
                   <Option key={index} value={rt}>
@@ -92,6 +74,7 @@ const SearchBar = () => {
             <div
               className="w-8 h-8 p-1 absolute -bottom-2 right-[42%] sm:top-[28px] sm:-right-[22px] lg:top-[40px] bg-white z-10 text-gray-500 flex items-center justify-center rounded-full cursor-pointer hover:shadow-lg"
               style={{ border: "1px solid lightgray" }}
+              onClick={handleFromToSwitcher}
             >
               <MdSwapHoriz className="text-2xl" />
             </div>
@@ -105,6 +88,7 @@ const SearchBar = () => {
               size="large"
               onChange={handleChange}
               className="w-[80%]"
+              value={toData}
             >
               {/* Options go here */}
               {ArrTo?.map((rt, index) => (
@@ -139,4 +123,4 @@ const SearchBar = () => {
   );
 };
 
-export default SearchBar;
+export default SearchBarV2;

@@ -1,4 +1,5 @@
-import SearchBar from "@/components/Shared/SearchBarV2";
+import SearchBarV2 from "@/components/Shared/SearchBarV2";
+// import SearchBar from "@/components/Shared/SearchBar";
 import React from "react";
 // import bannerImage from "../assets/HomeBannerImg.png"
 
@@ -24,7 +25,7 @@ const Banner = ({ handleSearchTrip }) => {
             </div>
             <div className="flex justify-center mt-10">
               <div className="z-20 flex justify-center -mt-20 sm:-mt-2">
-                <SearchBar handleSearchTrip={handleSearchTrip} />
+                <SearchBarV2 handleSearchTrip={handleSearchTrip} />
               </div>
             </div>
           </div>
