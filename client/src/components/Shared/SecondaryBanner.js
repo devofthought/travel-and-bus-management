@@ -13,6 +13,7 @@ import { EditOutlined, PlusOutlined } from "@ant-design/icons";
 import MainButton from "../UI/Button";
 import { useGetMyProfileQuery } from "@/redux/user/userApi";
 import Image from "next/image";
+import SearchBarV2 from "./SearchBarV2";
 
 const previousData = {
   name: "",
@@ -33,7 +34,21 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const showModal = () => {
-    setOpen(true);
+    // setOpen(true);
+    Modal.info({
+      open: searchModal,
+      title: "Dhruto Travel",
+      content: (
+        <div>
+          <p>This is some content in the modal.</p>
+        </div>
+      ),
+      style: {
+        background: "red", // Change this to your desired background color
+      },
+      onOk() {},
+      // open: searchModal,
+    });
   };
 
   useEffect(() => {
@@ -42,7 +57,9 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
       email: data?.data.traveler_id?.email,
       image: data?.data.traveler_id?.image,
       age: data?.data.traveler_id?.age,
-      phone: data?.data.traveler_id?.phone && data?.data.traveler_id?.phone.substring(4),
+      phone:
+        data?.data.traveler_id?.phone &&
+        data?.data.traveler_id?.phone.substring(4),
     };
     setUserProfile({ ...user });
   }, [data]);
@@ -158,7 +175,7 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
             autoComplete="off"
             layout="vertical"
             onFinish={onFinish}
-            initialValues={userProfile} 
+            initialValues={userProfile}
             className="w-full flex flex-wrap justify-between"
             onFinishFailed={(error) => {
               console.log({ error });
@@ -288,18 +305,19 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
       </Modal>
 
       {/* TRIP SEARCH MODAL */}
-      <Modal
+      {/* <Modal
         title="Trip Search"
         open={searchModal}
         centered
+        // className="bg-red-400"
+        contentBg="#c80000"
         confirmLoading={confirmLoadingTripSearchModal}
         onCancel={closedTripSearchModal}
         footer={null}
       >
-        <div className="flex justify-between flex-wrap">
-          <p>search trip</p>
-        </div>
-      </Modal>
+        <SearchBarV2 />
+        <div className="flex justify-between flex-wrap"></div>
+      </Modal> */}
     </Card>
   );
 };
