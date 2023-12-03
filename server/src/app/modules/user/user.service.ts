@@ -166,12 +166,18 @@ const updateUserEmail = async (
     session.startTransaction()
     const existingUser = await User.findOne({ _id: user?.id })
 
+
     if (!existingUser) {
-      throw new ApiError(httpStatus.BAD_REQUEST, 'User not found')
+      throw new ApiError(httpStatus.NOT_FOUND, 'User not found')
     }
 
     if (existingUser.email !== payload.old_email) {
-      throw new ApiError(httpStatus.BAD_REQUEST, 'Wrong email')
+      throw new ApiError(httpStatus.NOT_ACCEPTABLE, 'Wrong email')
+    }
+
+    const isEmailAcceptAble = await User.findOne({ email: payload.new_email })
+    if (isEmailAcceptAble) {
+      throw new ApiError(httpStatus.NOT_ACCEPTABLE, 'This email already exists')
     }
 
     const updateOptions = { session, new: true }

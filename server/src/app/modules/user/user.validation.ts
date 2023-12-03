@@ -13,7 +13,11 @@ const updateUserZodSchema = z.object({
 const updateUserEmailUpdateZodSchema = z.object({
   body: z.object({
     old_email: z.string(),
-    new_email: z.string(),
+    new_email: z
+      .string()
+      .refine(value => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value), {
+        message: 'Invalid email format',
+      }),
   }),
 })
 
