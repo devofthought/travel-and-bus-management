@@ -41,6 +41,14 @@ const userApi = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    UpdateTravelerProfile: builder.mutation({
+      query: (data) => ({
+        url: `/traveler/traveler-profile`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["user"],
+    }),
   }),
 });
 
@@ -51,4 +59,5 @@ export const {
   useGetMyProfileQuery,
   useUpdateUserEmailMutation,
   useUpdateUserPasswordMutation,
+  useUpdateTravelerProfileMutation
 } = userApi;
