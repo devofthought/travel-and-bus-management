@@ -221,22 +221,38 @@ const updateUserEmail = async (
   return result
 }
 
-/* 
-const updateUserProfile = async (userId: string, updatedUserData: any): Promise<User | null> => {
-  // Update the user's profile
-  const updatedUser = await User.findByIdAndUpdate(userId, updatedUserData, { new: true });
+const updateUserPassword = async (
+  user_id: JwtPayload | null,
+  payload: {
+    old_password: string
+    new_password: string
+    confirm_new_password: string
+  }
+): Promise<IUser | null> => {
+  const user = new User()
+  const isUserExist = await User.findById(user_id?.id)
 
-  return updatedUser;
-};
+  if (!isUserExist) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'User not found')
+  }
 
-const updateTravellerProfile = async (travellerId: string, updatedTravellerData: any): Promise<Traveller | null> => {
-  // Update the traveller's profile
-  const updatedTraveller = await Traveller.findByIdAndUpdate(travellerId, updatedTravellerData, { new: true });
+  if (
+    isUserExist.password &&
+    !(await user.isPasswordMatch(payload.old_password, isUserExist.password))
+  ) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'Invalid password')
+  }
 
-  return updatedTraveller;
-};
+  if(payload.confirm_new_password!== payload.new_password){
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'New password and confirm password is not match')
+  }
 
-*/
+ 
+  const password_hashed = await bcryptHelpers.hashPassword(payload.new_password)
+  const result = await User.findByIdAndUpdate(user_id?.id,{password:password_hashed})
+
+  return result
+}
 
 export const UserService = {
   getAllUsers,
@@ -246,16 +262,5 @@ export const UserService = {
   getMyProfile,
   updateMyProfile,
   updateUserEmail,
+  updateUserPassword,
 }
-
-/* const getUserProfile = async (payload: any) => {
-  const userInfo = await User.findOne({ email: payload?.email });
-  const { model, id } = userInfo?.admin_id ? { model: Admin, id: userInfo?.admin_id } : userInfo?.traveller_id ? { model: Traveller, id: userInfo?.traveller_id } : { model: Driver, id: userInfo?.driver_id };
-
-  const result = await model.findById(id);
-
-  return {
-    result,
-    userInfo,
-  };
-} */

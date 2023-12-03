@@ -62,6 +62,20 @@ const updateUserEmail: RequestHandler = catchAsync(async (req, res) => {
   })
 })
 
+const updateUserPassword: RequestHandler = catchAsync(async (req, res) => {
+  const user = req.user
+  const updateData = req.body
+
+  const result = await UserService.updateUserPassword(user, updateData)
+
+  sendResponse<IUser>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'user password updated successfully',
+    data: result,
+  })
+})
+
 const deleteUser: RequestHandler = catchAsync(async (req, res) => {
   const id = req.params.id
   const result = await UserService.deleteUser(id)
@@ -137,4 +151,5 @@ export const UserController = {
   getMyProfile,
   updateMyProfile,
   updateUserEmail,
+  updateUserPassword,
 }

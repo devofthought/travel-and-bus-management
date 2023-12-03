@@ -17,7 +17,16 @@ const updateUserEmailUpdateZodSchema = z.object({
   }),
 })
 
+const updateUserPasswordUpdateZodSchema = z.object({
+  body: z.object({
+    old_password: z.string(),
+    new_password: z.string(),
+    confirm_new_password: z.string(),
+  }),
+})
+
 export const userValidation = {
   updateUserZodSchema,
   updateUserEmailUpdateZodSchema,
+  updateUserPasswordUpdateZodSchema,
 }
