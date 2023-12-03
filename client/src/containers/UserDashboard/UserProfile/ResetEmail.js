@@ -25,6 +25,7 @@ const ResetEmail = ({ userProfile }) => {
   const onFinish = (values) => {
     // console.log(values);
     updateEmail(values);
+    form.resetFields();
   };
 
   useEffect(() => {

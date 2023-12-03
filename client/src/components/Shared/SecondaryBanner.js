@@ -25,21 +25,7 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const showModal = () => {
-    // setOpen(true);
-    Modal.info({
-      open: searchModal,
-      title: "Dhruto Travel",
-      content: (
-        <div>
-          <p>This is some content in the modal.</p>
-        </div>
-      ),
-      style: {
-        background: "red", // Change this to your desired background color
-      },
-      onOk() {},
-      // open: searchModal,
-    });
+    setOpen(true);
   };
 
   useEffect(() => {
@@ -83,7 +69,7 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
         <p className="mt-4 text-lg">
           Discover comfortable and convenient bus journeys for your travels.
         </p>
-        <div className="flex justify-between items-center w-2/3 mx-auto mt-10 backdrop-blur-xl opacity-100  p-5 rounded-3xl">
+        <div className="flex justify-between items-center w-2/3 mx-auto mt-10 backdrop-blur-xl opacity-100 border-2 border-solid border-white  p-5 rounded-3xl">
           <div className="flex items-center">
             <div className="relative w-16">
               <Image
@@ -136,11 +122,9 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
 
       {/* TRIP SEARCH MODAL */}
       <Modal
-        title={null}
         open={searchModal}
+        className="tripModal"
         centered
-        // className="bg-red-400"
-        contentBg="#c80000"
         confirmLoading={confirmLoadingTripSearchModal}
         onCancel={closedTripSearchModal}
         footer={null}
