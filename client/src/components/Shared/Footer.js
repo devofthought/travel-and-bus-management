@@ -12,7 +12,7 @@ const Footer = () => {
     console.log(values);
   };
   return (
-    <div className="secondary-bg mt-10">
+    <div className="secondary-bg mt-5">
       <footer className="main-container relative pt-8 pb-6">
         <div className="container mx-auto">
           <div className="flex flex-wrap text-left gap-y-5 lg:text-left">

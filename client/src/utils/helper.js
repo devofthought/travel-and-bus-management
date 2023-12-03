@@ -33,3 +33,20 @@ export const todayChecker = (date) => {
     return date;
   }
 };
+
+/*  duration maker*/
+export const formatDuration = (duration) => {
+  const hours = duration.hours();
+  const minutes = duration.minutes();
+
+  let result = "";
+  if (hours > 0) {
+    result += `${hours} hour${hours > 1 ? "s" : ""}`;
+  }
+
+  if (minutes > 0) {
+    result += ` ${minutes} minute${minutes > 1 ? "s" : ""}`;
+  }
+  
+  return result.trim();
+};

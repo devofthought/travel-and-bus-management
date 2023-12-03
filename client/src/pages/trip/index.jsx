@@ -9,7 +9,7 @@ import {
   useGetBusSeatStatusMutation,
   useGetTripsByUsersMutation,
 } from "@/redux/trip/tripApi";
-import { todayChecker } from "@/utils/helper";
+import { formatDuration, todayChecker } from "@/utils/helper";
 import dayjs from "dayjs";
 import { useGetMyProfileQuery } from "@/redux/user/userApi";
 import { getSingleTrip } from "@/data/tripSearchResult";
@@ -17,6 +17,8 @@ import BookingSeatsType from "@/components/Shared/BookingSeatsType";
 import { IoSearchOutline } from "react-icons/io5";
 import Loader from "@/components/UI/Loader";
 import TripBanner from "@/components/Shared/TripBanner";
+import duration from "dayjs/plugin/duration";
+dayjs.extend(duration);
 
 const Trip = () => {
   const router = useRouter();
@@ -202,13 +204,32 @@ const Trip = () => {
                     </p>
                   </div>
                 </li>
+                <li className="w-[20%] lg:w-[15%] p-7 border-t-0 border-l-0 border-b-0 border-r border-dashed hidden md:block">
+                  <div className="search_item-content__ydL0p">
+                    <h6 className="uppercase text-sm text-gray-500 font-semibold">
+                      tour durations
+                    </h6>
+                    <p className="text-[#5b2192] font-semibold">
+                      {trip?.departure_time && trip?.arrival_time && (
+                        <span>
+                          {formatDuration(
+                            dayjs.duration(
+                              dayjs(trip.arrival_time).diff(
+                                dayjs(trip.departure_time)
+                              )
+                            )
+                          )}
+                        </span>
+                      )}
+                    </p>
+                  </div>
+                </li>
                 <li className="w-[15%] p-7 border-t-0 border-l-0 border-b-0 border-r border-dashed hidden lg:block">
                   <div className="search_item-content__ydL0p">
                     <h6 className="uppercase text-sm text-gray-500 font-semibold">
                       Seats Available
                     </h6>
                     <p className="text-[#5b2192] font-semibold">
-                      {" "}
                       {trip?.seats_available}
                     </p>
                   </div>
@@ -503,12 +524,12 @@ const Trip = () => {
           </div>
         ))
       ) : (
-        <div className="min-h-[200px] flex justify-center items-center">
+        <div className="min-h-[30vh]  flex justify-center items-center">
           <div>
             <div className="flex justify-center items-center">
               <IoSearchOutline size={72} color="#d84e55" />
             </div>
-            <p className="text-3xl text-center mt-2 font-semibold primary-text">
+            <p className="text-xl md:text-3xl text-center mt-2 font-semibold primary-text">
               No trip found on that day :(
             </p>
           </div>
