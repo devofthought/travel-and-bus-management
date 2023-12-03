@@ -2,7 +2,7 @@ import React from "react";
 import { DatePicker, Input } from "antd";
 import moment from "moment";
 import { useRouter } from "next/router";
-import { MdOutlineLocationOn, MdSwapHoriz } from "react-icons/md";
+import { MdSwapHoriz } from "react-icons/md";
 import { BsCalendarDate, BsBusFront } from "react-icons/bs";
 import { TbBusStop } from "react-icons/tb";
 import dayjs from "dayjs";

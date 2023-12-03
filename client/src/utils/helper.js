@@ -47,6 +47,15 @@ export const formatDuration = (duration) => {
   if (minutes > 0) {
     result += ` ${minutes} minute${minutes > 1 ? "s" : ""}`;
   }
-  
+
   return result.trim();
+};
+
+export const validateEmail = (rule, value, callback) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!value || emailRegex.test(value)) {
+    callback();
+  } else {
+    callback("Please enter a valid email address");
+  }
 };
