@@ -40,7 +40,6 @@ const userApi = apiSlice.injectEndpoints({
         method: "PATCH",
         body: data,
       }),
-      invalidatesTags: ["user"],
     }),
   }),
 });
