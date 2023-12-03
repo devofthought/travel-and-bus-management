@@ -2,6 +2,8 @@ import React from "react";
 import { Form, Input, InputNumber, Select, Upload } from "antd";
 
 const Profile = ({ userProfile }) => {
+  // console.log("testing model", userProfile);   // TODO: [ankan bhai] input field not updating. fixed this issue or change input/form to normal <p> tag 
+
   const prefixSelector = (
     <Form.Item name="prefix" initialValue="+880" noStyle>
       <Select style={{ width: 80 }} disabled>

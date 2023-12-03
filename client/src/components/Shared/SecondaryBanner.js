@@ -1,16 +1,6 @@
-import {
-  Button,
-  Card,
-  Form,
-  Input,
-  InputNumber,
-  Modal,
-  Select,
-  Upload,
-} from "antd";
+import { Button, Card, Modal } from "antd";
 import { useEffect, useState } from "react";
 import { EditOutlined, PlusOutlined } from "@ant-design/icons";
-import MainButton from "../UI/Button";
 import { useGetMyProfileQuery } from "@/redux/user/userApi";
 import Image from "next/image";
 import SearchBarV2 from "./SearchBarV2";
@@ -42,7 +32,7 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
     const user = {
       name: data?.data.traveler_id?.name,
       email: data?.data.traveler_id?.email,
-      image: data?.data.traveler_id?.image,
+      image: data?.data.traveler_id?.image?.avatar,
       age: data?.data.traveler_id?.age,
       phone:
         data?.data.traveler_id?.phone &&
@@ -115,7 +105,6 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
           >
             Trip Search
           </button>
-          {/* <MainButton styles="py-2 px-4" btnName="Trip Search"></MainButton> */}
         </div>
       </div>
 
@@ -129,7 +118,7 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
         footer={null}
       >
         <UserProfileMainContainer userProfile={userProfile} />
-      </Modal> 
+      </Modal>
 
       {/* TRIP SEARCH MODAL */}
       <Modal
