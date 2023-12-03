@@ -3,7 +3,10 @@ import { Schema, model } from 'mongoose'
 
 const travelerSchema = new Schema<ITraveler>({
   name: { type: String, required: true },
-  image: { type: String },
+  image: {
+    avatar: { type: String },
+    avatar_public_url: { type: String },
+  },
   age: { type: Number },
   phone: { type: String },
   email: { type: String, required: true, unique: true },

@@ -3,7 +3,7 @@ import { z } from 'zod'
 const updateTravelerZodSchema = z.object({
   body: z.object({
     name: z
-      .number({
+      .string({
         required_error: 'name is required',
       })
       .optional(),
@@ -13,18 +13,13 @@ const updateTravelerZodSchema = z.object({
       })
       .optional(),
     age: z
-      .number({
+      .string({
         required_error: 'Age is required',
       })
       .optional(),
     phone: z
       .string({
         required_error: 'phone is required',
-      })
-      .optional(),
-    email: z
-      .string({
-        required_error: 'email is required',
       })
       .optional(),
   }),

@@ -1,19 +1,10 @@
-import {
-  Button,
-  Card,
-  Form,
-  Input,
-  InputNumber,
-  Modal,
-  Select,
-  Upload,
-} from "antd";
+import { Button, Card, Modal } from "antd";
 import { useEffect, useState } from "react";
 import { EditOutlined, PlusOutlined } from "@ant-design/icons";
-import MainButton from "../UI/Button";
 import { useGetMyProfileQuery } from "@/redux/user/userApi";
 import Image from "next/image";
 import SearchBarV2 from "./SearchBarV2";
+import UserProfileMainContainer from "@/containers/UserDashboard/UserProfile/UserProfileMainContainer";
 
 const previousData = {
   name: "",
@@ -55,7 +46,7 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
     const user = {
       name: data?.data.traveler_id?.name,
       email: data?.data.traveler_id?.email,
-      image: data?.data.traveler_id?.image,
+      image: data?.data.traveler_id?.image?.avatar,
       age: data?.data.traveler_id?.age,
       phone:
         data?.data.traveler_id?.phone &&
@@ -64,7 +55,7 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
     setUserProfile({ ...user });
   }, [data]);
 
-  console.log(userProfile);
+  // console.log(userProfile);
   const handleCancel = () => {
     setOpen(false);
   };
@@ -77,35 +68,6 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
   };
   const [confirmLoadingTripSearchModal, setConfirmLoadingTripSearchModal] =
     useState(false);
-
-  // form
-  const onFinish = (values) => {
-    console.log({ values });
-    // setData({
-    //   ...values,
-    // });
-  };
-
-  const uploadButton = (
-    <div>
-      <PlusOutlined />
-      <div
-        style={{
-          marginTop: 8,
-        }}
-      >
-        Upload
-      </div>
-    </div>
-  );
-
-  const prefixSelector = (
-    <Form.Item name="prefix" noStyle>
-      <Select style={{ width: 80 }}>
-        <Option value="+880">+880</Option>
-      </Select>
-    </Form.Item>
-  );
 
   return (
     <Card
@@ -157,156 +119,24 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
           >
             Trip Search
           </button>
-          {/* <MainButton styles="py-2 px-4" btnName="Trip Search"></MainButton> */}
         </div>
       </div>
 
       {/* PROFILE UPDATE MODAL */}
       <Modal
-        title="Update Profile"
+        title="User Profile"
         open={open}
         centered
         confirmLoading={confirmLoading}
         onCancel={handleCancel}
         footer={null}
       >
-        <div className="flex justify-between flex-wrap">
-          <Form
-            autoComplete="off"
-            layout="vertical"
-            onFinish={onFinish}
-            initialValues={userProfile}
-            className="w-full flex flex-wrap justify-between"
-            onFinishFailed={(error) => {
-              console.log({ error });
-            }}
-          >
-            <Form.Item
-              name="name"
-              label="Name"
-              className="w-[49%]"
-              rules={[{ required: true, message: "Please enter your name" }]}
-              hasFeedback
-            >
-              <Input placeholder="Type your name" />
-            </Form.Item>
-
-            <Form.Item
-              name="email"
-              label="Email"
-              className="w-[49%]"
-              rules={[
-                {
-                  type: "email",
-                  message: "The input is not valid E-mail!",
-                },
-                {
-                  required: true,
-                  message: "Please input your E-mail!",
-                },
-              ]}
-              hasFeedback
-            >
-              <Input placeholder="Type your email" />
-            </Form.Item>
-
-            <Form.Item
-              name="phone"
-              label="Phone Number"
-              className="w-[49%]"
-              rules={[
-                { required: true, message: "Please input your phone number!" },
-                {
-                  type: "number",
-                  message: "please your phone number",
-                  min: 1100000000,
-                  max: 1999999999,
-                },
-              ]}
-              hasFeedback
-            >
-              {/* <Input addonBefore={prefixSelector} style={{ width: "100%" }} /> */}
-              <InputNumber
-                addonBefore={prefixSelector}
-                className="w-full"
-                placeholder="mobile number"
-              />
-            </Form.Item>
-
-            <Form.Item
-              name="age"
-              label="Age"
-              className="w-[49%]"
-              rules={[
-                {
-                  required: true,
-                  message: "Please enter your age",
-                },
-                {
-                  type: "number",
-                  message: "your age is required",
-                  min: 4,
-                  max: 100,
-                },
-              ]}
-              hasFeedback
-            >
-              <InputNumber className="w-full" placeholder="Type age" />
-            </Form.Item>
-
-            <Form.Item
-              label="Profile Photo"
-              name="profile-photo"
-              valuePropName="fileList"
-              className="w-full"
-              getValueFromEvent={(event) => {
-                return event?.fileList;
-              }}
-              rules={[
-                {
-                  required: false,
-                  message: "Profile picture",
-                },
-                {
-                  validator(_, fileList) {
-                    return new Promise((resolve, reject) => {
-                      if (fileList && fileList[0].size > 2000000) {
-                        reject("File size must be under 2MB");
-                      } else {
-                        resolve("success");
-                      }
-                    });
-                  },
-                },
-              ]}
-            >
-              <Upload
-                listType="picture-card"
-                maxCount={1}
-                beforeUpload={(file) => {
-                  return new Promise((resolve, reject) => {
-                    if (file.size > 2000000) {
-                      reject("File size must be under 2MB");
-                    } else {
-                      resolve("success");
-                    }
-                  });
-                }}
-              >
-                {uploadButton}
-              </Upload>
-            </Form.Item>
-
-            <Form.Item wrapperCol={{ span: 24 }} className="w-full mb-0">
-              <MainButton btnName={"Submit"} styles="w-full py-2"></MainButton>
-            </Form.Item>
-          </Form>
-        </div>
+        <UserProfileMainContainer userProfile={userProfile} />
       </Modal>
 
       {/* TRIP SEARCH MODAL */}
-      {/* <Modal
-        title="Trip Search"
+      <Modal
+        title={null}
         open={searchModal}
         centered
         // className="bg-red-400"
@@ -314,10 +144,11 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
         confirmLoading={confirmLoadingTripSearchModal}
         onCancel={closedTripSearchModal}
         footer={null}
+        closable={false}
+        width={1000}
       >
         <SearchBarV2 />
-        <div className="flex justify-between flex-wrap"></div>
-      </Modal> */}
+      </Modal>
     </Card>
   );
 };

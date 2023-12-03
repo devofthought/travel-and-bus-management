@@ -10,6 +10,10 @@ import { IPaginationOptions } from '../../../interfaces/pagination'
 import { UserSearchableFields } from './user.constants'
 import { IUser, IUserFilter } from './user.interface'
 import { User } from './user.model'
+import { Admin } from '../admin/admin.modal'
+import mongoose from 'mongoose'
+import { Driver } from '../driver/driver.model'
+import { Traveler } from '../traveler/traveler.modal'
 
 const getAllUsers = async (
   filters: IUserFilter,
@@ -150,22 +154,115 @@ const updateMyProfile = async (
   return result
 }
 
-/* 
-const updateUserProfile = async (userId: string, updatedUserData: any): Promise<User | null> => {
-  // Update the user's profile
-  const updatedUser = await User.findByIdAndUpdate(userId, updatedUserData, { new: true });
+const updateUserEmail = async (
+  user: JwtPayload | null, // TODO: [note] JWT Payload
+  payload: { old_email: string; new_email: string }
+): Promise<IUser | null> => {
+  let result: IUser | null = null
 
-  return updatedUser;
-};
+  const session = await mongoose.startSession()
 
-const updateTravellerProfile = async (travellerId: string, updatedTravellerData: any): Promise<Traveller | null> => {
-  // Update the traveller's profile
-  const updatedTraveller = await Traveller.findByIdAndUpdate(travellerId, updatedTravellerData, { new: true });
+  try {
+    session.startTransaction()
+    const existingUser = await User.findOne({ _id: user?.id })
 
-  return updatedTraveller;
-};
 
-*/
+    if (!existingUser) {
+      throw new ApiError(httpStatus.NOT_FOUND, 'User not found')
+    }
+
+    if (existingUser.email !== payload.old_email) {
+      throw new ApiError(httpStatus.NOT_ACCEPTABLE, 'Wrong email')
+    }
+
+    const isEmailAcceptAble = await User.findOne({ email: payload.new_email })
+    if (isEmailAcceptAble) {
+      throw new ApiError(httpStatus.NOT_ACCEPTABLE, 'This email already exists')
+    }
+
+    const updateOptions = { session, new: true }
+    const updatePayload = { email: payload.new_email }
+
+    if (existingUser.role === 'admin') {
+      await Admin.findByIdAndUpdate(
+        existingUser.admin_id,
+        updatePayload,
+        updateOptions
+      )
+    } else if (existingUser.role === 'driver') {
+      await Driver.findByIdAndUpdate(
+        existingUser.driver_id,
+        updatePayload,
+        updateOptions
+      )
+    } else if (existingUser.role === 'traveler') {
+      await Traveler.findByIdAndUpdate(
+        existingUser.traveler_id,
+        updatePayload,
+        updateOptions
+      )
+    }
+
+    result = await User.findByIdAndUpdate(
+      existingUser.id,
+      updatePayload,
+      updateOptions
+    )
+
+    await session.commitTransaction()
+    await session.endSession()
+  } catch (error) {
+    await session.abortTransaction()
+    await session.endSession()
+    throw error
+  }
+
+  if (result) {
+    result = await User.findById(result._id)
+      .select('-password')
+      .populate('traveler_id')
+      .populate('driver_id')
+      .populate('admin_id')
+  }
+  return result
+}
+
+const updateUserPassword = async (
+  user_id: JwtPayload | null,
+  payload: {
+    old_password: string
+    new_password: string
+    confirm_new_password: string
+  }
+): Promise<IUser | null> => {
+  const user = new User()
+  const isUserExist = await User.findById(user_id?.id)
+
+  if (!isUserExist) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'User not found')
+  }
+
+  if (payload.confirm_new_password !== payload.new_password) {
+    throw new ApiError(
+      httpStatus.NOT_ACCEPTABLE,
+      'New password and confirm password is not match'
+    )
+  }
+
+  if (
+    isUserExist.password &&
+    !(await user.isPasswordMatch(payload.old_password, isUserExist.password))
+  ) {
+    throw new ApiError(httpStatus.NOT_ACCEPTABLE, 'Invalid password')
+  }
+
+  const password_hashed = await bcryptHelpers.hashPassword(payload.new_password)
+  const result = await User.findByIdAndUpdate(user_id?.id, {
+    password: password_hashed,
+  })
+
+  return result
+}
 
 export const UserService = {
   getAllUsers,
@@ -174,16 +271,6 @@ export const UserService = {
   deleteUser,
   getMyProfile,
   updateMyProfile,
+  updateUserEmail,
+  updateUserPassword,
 }
-
-/* const getUserProfile = async (payload: any) => {
-  const userInfo = await User.findOne({ email: payload?.email });
-  const { model, id } = userInfo?.admin_id ? { model: Admin, id: userInfo?.admin_id } : userInfo?.traveller_id ? { model: Traveller, id: userInfo?.traveller_id } : { model: Driver, id: userInfo?.driver_id };
-
-  const result = await model.findById(id);
-
-  return {
-    result,
-    userInfo,
-  };
-} */
