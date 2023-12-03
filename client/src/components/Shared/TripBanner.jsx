@@ -2,11 +2,11 @@ import SearchBar from "@/components/Shared/SearchBarV2";
 import React from "react";
 // import bannerImage from "../assets/HomeBannerImg.png"
 
-const Banner = ({ handleSearchTrip }) => {
+const TripBanner = ({ handleSearchTrip }) => {
   return (
     <>
       <div
-        className="relative mb-36 top-12 h-[65vh]"
+        className="relative mb-36 top-12 h-[50vh]"
         style={{ position: "relative" }}
       >
         <div
@@ -17,11 +17,6 @@ const Banner = ({ handleSearchTrip }) => {
           }}
         >
           <div className="sm:mb-32">
-            <div className=" text-gray-900 text-center  ">
-              <h1 className="text-xl sm:text-2xl lg:text-4xl  mb-[100px] sm:mb-0">
-                Book with Ease, Travel with Speed
-              </h1>
-            </div>
             <div className="flex justify-center mt-10">
               <div className="z-20 flex justify-center -mt-20 sm:-mt-2">
                 <SearchBar handleSearchTrip={handleSearchTrip} />
@@ -34,4 +29,4 @@ const Banner = ({ handleSearchTrip }) => {
   );
 };
 
-export default Banner;
+export default TripBanner;

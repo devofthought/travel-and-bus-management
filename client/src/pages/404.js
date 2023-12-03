@@ -1,8 +1,31 @@
-import Link from "next/link";
 import React from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import { BsFillQuestionCircleFill } from "react-icons/bs";
 
 const NotFoundPage = () => {
+  const router = useRouter();
+  const [countdown, setCountdown] = useState(5);
+
+  useEffect(() => {
+    const redirectHome = () => {
+      router.push("/");
+    };
+
+    const countdownInterval = setInterval(() => {
+      setCountdown((prevCount) => prevCount - 1);
+    }, 1000);
+
+    const timeout = setTimeout(() => {
+      clearInterval(countdownInterval);
+      redirectHome();
+    }, 5000);
+
+    return () => {
+      clearTimeout(timeout);
+      clearInterval(countdownInterval);
+    };
+  }, [router]);
   return (
     <div className="flex justify-center text-center items-center h-[100vh]">
       <div>
@@ -12,13 +35,9 @@ const NotFoundPage = () => {
           Oops! We couldn't find the page that you're looking for. <br /> Please
           check the address and try again.
         </p>
-        <p className="primary-text">
-          <span className="font-semibold">Error Code:</span> 404
-        </p>
-        <p className="mt-1">
-          <Link href="/" className="underline">
-            Return Home
-          </Link>
+        <p className="primary-text font-semibold text-xl">Error Code: 404</p>
+        <p className="text-lg mb-4">
+          Redirecting to home page in {countdown} seconds...
         </p>
       </div>
     </div>
