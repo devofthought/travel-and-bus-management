@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Form, Input } from "antd";
 import Button from "@/components/UI/Button";
 import Swal from "sweetalert2";
+import { useUpdateUserPasswordMutation } from "@/redux/user/userApi";
 
 const ResetPassword = () => {
   const [form] = Form.useForm();
+  const [
+    updatePassword,
+    {
+      data: updatePasswordResponse,
+      error: updatePasswordError,
+      isLoading: updatePasswordIsLoading,
+    }, // TODO: [ankan bhai] please handle error
+  ] = useUpdateUserPasswordMutation();
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
@@ -19,8 +28,22 @@ const ResetPassword = () => {
         text: "New Password isn't Matched!",
       });
       return;
+    } else {
+      updatePassword(values);
     }
   };
+
+  useEffect(() => {
+    if (updatePasswordResponse?.statusCode === 200) {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: `${updatePasswordResponse?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  }, [updatePasswordResponse]);
 
   return (
     <Form
