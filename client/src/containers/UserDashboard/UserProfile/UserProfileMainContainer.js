@@ -6,7 +6,7 @@ import CollapseComponent from "@/components/UI/Collapse";
 import Profile from "./Profile";
 
 const UserProfileMainContainer = ({ userProfile }) => {
-  const GeneralFQA = (panelStyle) => [
+  const updateProfileData = (panelStyle) => [
     {
       key: "1",
       label: <h2 className="text-lg font-medium">Update Profile</h2>,
@@ -30,16 +30,11 @@ const UserProfileMainContainer = ({ userProfile }) => {
   return (
     <>
       <Profile userProfile={userProfile} />
-      <CollapseComponent data={GeneralFQA} />
+      <CollapseComponent data={updateProfileData} />
     </>
   );
 };
 
 export default UserProfileMainContainer;
 
-/* 
-  <ResetEmail userProfile={userProfile} />
-  <UpdateProfile userProfile={userProfile} />
-  <ResetPassword />
-  <CollapseComponent data={faqDataMap} />
-*/
+

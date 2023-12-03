@@ -1,16 +1,51 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Form, Input, InputNumber, Select, Upload } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import MainButton from "../../../components/UI/Button";
+import { useUpdateTravelerProfileMutation } from "@/redux/user/userApi";
+import Swal from "sweetalert2";
 
 const UpdateProfile = ({ userProfile }) => {
+  const [
+    updateTravelerProfile,
+    {
+      data: updateTravelerProfileResponse,
+      error: updateTravelerProfileError,
+      isLoading: updateTravelerProfileIsLoading,
+    }, // TODO: [ankan bhai] handle error
+  ] = useUpdateTravelerProfileMutation();
+
   // form
   const onFinish = (values) => {
-    console.log({ values });
-    // setData({
-    //   ...values,
-    // });
+    console.log(values);
+    let formData = new FormData();
+    if (values.age) {
+      formData.append("age", values.age);
+    }
+    if (values.name) {
+      formData.append("name", values.name);
+    }
+    if (values.phone) {
+      formData.append("phone", values.prefix + values.phone);
+    }
+    if (values.profile_photo) {
+      formData.append("profile_image", values.profile_photo[0].originFileObj);
+      console.log(values.profile_photo[0].originFileObj);
+    }
+    updateTravelerProfile(formData);
   };
+
+  useEffect(() => {
+    if (updateTravelerProfileResponse?.statusCode === 200) {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: `${updateTravelerProfileResponse?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  }, [updateTravelerProfileResponse]);
 
   const uploadButton = (
     <div>
@@ -50,7 +85,7 @@ const UpdateProfile = ({ userProfile }) => {
             name="name"
             label="Name"
             className="w-[49%]"
-            rules={[{ required: true, message: "Please enter your name" }]}
+            // rules={[{ required: true, message: "Please enter your name" }]}
             hasFeedback
           >
             <Input placeholder="Type your name" />
@@ -61,7 +96,7 @@ const UpdateProfile = ({ userProfile }) => {
             label="Phone Number"
             className="w-[49%]"
             rules={[
-              { required: true, message: "Please input your phone number!" },
+              // { required: true, message: "Please input your phone number!" },
               {
                 type: "number",
                 message: "please your phone number",
@@ -84,10 +119,6 @@ const UpdateProfile = ({ userProfile }) => {
             className="w-[49%]"
             rules={[
               {
-                required: true,
-                message: "Please enter your age",
-              },
-              {
                 type: "number",
                 message: "your age is required",
                 min: 4,
@@ -101,7 +132,7 @@ const UpdateProfile = ({ userProfile }) => {
 
           <Form.Item
             label="Profile Photo"
-            name="profile-photo"
+            name="profile_photo"
             valuePropName="fileList"
             className="w-full"
             getValueFromEvent={(event) => {
@@ -153,5 +184,5 @@ const UpdateProfile = ({ userProfile }) => {
     </div>
   );
 };
-
+// TODO:[anakan bhai] please submit button loading spinner added {updateTravelerProfileIsLoading}
 export default UpdateProfile;

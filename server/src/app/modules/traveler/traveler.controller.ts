@@ -7,6 +7,7 @@ import { TravelerService } from './traveler.service'
 import sendResponse from '../../../shared/sendResponse'
 import { ITravelerResponse } from './traveler.interface'
 import httpStatus from 'http-status'
+import cloudinary from '../../../config/cloudinary'
 
 const getAllTraveler = catchAsync(async (req: Request, res: Response) => {
   const filters = pick(req.query, travelerFilterableFields)
@@ -38,9 +39,19 @@ const getSingleTraveler = catchAsync(async (req: Request, res: Response) => {
 })
 
 const updateTraveler = catchAsync(async (req: Request, res: Response) => {
-  const id = req.params.id
+  const user = req.user
   const updatedData = req.body
-  const result = await TravelerService.updateTraveler(id, updatedData)
+
+  if (req.file) {
+    const uploadedImage = await cloudinary.uploader.upload(req.file?.path)
+    const avatar = {
+      avatar: uploadedImage.secure_url,
+      avatar_public_url: uploadedImage.public_id,
+    }
+    updatedData.image = avatar
+  }
+
+  const result = await TravelerService.updateTraveler(user, updatedData)
 
   sendResponse<ITravelerResponse>(res, {
     statusCode: httpStatus.OK,

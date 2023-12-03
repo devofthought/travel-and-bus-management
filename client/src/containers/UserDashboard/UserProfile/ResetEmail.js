@@ -1,9 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Form, Input } from "antd";
 import Button from "@/components/UI/Button";
 import { validateEmail } from "@/utils/helper";
+import { useUpdateUserEmailMutation } from "@/redux/user/userApi";
+import Swal from "sweetalert2";
 
 const ResetEmail = ({ userProfile }) => {
+  const [
+    updateEmail,
+    {
+      data: updateEmailResponse,
+      error: updateEmailError,
+      isLoading: updateEmailIsLoading,
+    }, // TODO: [ankan bhai] handle error
+  ] = useUpdateUserEmailMutation();
+
   const [form] = Form.useForm();
   form.setFieldsValue({ old_email: userProfile?.email });
 
@@ -12,8 +23,21 @@ const ResetEmail = ({ userProfile }) => {
   };
 
   const onFinish = (values) => {
-    console.log(values);
+    // console.log(values);
+    updateEmail(values);
   };
+
+  useEffect(() => {
+    if (updateEmailResponse?.statusCode === 200) {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: `${updateEmailResponse?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  }, [updateEmailResponse]);
 
   return (
     <Form
