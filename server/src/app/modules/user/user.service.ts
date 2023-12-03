@@ -236,20 +236,24 @@ const updateUserPassword = async (
     throw new ApiError(httpStatus.BAD_REQUEST, 'User not found')
   }
 
+  if (payload.confirm_new_password !== payload.new_password) {
+    throw new ApiError(
+      httpStatus.NOT_ACCEPTABLE,
+      'New password and confirm password is not match'
+    )
+  }
+
   if (
     isUserExist.password &&
     !(await user.isPasswordMatch(payload.old_password, isUserExist.password))
   ) {
-    throw new ApiError(httpStatus.UNAUTHORIZED, 'Invalid password')
+    throw new ApiError(httpStatus.NOT_ACCEPTABLE, 'Invalid password')
   }
 
-  if(payload.confirm_new_password!== payload.new_password){
-    throw new ApiError(httpStatus.UNAUTHORIZED, 'New password and confirm password is not match')
-  }
-
- 
   const password_hashed = await bcryptHelpers.hashPassword(payload.new_password)
-  const result = await User.findByIdAndUpdate(user_id?.id,{password:password_hashed})
+  const result = await User.findByIdAndUpdate(user_id?.id, {
+    password: password_hashed,
+  })
 
   return result
 }
