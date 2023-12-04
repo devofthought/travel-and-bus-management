@@ -132,6 +132,7 @@ const createDriver = async (payload: IDriver): Promise<any> => {
     if (!newUser.length) {
       throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create user')
     }
+    // TODO: send a welcome email to driver email.
     newDriverData = newUser[0]
 
     await session.commitTransaction()

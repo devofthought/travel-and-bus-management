@@ -2,6 +2,8 @@ import express from 'express'
 import validateRequest from '../../middlewares/validateRequest'
 import { authValidation } from './auth.validation'
 import { AuthController } from './auth.controller'
+import auth from '../../middlewares/auth'
+import { ENUM_USER_ROLE } from '../../../enums/user'
 const router = express.Router()
 
 router.post(
@@ -11,6 +13,7 @@ router.post(
 )
 router.post(
   '/admin/create-driver',
+  auth(ENUM_USER_ROLE.ADMIN),
   validateRequest(authValidation.createDriverZodSchema),
   AuthController.createDriver
 )
