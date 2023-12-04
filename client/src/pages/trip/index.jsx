@@ -332,24 +332,26 @@ const Trip = () => {
                                     rx="3"
                                     ry="3"
                                     fill={`${
-                                      seat?.isAvailable
-                                        ? `${
-                                            selectedSeats[0] === seat?.name ||
-                                            selectedSeats[1] === seat?.name ||
-                                            selectedSeats[2] === seat?.name ||
-                                            selectedSeats[3] === seat?.name
-                                              ? "#22C55E"
-                                              : ` ${
-                                                  !!seatStatus?.data?.find(
-                                                    (s) =>
-                                                      s?.booking_seat ===
-                                                      seat?.name
-                                                  )
-                                                    ? "#97a5c2"
-                                                    : "#fff"
-                                                }`
+                                      selectedSeats[0] === seat?.name ||
+                                      selectedSeats[1] === seat?.name ||
+                                      selectedSeats[2] === seat?.name ||
+                                      selectedSeats[3] === seat?.name
+                                        ? "#22C55E"
+                                        : ` ${
+                                            !!seatStatus?.data?.find(
+                                              (s) =>
+                                                s?.booking_seat === seat?.name
+                                            )
+                                              ? !!seatStatus?.data?.find(
+                                                  (s) =>
+                                                    s?.booking_seat ===
+                                                      seat?.name &&
+                                                    s?.status === "pending"
+                                                )
+                                                ? "#ff9090"
+                                                : "#97a5c2"
+                                              : "#fff"
                                           }`
-                                        : "#ff9090"
                                     }`}
                                     stroke="#000"
                                     stroke-width="1"
@@ -362,24 +364,26 @@ const Trip = () => {
                                     rx="5"
                                     ry="5"
                                     fill={`${
-                                      seat?.isAvailable
-                                        ? `${
-                                            selectedSeats[0] === seat?.name ||
-                                            selectedSeats[1] === seat?.name ||
-                                            selectedSeats[2] === seat?.name ||
-                                            selectedSeats[3] === seat?.name
-                                              ? "#22C55E"
-                                              : ` ${
-                                                  !!seatStatus?.data?.find(
-                                                    (s) =>
-                                                      s?.booking_seat ===
-                                                      seat?.name
-                                                  )
-                                                    ? "#97a5c2"
-                                                    : "#fff"
-                                                }`
+                                      selectedSeats[0] === seat?.name ||
+                                      selectedSeats[1] === seat?.name ||
+                                      selectedSeats[2] === seat?.name ||
+                                      selectedSeats[3] === seat?.name
+                                        ? "#22C55E"
+                                        : ` ${
+                                            !!seatStatus?.data?.find(
+                                              (s) =>
+                                                s?.booking_seat === seat?.name
+                                            )
+                                              ? !!seatStatus?.data?.find(
+                                                  (s) =>
+                                                    s?.booking_seat ===
+                                                      seat?.name &&
+                                                    s?.status === "pending"
+                                                )
+                                                ? "#ff9090"
+                                                : "#97a5c2"
+                                              : "#fff"
                                           }`
-                                        : "#ff9090"
                                     }`}
                                     stroke="#000"
                                     stroke-width="1"
@@ -392,24 +396,26 @@ const Trip = () => {
                                     rx="5"
                                     ry="5"
                                     fill={`${
-                                      seat?.isAvailable
-                                        ? `${
-                                            selectedSeats[0] === seat?.name ||
-                                            selectedSeats[1] === seat?.name ||
-                                            selectedSeats[2] === seat?.name ||
-                                            selectedSeats[3] === seat?.name
-                                              ? "#22C55E"
-                                              : ` ${
-                                                  !!seatStatus?.data?.find(
-                                                    (s) =>
-                                                      s?.booking_seat ===
-                                                      seat?.name
-                                                  )
-                                                    ? "#97a5c2"
-                                                    : "#fff"
-                                                }`
+                                      selectedSeats[0] === seat?.name ||
+                                      selectedSeats[1] === seat?.name ||
+                                      selectedSeats[2] === seat?.name ||
+                                      selectedSeats[3] === seat?.name
+                                        ? "#22C55E"
+                                        : ` ${
+                                            !!seatStatus?.data?.find(
+                                              (s) =>
+                                                s?.booking_seat === seat?.name
+                                            )
+                                              ? !!seatStatus?.data?.find(
+                                                  (s) =>
+                                                    s?.booking_seat ===
+                                                      seat?.name &&
+                                                    s?.status === "pending"
+                                                )
+                                                ? "#ff9090"
+                                                : "#97a5c2"
+                                              : "#fff"
                                           }`
-                                        : "#ff9090"
                                     }`}
                                     stroke="#000"
                                     stroke-width="1"
@@ -422,24 +428,26 @@ const Trip = () => {
                                     rx="5"
                                     ry="5"
                                     fill={`${
-                                      seat?.isAvailable
-                                        ? `${
-                                            selectedSeats[0] === seat?.name ||
-                                            selectedSeats[1] === seat?.name ||
-                                            selectedSeats[2] === seat?.name ||
-                                            selectedSeats[3] === seat?.name
-                                              ? "#22C55E"
-                                              : ` ${
-                                                  !!seatStatus?.data?.find(
-                                                    (s) =>
-                                                      s?.booking_seat ===
-                                                      seat?.name
-                                                  )
-                                                    ? "#97a5c2"
-                                                    : "#fff"
-                                                }`
+                                      selectedSeats[0] === seat?.name ||
+                                      selectedSeats[1] === seat?.name ||
+                                      selectedSeats[2] === seat?.name ||
+                                      selectedSeats[3] === seat?.name
+                                        ? "#22C55E"
+                                        : ` ${
+                                            !!seatStatus?.data?.find(
+                                              (s) =>
+                                                s?.booking_seat === seat?.name
+                                            )
+                                              ? !!seatStatus?.data?.find(
+                                                  (s) =>
+                                                    s?.booking_seat ===
+                                                      seat?.name &&
+                                                    s?.status === "pending"
+                                                )
+                                                ? "#ff9090"
+                                                : "#97a5c2"
+                                              : "#fff"
                                           }`
-                                        : "#ff9090"
                                     }`}
                                     stroke="#000"
                                     stroke-width="1"
