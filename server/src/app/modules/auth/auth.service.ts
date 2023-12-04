@@ -96,12 +96,21 @@ const createTraveler = async (payload: IUser): Promise<any> => {
 
 const createDriver = async (payload: IDriver): Promise<any> => {
   const driverData = { ...payload }
-  const driver_code = await generatedDriverCode() // generated bus code
+  const driver_code = await generatedDriverCode() // generated driver code
 
   let newDriverData = null
   const session = await mongoose.startSession()
   try {
     session.startTransaction()
+
+    const isEmailHas= await User.findOne({email:payload.email})
+    if(isEmailHas){
+      throw new ApiError(httpStatus.BAD_REQUEST, 'email is not a valid email')
+    }
+    const isPhoneHas= await Driver.findOne({phone:payload.phone})
+    if(isPhoneHas){
+      throw new ApiError(httpStatus.BAD_REQUEST, 'phone is not a valid phone')
+    }
     //array
     driverData.joining_date = new Date().toISOString()
     driverData.driver_code = driver_code
@@ -123,6 +132,7 @@ const createDriver = async (payload: IDriver): Promise<any> => {
     if (!newUser.length) {
       throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create user')
     }
+    // TODO: send a welcome email to driver email.
     newDriverData = newUser[0]
 
     await session.commitTransaction()

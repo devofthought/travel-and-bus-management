@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import httpStatus from 'http-status'
-import { SortOrder } from 'mongoose'
+import mongoose, { SortOrder } from 'mongoose'
 import ApiError from '../../../errors/ApiError'
 import { paginationHelper } from '../../../helper/paginationHelper'
 import { IGenericResponse } from '../../../interfaces/common'
@@ -9,6 +9,7 @@ import { VariantCreation } from '../../../utils/utilities'
 import { driverSearchableFields } from './driver.constants'
 import { IDriver, IDriverFilter } from './driver.interface'
 import { Driver } from './driver.model'
+import { User } from '../user/user.model'
 
 const getAllDrivers = async (
   filters: IDriverFilter,
@@ -78,6 +79,40 @@ const updateDriver = async (
     throw new ApiError(httpStatus.BAD_REQUEST, 'Driver not found')
   }
 
+  if (isExist.email !== payload.email) {
+    const isEmailHas = await  User.findOne({ email: payload.email })
+    if (isEmailHas) {
+      throw new ApiError(httpStatus.BAD_REQUEST, 'This email has already been')
+    }
+    
+    const session = await mongoose.startSession()
+    try {
+      session.startTransaction()
+
+      await User.findOneAndUpdate(
+        { email: isExist.email },
+        { email: payload.email },
+        { session, new: true }
+      )
+
+      const result = await Driver.findByIdAndUpdate(isExist._id, payload, {
+        session,
+        new: true,
+      })
+      if (!result) {
+        throw new ApiError(httpStatus.BAD_REQUEST, 'Driver not updated')
+      }
+
+      await session.commitTransaction()
+      await session.endSession()
+      return result
+    } catch (error) {
+      await session.abortTransaction()
+      await session.endSession()
+      throw error
+    }
+  }
+
   const result = await Driver.findByIdAndUpdate(id, payload, {
     new: true,
   })
@@ -89,10 +124,13 @@ const updateDriver = async (
 }
 
 const getAvailableDriver = async (date: string): Promise<IDriver[] | null> => {
-  const allDriver = await Driver.find({});
-  const departureDate = VariantCreation.extractDateFromTimestamp(date);
-  const result = VariantCreation.availabilityDivider(allDriver, departureDate).standbyElements;
-  return result;
+  const allDriver = await Driver.find({})
+  const departureDate = VariantCreation.extractDateFromTimestamp(date)
+  const result = VariantCreation.availabilityDivider(
+    allDriver,
+    departureDate
+  ).standbyElements
+  return result
 }
 
 export const DriverService = {
@@ -101,7 +139,6 @@ export const DriverService = {
   updateDriver,
   getAvailableDriver,
 }
-
 
 /* 
 // Function to assign drivers based on input date

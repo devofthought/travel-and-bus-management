@@ -122,7 +122,7 @@ const DriverList = ({ data }) => {
   };
 
   useEffect(() => {
-    if (response?.success) {
+    if (response?.statusCode === 200) {
       Swal.fire({
         position: "center",
         icon: "success",
@@ -130,7 +130,8 @@ const DriverList = ({ data }) => {
         showConfirmButton: false,
         timer: 1500,
       });
-    } else {
+    }
+    if (error?.status === 400) {
       Swal.fire({
         position: "center",
         icon: "error",
