@@ -80,11 +80,11 @@ const updateDriver = async (
   }
 
   if (isExist.email !== payload.email) {
-    const isEmailHas = await  User.findOne({ email: payload.email })
+    const isEmailHas = await  User.findOne({ email: payload.email?.toLowerCase() })
     if (isEmailHas) {
       throw new ApiError(httpStatus.BAD_REQUEST, 'This email has already been')
     }
-    
+
     const session = await mongoose.startSession()
     try {
       session.startTransaction()
@@ -140,40 +140,3 @@ export const DriverService = {
   getAvailableDriver,
 }
 
-/* 
-// Function to assign drivers based on input date
-function assignDrivers(drivers: Driver[], inputDate: string) {
-  const assignedDrivers: Driver[] = [];
-  const standbyDrivers: Driver[] = [];
-
-  drivers.forEach((driver) => {
-    const isOccupied = driver.availability_status.some(
-      (status) => status.date === inputDate
-    );
-
-    if (isOccupied) {
-      assignedDrivers.push(driver);
-    } else {
-      standbyDrivers.push(driver);
-    }
-  });
-
-  return { assignedDrivers, standbyDrivers };
-}
-
-// Input date to check driver availability
-const inputDate = "2023-09-08";
-
-// Assign drivers based on the input date
-const { assignedDrivers, standbyDrivers } = assignDrivers(drivers, inputDate);
-
-console.log("Assigned Drivers:");
-assignedDrivers.forEach((driver) => {
-  console.log(`Driver ${driver.id}: ${driver.name}`);
-});
-
-console.log("\nStandby Drivers:");
-standbyDrivers.forEach((driver) => {
-  console.log(`Driver ${driver.id}: ${driver.name}`);
-});
-*/
