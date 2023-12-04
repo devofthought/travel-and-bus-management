@@ -96,6 +96,9 @@ a {
   margin: 0 auto;
 }
 
+.main-button:hover{
+  background-color:  rgb(220 38 38);
+}
 
 .blog-container {
   width: 100%;
