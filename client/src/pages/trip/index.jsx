@@ -18,6 +18,8 @@ import { IoSearchOutline } from "react-icons/io5";
 import Loader from "@/components/UI/Loader";
 import TripBanner from "@/components/Shared/TripBanner";
 import duration from "dayjs/plugin/duration";
+import { useInsertBookingMutation } from "@/redux/booking/bookingApi";
+import toast from "react-hot-toast";
 dayjs.extend(duration);
 
 const Trip = () => {
@@ -37,7 +39,7 @@ const Trip = () => {
   };
 
   const { data: getMyProfile } = useGetMyProfileQuery({ headers });
-  // console.log(getMyProfile);
+  // console.log(getMyProfile?.data);
 
   /*  */
   const [
@@ -82,6 +84,25 @@ const Trip = () => {
       isLoading: availableTripIsLoading,
     },
   ] = useGetTripsByUsersMutation();
+
+  const [insertBooking, { isSuccess: insertBookingIsSuccess }] =
+    useInsertBookingMutation();
+
+  const handleSubmitBooking = (e, tripId) => {
+    const body = {
+      user_id: {
+        name: getMyProfile?.data?.traveler_id?.name
+          ? getMyProfile?.data?.traveler_id?.name
+          : e.target.name.value,
+        email: getMyProfile?.data?.email
+          ? getMyProfile?.data?.email
+          : e.target.email.value,
+      },
+      trip_id: tripId,
+      booking_seat: selectedSeats,
+    };
+    insertBooking(body);
+  };
 
   useEffect(() => {
     getTripSearchByUser({
@@ -284,6 +305,7 @@ const Trip = () => {
                           } else {
                             return (
                               <button
+                                title={seat?.name}
                                 key={index}
                                 className={`flex items-center justify-center border-none bg-white ${
                                   seat?.isAvailable === false
@@ -499,22 +521,29 @@ const Trip = () => {
                       </div>
                       <div className="border rounded-lg mt-10 w-10/12 lg:w-1/2 mx-auto">
                         <form
-                          onSubmit={(e) => handlePaymentPageMove(e)}
+                          onSubmit={(e) => {
+                            handlePaymentPageMove(e);
+                            handleSubmitBooking(e, trip?.id);
+                          }}
                           className="flex flex-col gap-4"
                         >
-                          <input
-                            type="text"
-                            name="name"
-                            placeholder="Name"
-                            className="border border-gray-400 w-full rounded-md px-2 h-10"
-                          />
-                          <input
-                            type="text"
-                            name="email"
-                            placeholder="Email"
-                            className="border border-gray-400 w-full rounded-md px-2 h-10"
-                            required={true}
-                          />
+                          {!!getMyProfile?.data?.email || (
+                            <>
+                              <input
+                                type="text"
+                                name="name"
+                                placeholder="Name"
+                                className="border border-gray-400 w-full rounded-md px-2 h-10"
+                              />
+                              <input
+                                type="text"
+                                name="email"
+                                placeholder="Email"
+                                className="border border-gray-400 w-full rounded-md px-2 h-10"
+                                required={true}
+                              />
+                            </>
+                          )}
                           <Button
                             styles={`w-full px-2 md:px-3 py-2 font-semibold border-2 rounded-lg primary-bg text-white`}
                             textStyle={`btn-text px-2`}

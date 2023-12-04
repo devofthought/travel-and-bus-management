@@ -10,7 +10,17 @@ export const apiSlice = createApi({
       return headers;
     },
   }),
-  tagTypes: ["ticket", "bus", "driver", "route", "incident", "trip", "feedback", "user"],
+  tagTypes: [
+    "ticket",
+    "bus",
+    "driver",
+    "route",
+    "incident",
+    "trip",
+    "feedback",
+    "user",
+    "booking",
+  ],
   endpoints: () => ({}),
 });
 
