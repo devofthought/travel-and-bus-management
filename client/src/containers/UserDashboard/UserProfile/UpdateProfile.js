@@ -1,11 +1,20 @@
 import React, { useEffect } from "react";
-import { Form, Input, InputNumber, Select, Upload } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import {
+  Button,
+  Form,
+  Input,
+  InputNumber,
+  Select,
+  Upload,
+  message,
+} from "antd";
+import { PlusOutlined, LoadingOutlined } from "@ant-design/icons";
 import MainButton from "../../../components/UI/Button";
 import { useUpdateTravelerProfileMutation } from "@/redux/user/userApi";
 import Swal from "sweetalert2";
 
 const UpdateProfile = ({ userProfile }) => {
+  const [messageApi, contextHolder] = message.useMessage();
   const [
     updateTravelerProfile,
     {
@@ -14,10 +23,19 @@ const UpdateProfile = ({ userProfile }) => {
       isLoading: updateTravelerProfileIsLoading,
     }, // TODO: [ankan bhai] handle error
   ] = useUpdateTravelerProfileMutation();
-
   // form
   const onFinish = (values) => {
-    console.log(values);
+    // console.log(values);
+
+    // error handle of form data
+    if (!values.name || !values.phone || !values.age || !values.profile_photo) {
+      messageApi.open({
+        type: "error",
+        content: "Name, Phone, Age, and Profile Photo can't be empty!",
+      });
+      return;
+    }
+
     let formData = new FormData();
     if (values.age) {
       formData.append("age", values.age);
@@ -70,6 +88,7 @@ const UpdateProfile = ({ userProfile }) => {
 
   return (
     <div>
+      {contextHolder}
       <div className="flex justify-between flex-wrap">
         <Form
           autoComplete="off"
@@ -78,6 +97,19 @@ const UpdateProfile = ({ userProfile }) => {
           initialValues={userProfile}
           className="w-full flex flex-wrap justify-between"
           onFinishFailed={(error) => {
+            // error handle of form data
+            if (
+              error.values.name === "" ||
+              !error.values.phone ||
+              !error.values.age ||
+              !error.values.profile_photo
+            ) {
+              messageApi.open({
+                type: "error",
+                content: "Name, Phone, Age, and Profile Photo aren't valid!",
+              });
+              return;
+            }
             console.log({ error }); // TODO: [anakar bhai] handle the error show the proper way
           }}
         >
@@ -99,7 +131,7 @@ const UpdateProfile = ({ userProfile }) => {
               // { required: true, message: "Please input your phone number!" },
               {
                 type: "number",
-                message: "please your phone number",
+                message: "Your phone number!",
                 min: 1100000000,
                 max: 1999999999,
               },
@@ -120,7 +152,7 @@ const UpdateProfile = ({ userProfile }) => {
             rules={[
               {
                 type: "number",
-                message: "your age is required",
+                message: "Your age must be between 4 to 100.",
                 min: 4,
                 max: 100,
               },
@@ -157,6 +189,7 @@ const UpdateProfile = ({ userProfile }) => {
             ]}
           >
             <Upload
+              accept=".png, .jpg, .jpeg"
               listType="picture-card"
               maxCount={1}
               beforeUpload={(file) => {
@@ -174,10 +207,21 @@ const UpdateProfile = ({ userProfile }) => {
           </Form.Item>
 
           <Form.Item wrapperCol={{ span: 24 }} className="w-full mb-0">
-            <MainButton
+            {/* <MainButton
               btnName={"Update Profile"}
               styles="w-full py-2"
-            ></MainButton>
+            ></MainButton> */}
+            <Button
+              type="primary"
+              htmlType="submit"
+              icon={updateTravelerProfileIsLoading ? <LoadingOutlined /> : null}
+              className="w-full bg-[#d84e55] rounded"
+              loading={updateTravelerProfileIsLoading}
+            >
+              {updateTravelerProfileIsLoading
+                ? "Updating..."
+                : "Update Profile"}
+            </Button>
           </Form.Item>
         </Form>
       </div>
