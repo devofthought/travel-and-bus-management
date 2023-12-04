@@ -24,7 +24,7 @@ const UpdateRouteForm = ({ editingRoute, resetEditing }) => {
   form.setFieldsValue(data?.data);
 
   useEffect(() => {
-    if (updateResponse?.success) {
+    if (updateResponse?.statusCode === 200) {
       resetEditing();
       Swal.fire({
         position: "center",
@@ -33,7 +33,7 @@ const UpdateRouteForm = ({ editingRoute, resetEditing }) => {
         showConfirmButton: false,
         timer: 1500,
       });
-    } else {
+    } else if (updateError?.status === 400 || updateError?.status === 406) {
       resetEditing();
       Swal.fire({
         position: "center",
@@ -89,10 +89,13 @@ const UpdateRouteForm = ({ editingRoute, resetEditing }) => {
         >
           <Input placeholder="Type To" />
         </Form.Item>
-
+        
+        <label className="font-small">
+          <span className="primary-text">*</span> Distance
+        </label>
         <Form.Item
           name="distance"
-          label="Distance"
+          className="mt-2 mb-6"
           rules={[
             {
               required: true,
@@ -107,6 +110,7 @@ const UpdateRouteForm = ({ editingRoute, resetEditing }) => {
           hasFeedback
         >
           <InputNumber
+            className="h-10 w-full flex items-center"
             formatter={(values) =>
               `${values}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
             }
@@ -131,5 +135,7 @@ const UpdateRouteForm = ({ editingRoute, resetEditing }) => {
     </div>
   );
 };
+
+// TODO:[anakan bhai] handle loading button please.
 
 export default UpdateRouteForm;
