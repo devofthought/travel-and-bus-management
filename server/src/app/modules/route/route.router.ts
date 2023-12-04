@@ -15,6 +15,7 @@ router.post(
 )
 router.patch(
   '/:_id',
+  auth(ENUM_USER_ROLE.ADMIN),
   validateRequest(RouteValidation.updateRouteZodSchema),
   RouteController.updateRoute
 )

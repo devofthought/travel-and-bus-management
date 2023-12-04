@@ -90,7 +90,7 @@ const RouteListTable = ({ data }) => {
       okText: "Yes",
       okType: "danger",
       onOk: () => {
-        deleteRoute(routeData._id);
+        // deleteRoute(routeData._id); // TODO: delete route left
       },
     });
   };
@@ -105,7 +105,7 @@ const RouteListTable = ({ data }) => {
   };
 
   useEffect(() => {
-    if (response?.success) {
+    if (response?.statusCode === 200) {
       Swal.fire({
         position: "center",
         icon: "success",
@@ -113,7 +113,7 @@ const RouteListTable = ({ data }) => {
         showConfirmButton: false,
         timer: 1500,
       });
-    } else {
+    } else if (error?.status === 400 || error?.status === 406) {
       Swal.fire({
         position: "center",
         icon: "error",
@@ -150,5 +150,7 @@ const RouteListTable = ({ data }) => {
     </div>
   );
 };
+
+// TODO:[anakan bhai] handle table loading state and show a loader in the table when data fetching. and check pagination also in the table.
 
 export default RouteListTable;

@@ -98,9 +98,45 @@ const updateRoute = async (
     throw new ApiError(httpStatus.BAD_REQUEST, 'Route not found')
   }
 
-  const result = await Route.findByIdAndUpdate(id, payload, {
-    new: true,
-  })
+  if (isExist.from === payload.from && isExist.to === payload.to) {
+    const result = await Route.findByIdAndUpdate(
+      id,
+      {
+        $set: {
+          distance: payload.distance,
+        },
+      },
+      {
+        new: true,
+      }
+    )
+    return result
+  }
+
+  if (payload.from && payload.to) {
+    const existingRoute = await Route.findOne({
+      from: payload.from.trim().toLowerCase(),
+      to: payload.to.trim().toLowerCase(),
+    })
+    if (existingRoute) {
+      throw new ApiError(httpStatus.NOT_ACCEPTABLE, 'This route already has!')
+    }
+    const result = await Route.findByIdAndUpdate(
+      id,
+      {
+        $set: {
+          from: payload.from.trim().toLowerCase(),
+          to: payload.to.trim().toLowerCase(),
+        },
+      },
+      {
+        new: true,
+      }
+    )
+    return result
+  }
+
+  const result = await Route.findById(id)
   return result
 }
 
