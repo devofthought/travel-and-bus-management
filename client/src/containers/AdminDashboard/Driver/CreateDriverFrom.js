@@ -1,8 +1,9 @@
 import { useAddDriverMutation } from "@/redux/driver/driverApi";
-import { Form, Select, InputNumber, Input } from "antd";
-import { useEffect } from "react";
+import { Form, Select, InputNumber, Input, Button } from "antd";
+import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import MainButton from "@/components/UI/Button";
+import { LoadingOutlined } from "@ant-design/icons";
+// import MainButton from "@/components/UI/Button";
 
 const initialData = {
   Name: "",
@@ -15,8 +16,8 @@ const initialData = {
   years_experience: 0,
 };
 
-const CreateDriverForm = ({ driverInfo, setDriverInfo }) => {
-  setDriverInfo(initialData);
+const CreateDriverForm = () => {
+  const [driverInfo, setDriverInfo] = useState(initialData);
   const [
     AddDriver,
     { data: addResponse, error: addError, isLoading: addIsLoading },
@@ -24,15 +25,19 @@ const CreateDriverForm = ({ driverInfo, setDriverInfo }) => {
 
   const onFinish = async (values) => {
     setDriverInfo(values);
-    await AddDriver(values);
+    const phoneNumber = values.prefix + values.phone;
+    const createData ={...values ,phone:phoneNumber}
+    await AddDriver(createData);
   };
+
+  console.log(driverInfo);
 
   const [form] = Form.useForm();
   form.setFieldsValue(driverInfo);
 
   useEffect(() => {
-    console.log(addError);
-    if (addResponse?.success) {
+    console.log(addError)
+    if (addResponse?.statusCode === 200) {
       setDriverInfo(initialData);
       Swal.fire({
         position: "center",
@@ -41,16 +46,24 @@ const CreateDriverForm = ({ driverInfo, setDriverInfo }) => {
         showConfirmButton: false,
         timer: 2000,
       });
-    } else {
+    } else if (addError?.status === 400) {
       Swal.fire({
         position: "center",
         icon: "error",
         title: `${addError?.data?.errorMessage[0]?.message}`,
         showConfirmButton: false,
-        timer: 2000,
+        timer: 2500,
       });
     }
   }, [addResponse, addError]);
+
+  const prefixSelector = (
+    <Form.Item name="prefix" initialValue="+880" noStyle>
+      <Select style={{ width: 80 }}>
+        <Option value="+880">+880</Option>
+      </Select>
+    </Form.Item>
+  );
 
   return (
     <div
@@ -98,25 +111,28 @@ const CreateDriverForm = ({ driverInfo, setDriverInfo }) => {
           ]}
           hasFeedback
         >
-          <InputNumber
-            className="w-full"
-            placeholder="Type age"
-          />
+          <InputNumber className="w-full" placeholder="Type age" />
         </Form.Item>
-
         <Form.Item
           name="phone"
-          label="Phone"
+          label="Phone Number"
+          className="w-full"
           rules={[
+            { required: true, message: "input phone number!" },
             {
-              required: true,
+              type: "number",
               message: "Please enter Driver phone number",
+              min: 1100000000,
+              max: 1999999999,
             },
-            { whitespace: true },
           ]}
           hasFeedback
         >
-          <Input placeholder="Type driver phone number" />
+          <InputNumber
+            addonBefore={prefixSelector}
+            className="w-full"
+            placeholder="phone number"
+          />
         </Form.Item>
 
         <Form.Item
@@ -210,15 +226,18 @@ const CreateDriverForm = ({ driverInfo, setDriverInfo }) => {
         </Form.Item>
 
         <Form.Item wrapperCol={{ span: 24 }}>
-          {/* <Button
+          <Button
             disabled={addIsLoading ? true : false}
             block
+            icon={addIsLoading ? <LoadingOutlined /> : null}
             type="primary"
+            className="w-full bg-[#d84e55] rounded"
+            loading={addIsLoading}
             htmlType="submit"
           >
             {addIsLoading ? "Loading..." : "Submit"}
-          </Button> */}
-          <MainButton btnName="Submit" styles="w-full py-3"></MainButton>
+          </Button>
+          {/* <MainButton btnName="Submit" styles="w-full py-3"></MainButton> */}
         </Form.Item>
       </Form>
     </div>
