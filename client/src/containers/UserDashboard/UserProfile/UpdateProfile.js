@@ -215,7 +215,7 @@ const UpdateProfile = ({ userProfile }) => {
               type="primary"
               htmlType="submit"
               icon={updateTravelerProfileIsLoading ? <LoadingOutlined /> : null}
-              className="bg-[#d84e55] py-1 hover:bg-red-600 w-full text-white border-none rounded-[5px] cursor-pointer text-center transition-transform active:scale-95 hover:opacity-75 shadow"
+              className="bg-[#d84e55] hover:bg-red-600 w-full text-white border-none rounded-[5px] cursor-pointer text-center transition-transform active:scale-95 hover:opacity-75 shadow"
               loading={updateTravelerProfileIsLoading}
             >
               {updateTravelerProfileIsLoading
