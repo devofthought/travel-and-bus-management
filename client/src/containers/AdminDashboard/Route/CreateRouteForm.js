@@ -1,4 +1,4 @@
-import { Form, Button, Input, InputNumber } from "antd";
+import { Form, Input, InputNumber } from "antd";
 import { useEffect } from "react";
 import { useAddRouteMutation } from "@/redux/route/routeApi";
 import Swal from "sweetalert2";
@@ -9,19 +9,24 @@ const initialData = {
   to: "",
   distance: 0,
 };
+
+
 const CreateRouteForm = () => {
+  const [form] = Form.useForm();
+  // form.setFieldsValue(initialData);
+
   const [
     AddRoute,
     { data: addResponse, error: addError, isLoading: addIsLoading },
   ] = useAddRouteMutation();
   const onFinish = async (values) => {
-    // console.log({ values });
     await AddRoute(values);
   };
 
   useEffect(() => {
-    if (addResponse?.success) {
+      if (addResponse?.statusCode === 200) {
       form.setFieldsValue(initialData);
+      console.log('i am here')
       Swal.fire({
         position: "center",
         icon: "success",
@@ -29,7 +34,7 @@ const CreateRouteForm = () => {
         showConfirmButton: false,
         timer: 1500,
       });
-    } else {
+    }  else if (addError?.status === 400 || addError?.status === 406) {
       Swal.fire({
         position: "center",
         icon: "error",
@@ -39,9 +44,6 @@ const CreateRouteForm = () => {
       });
     }
   }, [addResponse, addError]);
-
-  const [form] = Form.useForm();
-  form.setFieldsValue(initialData);
 
   return (
     <div
@@ -136,5 +138,7 @@ const CreateRouteForm = () => {
     </div>
   );
 };
+
+// TODO: [handler submit button with loading]
 
 export default CreateRouteForm;
