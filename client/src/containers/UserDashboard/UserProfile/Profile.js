@@ -1,20 +1,54 @@
 import React from "react";
 import { Form, Input, InputNumber, Select, Upload } from "antd";
+import Image from "next/image";
 
 const Profile = ({ userProfile }) => {
-  // console.log("testing model", userProfile);   // TODO: [ankan bhai] input field not updating. fixed this issue or change input/form to normal <p> tag 
+  console.log("testing model", userProfile);
 
   const prefixSelector = (
     <Form.Item name="prefix" initialValue="+880" noStyle>
-      <Select style={{ width: 80 }} disabled>
-      </Select>
+      <Select style={{ width: 80 }} disabled></Select>
     </Form.Item>
   );
 
   return (
     <div>
-      <div className="flex justify-between flex-wrap">
-        <Form
+      <div className="flex justify-between">
+        <div className="">
+          <Image
+            src={userProfile.image}
+            className="object-cover"
+            width={300}
+            height={300}
+          />
+        </div>
+        <div>
+          <p>
+            <span>Name:</span>
+            {userProfile.name}
+          </p>
+          <p>
+            <span>Email:</span>
+            {userProfile.email}
+          </p>
+          <p>
+            <span>Age:</span>
+            {userProfile.age}
+          </p>
+          <p>
+            <span>Phone:</span>
+            {userProfile.phone_full}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Profile;
+
+/* 
+ <Form
           autoComplete="off"
           layout="vertical"
           initialValues={userProfile}
@@ -93,9 +127,6 @@ const Profile = ({ userProfile }) => {
             <InputNumber className="w-full" placeholder="Type age" disabled />
           </Form.Item>
         </Form>
-      </div>
-    </div>
-  );
-};
 
-export default Profile;
+
+*/

@@ -37,6 +37,8 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
       phone:
         data?.data.traveler_id?.phone &&
         data?.data.traveler_id?.phone.substring(4),
+      phone_full:
+        data?.data.traveler_id?.phone && data?.data.traveler_id?.phone,
     };
     setUserProfile({ ...user });
   }, [data]);
