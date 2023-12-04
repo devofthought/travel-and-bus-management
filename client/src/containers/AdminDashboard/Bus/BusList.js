@@ -56,40 +56,43 @@ const BusListTable = ({ data }) => {
     },
     {
       title: "Total Trip",
-      dataIndex: "total_trip",
-      minWidth: 200,
-      sorter: (a, b) => a.total_trip - b.total_trip,
-    },
-    {
-      title: "Current status",
       dataIndex: "availability_status",
       minWidth: 200,
       render: (availability_status) => {
-        return (
-          <p
-            className={
-              availability_status === "servicing"
-                ? "bg-[rgba(255,189,90,.2)] text-[#ffc107] rounded pl-2"
-                : availability_status === "standBy"
-                ? "bg-[rgba(28,213,174,.2)] text-[#38cab3] rounded pl-2"
-                : availability_status === "transit"
-                ? "bg-[#7CB9E8] text-[#0039a6] rounded pl-2"
-                : availability_status === "rest"
-                ? "bg-[#A3C1AD] text-[#002244] rounded pl-2"
-                : "bg-[rgba(247,79,117,.2)] text-[#f74f75] rounded pl-2"
-            }
-          >
-            {availability_status}
-          </p>
-        );
+        return <p>{availability_status?.length}</p>;
       },
     },
+    // {
+    //   title: "Current status",
+    //   dataIndex: "availability_status",
+    //   minWidth: 200,
+    //   render: (availability_status) => {
+    //     return (
+    //       <p
+    //         className={
+    //           availability_status === "servicing"
+    //             ? "bg-[rgba(255,189,90,.2)] text-[#ffc107] rounded pl-2"
+    //             : availability_status === "standBy"
+    //             ? "bg-[rgba(28,213,174,.2)] text-[#38cab3] rounded pl-2"
+    //             : availability_status === "transit"
+    //             ? "bg-[#7CB9E8] text-[#0039a6] rounded pl-2"
+    //             : availability_status === "rest"
+    //             ? "bg-[#A3C1AD] text-[#002244] rounded pl-2"
+    //             : "bg-[rgba(247,79,117,.2)] text-[#f74f75] rounded pl-2"
+    //         }
+    //       >
+    //         {availability_status}
+    //       </p>
+    //     );
+    //   },
+    // },
     {
       title: "Seats",
       dataIndex: "total_seats",
       minWidth: 200,
       render: (total_seats) => {
-        return <p>{total_seats} Seats</p>;
+        console.log(total_seats)
+        return <p>{total_seats[0]} Seats</p>;
       },
     },
     {

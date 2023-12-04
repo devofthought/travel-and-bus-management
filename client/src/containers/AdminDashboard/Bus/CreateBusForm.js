@@ -3,25 +3,21 @@ import { PlusOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import { useAddBusMutation } from "@/redux/bus/busApi";
 import MainButton from "@/components/UI/Button";
+import Swal from "sweetalert2";
+
+const initialData = {
+  model: "",
+  brand: "",
+  bus_image: undefined,
+  inner_image: undefined,
+  outer_image: undefined,
+  total_seats: "",
+};
 
 const CreateBusForm = () => {
-  const initialData = {
-    model: "Vlvo x99",
-    brand: "",
-    bus_image: "",
-    inner_image: "",
-    outer_image: "",
-    total_seats: "",
-    availability_status: "",
-  };
   const [form] = Form.useForm();
-  form.setFieldsValue(initialData);
-  const [AddBus, { BusResponse: response, error, isLoading }] =
+  const [AddBus, { data: busCreateResponse, error, isLoading }] =
     useAddBusMutation();
-
-  // useEffect(() => {
-  //   form.setFieldsValue(initialData);
-  // }, [BusResponse]);
 
   const onFinish = async (values) => {
     // console.log(values);
@@ -35,12 +31,36 @@ const CreateBusForm = () => {
     values.outer_image
       ? formData.append("bus_image", values?.outer_image[0]?.originFileObj)
       : formData.append("bus_image", "");
-    formData.append("availability_status", values.availability_status);
     formData.append("brand_name", values.brand);
     formData.append("model", values.model);
     formData.append("total_seats", values.total_seats);
     await AddBus(formData);
   };
+
+  useEffect(() => {
+    if (busCreateResponse?.statusCode === 200) {
+      form.setFieldsValue(initialData);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: `${busCreateResponse?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } else if (
+      error?.status === 400 ||
+      error?.status === 406 ||
+      error?.status === 403
+    ) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: `${error?.data?.errorMessage[0]?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  }, [busCreateResponse, error]);
 
   const uploadButton = (
     <div>
@@ -54,6 +74,7 @@ const CreateBusForm = () => {
       </div>
     </div>
   );
+
   return (
     <div
       style={{
@@ -61,15 +82,13 @@ const CreateBusForm = () => {
       }}
     >
       <Form
+        form={form}
         autoComplete="off"
         layout="vertical"
         onFinish={onFinish}
-        // initialValue={initialData} // Set the initial values here
-        // form={form}
         onFinishFailed={(error) => {
           console.log({ error });
         }}
-        hasFeedback
       >
         <Form.Item
           name="model"
@@ -130,7 +149,7 @@ const CreateBusForm = () => {
           <Upload
             listType="picture-card"
             maxCount={1}
-            style={{width: '100%'}}
+            style={{ width: "100%" }}
             beforeUpload={(file) => {
               return new Promise((resolve, reject) => {
                 if (file.size > 2000000) {
@@ -244,32 +263,10 @@ const CreateBusForm = () => {
           hasFeedback
         >
           <Select placeholder="Select trip Driver code">
-            <Select.Option value="30">30 seats bus</Select.Option>
             <Select.Option value="40">40 seats bus</Select.Option>
-            <Select.Option value="44">44 seats bus</Select.Option>
-            <Select.Option value="48">48 seats bus</Select.Option>
           </Select>
         </Form.Item>
 
-        <Form.Item
-          name="availability_status"
-          label="Bus status"
-          requiredMark="require"
-          rules={[
-            {
-              required: true,
-              message: "bus status is required",
-            },
-          ]}
-          hasFeedback
-        >
-          <Select placeholder="Select bus status">
-            <Select.Option value="transit">transit</Select.Option>
-            <Select.Option value="discontinue">discontinue</Select.Option>
-            <Select.Option value="servicing">servicing</Select.Option>
-            <Select.Option value="rest">rest</Select.Option>
-          </Select>
-        </Form.Item>
         <Form.Item wrapperCol={{ span: 24 }}>
           <MainButton btnName="Submit" styles="w-full py-3"></MainButton>
         </Form.Item>
@@ -278,19 +275,6 @@ const CreateBusForm = () => {
   );
 };
 
+// TODO:[anakan bhai] please submit button loading spinner added {isLoading}
+
 export default CreateBusForm;
-
-/* 
-
-<div>
-<PlusOutlined />
-<div
-  style={{
-    marginTop: 8,
-  }}
->
-  Upload
-</div>
-</div>
-
- */
