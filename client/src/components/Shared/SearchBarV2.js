@@ -17,8 +17,8 @@ const SearchBarV2 = () => {
   };
 
   const router = useRouter();
-  const [fromData, setFromData] = useState("");
-  const [toData, setToData] = useState("");
+  const [fromData, setFromData] = useState(null);
+  const [toData, setToData] = useState(null);
   function handleChangeFrom(value) {
     setFromData(value);
   }

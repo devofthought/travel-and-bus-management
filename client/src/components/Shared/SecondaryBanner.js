@@ -37,6 +37,8 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
       phone:
         data?.data.traveler_id?.phone &&
         data?.data.traveler_id?.phone.substring(4),
+      phone_full:
+        data?.data.traveler_id?.phone && data?.data.traveler_id?.phone,
     };
     setUserProfile({ ...user });
   }, [data]);
@@ -69,7 +71,7 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
         <p className="mt-4 text-lg">
           Discover comfortable and convenient bus journeys for your travels.
         </p>
-        <div className="flex justify-between items-center w-2/3 mx-auto mt-10 backdrop-blur-xl opacity-100  p-5 rounded-3xl">
+        <div className="flex justify-between items-center w-2/3 mx-auto mt-10 backdrop-blur-xl opacity-100 border-2 border-solid border-white  p-5 rounded-3xl">
           <div className="flex items-center">
             <div className="relative w-16">
               <Image
@@ -122,8 +124,8 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
 
       {/* TRIP SEARCH MODAL */}
       <Modal
-        title={null}
         open={searchModal}
+        className="tripModal"
         centered
         confirmLoading={confirmLoadingTripSearchModal}
         onCancel={closedTripSearchModal}
