@@ -59,5 +59,5 @@ export const {
   useGetMyProfileQuery,
   useUpdateUserEmailMutation,
   useUpdateUserPasswordMutation,
-  useUpdateTravelerProfileMutation
+  useUpdateTravelerProfileMutation,
 } = userApi;

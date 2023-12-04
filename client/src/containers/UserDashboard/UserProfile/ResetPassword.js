@@ -42,8 +42,20 @@ const ResetPassword = () => {
         showConfirmButton: false,
         timer: 1500,
       });
+    } else if (
+      updatePasswordError?.status === 404 ||
+      updatePasswordError?.status === 406 ||
+      updatePasswordError?.status === 400
+    ) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: `${updatePasswordError?.data?.message}`,
+        showConfirmButton: false,
+        timer: 2000,
+      });
     }
-  }, [updatePasswordResponse]);
+  }, [updatePasswordResponse, updatePasswordError]);
 
   return (
     <Form
