@@ -23,7 +23,7 @@ const UpdateDriverForm = ({ editingDriver, resetEditing }) => {
   const [form] = Form.useForm();
   form.setFieldsValue(data?.data);
   useEffect(() => {
-    if (updateResponse?.success) {
+    if (updateResponse?.statusCode === 200) {
       resetEditing();
       Swal.fire({
         position: "center",
@@ -32,7 +32,7 @@ const UpdateDriverForm = ({ editingDriver, resetEditing }) => {
         showConfirmButton: false,
         timer: 1500,
       });
-    } else {
+    } else if (updateError?.status === 400) {
       resetEditing();
       Swal.fire({
         position: "center",
