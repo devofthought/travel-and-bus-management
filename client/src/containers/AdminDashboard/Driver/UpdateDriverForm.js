@@ -1,27 +1,19 @@
 import { Form, Button, Input, InputNumber, Select } from "antd";
 import Swal from "sweetalert2";
 import { useEffect } from "react";
-import {
-  useGetSingleDriverDetailsQuery,
-  useUpdateDriverMutation,
-} from "@/redux/driver/driverApi";
+import { useUpdateDriverMutation } from "@/redux/driver/driverApi";
 
 const UpdateDriverForm = ({ editingDriver, resetEditing }) => {
-  const {
-    data,
-    error: currRouteError,  // TODO:[ankan bhai] handle this error and loading => loading will be show one the table
-    isLoading: currRouteIsLoading,
-  } = useGetSingleDriverDetailsQuery(editingDriver?._id);
   const [
     updateDriver,
     { data: updateResponse, error: updateError, isLoading: updateIsLoading },
   ] = useUpdateDriverMutation();
   const onFinish = async (values) => {
-    await updateDriver({ driver_id: data?.data?._id, body: values });
+    await updateDriver({ driver_id: editingDriver?._id, body: values });
   };
 
   const [form] = Form.useForm();
-  form.setFieldsValue(data?.data);
+  form.setFieldsValue(editingDriver);
   useEffect(() => {
     if (updateResponse?.statusCode === 200) {
       resetEditing();
