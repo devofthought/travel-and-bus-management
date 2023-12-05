@@ -14,7 +14,7 @@ import MainButton from "@/components/UI/Button";
 const initialData = {
   route_code: "",
   bus_code: "",
-  bus_id:"",
+  bus_id: "",
   departure_time: "",
   arrival_time: "",
   driver_id: "",
@@ -56,9 +56,7 @@ const CreateTripForm = () => {
       (driver) => driver._id === values.driver_id
     );
 
-    const bus = busData?.data?.find(
-      (bus) => bus._id === values.bus_id
-    );
+    const bus = busData?.data?.find((bus) => bus._id === values.bus_id);
 
     AddTrip({
       ...values,
@@ -85,7 +83,7 @@ const CreateTripForm = () => {
   };
 
   useEffect(() => {
-    if (addResponse?.success) {
+    if (addResponse?.statusCode === 200) {
       form.setFieldsValue(initialData);
       Swal.fire({
         position: "center",
@@ -94,7 +92,11 @@ const CreateTripForm = () => {
         showConfirmButton: false,
         timer: 1500,
       });
-    } else {
+    } else if (
+      addError?.status === 400 ||
+      addError?.status === 406 ||
+      addError?.status === 403
+    ) {
       Swal.fire({
         position: "center",
         icon: "error",
