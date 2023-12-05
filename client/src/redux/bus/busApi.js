@@ -38,6 +38,14 @@ const busApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["bus"],
     }),
+    UpdateBusImage: builder.mutation({
+      query: ({ bus_id, body }) => ({
+        url: `/buses/image/${bus_id}`,
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: ["bus"],
+    }),
   }),
 });
 
@@ -48,4 +56,5 @@ export const {
   useAddBusMutation,
   useAddForGetRequestAvailableBusMutation,
   useUpdateBusMutation,
+  useUpdateBusImageMutation
 } = busApi;

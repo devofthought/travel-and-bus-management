@@ -2,11 +2,16 @@ import { Table, Modal, Avatar } from "antd";
 import { useState } from "react";
 import { EditOutlined } from "@ant-design/icons";
 import UpdateBusForm from "./UpdateBusFrom";
+import UpdateImage from "./UpdateBusImage";
 
 const BusListTable = ({ data }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editingBus, setEditingBus] = useState(null);
-  
+
+  /* bus image show and update modal  */
+  const [isImageModal, setIsImageModal] = useState(false);
+  const [ImageUpdate, setImageUpdate] = useState(null);
+
   const columns = [
     {
       title: "Sr.",
@@ -36,24 +41,54 @@ const BusListTable = ({ data }) => {
       title: "Image",
       dataIndex: "bus_image",
       minWidth: 200,
-      render: (bus_image) => {
-        return <Avatar shape="square" size={64} src={bus_image?.avatar} />;
+      render: (bus_image, BusData) => {
+        return (
+          <Avatar
+            shape="square"
+            size={64}
+            src={bus_image?.avatar}
+            className="cursor-pointer"
+            onClick={() => {
+              onImageSelect("bus_image", bus_image?.avatar, BusData._id);
+            }}
+          />
+        );
       },
     },
     {
       title: "inner image",
       dataIndex: "inner_image",
       minWidth: 200,
-      render: (inner_image) => {
-        return <Avatar shape="square" size={64} src={inner_image?.avatar} />;
+      render: (inner_image, BusData) => {
+        return (
+          <Avatar
+            shape="square"
+            size={64}
+            src={inner_image?.avatar}
+            className="cursor-pointer"
+            onClick={() => {
+              onImageSelect("inner_image", inner_image?.avatar, BusData._id);
+            }}
+          />
+        );
       },
     },
     {
       title: "Outer Image",
       dataIndex: "outer_image",
       minWidth: 200,
-      render: (outer_image) => {
-        return <Avatar shape="square" size={64} src={outer_image?.avatar} />;
+      render: (outer_image, BusData) => {
+        return (
+          <Avatar
+            shape="square"
+            size={64}
+            src={outer_image?.avatar}
+            className="cursor-pointer"
+            onClick={() => {
+              onImageSelect("outer_image", outer_image?.avatar, BusData._id);
+            }}
+          />
+        );
       },
     },
     {
@@ -115,6 +150,16 @@ const BusListTable = ({ data }) => {
     },
   ];
 
+  const onImageSelect = (image_name, url, Bus_id) => {
+    setIsImageModal(true);
+    setImageUpdate({ image_name, url, Bus_id });
+  };
+
+  const resetImageSelect = () => {
+    setIsImageModal(false);
+    setImageUpdate(null);
+  };
+  /* updating bus info */
   const onEditTrip = (BusData) => {
     setIsEditing(true);
     setEditingBus({ ...BusData });
@@ -151,6 +196,24 @@ const BusListTable = ({ data }) => {
             editingBus={editingBus}
             resetEditing={resetEditing}
           ></UpdateBusForm>
+        </Modal>
+
+        {/* Update bus images */}
+        <Modal
+          title="Edit Bus Image"
+          open={isImageModal}
+          okText="Save"
+          centered
+          onCancel={() => {
+            resetImageSelect();
+          }}
+          onOk={() => {
+            resetImageSelect();
+          }}
+          width={330}
+          footer={null}
+        >
+          <UpdateImage ImageUpdate={ImageUpdate}></UpdateImage>
         </Modal>
       </header>
     </div>
