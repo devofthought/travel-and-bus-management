@@ -65,7 +65,7 @@ const getAllBus = catchAsync(async (req: Request, res: Response) => {
   const paginationOptions = pick(req.query, paginationFields)
   const result = await BusService.getAllBus(filters, paginationOptions)
 
-  sendResponse<any[]>(res, {
+  sendResponse<IBus[]>(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'All bus retrieved successfully !',
@@ -78,7 +78,7 @@ const getSingleBus = catchAsync(async (req: Request, res: Response) => {
   const bus_code = req.params.bus_code
   const result = await BusService.getSingleBus(bus_code)
 
-  sendResponse<any>(res, {
+  sendResponse<IBus>(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Bus data retrieved successfully!',
@@ -111,28 +111,54 @@ const deleteBus = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
-const getAvailableBusController: RequestHandler = catchAsync(async (req, res) => {
-  const result = await BusService.getAvailableBus(req.body.departure_time);
+const getAvailableBusController: RequestHandler = catchAsync(
+  async (req, res) => {
+    const result = await BusService.getAvailableBus(req.body.departure_time)
 
-  sendResponse<any>(res, {
+    sendResponse<any>(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Available buses fetched successfully',
+      data: result,
+    })
+  }
+)
+
+const seatViewForBookingController: RequestHandler = catchAsync(
+  async (req, res) => {
+    const result = await BusService.seatViewForBooking(req.body.id)
+
+    sendResponse<any>(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'booking info of buses fetched successfully',
+      data: result,
+    })
+  }
+)
+
+const updateBusImage = catchAsync(async (req: Request, res: Response) => {
+  const id = req.params.id
+  const updatedData = req.body
+
+  if (req.file) {
+    const uploadedImage = await cloudinary.uploader.upload(req.file?.path)
+    const avatar = {
+      avatar: uploadedImage.secure_url,
+      avatar_public_url: uploadedImage.public_id,
+    }
+    updatedData.image = avatar
+  }
+
+  const result = await BusService.updateBusImage(id, updatedData)
+
+  sendResponse<IBus>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Available buses fetched successfully',
+    message: 'Bus updated successfully!',
     data: result,
   })
 })
-
-const seatViewForBookingController: RequestHandler = catchAsync(async (req, res) => {
-  const result = await BusService.seatViewForBooking(req.body.id);
-
-  sendResponse<any>(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: 'booking info of buses fetched successfully',
-    data: result,
-  })
-})
-
 
 export const BusController = {
   createBus,
@@ -142,4 +168,5 @@ export const BusController = {
   deleteBus,
   getAvailableBusController,
   seatViewForBookingController,
+  updateBusImage,
 }

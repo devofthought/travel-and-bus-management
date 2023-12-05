@@ -77,8 +77,19 @@ const CheckBusAvailableZodSchema = z.object({
   }),
 })
 
+const updateBusImageZodSchema = z.object({
+  body: z.object({
+    image: z
+      .string({
+        required_error: 'Bus image is required',
+      })
+      .optional(),
+  }),
+})
+
 export const BusValidation = {
   createBusZodSchema,
   updateBusZodSchema,
+  updateBusImageZodSchema,
   CheckBusAvailableZodSchema,
 }

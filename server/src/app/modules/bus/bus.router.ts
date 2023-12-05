@@ -17,6 +17,14 @@ router.post(
 )
 
 router.patch(
+  '/image/:id',
+  auth(ENUM_USER_ROLE.ADMIN),
+  multer.single('image'),
+  validateRequest(BusValidation.updateBusImageZodSchema),
+  BusController.updateBusImage
+)
+
+router.patch(
   '/:id',
   auth(ENUM_USER_ROLE.ADMIN),
   validateRequest(BusValidation.updateBusZodSchema),

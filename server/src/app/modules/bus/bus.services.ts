@@ -12,6 +12,7 @@ import { busSearchableFields } from './bus.constants'
 import { IBus, IBusFilter } from './bus.interface'
 import { Bus } from './bus.model'
 import { generatedBusCode } from './bus.utils'
+import cloudinary from '../../../config/cloudinary'
 
 const createBus = async (payload: IBus): Promise<any> => {
   const bus_code = await generatedBusCode() // generated bus code
@@ -177,6 +178,56 @@ const seatViewForBooking = async (id: string): Promise<any> => {
   return { availableSeats, bookedSeats }
 }
 
+type ImageDataPayload = {
+  image_name: 'bus_image' | 'outer_image' | 'inner_image'
+  image: {
+    avatar: string
+    avatar_public_url: string
+  }
+}
+
+const updateBusImage = async (
+  id: string,
+  payload: ImageDataPayload
+): Promise<IBus | null> => {
+  const isExist = await Bus.findById(id)
+  if (!isExist) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Bus not found!')
+  }
+
+  const { image, image_name } = payload
+
+  if (
+    image === undefined ||
+    !['bus_image', 'outer_image', 'inner_image'].includes(image_name)
+  ) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'some thing wrong! try later')
+  }
+
+  const isValidImageName = ['bus_image', 'outer_image', 'inner_image'].includes(
+    image_name
+  )
+  if (
+    payload.image &&
+    isExist &&
+    isValidImageName &&
+    isExist[image_name]?.avatar_public_url
+  ) {
+    await cloudinary.uploader.destroy(
+      isExist[image_name]?.avatar_public_url as string
+    )
+  }
+
+  const result = await Bus.findByIdAndUpdate(
+    id,
+    { $set: { [image_name]: image } },
+    {
+      new: true,
+    }
+  )
+  return result
+}
+
 export const BusService = {
   createBus,
   getAllBus,
@@ -185,39 +236,5 @@ export const BusService = {
   deleteBus,
   getAvailableBus,
   seatViewForBooking,
+  updateBusImage,
 }
-
-/* function assignBuses(buses: Bus[], inputDate: string) {
-  const assignedBuses: Bus[] = [];
-  const standbyBuses: Bus[] = [];
-
-  buses.forEach((bus) => {
-    const isOccupied = bus.availability_status.some(
-      (status) => status.date === inputDate
-    );
-
-    if (isOccupied) {
-      assignedBuses.push(bus);
-    } else {
-      standbyBuses.push(bus);
-    }
-  });
-
-  return { assignedBuses, standbyBuses };
-}
-
-// Input date to check bus availability
-const inputDate = "2023-09-08";
-
-// Assign buses based on the input date
-const { assignedBuses, standbyBuses } = assignBuses(buses, inputDate);
-
-console.log("Assigned Buses:");
-assignedBuses.forEach((bus) => {
-  console.log(`Bus ${bus.id}: ${bus.name}`);
-});
-
-console.log("\nStandby Buses:");
-standbyBuses.forEach((bus) => {
-  console.log(`Bus ${bus.id}: ${bus.name}`);
-}); */
