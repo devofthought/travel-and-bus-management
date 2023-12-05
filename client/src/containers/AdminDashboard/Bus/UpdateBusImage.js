@@ -10,8 +10,8 @@ const initialData = {
   image: undefined,
 };
 
-const UpdateImage = ({ ImageUpdate }) => {
-  console.log(ImageUpdate);
+const UpdateImage = ({ ImageUpdate, resetImageSelect }) => {
+  //   console.log(ImageUpdate);
   const [form] = Form.useForm();
   form.setFieldsValue(initialData);
 
@@ -33,6 +33,7 @@ const UpdateImage = ({ ImageUpdate }) => {
   useEffect(() => {
     if (updateImageResponse?.statusCode === 200) {
       form.setFieldsValue(initialData);
+      resetImageSelect()
       Swal.fire({
         position: "center",
         icon: "success",

@@ -150,6 +150,7 @@ const BusListTable = ({ data }) => {
     },
   ];
 
+  /* image show and upload */
   const onImageSelect = (image_name, url, Bus_id) => {
     setIsImageModal(true);
     setImageUpdate({ image_name, url, Bus_id });
@@ -213,7 +214,10 @@ const BusListTable = ({ data }) => {
           width={330}
           footer={null}
         >
-          <UpdateImage ImageUpdate={ImageUpdate}></UpdateImage>
+          <UpdateImage
+            ImageUpdate={ImageUpdate}
+            resetImageSelect={resetImageSelect}
+          ></UpdateImage>
         </Modal>
       </header>
     </div>
