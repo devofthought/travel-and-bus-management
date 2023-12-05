@@ -106,9 +106,13 @@ const updateBus = async (
   if (brand_name !== undefined) updatePayload.brand_name = brand_name
   if (total_seats !== undefined) updatePayload.total_seats = total_seats
 
-  const result = await Bus.findByIdAndUpdate(id, { $set: updatePayload }, {
-    new: true,
-  })
+  const result = await Bus.findByIdAndUpdate(
+    id,
+    { $set: updatePayload },
+    {
+      new: true,
+    }
+  )
   return result
 }
 
