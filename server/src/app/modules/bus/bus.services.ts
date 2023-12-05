@@ -89,15 +89,24 @@ const updateBus = async (
   id: string,
   payload: Partial<IBus>
 ): Promise<IBus | null> => {
-  const bus_code = id.toLocaleUpperCase()
-  delete payload.bus_code
-  const isExist = await Bus.findOne({ bus_code })
-
+  const isExist = await Bus.findById(id)
   if (!isExist) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Bus not found!')
   }
 
-  const result = await Bus.findOneAndUpdate({ bus_code }, payload, {
+  const { model, brand_name, total_seats } = payload
+
+  const updatePayload: {
+    model?: string
+    brand_name?: string
+    total_seats?: string[]
+  } = {}
+
+  if (model !== undefined) updatePayload.model = model
+  if (brand_name !== undefined) updatePayload.brand_name = brand_name
+  if (total_seats !== undefined) updatePayload.total_seats = total_seats
+
+  const result = await Bus.findByIdAndUpdate(id, { $set: updatePayload }, {
     new: true,
   })
   return result

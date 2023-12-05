@@ -7,6 +7,7 @@ import { pick } from '../../../shared/pick'
 import sendResponse from '../../../shared/sendResponse'
 import { busFilterableFields } from './bus.constants'
 import { BusService } from './bus.services'
+import { IBus } from './bus.interface'
 
 const createBus = catchAsync(async (req: Request, res: Response) => {
   const bus = { ...req.body }
@@ -86,11 +87,11 @@ const getSingleBus = catchAsync(async (req: Request, res: Response) => {
 })
 
 const updateBus = catchAsync(async (req: Request, res: Response) => {
-  const bus_code = req.params.bus_code
+  const id = req.params.id
   const updatedData = req.body
-  const result = await BusService.updateBus(bus_code, updatedData)
+  const result = await BusService.updateBus(id, updatedData)
 
-  sendResponse<any>(res, {
+  sendResponse<IBus>(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Bus updated successfully!',

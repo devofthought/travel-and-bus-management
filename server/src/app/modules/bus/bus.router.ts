@@ -17,7 +17,8 @@ router.post(
 )
 
 router.patch(
-  '/:bus_code',
+  '/:id',
+  auth(ENUM_USER_ROLE.ADMIN),
   validateRequest(BusValidation.updateBusZodSchema),
   BusController.updateBus
 )

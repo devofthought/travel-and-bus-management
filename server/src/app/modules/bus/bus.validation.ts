@@ -45,14 +45,11 @@ const createBusZodSchema = z.object({
 const updateBusZodSchema = z.object({
   body: z.object({
     total_seats: z
-      .number({
-        required_error: 'Available seats is required',
-      })
-      .optional(),
-    availability_status: z
-      .string({
-        required_error: 'Availability status is required',
-      })
+      .array(
+        z.string({
+          required_error: 'Available seats is required',
+        })
+      )
       .optional(),
     brand_name: z
       .string({
@@ -60,21 +57,6 @@ const updateBusZodSchema = z.object({
       })
       .optional(),
     model: z
-      .string({
-        required_error: 'Brand name is required',
-      })
-      .optional(),
-    bus_image: z
-      .string({
-        required_error: 'Brand name is required',
-      })
-      .optional(),
-    outer_image: z
-      .string({
-        required_error: 'Brand name is required',
-      })
-      .optional(),
-    inner_image: z
       .string({
         required_error: 'Brand name is required',
       })
