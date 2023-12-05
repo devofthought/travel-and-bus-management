@@ -26,8 +26,8 @@ const UpdateImage = ({ ImageUpdate }) => {
       : formData.append("bus_image", "");
     formData.append("image_name", ImageUpdate.image_name);
 
-    console.log(formData);
-    // await updateImage({ bus_id: editingBus._id, body: formData });
+    // console.log(formData);
+    await updateImage({ bus_id: ImageUpdate.Bus_id, body: formData });
   };
 
   useEffect(() => {
