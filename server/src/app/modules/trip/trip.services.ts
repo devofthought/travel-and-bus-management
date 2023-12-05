@@ -342,7 +342,7 @@ const getAllTrip = async (
       },
     ]) // create an array of booked_seats
 
-    console.log(bookedSeatsArray)
+    // console.log(bookedSeatsArray)
 
     result2.push({
       bus_id: bus?._id,
@@ -362,6 +362,7 @@ const getAllTrip = async (
         bus?.total_seats.length - bookedSeatsArray[0]?.booked_seats?.length,
       booked_seats_list: bookedSeatsArray,
       total_seat: bus?.total_seats,
+      trips_status: trip.trips_status,
     })
   }
 
@@ -471,7 +472,7 @@ const getUpComingTrip = async (payload: any, userAuth: any) => {
           })
 
           return {
-            id:trip._id,
+            id: trip._id,
             from: trip.route_id.from,
             to: trip.route_id.to,
             distance: trip.route_id.distance,

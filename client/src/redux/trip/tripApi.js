@@ -3,7 +3,8 @@ import apiSlice from "../api/apiSlice";
 const tripApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getAllTrip: builder.query({
-      query: () => `/trips`,
+      query: ({ limit, page, trips_status }) =>
+        `/trips?trips_status=${trips_status}&page=${page}&limit=${limit}`,
       providesTags: ["trip"],
     }),
     getSingleTripDetails: builder.query({
@@ -26,8 +27,8 @@ const tripApi = apiSlice.injectEndpoints({
       invalidatesTags: ["trip"],
     }),
     getAllUpdateAbleTrip: builder.query({
-      query: ({ status, statusTwo }) =>
-        `/trips/update-able-trip?trips_status=${status}&trips_status=${statusTwo}`,
+      query: ({ limit, page }) =>
+        `/trips/update-able-trip?page=${page}&limit=${limit}`,
       providesTags: ["trip"],
     }),
     updateTrip: builder.mutation({
@@ -55,8 +56,7 @@ const tripApi = apiSlice.injectEndpoints({
       invalidatesTags: ["trip"],
     }),
     getAllCompletedAndUpcomingTripForUser: builder.query({
-      query: ({ trip_status }) =>
-        `/trips/up-coming?trip_status=${trip_status}`,
+      query: ({ trip_status }) => `/trips/up-coming?trip_status=${trip_status}`,
       providesTags: ["trip"],
     }),
   }),
@@ -71,5 +71,5 @@ export const {
   useGetAllUpdateAbleTripQuery,
   useGetTripsByUsersMutation,
   useGetBusSeatStatusMutation,
-  useGetAllCompletedAndUpcomingTripForUserQuery
+  useGetAllCompletedAndUpcomingTripForUserQuery,
 } = tripApi;

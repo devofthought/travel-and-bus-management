@@ -4,7 +4,7 @@ import { Table, Typography } from "antd";
 import dayjs from "dayjs";
 
 const TripListContainer = () => {
-  const { data } = useGetAllTripQuery();
+  const { data } = useGetAllTripQuery({ limit: 10, page: 1, trips_status:'pending'});
 
   const columns = [
     {
@@ -93,8 +93,23 @@ const TripListContainer = () => {
     },
     {
       title: "Trip status",
-      dataIndex: "trip_status",
+      dataIndex: "trips_status",
       minWidth: 200,
+      render: (trips_status) => {
+        return (
+          <p
+            className={
+              trips_status === "pending"
+                ? "bg-[rgba(255,189,90,.2)] text-[#ffc107] rounded pl-2"
+                : trips_status === "on-processing"
+                ? "bg-[rgba(28,213,174,.2)] text-[#38cab3] rounded pl-2"
+                : "bg-[rgba(247,79,117,.2)] text-[#f74f75] rounded pl-2"
+            }
+          >
+            {trips_status}
+          </p>
+        );
+      },
     },
   ];
   return (
@@ -111,5 +126,3 @@ const TripListContainer = () => {
   );
 };
 export default TripListContainer;
-
-
