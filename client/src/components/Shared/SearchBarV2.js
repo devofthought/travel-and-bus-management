@@ -8,13 +8,13 @@ import { TbBusStop } from "react-icons/tb";
 import { Select } from "antd";
 
 const deptFrom = ["Dhaka", "Sylhet"];
-const ArrTo = ["Sylhet", "Dhaka"];
+const ArrTo = ["Sylhet", "Dhaka", "brahmanbaria", "Bogora"];
 
 const SearchBarV2 = () => {
   const disabledDate = (current) => {
-    // Disable dates before today after 4 days 
+    // Disable dates before today after 5 days
     const today = moment().startOf("day");
-    const sevenDaysAhead = moment().add(3, "days").endOf("day");
+    const sevenDaysAhead = moment().add(4, "days").endOf("day");
 
     return current && (current < today || current > sevenDaysAhead);
   };
