@@ -96,7 +96,7 @@ const CreateRouteForm = () => {
           <Input className="h-10" placeholder="Type To" />
         </Form.Item>
         <label className="text-base font-medium">
-          <span className="primary-text">*</span> Distance
+          <span className="primary-text">*</span> Distance (km)
         </label>
         <Form.Item
           name="distance"

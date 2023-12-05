@@ -127,7 +127,13 @@ const RouteListTable = ({ data }) => {
   return (
     <div className="App">
       <header className="App-header">
-        <Table columns={columns} dataSource={data}></Table>
+        <Table
+          columns={columns}
+          dataSource={data}
+          pagination={{
+            pageSize: 5,
+          }}
+        ></Table>
         <Modal
           title="Edit route details"
           open={isEditing}
