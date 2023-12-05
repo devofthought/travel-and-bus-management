@@ -3,6 +3,7 @@ import { Form, Select, InputNumber, Input, Button } from "antd";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { LoadingOutlined } from "@ant-design/icons";
+import { validateEmail } from "@/utils/helper";
 // import MainButton from "@/components/UI/Button";
 
 const initialData = {
@@ -26,7 +27,7 @@ const CreateDriverForm = () => {
   const onFinish = async (values) => {
     setDriverInfo(values);
     const phoneNumber = values.prefix + values.phone;
-    const createData ={...values ,phone:phoneNumber}
+    const createData = { ...values, phone: phoneNumber };
     await AddDriver(createData);
   };
 
@@ -36,7 +37,7 @@ const CreateDriverForm = () => {
   form.setFieldsValue(driverInfo);
 
   useEffect(() => {
-    console.log(addError)
+    console.log(addError);
     if (addResponse?.statusCode === 200) {
       setDriverInfo(initialData);
       Swal.fire({
@@ -142,6 +143,9 @@ const CreateDriverForm = () => {
             {
               required: true,
               message: "Please enter Driver email address",
+            },
+            {
+              validator: validateEmail,
             },
             { whitespace: true },
           ]}

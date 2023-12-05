@@ -10,16 +10,15 @@ import { Driver } from '../driver/driver.model'
 import { Route } from '../route/route.model'
 import { tripSearchableFields } from './trip.constants'
 import {
-  IBooksTrip,
   ITrip,
   ITripFilter,
   ITripResponse,
   ITripSP,
   ITripUserSearch,
-  IUpComingTripPayload,
 } from './trip.interface'
 import { Trip } from './trip.model'
 import { User } from '../user/user.model'
+import { JwtPayload } from 'jsonwebtoken'
 
 const createTrip = async (payload: ITrip): Promise<ITripResponse | null> => {
   const driver = await VariantCreation.findAvailabilityByDepartureTime(
@@ -342,7 +341,7 @@ const getAllTrip = async (
       },
     ]) // create an array of booked_seats
 
-    console.log(bookedSeatsArray)
+    // console.log(bookedSeatsArray)
 
     result2.push({
       bus_id: bus?._id,
@@ -362,6 +361,7 @@ const getAllTrip = async (
         bus?.total_seats.length - bookedSeatsArray[0]?.booked_seats?.length,
       booked_seats_list: bookedSeatsArray,
       total_seat: bus?.total_seats,
+      trips_status: trip.trips_status,
     })
   }
 
@@ -441,8 +441,11 @@ const getSingleTrip = async (id: string): Promise<ITrip | null> => {
 //   return pendingTrip
 // }
 
-const getUpComingTrip = async (payload: any, userAuth: any) => {
-  const user = await User.findById(userAuth.id)
+const getUpComingTrip = async (
+  payload: any,
+  userAuth: JwtPayload | null
+): Promise<any> => {
+  const user = await User.findById(userAuth?.id)
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'user not found!')
   }
@@ -471,7 +474,7 @@ const getUpComingTrip = async (payload: any, userAuth: any) => {
           })
 
           return {
-            id:trip._id,
+            id: trip._id,
             from: trip.route_id.from,
             to: trip.route_id.to,
             distance: trip.route_id.distance,

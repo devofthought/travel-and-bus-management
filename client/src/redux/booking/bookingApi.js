@@ -10,7 +10,14 @@ const bookingApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["booking"],
     }),
+    reserveBus: builder.mutation({
+      query: (body) => ({
+        url: "/reserveBus",
+        method: "POST",
+        body,
+      }),
+    }),
   }),
 });
 
-export const { useInsertBookingMutation } = bookingApi;
+export const { useInsertBookingMutation, useReserveBusMutation } = bookingApi;

@@ -5,6 +5,21 @@ import moment from "moment";
 import SectionTitle from "@/components/Shared/SectionTitle";
 import Button from "@/components/UI/Button";
 import Swal from "sweetalert2";
+import { validateEmail } from "@/utils/helper";
+import { useReserveBusMutation } from "@/redux/booking/bookingApi";
+import dayjs from "dayjs";
+import { useEffect } from "react";
+
+const initialData = {
+  busSeats: "",
+  busType: "",
+  from: "",
+  to: "",
+  requester_name: "",
+  requester_email: "",
+  journeyEnd: "",
+  journeyDate: "",
+};
 
 const ReserveABus = () => {
   const dateFormatList = ["DD/MM/YYYY", "DD/MM/YY", "DD-MM-YYYY", "DD-MM-YY"];
@@ -13,18 +28,60 @@ const ReserveABus = () => {
     return current && current < moment().startOf("day");
   };
   const [form] = Form.useForm();
+
+  const [AddReserveBus, { data, error, isLoading }] = useReserveBusMutation();
+
   const onFinish = (values) => {
     console.log("Success:", values);
-    Swal.fire({
-      icon: "success",
-      title: "Good Job!",
-      text: "Your reserved bus request has been successfully sent!",
-    });
-    form.resetFields();
+    const journeyDateTime = dayjs(values.journeyDate).format(
+      "YYYY-MM-DDTHH:mm:ss.sss"
+    );
+    const journeyEndTime = dayjs(values.journeyEnd).format(
+      "YYYY-MM-DDTHH:mm:ss.sss"
+    );
+
+    const journeyDateTimePayload = {
+      ...values,
+      journeyDate: journeyDateTime,
+      journeyEnd: journeyEndTime,
+    };
+
+    console.log(journeyDateTimePayload);
+    // AddReserveBus(journeyDateTimePayload)
+    form.setFieldsValue(initialData);
+
   };
+
+  useEffect(() => {
+    if (data?.statusCode === 200) {
+      form.setFieldsValue(initialData);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: `${data?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } else if (
+      error?.status === 400 ||
+      error?.status === 406 ||
+      error?.status === 403
+    ) {
+      form.setFieldsValue(initialData);
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: `${error?.data?.errorMessage[0]?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  }, [data, error]);
+
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
+
   return (
     <div className="main-container py-32 lg:py-36" id="reserveBus">
       <SectionTitle
@@ -92,6 +149,43 @@ const ReserveABus = () => {
                       ]}
                     />
                   </Form.Item>
+                  <Form.Item
+                    name="busSeats"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please select Bus seats!",
+                      },
+                    ]}
+                  >
+                    <Select
+                      size="large"
+                      className=" text-lg w-full"
+                      placeholder="Bus Type"
+                      options={[
+                        {
+                          value: "20",
+                          label: "20 Seats",
+                        },
+                        {
+                          value: "26",
+                          label: "26 Seats",
+                        },
+                        {
+                          value: "30",
+                          label: "30 Seats",
+                        },
+                        {
+                          value: "36",
+                          label: "36 Seats",
+                        },
+                        {
+                          value: "40",
+                          label: "40 Seats",
+                        },
+                      ]}
+                    />
+                  </Form.Item>
 
                   <Form.Item
                     name="journeyDate"
@@ -108,6 +202,47 @@ const ReserveABus = () => {
                       disabledDate={disabledDate}
                       format={dateFormatList}
                     />
+                  </Form.Item>
+
+                  <Form.Item
+                    name="journeyEnd"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please select your Journey Date!",
+                      },
+                    ]}
+                  >
+                    <DatePicker
+                      className="h-10 text-lg w-full"
+                      placeholder="Journey End Date"
+                      disabledDate={disabledDate}
+                      format={dateFormatList}
+                    />
+                  </Form.Item>
+
+                  <Form.Item
+                    className="h-10"
+                    name="requester_name"
+                    rules={[
+                      { required: true, message: "Please input your Name!" },
+                    ]}
+                  >
+                    <Input className="h-10 text-lg" placeholder="Your name" />
+                  </Form.Item>
+                  <Form.Item
+                    name="requester_email"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input your valid Email!",
+                      },
+                      {
+                        validator: validateEmail,
+                      },
+                    ]}
+                  >
+                    <Input className="h-10 text-lg" placeholder="Your email" />
                   </Form.Item>
                 </div>
                 <Form.Item>

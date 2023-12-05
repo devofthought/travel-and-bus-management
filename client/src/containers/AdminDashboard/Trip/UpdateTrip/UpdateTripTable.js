@@ -51,33 +51,7 @@ const UpdateTripTable = ({ data }) => {
       dataIndex: "route_id",
       minWidth: 200,
       render: (route_id) => {
-        return <p>{route_id?.distance} K.m</p>;
-      },
-    },
-    {
-      title: "Dept. Time",
-      dataIndex: "departure_time",
-      minWidth: 200,
-      render: (departure_time) => {
-        const date = new Date(departure_time);
-        if (!isNaN(date)) {
-          return <p>{date.toLocaleString()}</p>;
-        } else {
-          return <p>Invalid Date</p>;
-        }
-      },
-    },
-    {
-      title: "Arr. time",
-      dataIndex: "arrival_time",
-      minWidth: 200,
-      render: (arrival_time) => {
-        const date = new Date(arrival_time);
-        if (!isNaN(date)) {
-          return <p>{date.toLocaleString()}</p>;
-        } else {
-          return <p>Invalid Date</p>;
-        }
+        return <p>{route_id?.distance} Km</p>;
       },
     },
     {
@@ -154,7 +128,13 @@ const UpdateTripTable = ({ data }) => {
   return (
     <div className="App">
       <header className="App-header">
-        <Table columns={columns} dataSource={data}></Table>
+        <Table
+          columns={columns}
+          dataSource={data}
+          pagination={{
+            pageSize: 5,
+          }}
+        ></Table>
         <Modal
           title="Update a trip"
           open={isEditing}
