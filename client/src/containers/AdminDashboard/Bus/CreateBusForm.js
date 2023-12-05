@@ -268,13 +268,12 @@ const CreateBusForm = () => {
         </Form.Item>
 
         <Form.Item wrapperCol={{ span: 24 }}>
-          <MainButton btnName="Submit" styles="w-full py-3"></MainButton>
+          <MainButton btnName="Submit" isLoading={isLoading} styles="w-full py-3"></MainButton>
         </Form.Item>
       </Form>
     </div>
   );
 };
 
-// TODO:[anakan bhai] please submit button loading spinner added {isLoading}
 
 export default CreateBusForm;

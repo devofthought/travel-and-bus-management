@@ -10,7 +10,7 @@ const BusListTable = ({ data }) => {
       title: "Sr.",
       dataIndex: "sr",
       minWidth: 200,
-      render: (text, record, index) => {
+      render: (_text, _record, index) => {
         // You can render a static serial number here
         return `${index + 1}`;
       },
@@ -91,7 +91,7 @@ const BusListTable = ({ data }) => {
       dataIndex: "total_seats",
       minWidth: 200,
       render: (total_seats) => {
-        console.log(total_seats)
+        console.log(total_seats);
         return <p>{total_seats[0]} Seats</p>;
       },
     },
@@ -123,7 +123,13 @@ const BusListTable = ({ data }) => {
   return (
     <div className="App">
       <header className="App-header">
-        <Table columns={columns} dataSource={data}></Table>
+        <Table
+          columns={columns}
+          dataSource={data}
+          pagination={{
+            pageSize: 5,
+          }}
+        ></Table>
         <Modal
           title="Edit Bus details"
           open={isEditing}
@@ -146,42 +152,3 @@ const BusListTable = ({ data }) => {
 };
 
 export default BusListTable;
-
-const demoData = [
-  {
-    key: "1",
-    sr: "1",
-    name: "Traveler",
-    image: "https://robohash.org/hicveldicta.png",
-    email: "user1@example.com",
-    phone: "123-456-7890",
-    experience: 10,
-    license: "3487823jbh093",
-    age: 28,
-    total_trip: 10,
-  },
-  {
-    key: "2",
-    sr: "2",
-    name: "Traveler",
-    image: "https://robohash.org/doloremquesintcorrupti.png",
-    email: "user2@example.com",
-    experience: 3,
-    license: "34h8g7893",
-    phone: "987-654-3210",
-    age: 35,
-    total_trip: 15,
-  },
-  {
-    key: "3",
-    sr: "3",
-    name: "Traveler",
-    image: "https://robohash.org/consequunturautconsequatur.png",
-    email: "user3@example.com",
-    phone: "555-123-4567",
-    experience: 15,
-    license: "89h34g32h8h",
-    age: 22,
-    total_trip: 5,
-  },
-];
