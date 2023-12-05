@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 
 const initialData = {
   model: "",
-  brand: "",
+  brand_name: "",
   bus_image: undefined,
   inner_image: undefined,
   outer_image: undefined,
@@ -31,7 +31,7 @@ const CreateBusForm = () => {
     values.outer_image
       ? formData.append("bus_image", values?.outer_image[0]?.originFileObj)
       : formData.append("bus_image", "");
-    formData.append("brand_name", values.brand);
+    formData.append("brand_name", values.brand_name);
     formData.append("model", values.model);
     formData.append("total_seats", values.total_seats);
     await AddBus(formData);
@@ -106,7 +106,7 @@ const CreateBusForm = () => {
         </Form.Item>
 
         <Form.Item
-          name="brand"
+          name="brand_name"
           label="Brand Name"
           rules={[
             {

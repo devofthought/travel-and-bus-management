@@ -1,10 +1,12 @@
 import { Table, Modal, Avatar } from "antd";
 import { useState } from "react";
 import { EditOutlined } from "@ant-design/icons";
+import UpdateBusForm from "./UpdateBusFrom";
 
 const BusListTable = ({ data }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editingBus, setEditingBus] = useState(null);
+  
   const columns = [
     {
       title: "Sr.",
@@ -62,6 +64,7 @@ const BusListTable = ({ data }) => {
         return <p>{availability_status?.length}</p>;
       },
     },
+    /* // TODO: trip history show in a table */
     // {
     //   title: "Current status",
     //   dataIndex: "availability_status",
@@ -142,9 +145,12 @@ const BusListTable = ({ data }) => {
             /* add there your logic on edit trip */
             resetEditing();
           }}
+          footer={null}
         >
-          {/* <UpdateTripForm editingBus={editingBus} /> */}
-          <h1>here will be a form for edit bus details</h1>
+          <UpdateBusForm
+            editingBus={editingBus}
+            resetEditing={resetEditing}
+          ></UpdateBusForm>
         </Modal>
       </header>
     </div>

@@ -28,7 +28,15 @@ const busApi = apiSlice.injectEndpoints({
         method: "POST",
         body,
       }),
-      invalidatesTags: ["bus"], // automatic-data fetching
+      invalidatesTags: ["bus"],
+    }),
+    UpdateBus: builder.mutation({
+      query: ({ bus_id, body }) => ({
+        url: `/buses/${bus_id}`,
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: ["bus"],
     }),
   }),
 });
@@ -39,4 +47,5 @@ export const {
   useGetSingleBusDetailsQuery,
   useAddBusMutation,
   useAddForGetRequestAvailableBusMutation,
+  useUpdateBusMutation,
 } = busApi;
