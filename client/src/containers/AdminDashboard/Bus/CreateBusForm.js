@@ -1,6 +1,6 @@
-import { Form, Button, Select, Input, Upload } from "antd";
+import { Form, Select, Input, Upload } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useAddBusMutation } from "@/redux/bus/busApi";
 import MainButton from "@/components/UI/Button";
 import Swal from "sweetalert2";
@@ -268,12 +268,15 @@ const CreateBusForm = () => {
         </Form.Item>
 
         <Form.Item wrapperCol={{ span: 24 }}>
-          <MainButton btnName="Submit" isLoading={isLoading} styles="w-full py-3"></MainButton>
+          <MainButton
+            btnName="Submit"
+            isLoading={isLoading}
+            styles="w-full py-3"
+          ></MainButton>
         </Form.Item>
       </Form>
     </div>
   );
 };
-
 
 export default CreateBusForm;
