@@ -6,7 +6,7 @@ import auth from '../../middlewares/auth'
 import { ENUM_USER_ROLE } from '../../../enums/user'
 const router = express.Router()
 
-router.get('/', TripController.getAllTrip) //done testing
+router.get('/', auth(ENUM_USER_ROLE.ADMIN), TripController.getAllTrip) //done testing
 router.get(
   '/up-coming',
   auth(ENUM_USER_ROLE.USER),
@@ -15,19 +15,26 @@ router.get(
 
 router.post(
   '/',
+  auth(ENUM_USER_ROLE.ADMIN),
   validateRequest(TripValidation.createTripZodSchema),
   TripController.createTrip
 )
-router.get('/update-able-trip', TripController.getAllUpdateAbleTrip)
+router.get(
+  '/update-able-trip',
+  auth(ENUM_USER_ROLE.ADMIN),
+  TripController.getAllUpdateAbleTrip
+)
 
 router.patch(
   '/:id',
   validateRequest(TripValidation.updateTripZodSchema),
+  auth(ENUM_USER_ROLE.ADMIN),
   TripController.updateTrip
 ) //done testing
 
 router.get('/:id', TripController.getSingleTrip)
 
+/* public API */
 router.post(
   '/get-trips-by-users',
   validateRequest(TripValidation.getTripsByUsers),
