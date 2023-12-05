@@ -37,8 +37,20 @@ const ResetEmail = ({ userProfile }) => {
         showConfirmButton: false,
         timer: 1500,
       });
+    } else if (
+      updateEmailError?.status === 404 ||
+      updateEmailError?.status === 406 ||
+      updateEmailError?.status === 400
+    ) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: `${updateEmailError?.data?.message}`,
+        showConfirmButton: false,
+        timer: 2000,
+      });
     }
-  }, [updateEmailResponse]);
+  }, [updateEmailResponse, updateEmailError]);
 
   return (
     <Form

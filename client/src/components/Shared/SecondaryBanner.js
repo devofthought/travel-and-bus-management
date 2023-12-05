@@ -59,7 +59,7 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
 
   return (
     <Card
-      className="bg-center bg-cover sm:bg-contain lg:bg-cover bg-no-repeat z-10 text-gray-700 text-center py-12 pt-32 h-[500px]"
+      className="bg-center bg-cover sm:bg-contain lg:bg-cover bg-no-repeat z-10 text-gray-700 text-center py-12 pt-32 h-[520px]"
       style={{
         backgroundImage: `url("/images/HomeBannerImg.png")`,
         inset: "0px",
@@ -71,7 +71,7 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
         <p className="mt-4 text-lg">
           Discover comfortable and convenient bus journeys for your travels.
         </p>
-        <div className="flex justify-between items-center w-2/3 mx-auto mt-10 backdrop-blur-xl opacity-100 border-2 border-solid border-white  p-5 rounded-3xl">
+        <div className="flex flex-col md:flex-row justify-between items-center w-2/3 mx-auto mt-8 backdrop-blur-xl opacity-100 border-2 border-solid border-white  p-5 rounded-3xl">
           <div className="flex items-center">
             <div className="relative w-16">
               <Image
@@ -102,7 +102,7 @@ const SecondaryBanner = ({ openDashboard, setOpenDashboard }) => {
             </div>
           </div>
           <button
-            className="primary-bg text-white border-none rounded-[5px] cursor-pointer text-center py-2 px-3"
+            className="primary-bg text-white border-none mt-3 md:mt-0 w-2/3 md:w-auto rounded-[5px] cursor-pointer text-center py-2 px-3"
             onClick={showTripSearchModal}
           >
             Trip Search
