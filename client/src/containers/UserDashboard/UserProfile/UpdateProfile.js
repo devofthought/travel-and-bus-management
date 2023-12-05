@@ -62,8 +62,20 @@ const UpdateProfile = ({ userProfile }) => {
         showConfirmButton: false,
         timer: 1500,
       });
+    } else if (
+      updateTravelerProfileError?.status === 404 ||
+      updateTravelerProfileError?.status === 406 ||
+      updateTravelerProfileError?.status === 400
+    ) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: `${updateTravelerProfileError?.data?.message}`,
+        showConfirmButton: false,
+        timer: 2000,
+      });
     }
-  }, [updateTravelerProfileResponse]);
+  }, [updateTravelerProfileResponse, updateTravelerProfileError]);
 
   const uploadButton = (
     <div>
@@ -215,7 +227,7 @@ const UpdateProfile = ({ userProfile }) => {
               type="primary"
               htmlType="submit"
               icon={updateTravelerProfileIsLoading ? <LoadingOutlined /> : null}
-              className="w-full bg-[#d84e55] rounded"
+              className="bg-[#d84e55] hover:bg-red-600 w-full text-white border-none rounded-[5px] cursor-pointer text-center transition-transform active:scale-95 hover:opacity-75 shadow"
               loading={updateTravelerProfileIsLoading}
             >
               {updateTravelerProfileIsLoading
@@ -228,5 +240,5 @@ const UpdateProfile = ({ userProfile }) => {
     </div>
   );
 };
-// TODO:[anakan bhai] please submit button loading spinner added {updateTravelerProfileIsLoading}
+
 export default UpdateProfile;
