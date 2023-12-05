@@ -12,8 +12,11 @@ const ArrTo = ["Sylhet", "Dhaka"];
 
 const SearchBarV2 = () => {
   const disabledDate = (current) => {
-    // Disable dates before today
-    return current && current < moment().startOf("day");
+    // Disable dates before today after 4 days 
+    const today = moment().startOf("day");
+    const sevenDaysAhead = moment().add(3, "days").endOf("day");
+
+    return current && (current < today || current > sevenDaysAhead);
   };
 
   const router = useRouter();
