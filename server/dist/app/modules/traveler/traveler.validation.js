@@ -5,7 +5,7 @@ const zod_1 = require("zod");
 const updateTravelerZodSchema = zod_1.z.object({
     body: zod_1.z.object({
         name: zod_1.z
-            .number({
+            .string({
             required_error: 'name is required',
         })
             .optional(),
@@ -15,18 +15,13 @@ const updateTravelerZodSchema = zod_1.z.object({
         })
             .optional(),
         age: zod_1.z
-            .number({
+            .string({
             required_error: 'Age is required',
         })
             .optional(),
         phone: zod_1.z
             .string({
             required_error: 'phone is required',
-        })
-            .optional(),
-        email: zod_1.z
-            .string({
-            required_error: 'email is required',
         })
             .optional(),
     }),

@@ -5,12 +5,14 @@ import { useRouter } from "next/router";
 import { MdSwapHoriz } from "react-icons/md";
 import { BsCalendarDate, BsBusFront } from "react-icons/bs";
 import { TbBusStop } from "react-icons/tb";
-import dayjs from "dayjs";
 
 const SearchBar = () => {
   const disabledDate = (current) => {
-    // Disable dates before today
-    return current && current < moment().startOf("day");
+    // Disable dates before today after 5 days
+    const today = moment().startOf("day");
+    const sevenDaysAhead = moment().add(4, "days").endOf("day");
+
+    return current && (current < today || current > sevenDaysAhead);
   };
 
   const router = useRouter();

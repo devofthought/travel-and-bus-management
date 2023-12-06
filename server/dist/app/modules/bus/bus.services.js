@@ -34,6 +34,7 @@ const trip_model_1 = require("../trip/trip.model");
 const bus_constants_1 = require("./bus.constants");
 const bus_model_1 = require("./bus.model");
 const bus_utils_1 = require("./bus.utils");
+const cloudinary_1 = __importDefault(require("../../../config/cloudinary"));
 const createBus = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     const bus_code = yield (0, bus_utils_1.generatedBusCode)(); // generated bus code
     payload.bus_code = bus_code;
@@ -90,13 +91,19 @@ const getSingleBus = (id) => __awaiter(void 0, void 0, void 0, function* () {
     return result;
 });
 const updateBus = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
-    const bus_code = id.toLocaleUpperCase();
-    delete payload.bus_code;
-    const isExist = yield bus_model_1.Bus.findOne({ bus_code });
+    const isExist = yield bus_model_1.Bus.findById(id);
     if (!isExist) {
         throw new ApiError_1.default(http_status_1.default.BAD_REQUEST, 'Bus not found!');
     }
-    const result = yield bus_model_1.Bus.findOneAndUpdate({ bus_code }, payload, {
+    const { model, brand_name, total_seats } = payload;
+    const updatePayload = {};
+    if (model !== undefined)
+        updatePayload.model = model;
+    if (brand_name !== undefined)
+        updatePayload.brand_name = brand_name;
+    if (total_seats !== undefined)
+        updatePayload.total_seats = total_seats;
+    const result = yield bus_model_1.Bus.findByIdAndUpdate(id, { $set: updatePayload }, {
         new: true,
     });
     return result;
@@ -152,6 +159,29 @@ const seatViewForBooking = (id) => __awaiter(void 0, void 0, void 0, function* (
     }
     return { availableSeats, bookedSeats };
 });
+const updateBusImage = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b;
+    const isExist = yield bus_model_1.Bus.findById(id);
+    if (!isExist) {
+        throw new ApiError_1.default(http_status_1.default.BAD_REQUEST, 'Bus not found!');
+    }
+    const { image, image_name } = payload;
+    if (image === undefined ||
+        !['bus_image', 'outer_image', 'inner_image'].includes(image_name)) {
+        throw new ApiError_1.default(http_status_1.default.BAD_REQUEST, 'some thing wrong! try later');
+    }
+    const isValidImageName = ['bus_image', 'outer_image', 'inner_image'].includes(image_name);
+    if (payload.image &&
+        isExist &&
+        isValidImageName &&
+        ((_a = isExist[image_name]) === null || _a === void 0 ? void 0 : _a.avatar_public_url)) {
+        yield cloudinary_1.default.uploader.destroy((_b = isExist[image_name]) === null || _b === void 0 ? void 0 : _b.avatar_public_url);
+    }
+    const result = yield bus_model_1.Bus.findByIdAndUpdate(id, { $set: { [image_name]: image } }, {
+        new: true,
+    });
+    return result;
+});
 exports.BusService = {
     createBus,
     getAllBus,
@@ -160,38 +190,5 @@ exports.BusService = {
     deleteBus,
     getAvailableBus,
     seatViewForBooking,
+    updateBusImage,
 };
-/* function assignBuses(buses: Bus[], inputDate: string) {
-  const assignedBuses: Bus[] = [];
-  const standbyBuses: Bus[] = [];
-
-  buses.forEach((bus) => {
-    const isOccupied = bus.availability_status.some(
-      (status) => status.date === inputDate
-    );
-
-    if (isOccupied) {
-      assignedBuses.push(bus);
-    } else {
-      standbyBuses.push(bus);
-    }
-  });
-
-  return { assignedBuses, standbyBuses };
-}
-
-// Input date to check bus availability
-const inputDate = "2023-09-08";
-
-// Assign buses based on the input date
-const { assignedBuses, standbyBuses } = assignBuses(buses, inputDate);
-
-console.log("Assigned Buses:");
-assignedBuses.forEach((bus) => {
-  console.log(`Bus ${bus.id}: ${bus.name}`);
-});
-
-console.log("\nStandby Buses:");
-standbyBuses.forEach((bus) => {
-  console.log(`Bus ${bus.id}: ${bus.name}`);
-}); */

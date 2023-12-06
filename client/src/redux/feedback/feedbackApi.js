@@ -14,7 +14,24 @@ const feedBackApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["feedback"],
     }),
+    getSupportBack: builder.query({
+      query: () => `/support`,
+      providesTags: ["support"],
+    }),
+    addSupportConnection: builder.mutation({
+      query: (body) => ({
+        url: "/support",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["support"],
+    }),
   }),
 });
 
-export const { useGetFeedBackQuery, useAddFeedBackMutation } = feedBackApi;
+export const {
+  useGetFeedBackQuery,
+  useAddFeedBackMutation,
+  useGetSupportBackQuery,
+  useAddSupportConnectionMutation,
+} = feedBackApi;

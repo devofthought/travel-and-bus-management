@@ -96,9 +96,35 @@ const updateRoute = (id, payload) => __awaiter(void 0, void 0, void 0, function*
     if (!isExist) {
         throw new ApiError_1.default(http_status_1.default.BAD_REQUEST, 'Route not found');
     }
-    const result = yield route_model_1.Route.findByIdAndUpdate(id, payload, {
-        new: true,
-    });
+    if (isExist.from === payload.from && isExist.to === payload.to) {
+        const result = yield route_model_1.Route.findByIdAndUpdate(id, {
+            $set: {
+                distance: payload.distance,
+            },
+        }, {
+            new: true,
+        });
+        return result;
+    }
+    if (payload.from && payload.to) {
+        const existingRoute = yield route_model_1.Route.findOne({
+            from: payload.from.trim().toLowerCase(),
+            to: payload.to.trim().toLowerCase(),
+        });
+        if (existingRoute) {
+            throw new ApiError_1.default(http_status_1.default.NOT_ACCEPTABLE, 'This route already has!');
+        }
+        const result = yield route_model_1.Route.findByIdAndUpdate(id, {
+            $set: {
+                from: payload.from.trim().toLowerCase(),
+                to: payload.to.trim().toLowerCase(),
+            },
+        }, {
+            new: true,
+        });
+        return result;
+    }
+    const result = yield route_model_1.Route.findById(id);
     return result;
 });
 const deleteRoute = (id) => __awaiter(void 0, void 0, void 0, function* () {

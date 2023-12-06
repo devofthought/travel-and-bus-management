@@ -9,9 +9,9 @@ const globalErrorHandler_1 = __importDefault(require("./app/middlewares/globalEr
 const http_status_1 = __importDefault(require("http-status"));
 const router_1 = __importDefault(require("./app/router"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
-const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
-const yamljs_1 = __importDefault(require("yamljs"));
-const swaggerDOC = yamljs_1.default.load('swagger.yaml');
+// import swaggerUI from 'swagger-ui-express'
+// import YAML from 'yamljs'
+// const swaggerDOC = YAML.load('swagger.yaml')
 const app = (0, express_1.default)();
 // cors
 app.use((0, cors_1.default)());
@@ -22,7 +22,7 @@ app.use((0, cookie_parser_1.default)());
 // application routes
 app.use('/api/v1', router_1.default);
 // application docs
-app.use('/docs', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swaggerDOC));
+// app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerDOC))
 app.get('/', (req, res) => {
     res.send({ message: 'project is running for world 🕊' });
 });

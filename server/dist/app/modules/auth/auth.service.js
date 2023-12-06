@@ -78,11 +78,19 @@ const createTraveler = (payload) => __awaiter(void 0, void 0, void 0, function* 
 });
 const createDriver = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     const driverData = Object.assign({}, payload);
-    const driver_code = yield (0, driver_utils_1.generatedDriverCode)(); // generated bus code
+    const driver_code = yield (0, driver_utils_1.generatedDriverCode)(); // generated driver code
     let newDriverData = null;
     const session = yield mongoose_1.default.startSession();
     try {
         session.startTransaction();
+        const isEmailHas = yield user_model_1.User.findOne({ email: payload.email });
+        if (isEmailHas) {
+            throw new ApiError_1.default(http_status_1.default.BAD_REQUEST, 'email is not a valid email');
+        }
+        const isPhoneHas = yield driver_model_1.Driver.findOne({ phone: payload.phone });
+        if (isPhoneHas) {
+            throw new ApiError_1.default(http_status_1.default.BAD_REQUEST, 'phone is not a valid phone');
+        }
         //array
         driverData.joining_date = new Date().toISOString();
         driverData.driver_code = driver_code;
@@ -101,6 +109,7 @@ const createDriver = (payload) => __awaiter(void 0, void 0, void 0, function* ()
         if (!newUser.length) {
             throw new ApiError_1.default(http_status_1.default.BAD_REQUEST, 'Failed to create user');
         }
+        // TODO: send a welcome email to driver email.
         newDriverData = newUser[0];
         yield session.commitTransaction();
         yield session.endSession();

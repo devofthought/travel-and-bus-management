@@ -21,7 +21,8 @@ const pagination_1 = require("../../../constants/pagination");
 const feedback_constants_1 = require("./feedback.constants");
 const feedback_services_1 = require("./feedback.services");
 const createFeedback = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield feedback_services_1.FeedbackService.createFeedback(req.body);
+    const userAuth = req.user;
+    const result = yield feedback_services_1.FeedbackService.createFeedback(req.body, userAuth);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
@@ -32,7 +33,8 @@ const createFeedback = (0, catchAsync_1.default)((req, res) => __awaiter(void 0,
 const getAllFeedback = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const filters = (0, pick_1.pick)(req.query, feedback_constants_1.feedbackFilterableFields);
     const paginationOptions = (0, pick_1.pick)(req.query, pagination_1.paginationFields);
-    const result = yield feedback_services_1.FeedbackService.getAllFeedback(filters, paginationOptions);
+    const user = req.user;
+    const result = yield feedback_services_1.FeedbackService.getAllFeedback(user, filters, paginationOptions);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
@@ -42,12 +44,14 @@ const getAllFeedback = (0, catchAsync_1.default)((req, res) => __awaiter(void 0,
     });
 }));
 const getSingleUserFeedback = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield feedback_services_1.FeedbackService.getSingleUserFeedbacks(req.params.user_id);
+    const paginationOptions = (0, pick_1.pick)(req.query, pagination_1.paginationFields);
+    const result = yield feedback_services_1.FeedbackService.getSingleUserFeedbacks(req.params.user_id, paginationOptions);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
-        message: 'Feedbacks retrieved successfully!',
-        data: result,
+        message: 'Users all feedback retrieved successfully!',
+        meta: result.meta,
+        data: result.data,
     });
 }));
 const getApprovedFeedbacks = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -63,6 +67,16 @@ const updateFeedback = (0, catchAsync_1.default)((req, res) => __awaiter(void 0,
     const id = req.params.id;
     const updatedData = req.body;
     const result = yield feedback_services_1.FeedbackService.updateFeedback(id, updatedData);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: 'Feedback updated successfully!',
+        data: result,
+    });
+}));
+const updateAdminApprovedFeedback = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const updatedData = req.body;
+    const result = yield feedback_services_1.FeedbackService.updateAdminApprovedFeedback(updatedData);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
@@ -86,4 +100,5 @@ exports.FeedbackController = {
     updateFeedback,
     deleteFeedback,
     getApprovedFeedbacks,
+    updateAdminApprovedFeedback,
 };

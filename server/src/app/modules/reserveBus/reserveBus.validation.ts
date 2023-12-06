@@ -9,6 +9,12 @@ const createReserveBusZodSchema = z.object({
     to: z.string({
       required_error: 'to is required',
     }),
+    bus_seats: z.string({
+      required_error: 'Bus Seats is required',
+    }),
+    bus_type: z.string({
+      required_error: 'Bus type is required',
+    }),
     departure_time: z.string({
       required_error: 'departure_time  is required',
     }),
@@ -18,11 +24,8 @@ const createReserveBusZodSchema = z.object({
     email: z.string({
       required_error: 'email  is required',
     }),
-    phone: z.string({
-      required_error: 'phone  is required',
-    }),
-    user_id: z.string({
-      required_error: 'user_id is required',
+    name: z.string({
+      required_error: 'name is required',
     }),
   }),
 })

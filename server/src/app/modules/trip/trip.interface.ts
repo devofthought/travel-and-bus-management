@@ -87,3 +87,36 @@ export type ITripSP = {
   __v: number
 }
 
+export type IGetUpComingTripResponse = {
+  id: string
+  from: string
+  to: string
+  distance: number
+  departure_time: string
+  arrival_time: string
+  bus_code: string
+  fare: number
+  trip_status: string
+  payment_status: string
+  seats: number
+  feedback: string
+}
+
+export type IGetAllTripResponse = {
+  bus_id: string
+  bus_model: string
+  bus_code: string
+  driver_id: string
+  driver_code: string
+  traveling_date: Date
+  departure_time: string
+  arrival_time: string
+  from: string
+  to: string
+  distance: number
+  fare: number
+  available_seat: number
+  booked_seats_list: any[]
+  total_seat: string[]
+  trips_status: string
+}

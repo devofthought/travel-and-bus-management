@@ -20,6 +20,7 @@ const traveler_constants_1 = require("./traveler.constants");
 const traveler_service_1 = require("./traveler.service");
 const sendResponse_1 = __importDefault(require("../../../shared/sendResponse"));
 const http_status_1 = __importDefault(require("http-status"));
+const cloudinary_1 = __importDefault(require("../../../config/cloudinary"));
 const getAllTraveler = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const filters = (0, pick_1.pick)(req.query, traveler_constants_1.travelerFilterableFields);
     const paginationOptions = (0, pick_1.pick)(req.query, pagination_1.paginationFields);
@@ -43,9 +44,18 @@ const getSingleTraveler = (0, catchAsync_1.default)((req, res) => __awaiter(void
     });
 }));
 const updateTraveler = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const id = req.params.id;
+    var _a;
+    const user = req.user;
     const updatedData = req.body;
-    const result = yield traveler_service_1.TravelerService.updateTraveler(id, updatedData);
+    if (req.file) {
+        const uploadedImage = yield cloudinary_1.default.uploader.upload((_a = req.file) === null || _a === void 0 ? void 0 : _a.path);
+        const avatar = {
+            avatar: uploadedImage.secure_url,
+            avatar_public_url: uploadedImage.public_id,
+        };
+        updatedData.image = avatar;
+    }
+    const result = yield traveler_service_1.TravelerService.updateTraveler(user, updatedData);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,

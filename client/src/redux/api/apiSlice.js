@@ -4,7 +4,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:5000/api/v1",
+    baseUrl: `${process.env.NEXT_PUBLIC_BASE_URL}api/v1`,
     prepareHeaders: (headers) => {
       headers.set("authorization", getFromLocalStorage("accessToken"));
       return headers;
@@ -20,6 +20,8 @@ export const apiSlice = createApi({
     "feedback",
     "user",
     "booking",
+    "reserveBus",
+    "support",
   ],
   endpoints: () => ({}),
 });

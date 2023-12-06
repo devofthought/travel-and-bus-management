@@ -19,13 +19,6 @@ const initialData = {
   route_code: "",
   ticket_price: 0,
 };
-const preDefinePrice = [
-  { ticket_price: 50 },
-  { ticket_price: 150 },
-  { ticket_price: 200 },
-  { ticket_price: 280 },
-  { ticket_price: 300 },
-];
 
 const preDefineTripsStatus = [
   { trips_status: "pending" },
@@ -49,9 +42,12 @@ const UpdateTripForm = ({ editingTrip, resetEditing }) => {
     useGetAllAvailabilityDriverQuery("ready");
   const { data: busData, isLoading: busIsLoading } =
     useGetAllAvailabilityBusQuery("standBy");
+
+  // trip update api....
+
   const [
     updateTrip,
-    { data: addResponse, error: addError, isLoading: addIsLoading },
+    { data: updateResponse, error: updateError, isLoading: updateIsLoading },
   ] = useUpdateTripMutation();
 
   const handleChange = async (changedValues) => {
@@ -98,26 +94,30 @@ const UpdateTripForm = ({ editingTrip, resetEditing }) => {
   };
 
   useEffect(() => {
-    if (addResponse?.success) {
+    if (updateResponse?.statusCode === 200) {
       form.setFieldsValue(initialData);
       resetEditing();
       Swal.fire({
         position: "center",
         icon: "success",
-        title: `${addResponse?.message}`,
+        title: `${updateResponse?.message}`,
         showConfirmButton: false,
         timer: 1500,
       });
-    } else {
+    } else if (
+      updateError?.status === 400 ||
+      updateError?.status === 406 ||
+      updateError?.status === 403
+    ) {
       Swal.fire({
         position: "center",
         icon: "error",
-        title: `${addError?.data?.errorMessage[0]?.message}`,
+        title: `${updateError?.data?.errorMessage[0]?.message}`,
         showConfirmButton: false,
         timer: 1500,
       });
     }
-  }, [addResponse, addError]);
+  }, [updateResponse, updateError]);
 
   const [form] = Form.useForm();
   form.setFieldsValue(editingTrip);
@@ -220,32 +220,7 @@ const UpdateTripForm = ({ editingTrip, resetEditing }) => {
             ))}
           </Select>
         </Form.Item>
-
         <Form.Item
-          name="ticket_price"
-          label="fare price"
-          requiredMark="require"
-        >
-          <Select placeholder="Select fare price">
-            {preDefinePrice?.map((bs, index) => (
-              <Select.Option key={index} value={`${bs?.ticket_price}`}>
-                <span className="ps-2 pe-2">{bs?.ticket_price}$</span>
-              </Select.Option>
-            ))}
-          </Select>
-        </Form.Item>
-
-        <Form.Item name="trips_status" label="Status" requiredMark="require">
-          <Select placeholder="Select trips status">
-            {preDefineTripsStatus?.map((ts, index) => (
-              <Select.Option key={index} value={`${ts?.trips_status}`}>
-                <span className="ps-2 pe-2">{ts?.trips_status}</span>
-              </Select.Option>
-            ))}
-          </Select>
-        </Form.Item>
-
-        {/* <Form.Item
           name="ticket_price"
           label="Fare Price"
           rules={[
@@ -264,9 +239,20 @@ const UpdateTripForm = ({ editingTrip, resetEditing }) => {
             formatter={(values) =>
               `৳ ${values}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
             }
+            className="w-full"
             placeholder="Type trip fare"
           />
-        </Form.Item> */}
+        </Form.Item>
+
+        <Form.Item name="trips_status" label="Status" requiredMark="require">
+          <Select placeholder="Select trips status">
+            {preDefineTripsStatus?.map((ts, index) => (
+              <Select.Option key={index} value={`${ts?.trips_status}`}>
+                <span className="ps-2 pe-2">{ts?.trips_status}</span>
+              </Select.Option>
+            ))}
+          </Select>
+        </Form.Item>
       </Form>
     </div>
   );

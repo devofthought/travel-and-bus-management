@@ -27,4 +27,6 @@ exports.default = {
     client_url: process.env.CLIENT_URL,
     server_url: process.env.SERVER_URL,
     stripe_secret_key: process.env.STRIPE_SECRET_KEY,
+    nodemailer_email: process.env.NODEMAILER_EMAIL,
+    nodemailer_password: process.env.NODEMAILER_PASSWORD
 };

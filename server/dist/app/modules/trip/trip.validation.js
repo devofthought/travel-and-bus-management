@@ -66,7 +66,21 @@ const updateTripZodSchema = zod_1.z.object({
             .optional(),
     }),
 });
+const getTripsByUsers = zod_1.z.object({
+    body: zod_1.z.object({
+        to: zod_1.z.string({
+            required_error: 'to is required',
+        }),
+        departure_time: zod_1.z.string({
+            required_error: 'departure time is required',
+        }),
+        from: zod_1.z.string({
+            required_error: 'from time is required',
+        }),
+    }),
+});
 exports.TripValidation = {
     createTripZodSchema,
     updateTripZodSchema,
+    getTripsByUsers
 };

@@ -18,7 +18,7 @@ const booking_service_1 = require("./booking.service");
 // Controller function to create a booking
 const createBookingController = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const bookingData = req.body;
-    const newBooking = yield booking_service_1.bookingService.createBooking(req.body);
+    const newBooking = yield booking_service_1.bookingService.createBooking(bookingData);
     res.status(201).json(newBooking);
 }));
 // Controller function to update booking status
@@ -29,7 +29,7 @@ const updateBookingController = (0, catchAsync_1.default)((req, res) => __awaite
     res.json(updatedBooking);
 }));
 const getBookingController = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const getBooking = yield booking_service_1.bookingService.getBooking(req.params);
+    const getBooking = yield booking_service_1.bookingService.getBooking();
     res.json(getBooking);
 }));
 // Export the controller functions with error handling

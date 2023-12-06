@@ -30,10 +30,21 @@ const ApiError_1 = __importDefault(require("../../../errors/ApiError"));
 const reserveBus_model_1 = require("./reserveBus.model");
 const reserveBus_constants_1 = require("./reserveBus.constants");
 const reserveBusRequest = (payload) => __awaiter(void 0, void 0, void 0, function* () {
-    const newReserveBus = yield reserveBus_model_1.ReserveBus.create(payload);
+    const updatePayload = {
+        from: payload.from,
+        to: payload.to,
+        departure_time: payload.departure_time,
+        arrival_time: payload.arrival_time,
+        name: payload.name,
+        email: payload.email,
+        bus_seats: payload.bus_seats,
+        bus_type: payload.bus_type,
+    };
+    const newReserveBus = yield reserveBus_model_1.ReserveBus.create(updatePayload);
     if (!newReserveBus) {
         throw new ApiError_1.default(http_status_1.default.BAD_REQUEST, 'Failed to create ReserveBus');
     }
+    /* //TODO: email send when someone request for a bus */
     return newReserveBus;
 });
 const getAllReserveBus = (filters, paginationOptions) => __awaiter(void 0, void 0, void 0, function* () {

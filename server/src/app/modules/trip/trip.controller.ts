@@ -4,11 +4,8 @@ import { paginationFields } from '../../../constants/pagination'
 import catchAsync from '../../../shared/catchAsync'
 import { pick } from '../../../shared/pick'
 import sendResponse from '../../../shared/sendResponse'
-import {
-  tripFilterableFields,
-  upComingTripFilterableFields,
-} from './trip.constants'
-import { ITripResponse } from './trip.interface'
+import { tripFilterableFields } from './trip.constants'
+import { IGetUpComingTripResponse, ITripResponse } from './trip.interface'
 import { TripService } from './trip.services'
 
 const createTrip = catchAsync(async (req: Request, res: Response) => {
@@ -28,7 +25,7 @@ const getUpComingTrip = catchAsync(async (req: Request, res: Response) => {
   const userAuth = req.user
   const result = await TripService.getUpComingTrip(payload, userAuth)
 
-  sendResponse<ITripResponse[]>(res, {
+  sendResponse<IGetUpComingTripResponse[]>(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Up-coming Trip retrieved successfully!',
@@ -53,7 +50,7 @@ const getAllTrip = catchAsync(async (req: Request, res: Response) => {
   const paginationOptions = pick(req.query, paginationFields)
   const result = await TripService.getAllTrip(filters, paginationOptions)
 
-  sendResponse<ITripResponse[]>(res, {
+  sendResponse<any[]>(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'All Trip retrieved successfully!',

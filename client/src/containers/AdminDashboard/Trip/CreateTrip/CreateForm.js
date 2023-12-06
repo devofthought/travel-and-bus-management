@@ -10,6 +10,7 @@ import { BiTrip, BiUser } from "react-icons/bi";
 import { useAddTripMutation } from "@/redux/trip/tripApi";
 import Swal from "sweetalert2";
 import MainButton from "@/components/UI/Button";
+import moment from "moment";
 
 const initialData = {
   route_code: "",
@@ -23,6 +24,15 @@ const initialData = {
 };
 
 const CreateTripForm = () => {
+
+  const disabledDate = (current) => {
+    // Disable dates before today after 7 days
+    const today = moment().startOf("day");
+    const sevenDaysAhead = moment().add(6, "days").endOf("day");
+
+    return current && (current < today || current > sevenDaysAhead);
+  };
+
   const { data: routeData, isLoading: routeIsLoading } = useGetAllRouteQuery();
 
   // const { data: driveData, isLoading: driverIsLoading } = useGetAllAvailabilityDriverQuery("ready");
@@ -156,8 +166,9 @@ const CreateTripForm = () => {
         >
           <DatePicker
             className="w-full "
-            showTime
+            showTime={{ format: "hh:mm A", use12Hours: true }}
             placeholder="Select Departure Date"
+            disabledDate={disabledDate}
           />
         </Form.Item>
 
@@ -173,8 +184,9 @@ const CreateTripForm = () => {
         >
           <DatePicker
             className="w-full"
-            showTime
             placeholder="Select Arrival Date"
+            showTime={{ format: "hh:mm A", use12Hours: true }}
+            disabledDate={disabledDate}
           />
         </Form.Item>
 
