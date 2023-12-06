@@ -6,7 +6,7 @@ import DashboardRightBarDropDown from "@/components/Shared/DashboardRightBarDrop
 import Footer from "@/components/UI/Footer";
 import Link from "next/link";
 import TopLoader from "@/components/Shared/TopLoader";
-import NoticeBoard from "@/components/Shared/NoticeBoard";
+// import NoticeBoard from "@/components/Shared/NoticeBoard";
 const { Header, Sider, Content } = Layout;
 import withAuth from "@/utils/withAuth";
 import dynamic from "next/dynamic";
@@ -41,7 +41,7 @@ const AdminDashboardLayout = ({ children }) => {
         <SideBar />
       </Sider>
       <Layout>
-        <NoticeBoard />
+        {/* <NoticeBoard /> */}
         <TopLoader />
         <Header
           style={{
