@@ -133,6 +133,7 @@ const RouteListTable = ({ data }) => {
           pagination={{
             pageSize: 5,
           }}
+          scroll={{ x: true }}
         ></Table>
         <Modal
           title="Edit route details"

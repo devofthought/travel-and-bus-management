@@ -125,7 +125,7 @@ const ReserveBusHistoryList = ({ data }) => {
   return (
     <div className="App">
       <header className="App-header">
-        <Table columns={columns} dataSource={data}></Table>
+        <Table columns={columns} dataSource={data} scroll={{ x: true }}></Table>
       </header>
     </div>
   );

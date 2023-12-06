@@ -4,7 +4,11 @@ import { Table, Typography } from "antd";
 import dayjs from "dayjs";
 
 const TripListContainer = () => {
-  const { data } = useGetAllTripQuery({ limit: 10, page: 1, trips_status:'pending'});
+  const { data } = useGetAllTripQuery({
+    limit: 10,
+    page: 1,
+    trips_status: "pending",
+  });
 
   const columns = [
     {
@@ -120,6 +124,7 @@ const TripListContainer = () => {
         pagination={{
           pageSize: 5,
         }}
+        scroll={{ x: true }}
       ></Table>
     </span>
   );

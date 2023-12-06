@@ -121,7 +121,7 @@ const ReserveBusList = ({ data }) => {
   return (
     <div className="App">
       <header className="App-header">
-        <Table columns={columns} dataSource={data}></Table>
+        <Table columns={columns} dataSource={data} scroll={{ x: true }}></Table>
         <Modal
           title="Edit reserve bus request details"
           open={isEditing}

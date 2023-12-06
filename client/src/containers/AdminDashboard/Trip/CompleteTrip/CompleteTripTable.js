@@ -125,6 +125,7 @@ const CompleteTripTable = () => {
         pagination={{
           pageSize: 5,
         }}
+        scroll={{ x: true }}
       ></Table>
     </span>
   );

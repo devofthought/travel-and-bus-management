@@ -84,6 +84,7 @@ const DriverTable = () => {
         pagination={{
           pageSize: 5,
         }}
+        scroll={{ x: true }}
       ></Table>
     </span>
   );

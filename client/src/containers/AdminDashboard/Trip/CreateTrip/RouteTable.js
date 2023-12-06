@@ -45,6 +45,7 @@ const RouteTable = () => {
         pagination={{
           pageSize: 5,
         }}
+        scroll={{ x: true }}
       ></Table>
     </span>
   );
