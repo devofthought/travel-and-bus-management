@@ -15,8 +15,8 @@ const initialData = {
   busType: "",
   from: "",
   to: "",
-  requester_name: "",
-  requester_email: "",
+  name: "",
+  email: "",
   journeyEnd: "",
   journeyDate: "",
 };
@@ -42,14 +42,10 @@ const ReserveABus = () => {
 
     const journeyDateTimePayload = {
       ...values,
-      journeyDate: journeyDateTime,
-      journeyEnd: journeyEndTime,
+      departure_time: journeyDateTime,
+      arrival_time: journeyEndTime,
     };
-
-    console.log(journeyDateTimePayload);
-    // AddReserveBus(journeyDateTimePayload)
-    form.setFieldsValue(initialData);
-
+    AddReserveBus(journeyDateTimePayload);
   };
 
   useEffect(() => {
@@ -67,7 +63,6 @@ const ReserveABus = () => {
       error?.status === 406 ||
       error?.status === 403
     ) {
-      form.setFieldsValue(initialData);
       Swal.fire({
         position: "center",
         icon: "error",
@@ -125,7 +120,7 @@ const ReserveABus = () => {
                   </Form.Item>
 
                   <Form.Item
-                    name="busType"
+                    name="bus_type"
                     rules={[
                       {
                         required: true,
@@ -150,7 +145,7 @@ const ReserveABus = () => {
                     />
                   </Form.Item>
                   <Form.Item
-                    name="busSeats"
+                    name="bus_seats"
                     rules={[
                       {
                         required: true,
@@ -223,7 +218,7 @@ const ReserveABus = () => {
 
                   <Form.Item
                     className="h-10"
-                    name="requester_name"
+                    name="name"
                     rules={[
                       { required: true, message: "Please input your Name!" },
                     ]}
@@ -231,7 +226,7 @@ const ReserveABus = () => {
                     <Input className="h-10 text-lg" placeholder="Your name" />
                   </Form.Item>
                   <Form.Item
-                    name="requester_email"
+                    name="email"
                     rules={[
                       {
                         required: true,
