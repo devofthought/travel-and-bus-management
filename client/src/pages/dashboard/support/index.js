@@ -1,17 +1,13 @@
 import { userRole } from "@/config/userRole";
+import SupportList from "@/containers/AdminDashboard/Support/SupportList";
 import AdminDashboardLayout from "@/layouts/AdminDashboardLayout";
+import { useGetSupportBackQuery } from "@/redux/feedback/feedbackApi";
 import React from "react";
 
 const Support = () => {
-  return (
-    <>
-      {"admin" === userRole.ADMIN && (
-        <>
-          <h1>this is Support </h1>
-        </>
-      )}
-    </>
-  );
+  const { data } = useGetSupportBackQuery();
+
+  return <>{"admin" === userRole.ADMIN && <SupportList data={data?.data} />}</>;
 };
 
 export default Support;
