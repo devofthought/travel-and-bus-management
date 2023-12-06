@@ -24,7 +24,7 @@ const withAuth = (WrappedComponent, allowedRoles = []) => {
       // Verify the token
       const decoded = jwt.verify(
         token,
-        "access_token_secret_bus_management_service"
+      `${process.env.NEXT_PUBLIC_JWT_SECRET}`
       );
       console.log("Decoded:", decoded);
 
