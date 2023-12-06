@@ -1,4 +1,3 @@
-import envConfig from "@/config/envConfig";
 import { getFromLocalStorage } from "@/utils/localStorage";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 

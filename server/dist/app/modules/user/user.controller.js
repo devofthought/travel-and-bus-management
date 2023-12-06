@@ -64,6 +64,28 @@ const updateUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, voi
         data: result,
     });
 }));
+const updateUserEmail = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = req.user;
+    const updateData = req.body;
+    const result = yield user_service_1.UserService.updateUserEmail(user, updateData);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: 'user email updated successfully',
+        data: result,
+    });
+}));
+const updateUserPassword = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = req.user;
+    const updateData = req.body;
+    const result = yield user_service_1.UserService.updateUserPassword(user, updateData);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: 'user password updated successfully',
+        data: result,
+    });
+}));
 const deleteUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.params.id;
     const result = yield user_service_1.UserService.deleteUser(id);
@@ -130,4 +152,6 @@ exports.UserController = {
     deleteUser,
     getMyProfile,
     updateMyProfile,
+    updateUserEmail,
+    updateUserPassword,
 };

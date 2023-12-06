@@ -4,9 +4,9 @@ import globalErrorHandler from './app/middlewares/globalErrorHandler'
 import httpStatus from 'http-status'
 import router from './app/router'
 import cookieParser from 'cookie-parser'
-import swaggerUI from 'swagger-ui-express'
-import YAML from 'yamljs'
-const swaggerDOC = YAML.load('swagger.yaml')
+// import swaggerUI from 'swagger-ui-express'
+// import YAML from 'yamljs'
+// const swaggerDOC = YAML.load('swagger.yaml')
 
 const app: Application = express()
 
@@ -22,7 +22,7 @@ app.use(cookieParser())
 app.use('/api/v1', router)
 
 // application docs
-app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerDOC))
+// app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerDOC))
 
 app.get('/', (req: Request, res: Response) => {
   res.send({ message: 'project is running for world 🕊' })

@@ -16,6 +16,7 @@ const traveler_router_1 = require("../modules/traveler/traveler.router");
 const trip_router_1 = require("../modules/trip/trip.router");
 const user_router_1 = require("../modules/user/user.router");
 const payment_router_1 = require("../modules/payment/payment.router");
+const support_router_1 = require("../modules/support/support.router");
 const router = express_1.default.Router();
 const moduleRoutes = [
     { path: '/auth', router: auth_router_1.AuthRouter },
@@ -30,6 +31,7 @@ const moduleRoutes = [
     { path: '/incident', router: incident_router_1.IncidentRoutes },
     { path: '/booking', router: booking_router_1.BookingRoutes },
     { path: '/payment', router: payment_router_1.PaymentRoutes },
+    { path: '/support', router: support_router_1.SupportRoutes },
 ];
 moduleRoutes.forEach(route => router.use(route.path, route.router));
 exports.default = router;

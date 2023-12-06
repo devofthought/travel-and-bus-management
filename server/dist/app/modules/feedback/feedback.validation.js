@@ -7,19 +7,19 @@ const createFeedbackZodSchema = zod_1.z.object({
         feedback_for: zod_1.z.string({
             required_error: 'feedback_for is required',
         }),
-        user_id: zod_1.z.string({
-            required_error: 'user_id is required',
-        }),
         trip_id: zod_1.z.string({
-            required_error: 'trip_id  is required',
+            required_error: 'trip_id is required',
         }),
         feedback: zod_1.z.string({
-            required_error: 'feedback  is required',
+            required_error: 'feedback is required',
         }),
-        rating: zod_1.z.string({
-            required_error: 'rating  is required',
+        rating: zod_1.z
+            .number({
+            required_error: 'rating is required',
+        })
+            .max(5, {
+            message: 'Rating must be at most 5',
         }),
-        status: zod_1.z.string().optional(),
     }),
 });
 const updateFeedbackZodSchema = zod_1.z.object({
@@ -32,7 +32,14 @@ const updateFeedbackZodSchema = zod_1.z.object({
         status: zod_1.z.string().optional(),
     }),
 });
+const adminApprovedFeedbackZodSchema = zod_1.z.object({
+    body: zod_1.z.object({
+        status: zod_1.z.string(),
+        feedback_id: zod_1.z.string(),
+    }),
+});
 exports.FeedbackValidation = {
     createFeedbackZodSchema,
     updateFeedbackZodSchema,
+    adminApprovedFeedbackZodSchema,
 };

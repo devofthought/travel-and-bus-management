@@ -29,6 +29,8 @@ const http_status_1 = __importDefault(require("http-status"));
 const ApiError_1 = __importDefault(require("../../../errors/ApiError"));
 const traveler_modal_1 = require("./traveler.modal");
 const traveler_constants_1 = require("./traveler.constants");
+const user_model_1 = require("../user/user.model");
+const cloudinary_1 = __importDefault(require("../../../config/cloudinary"));
 const getAllTraveler = (filters, paginationOptions) => __awaiter(void 0, void 0, void 0, function* () {
     const { searchTerm } = filters, filtersData = __rest(filters, ["searchTerm"]);
     const andConditions = [];
@@ -74,15 +76,21 @@ const getSingleTraveler = (id) => __awaiter(void 0, void 0, void 0, function* ()
     }
     return result;
 });
-const updateTraveler = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
+const updateTraveler = (user, payload) => __awaiter(void 0, void 0, void 0, function* () {
     delete payload._id;
-    const isExist = yield traveler_modal_1.Traveler.findById(id);
-    if (!isExist) {
-        throw new ApiError_1.default(http_status_1.default.BAD_REQUEST, 'Bus not found!');
+    delete payload.email;
+    const isExistUser = yield user_model_1.User.findById(user === null || user === void 0 ? void 0 : user.id);
+    if (!isExistUser) {
+        throw new ApiError_1.default(http_status_1.default.BAD_REQUEST, 'Traveler is not found!');
     }
-    const result = yield traveler_modal_1.Traveler.findOneAndUpdate({ _id: id }, payload, {
-        new: true,
-    });
+    const traveler = yield traveler_modal_1.Traveler.findById(isExistUser.traveler_id);
+    // console.log(traveler)
+    if (payload.image && traveler && traveler.image && traveler.image.avatar_public_url) {
+        yield cloudinary_1.default.uploader.destroy(traveler.image.avatar_public_url);
+        // console.log(result);
+        // console.log('image here', traveler.image.avatar_public_url)
+    }
+    const result = yield traveler_modal_1.Traveler.findByIdAndUpdate(isExistUser.traveler_id, payload, { new: true });
     return result;
 });
 exports.TravelerService = {

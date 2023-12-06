@@ -31,6 +31,10 @@ const bcryptHelpers_1 = require("../../../helper/bcryptHelpers");
 const paginationHelper_1 = require("../../../helper/paginationHelper");
 const user_constants_1 = require("./user.constants");
 const user_model_1 = require("./user.model");
+const admin_modal_1 = require("../admin/admin.modal");
+const mongoose_1 = __importDefault(require("mongoose"));
+const driver_model_1 = require("../driver/driver.model");
+const traveler_modal_1 = require("../traveler/traveler.modal");
 const getAllUsers = (filters, paginationOptions) => __awaiter(void 0, void 0, void 0, function* () {
     const { searchTerm } = filters, filtersData = __rest(filters, ["searchTerm"]);
     const andConditions = [];
@@ -98,7 +102,11 @@ const deleteUser = (id) => __awaiter(void 0, void 0, void 0, function* () {
 });
 const getMyProfile = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     let result = null;
-    result = yield user_model_1.User.findById({ _id: payload === null || payload === void 0 ? void 0 : payload.id });
+    result = yield user_model_1.User.findById({ _id: payload === null || payload === void 0 ? void 0 : payload.id })
+        .select('-password')
+        .populate('traveler_id')
+        .populate('admin_id')
+        .populate('driver_id');
     return result;
 });
 const updateMyProfile = (user, payload) => __awaiter(void 0, void 0, void 0, function* () {
@@ -125,22 +133,71 @@ const updateMyProfile = (user, payload) => __awaiter(void 0, void 0, void 0, fun
     });
     return result;
 });
-/*
-const updateUserProfile = async (userId: string, updatedUserData: any): Promise<User | null> => {
-  // Update the user's profile
-  const updatedUser = await User.findByIdAndUpdate(userId, updatedUserData, { new: true });
-
-  return updatedUser;
-};
-
-const updateTravellerProfile = async (travellerId: string, updatedTravellerData: any): Promise<Traveller | null> => {
-  // Update the traveller's profile
-  const updatedTraveller = await Traveller.findByIdAndUpdate(travellerId, updatedTravellerData, { new: true });
-
-  return updatedTraveller;
-};
-
-*/
+const updateUserEmail = (user, // TODO: [note] JWT Payload
+payload) => __awaiter(void 0, void 0, void 0, function* () {
+    let result = null;
+    const session = yield mongoose_1.default.startSession();
+    try {
+        session.startTransaction();
+        const existingUser = yield user_model_1.User.findOne({ _id: user === null || user === void 0 ? void 0 : user.id });
+        if (!existingUser) {
+            throw new ApiError_1.default(http_status_1.default.NOT_FOUND, 'User not found');
+        }
+        if (existingUser.email !== payload.old_email) {
+            throw new ApiError_1.default(http_status_1.default.NOT_ACCEPTABLE, 'Wrong email');
+        }
+        const isEmailAcceptAble = yield user_model_1.User.findOne({ email: payload.new_email });
+        if (isEmailAcceptAble) {
+            throw new ApiError_1.default(http_status_1.default.NOT_ACCEPTABLE, 'This email already exists');
+        }
+        const updateOptions = { session, new: true };
+        const updatePayload = { email: payload.new_email };
+        if (existingUser.role === 'admin') {
+            yield admin_modal_1.Admin.findByIdAndUpdate(existingUser.admin_id, updatePayload, updateOptions);
+        }
+        else if (existingUser.role === 'driver') {
+            yield driver_model_1.Driver.findByIdAndUpdate(existingUser.driver_id, updatePayload, updateOptions);
+        }
+        else if (existingUser.role === 'traveler') {
+            yield traveler_modal_1.Traveler.findByIdAndUpdate(existingUser.traveler_id, updatePayload, updateOptions);
+        }
+        result = yield user_model_1.User.findByIdAndUpdate(existingUser.id, updatePayload, updateOptions);
+        yield session.commitTransaction();
+        yield session.endSession();
+    }
+    catch (error) {
+        yield session.abortTransaction();
+        yield session.endSession();
+        throw error;
+    }
+    if (result) {
+        result = yield user_model_1.User.findById(result._id)
+            .select('-password')
+            .populate('traveler_id')
+            .populate('driver_id')
+            .populate('admin_id');
+    }
+    return result;
+});
+const updateUserPassword = (user_id, payload) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = new user_model_1.User();
+    const isUserExist = yield user_model_1.User.findById(user_id === null || user_id === void 0 ? void 0 : user_id.id);
+    if (!isUserExist) {
+        throw new ApiError_1.default(http_status_1.default.BAD_REQUEST, 'User not found');
+    }
+    if (payload.confirm_new_password !== payload.new_password) {
+        throw new ApiError_1.default(http_status_1.default.NOT_ACCEPTABLE, 'New password and confirm password is not match');
+    }
+    if (isUserExist.password &&
+        !(yield user.isPasswordMatch(payload.old_password, isUserExist.password))) {
+        throw new ApiError_1.default(http_status_1.default.NOT_ACCEPTABLE, 'Invalid password');
+    }
+    const password_hashed = yield bcryptHelpers_1.bcryptHelpers.hashPassword(payload.new_password);
+    const result = yield user_model_1.User.findByIdAndUpdate(user_id === null || user_id === void 0 ? void 0 : user_id.id, {
+        password: password_hashed,
+    });
+    return result;
+});
 exports.UserService = {
     getAllUsers,
     getSingleUser,
@@ -148,15 +205,6 @@ exports.UserService = {
     deleteUser,
     getMyProfile,
     updateMyProfile,
+    updateUserEmail,
+    updateUserPassword,
 };
-/* const getUserProfile = async (payload: any) => {
-  const userInfo = await User.findOne({ email: payload?.email });
-  const { model, id } = userInfo?.admin_id ? { model: Admin, id: userInfo?.admin_id } : userInfo?.traveller_id ? { model: Traveller, id: userInfo?.traveller_id } : { model: Driver, id: userInfo?.driver_id };
-
-  const result = await model.findById(id);
-
-  return {
-    result,
-    userInfo,
-  };
-} */

@@ -30,9 +30,11 @@ const createTrip = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, voi
     });
 }));
 const getUpComingTrip = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const filters = (0, pick_1.pick)(req.query, trip_constants_1.upComingTripFilterableFields);
-    const paginationOptions = (0, pick_1.pick)(req.query, pagination_1.paginationFields);
-    const result = yield trip_services_1.TripService.getUpComingTrip( /* filters, paginationOptions */);
+    // const filters = pick(req.query, upComingTripFilterableFields)
+    // const paginationOptions = pick(req.query, paginationFields)
+    const payload = req.query;
+    const userAuth = req.user;
+    const result = yield trip_services_1.TripService.getUpComingTrip(payload, userAuth);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
@@ -95,6 +97,16 @@ const getTripsByUsersController = (0, catchAsync_1.default)((req, res) => __awai
         data: result.data,
     });
 }));
+const getBusSeatStatusOnTripController = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield trip_services_1.TripService.getBusSeatStatusOnTrip(req.body);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: 'All Seat status retrieved successfully!',
+        // meta: result?.meta,
+        data: result,
+    });
+}));
 exports.TripController = {
     createTrip,
     updateTrip,
@@ -103,4 +115,5 @@ exports.TripController = {
     getUpComingTrip,
     getAllUpdateAbleTrip,
     getTripsByUsersController,
+    getBusSeatStatusOnTripController,
 };

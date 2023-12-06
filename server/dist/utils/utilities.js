@@ -23,7 +23,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VariantCreation = void 0;
+exports.VariantCreation = exports.generateRandomPassword = void 0;
 const availabilityDivider = (elements, inputDate) => {
     const assignedElements = [];
     const standbyElements = [];
@@ -83,6 +83,16 @@ const extractDateFromTimestamp = (timestamp) => {
     const day = String(dateObject.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
 };
+const generateRandomPassword = (length = 6) => {
+    const charset = "abcdelmnopst0123456789";
+    let password = "";
+    for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * charset.length);
+        password += charset[randomIndex];
+    }
+    return password;
+};
+exports.generateRandomPassword = generateRandomPassword;
 exports.VariantCreation = {
     availabilityDivider,
     availabilityUpdater,

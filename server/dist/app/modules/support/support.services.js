@@ -23,36 +23,33 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ReserveBusService = void 0;
+exports.SupportService = void 0;
 const paginationHelper_1 = require("../../../helper/paginationHelper");
 const http_status_1 = __importDefault(require("http-status"));
 const ApiError_1 = __importDefault(require("../../../errors/ApiError"));
-const reserveBus_model_1 = require("./reserveBus.model");
-const reserveBus_constants_1 = require("./reserveBus.constants");
-const reserveBusRequest = (payload) => __awaiter(void 0, void 0, void 0, function* () {
-    const updatePayload = {
-        from: payload.from,
-        to: payload.to,
-        departure_time: payload.departure_time,
-        arrival_time: payload.arrival_time,
-        name: payload.name,
+const support_model_1 = require("./support.model");
+const support_constants_1 = require("./support.constants");
+const createSupport = (payload) => __awaiter(void 0, void 0, void 0, function* () {
+    const createSupport = {
+        first_name: payload.first_name,
+        last_name: payload.last_name,
         email: payload.email,
-        bus_seats: payload.bus_seats,
-        bus_type: payload.bus_type,
+        phone: payload.phone,
+        subject: payload.subject,
+        message: payload.message,
     };
-    const newReserveBus = yield reserveBus_model_1.ReserveBus.create(updatePayload);
-    if (!newReserveBus) {
-        throw new ApiError_1.default(http_status_1.default.BAD_REQUEST, 'Failed to create ReserveBus');
+    const newSupport = yield support_model_1.Support.create(createSupport);
+    if (!newSupport) {
+        throw new ApiError_1.default(http_status_1.default.BAD_REQUEST, 'Failed to create Support');
     }
-    /* //TODO: email send when someone request for a bus */
-    return newReserveBus;
+    return newSupport;
 });
-const getAllReserveBus = (filters, paginationOptions) => __awaiter(void 0, void 0, void 0, function* () {
+const getAllSupport = (payload, filters, paginationOptions) => __awaiter(void 0, void 0, void 0, function* () {
     const { searchTerm } = filters, filtersData = __rest(filters, ["searchTerm"]);
     const andConditions = [];
     if (searchTerm) {
         andConditions.push({
-            $or: reserveBus_constants_1.reserveBusSearchableFields === null || reserveBus_constants_1.reserveBusSearchableFields === void 0 ? void 0 : reserveBus_constants_1.reserveBusSearchableFields.map((field) => ({
+            $or: support_constants_1.supportSearchableFields === null || support_constants_1.supportSearchableFields === void 0 ? void 0 : support_constants_1.supportSearchableFields.map((field) => ({
                 [field]: {
                     $regex: searchTerm,
                     $options: 'i',
@@ -71,11 +68,11 @@ const getAllReserveBus = (filters, paginationOptions) => __awaiter(void 0, void 
     const sortCondition = sortBy &&
         sortOrder && { [sortBy]: sortOrder };
     const whereCondition = (andConditions === null || andConditions === void 0 ? void 0 : andConditions.length) > 0 ? { $and: andConditions } : {};
-    const result = yield reserveBus_model_1.ReserveBus.find(whereCondition)
+    const result = yield support_model_1.Support.find(whereCondition)
         .sort(sortCondition)
         .skip(skip)
         .limit(limit);
-    const total = yield reserveBus_model_1.ReserveBus.countDocuments(whereCondition);
+    const total = yield support_model_1.Support.countDocuments(whereCondition);
     return {
         meta: {
             page,
@@ -85,34 +82,7 @@ const getAllReserveBus = (filters, paginationOptions) => __awaiter(void 0, void 
         data: result,
     };
 });
-const getSingleUserReserveBus = (user_id) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield reserveBus_model_1.ReserveBus.find({ user_id });
-    if (!result) {
-        throw new ApiError_1.default(http_status_1.default.NOT_FOUND, 'ReserveBuss not found!');
-    }
-    return result;
-});
-const updateReserveBus = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
-    const isExist = yield reserveBus_model_1.ReserveBus.findOne({ _id: id });
-    if (!isExist) {
-        throw new ApiError_1.default(http_status_1.default.BAD_REQUEST, 'ReserveBus not found!');
-    }
-    const result = yield reserveBus_model_1.ReserveBus.findOneAndUpdate({ _id: id }, payload, {
-        new: true,
-    });
-    return result;
-});
-const deleteReserveBus = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield reserveBus_model_1.ReserveBus.findOneAndDelete({ _id: id });
-    if (!result) {
-        throw new ApiError_1.default(http_status_1.default.NOT_FOUND, 'ReserveBus not found!');
-    }
-    return result;
-});
-exports.ReserveBusService = {
-    reserveBusRequest,
-    getAllReserveBus,
-    getSingleUserReserveBus,
-    updateReserveBus,
-    deleteReserveBus,
+exports.SupportService = {
+    createSupport,
+    getAllSupport,
 };

@@ -44,14 +44,9 @@ const createBusZodSchema = zod_1.z.object({
 const updateBusZodSchema = zod_1.z.object({
     body: zod_1.z.object({
         total_seats: zod_1.z
-            .number({
+            .array(zod_1.z.string({
             required_error: 'Available seats is required',
-        })
-            .optional(),
-        availability_status: zod_1.z
-            .string({
-            required_error: 'Availability status is required',
-        })
+        }))
             .optional(),
         brand_name: zod_1.z
             .string({
@@ -59,21 +54,6 @@ const updateBusZodSchema = zod_1.z.object({
         })
             .optional(),
         model: zod_1.z
-            .string({
-            required_error: 'Brand name is required',
-        })
-            .optional(),
-        bus_image: zod_1.z
-            .string({
-            required_error: 'Brand name is required',
-        })
-            .optional(),
-        outer_image: zod_1.z
-            .string({
-            required_error: 'Brand name is required',
-        })
-            .optional(),
-        inner_image: zod_1.z
             .string({
             required_error: 'Brand name is required',
         })
@@ -92,8 +72,18 @@ const CheckBusAvailableZodSchema = zod_1.z.object({
             .optional(),
     }),
 });
+const updateBusImageZodSchema = zod_1.z.object({
+    body: zod_1.z.object({
+        image: zod_1.z
+            .string({
+            required_error: 'Bus image is required',
+        })
+            .optional(),
+    }),
+});
 exports.BusValidation = {
     createBusZodSchema,
     updateBusZodSchema,
+    updateBusImageZodSchema,
     CheckBusAvailableZodSchema,
 };

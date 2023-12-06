@@ -56,7 +56,6 @@
     "nodemailer": "^6.9.7",
     "sslcommerz-lts": "^1.1.0",
     "stripe": "^13.4.0",
-    "swagger-ui-express": "^5.0.0",
     "uuidv4": "^6.2.13",
     "winston": "^3.10.0",
     "winston-daily-rotate-file": "^4.7.1",
