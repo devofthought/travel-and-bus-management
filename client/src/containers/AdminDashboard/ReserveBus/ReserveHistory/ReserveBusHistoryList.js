@@ -1,7 +1,8 @@
+import Spinner from "@/components/Shared/Spinner";
 import { Table } from "antd";
 import dayjs from "dayjs";
 
-const ReserveBusHistoryList = ({ data }) => {
+const ReserveBusHistoryList = ({ data, isLoading }) => {
   const columns = [
     {
       title: "Sr.",
@@ -125,7 +126,15 @@ const ReserveBusHistoryList = ({ data }) => {
   return (
     <div className="App">
       <header className="App-header">
-        <Table columns={columns} dataSource={data} scroll={{ x: true }}></Table>
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <Table
+            columns={columns}
+            dataSource={data}
+            scroll={{ x: true }}
+          ></Table>
+        )}
       </header>
     </div>
   );

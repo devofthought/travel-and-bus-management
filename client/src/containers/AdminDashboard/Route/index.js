@@ -3,10 +3,10 @@ import RouteListTable from "./RouteList";
 import { useGetAllRouteQuery } from "@/redux/route/routeApi";
 
 const RouteListContainer = () => {
-  const { data } = useGetAllRouteQuery();
+  const { data, isLoading } = useGetAllRouteQuery();
   return (
     <>
-      <RouteListTable data={data?.data} />
+      <RouteListTable data={data?.data} isLoading={isLoading} />
     </>
   );
 };

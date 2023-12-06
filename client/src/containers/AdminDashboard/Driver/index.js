@@ -3,10 +3,10 @@ import DriverListTable from "./DriverList";
 import { useGetAllDriverQuery } from "@/redux/driver/driverApi";
 
 const DriverContainer = () => {
-  const { data } = useGetAllDriverQuery();
+  const { data, isLoading } = useGetAllDriverQuery();
   return (
     <>
-      <DriverListTable data={data?.data} />
+      <DriverListTable data={data?.data} loading={isLoading} />
     </>
   );
 };

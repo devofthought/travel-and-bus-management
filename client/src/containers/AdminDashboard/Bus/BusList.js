@@ -3,8 +3,9 @@ import { useState } from "react";
 import { EditOutlined } from "@ant-design/icons";
 import UpdateBusForm from "./UpdateBusFrom";
 import UpdateImage from "./UpdateBusImage";
+import Spinner from "@/components/Shared/Spinner";
 
-const BusListTable = ({ data }) => {
+const BusListTable = ({ data, isLoading }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editingBus, setEditingBus] = useState(null);
 
@@ -172,14 +173,18 @@ const BusListTable = ({ data }) => {
   return (
     <div className="App">
       <header className="App-header">
-        <Table
-          columns={columns}
-          dataSource={data}
-          pagination={{
-            pageSize: 5,
-          }}
-          scroll={{ x: true }}
-        ></Table>
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <Table
+            columns={columns}
+            dataSource={data}
+            pagination={{
+              pageSize: 5,
+            }}
+            scroll={{ x: true }}
+          ></Table>
+        )}
         <Modal
           title="Edit Bus details"
           open={isEditing}

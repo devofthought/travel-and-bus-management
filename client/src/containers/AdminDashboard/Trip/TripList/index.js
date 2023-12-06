@@ -1,10 +1,11 @@
 "use client";
+import Spinner from "@/components/Shared/Spinner";
 import { useGetAllTripQuery } from "@/redux/trip/tripApi";
 import { Table, Typography } from "antd";
 import dayjs from "dayjs";
 
 const TripListContainer = () => {
-  const { data } = useGetAllTripQuery({
+  const { data, isLoading } = useGetAllTripQuery({
     limit: 10,
     page: 1,
     trips_status: "pending",
@@ -118,14 +119,18 @@ const TripListContainer = () => {
   return (
     <span className="block w-full">
       <Typography.Title level={4}>Today Total Trip</Typography.Title>
-      <Table
-        columns={columns}
-        dataSource={data?.data}
-        pagination={{
-          pageSize: 5,
-        }}
-        scroll={{ x: true }}
-      ></Table>
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <Table
+          columns={columns}
+          dataSource={data?.data}
+          pagination={{
+            pageSize: 5,
+          }}
+          scroll={{ x: true }}
+        ></Table>
+      )}
     </span>
   );
 };

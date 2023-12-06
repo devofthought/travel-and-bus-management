@@ -3,11 +3,11 @@ import IncidentListTable from "./IncidentList";
 import { useGetAllIncidentQuery } from "@/redux/incident/incidentApi";
 
 const BusListContainer = () => {
-  const { data } = useGetAllIncidentQuery();
+  const { data, isLoading } = useGetAllIncidentQuery();
 
   return (
     <>
-      <IncidentListTable data={data?.data} />
+      <IncidentListTable data={data?.data} isLoading={isLoading} />
     </>
   );
 };

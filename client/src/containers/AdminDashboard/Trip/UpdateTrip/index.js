@@ -3,10 +3,13 @@ import UpdateTripTable from "./UpdateTripTable";
 import { useGetAllUpdateAbleTripQuery } from "@/redux/trip/tripApi";
 
 const UpdateTripContainer = () => {
-  const { data } = useGetAllUpdateAbleTripQuery({ limit: 10, page: 1 });
+  const { data, isLoading } = useGetAllUpdateAbleTripQuery({
+    limit: 10,
+    page: 1,
+  });
   return (
     <>
-      <UpdateTripTable data={data?.data} />
+      <UpdateTripTable data={data?.data} isLoading={isLoading} />
     </>
   );
 };

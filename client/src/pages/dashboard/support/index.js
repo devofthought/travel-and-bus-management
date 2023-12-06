@@ -3,9 +3,9 @@ import AdminDashboardLayout from "@/layouts/AdminDashboardLayout";
 import { useGetSupportBackQuery } from "@/redux/feedback/feedbackApi";
 
 const Support = () => {
-  const { data } = useGetSupportBackQuery();
+  const { data, isLoading } = useGetSupportBackQuery();
 
-  return <SupportList data={data?.data} />;
+  return <SupportList data={data?.data} isLoading={isLoading} />;
 };
 
 export default Support;

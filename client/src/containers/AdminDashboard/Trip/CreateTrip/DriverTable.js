@@ -1,9 +1,10 @@
+import Spinner from "@/components/Shared/Spinner";
 import { useGetAllDriverQuery } from "@/redux/driver/driverApi";
 import { Table, Typography } from "antd";
 import { useState } from "react";
 
 const DriverTable = () => {
-  const { data } = useGetAllDriverQuery();
+  const { data, isLoading } = useGetAllDriverQuery();
 
   const columns = [
     {
@@ -78,14 +79,18 @@ const DriverTable = () => {
   return (
     <span className="block w-full md:w-2/3">
       <Typography.Title level={4}>Driver</Typography.Title>
-      <Table
-        columns={columns}
-        dataSource={data?.data}
-        pagination={{
-          pageSize: 5,
-        }}
-        scroll={{ x: true }}
-      ></Table>
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <Table
+          columns={columns}
+          dataSource={data?.data}
+          pagination={{
+            pageSize: 5,
+          }}
+          scroll={{ x: true }}
+        ></Table>
+      )}
     </span>
   );
 };
