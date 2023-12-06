@@ -68,7 +68,6 @@ const TripListContainer = () => {
         return <span>{dayjs(departure_time).format("hh:mm A")}</span>;
       },
     },
-
     {
       title: "Arr. Time",
       dataIndex: "arrival_time",

@@ -1,16 +1,19 @@
-import { Table, Modal, Avatar } from "antd";
+import { Table, Modal } from "antd";
 import { useState } from "react";
 import { EditOutlined } from "@ant-design/icons";
+import dayjs from "dayjs";
 
-const ReserveBusList = () => {
+const ReserveBusList = ({ data }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editingReserveRequest, setEditingReserveRequest] = useState(null);
-  const [dataSource, setDataSource] = useState(demoData);
   const columns = [
     {
       title: "Sr.",
       dataIndex: "sr",
       minWidth: 200,
+      render: (_text, _record, index) => {
+        return `${index + 1}`;
+      },
     },
     {
       title: "From",
@@ -23,21 +26,71 @@ const ReserveBusList = () => {
       minWidth: 200,
     },
     {
-      title: "Start time",
-      dataIndex: "start_time",
+      title: "journey Date",
+      dataIndex: "departure_time",
+      minWidth: 200,
+      sorter: (a, b) => a.departure_time - b.departure_time,
+      render: (departure_time) => {
+        return (
+          <>
+            <p>{dayjs(departure_time).format("YYYY-MM-DD")}</p>
+            <p>{dayjs(departure_time).format("hh:mm A")}</p>
+          </>
+        );
+      },
+    },
+    {
+      title: "journey End",
+      dataIndex: "arrival_time",
+      minWidth: 200,
+      sorter: (a, b) => a.arrival_time - b.arrival_time,
+      render: (arrival_time) => {
+        return (
+          <>
+            <p>{dayjs(arrival_time).format("YYYY-MM-DD")}</p>
+            <p>{dayjs(arrival_time).format("hh:mm A")}</p>
+          </>
+        );
+      },
+    },
+    {
+      title: "Traveler name",
+      dataIndex: "name",
       minWidth: 200,
     },
     {
-      title: "Traveler",
-      dataIndex: "traveler_name",
+      title: "Traveler email",
+      dataIndex: "email",
       minWidth: 200,
     },
     {
       title: "Seats",
-      dataIndex: "seats",
+      dataIndex: "bus_seats",
       minWidth: 200,
-      render: (seats) => {
-        return <p>{seats} Seats</p>;
+      sorter: (a, b) => parseInt(a?.bus_seats) - parseInt(b?.bus_seats),
+      render: (bus_seats) => {
+        console.log(bus_seats);
+        return <p>{bus_seats} Seats</p>;
+      },
+    },
+    {
+      title: "Bus Type",
+      dataIndex: "bus_type",
+      minWidth: 200,
+      render: (bus_type) => {
+        return <p>{bus_type} Bus</p>;
+      },
+    },
+    {
+      title: "reserve Booking Status",
+      dataIndex: "status",
+      minWidth: 200,
+      render: (status) => {
+        return (
+          <p className="bg-[rgba(255,189,90,.2)] text-[#ffc107] rounded pl-2">
+            {status}
+          </p>
+        );
       },
     },
     {
@@ -68,7 +121,7 @@ const ReserveBusList = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <Table columns={columns} dataSource={dataSource}></Table>
+        <Table columns={columns} dataSource={data}></Table>
         <Modal
           title="Edit reserve bus request details"
           open={isEditing}
@@ -91,30 +144,3 @@ const ReserveBusList = () => {
 };
 
 export default ReserveBusList;
-
-const demoData = [
-  {
-    sr: 1,
-    from: "City A",
-    to: "City B",
-    start_time: "09:00 AM",
-    traveler_name: "John Doe",
-    seats: 2,
-  },
-  {
-    sr: 2,
-    from: "City C",
-    to: "City D",
-    start_time: "11:30 AM",
-    traveler_name: "Jane Smith",
-    seats: 3,
-  },
-  {
-    sr: 3,
-    from: "City E",
-    to: "City F",
-    start_time: "01:15 PM",
-    traveler_name: "Alice Johnson",
-    seats: 1,
-  },
-];

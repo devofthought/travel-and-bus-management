@@ -5,10 +5,12 @@ export type IReserveBus = {
   to: string
   departure_time: Date
   arrival_time: Date
-  user_id: string
+  name:string
   email: string
   phone: string
   bus_code: string
+  bus_type: string
+  bus_seats: string
   total_price: number
   driver_ids: string[]
   status: 'pending' | 'approved' | 'rejected'

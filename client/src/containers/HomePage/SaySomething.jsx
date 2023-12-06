@@ -1,15 +1,57 @@
 import Button from "@/components/UI/Button";
+import { useAddSupportConnectionMutation } from "@/redux/feedback/feedbackApi";
 import { Input } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
+import Swal from "sweetalert2";
 
 const SaySomething = () => {
   const { TextArea } = Input;
+  const [AddSupportConnection, { data, error, isLoading }] =
+    useAddSupportConnectionMutation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // console.log(e.target.value);
+    console.log(e.target.value);
+    // AddSupportConnection();  // TODO: [faizul bhai] handle this form and send value with RTK mutation
+
+    // TODO: [faizul bhai] request formating like this.
+    /*
+    
+    {
+    "first_name": "kamruzzaman",
+    "last_name": "Md",
+    "email": "md@gmail.com",
+    "phone": "01949016709",
+    "subject": "testing",
+    "message": "testing is nice"
+}
+    */
   };
+
+  useEffect(() => {
+    if (data?.statusCode === 200) {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: `${data?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } else if (
+      error?.status === 400 ||
+      error?.status === 406 ||
+      error?.status === 403
+    ) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: `${error?.data?.errorMessage[0]?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  }, [data, error]);
 
   return (
     <div className="main-container my-32 lg:my-36">

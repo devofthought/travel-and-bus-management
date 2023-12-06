@@ -10,12 +10,24 @@ import { ReserveBus } from './reserveBus.model'
 import { reserveBusSearchableFields } from './reserveBus.constants'
 
 const reserveBusRequest = async (
-  payload: IReserveBus
+  payload: Partial<IReserveBus>
 ): Promise<IReserveBus | null> => {
-  const newReserveBus = await ReserveBus.create(payload)
+  const updatePayload = {
+    from: payload.from,
+    to: payload.to,
+    departure_time: payload.departure_time,
+    arrival_time: payload.arrival_time,
+    name: payload.name,
+    email: payload.email,
+    bus_seats: payload.bus_seats,
+    bus_type: payload.bus_type,
+  }
+  const newReserveBus = await ReserveBus.create(updatePayload)
   if (!newReserveBus) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create ReserveBus')
   }
+  /* //TODO: email send when someone request for a bus */
+
   return newReserveBus
 }
 

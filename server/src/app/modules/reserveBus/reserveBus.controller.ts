@@ -13,7 +13,7 @@ const reserveBusRequest: RequestHandler = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'ReserveBus created successfully!',
+    message: 'Your reserved bus request has been successfully sent!',
     data: result,
   })
 })
