@@ -13,7 +13,20 @@ const SaySomething = () => {
     e.preventDefault();
 
     console.log(e.target.value);
-    // AddSupportConnection();
+    // AddSupportConnection();  // TODO: [faizul bhai] handle this form and send value with RTK mutation
+
+    // TODO: [faizul bhai] request formating like this.
+    /*
+    
+    {
+    "first_name": "kamruzzaman",
+    "last_name": "Md",
+    "email": "md@gmail.com",
+    "phone": "01949016709",
+    "subject": "testing",
+    "message": "testing is nice"
+}
+    */
   };
 
   useEffect(() => {
