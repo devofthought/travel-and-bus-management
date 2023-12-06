@@ -13,6 +13,8 @@ const user_1 = require("../../../enums/user");
 const router = express_1.default.Router();
 router.get('/my-profile', (0, auth_1.default)(user_1.ENUM_USER_ROLE.USER), user_controller_1.UserController.getMyProfile);
 router.patch('/my-profile', (0, auth_1.default)(user_1.ENUM_USER_ROLE.USER, user_1.ENUM_USER_ROLE.ADMIN), (0, validateRequest_1.default)(user_validation_1.userValidation.updateUserZodSchema), user_controller_1.UserController.updateMyProfile);
+router.patch('/user-email-update', (0, auth_1.default)(user_1.ENUM_USER_ROLE.USER, user_1.ENUM_USER_ROLE.ADMIN, user_1.ENUM_USER_ROLE.ADMIN), (0, validateRequest_1.default)(user_validation_1.userValidation.updateUserEmailUpdateZodSchema), user_controller_1.UserController.updateUserEmail);
+router.patch('/user-password-update', (0, auth_1.default)(user_1.ENUM_USER_ROLE.USER, user_1.ENUM_USER_ROLE.ADMIN, user_1.ENUM_USER_ROLE.ADMIN), (0, validateRequest_1.default)(user_validation_1.userValidation.updateUserPasswordUpdateZodSchema), user_controller_1.UserController.updateUserPassword);
 router.get('/:id', (0, auth_1.default)(user_1.ENUM_USER_ROLE.ADMIN), user_controller_1.UserController.getSingleUser);
 router.delete('/:id', (0, auth_1.default)(user_1.ENUM_USER_ROLE.ADMIN), user_controller_1.UserController.deleteUser);
 router.patch('/:id', (0, auth_1.default)(user_1.ENUM_USER_ROLE.ADMIN), (0, validateRequest_1.default)(user_validation_1.userValidation.updateUserZodSchema), user_controller_1.UserController.updateUser);

@@ -26,11 +26,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DriverService = void 0;
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const http_status_1 = __importDefault(require("http-status"));
+const mongoose_1 = __importDefault(require("mongoose"));
 const ApiError_1 = __importDefault(require("../../../errors/ApiError"));
 const paginationHelper_1 = require("../../../helper/paginationHelper");
 const utilities_1 = require("../../../utils/utilities");
 const driver_constants_1 = require("./driver.constants");
 const driver_model_1 = require("./driver.model");
+const user_model_1 = require("../user/user.model");
 const getAllDrivers = (filters, paginationOptions) => __awaiter(void 0, void 0, void 0, function* () {
     const { searchTerm } = filters, filtersData = __rest(filters, ["searchTerm"]);
     const andConditions = [];
@@ -74,9 +76,36 @@ const getSingleDriver = (id) => __awaiter(void 0, void 0, void 0, function* () {
     return result;
 });
 const updateDriver = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     const isExist = yield driver_model_1.Driver.findById(id);
     if (!isExist) {
         throw new ApiError_1.default(http_status_1.default.BAD_REQUEST, 'Driver not found');
+    }
+    if (isExist.email !== payload.email) {
+        const isEmailHas = yield user_model_1.User.findOne({ email: (_a = payload.email) === null || _a === void 0 ? void 0 : _a.toLowerCase() });
+        if (isEmailHas) {
+            throw new ApiError_1.default(http_status_1.default.BAD_REQUEST, 'This email has already been');
+        }
+        const session = yield mongoose_1.default.startSession();
+        try {
+            session.startTransaction();
+            yield user_model_1.User.findOneAndUpdate({ email: isExist.email }, { email: payload.email }, { session, new: true });
+            const result = yield driver_model_1.Driver.findByIdAndUpdate(isExist._id, payload, {
+                session,
+                new: true,
+            });
+            if (!result) {
+                throw new ApiError_1.default(http_status_1.default.BAD_REQUEST, 'Driver not updated');
+            }
+            yield session.commitTransaction();
+            yield session.endSession();
+            return result;
+        }
+        catch (error) {
+            yield session.abortTransaction();
+            yield session.endSession();
+            throw error;
+        }
     }
     const result = yield driver_model_1.Driver.findByIdAndUpdate(id, payload, {
         new: true,
@@ -98,40 +127,3 @@ exports.DriverService = {
     updateDriver,
     getAvailableDriver,
 };
-/*
-// Function to assign drivers based on input date
-function assignDrivers(drivers: Driver[], inputDate: string) {
-  const assignedDrivers: Driver[] = [];
-  const standbyDrivers: Driver[] = [];
-
-  drivers.forEach((driver) => {
-    const isOccupied = driver.availability_status.some(
-      (status) => status.date === inputDate
-    );
-
-    if (isOccupied) {
-      assignedDrivers.push(driver);
-    } else {
-      standbyDrivers.push(driver);
-    }
-  });
-
-  return { assignedDrivers, standbyDrivers };
-}
-
-// Input date to check driver availability
-const inputDate = "2023-09-08";
-
-// Assign drivers based on the input date
-const { assignedDrivers, standbyDrivers } = assignDrivers(drivers, inputDate);
-
-console.log("Assigned Drivers:");
-assignedDrivers.forEach((driver) => {
-  console.log(`Driver ${driver.id}: ${driver.name}`);
-});
-
-console.log("\nStandby Drivers:");
-standbyDrivers.forEach((driver) => {
-  console.log(`Driver ${driver.id}: ${driver.name}`);
-});
-*/

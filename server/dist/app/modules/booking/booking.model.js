@@ -26,8 +26,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Booking = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const bookingSchema = new mongoose_1.Schema({
-    user_id: { type: String, required: true },
-    trip_id: { type: String, required: true, unique: true },
+    travel_id: { type: String, required: true },
+    trip_id: { type: String, required: true },
     booking_seat: { type: String, required: true },
     status: { type: String, required: true, default: 'pending' },
     payment_id: { type: String },

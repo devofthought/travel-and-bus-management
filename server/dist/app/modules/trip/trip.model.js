@@ -34,6 +34,10 @@ exports.tripSchema = new mongoose_1.Schema({
         type: Number,
         required: true,
     },
+    seats_available: {
+        type: Number,
+        required: true,
+    },
     active_status: {
         type: String,
         required: true,

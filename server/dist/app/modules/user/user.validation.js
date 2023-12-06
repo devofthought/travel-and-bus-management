@@ -11,6 +11,25 @@ const updateUserZodSchema = zod_1.z.object({
         phone: zod_1.z.string().optional(),
     }),
 });
+const updateUserEmailUpdateZodSchema = zod_1.z.object({
+    body: zod_1.z.object({
+        old_email: zod_1.z.string(),
+        new_email: zod_1.z
+            .string()
+            .refine(value => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value), {
+            message: 'Invalid email format',
+        }),
+    }),
+});
+const updateUserPasswordUpdateZodSchema = zod_1.z.object({
+    body: zod_1.z.object({
+        old_password: zod_1.z.string(),
+        new_password: zod_1.z.string(),
+        confirm_new_password: zod_1.z.string(),
+    }),
+});
 exports.userValidation = {
     updateUserZodSchema,
+    updateUserEmailUpdateZodSchema,
+    updateUserPasswordUpdateZodSchema,
 };

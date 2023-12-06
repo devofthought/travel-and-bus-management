@@ -89,9 +89,9 @@ const getSingleBus = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, v
     });
 }));
 const updateBus = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const bus_code = req.params.bus_code;
+    const id = req.params.id;
     const updatedData = req.body;
-    const result = yield bus_services_1.BusService.updateBus(bus_code, updatedData);
+    const result = yield bus_services_1.BusService.updateBus(id, updatedData);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
@@ -127,6 +127,26 @@ const seatViewForBookingController = (0, catchAsync_1.default)((req, res) => __a
         data: result,
     });
 }));
+const updateBusImage = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    const id = req.params.id;
+    const updatedData = req.body;
+    if (req.file) {
+        const uploadedImage = yield cloudinary_1.default.uploader.upload((_a = req.file) === null || _a === void 0 ? void 0 : _a.path);
+        const avatar = {
+            avatar: uploadedImage.secure_url,
+            avatar_public_url: uploadedImage.public_id,
+        };
+        updatedData.image = avatar;
+    }
+    const result = yield bus_services_1.BusService.updateBusImage(id, updatedData);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: 'Bus updated successfully!',
+        data: result,
+    });
+}));
 exports.BusController = {
     createBus,
     getAllBus,
@@ -135,4 +155,5 @@ exports.BusController = {
     deleteBus,
     getAvailableBusController,
     seatViewForBookingController,
+    updateBusImage,
 };
