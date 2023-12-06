@@ -46,6 +46,10 @@ const busApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["bus"],
     }),
+    getAllReserveBusRequest: builder.query({
+      query: ({ status }) => `/reserveBus?status=${status}`,
+      providesTags: ["reserveBus"],
+    }),
   }),
 });
 
@@ -56,5 +60,6 @@ export const {
   useAddBusMutation,
   useAddForGetRequestAvailableBusMutation,
   useUpdateBusMutation,
-  useUpdateBusImageMutation
+  useUpdateBusImageMutation,
+  useGetAllReserveBusRequestQuery,
 } = busApi;
