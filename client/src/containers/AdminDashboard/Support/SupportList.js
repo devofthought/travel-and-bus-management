@@ -2,8 +2,9 @@ import { Modal, Table } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { EditOutlined } from "@ant-design/icons";
+import Spinner from "@/components/Shared/Spinner";
 
-const SupportList = ({ data }) => {
+const SupportList = ({ data, isLoading }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editingSupportRequest, setEditingSupportRequest] = useState(null);
 
@@ -109,14 +110,18 @@ const SupportList = ({ data }) => {
   return (
     <div className="App">
       <header className="App-header">
-        <Table
-          columns={columns}
-          dataSource={data}
-          pagination={{
-            pageSize: 5,
-          }}
-          scroll={{ x: true }}
-        ></Table>
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <Table
+            columns={columns}
+            dataSource={data}
+            pagination={{
+              pageSize: 5,
+            }}
+            scroll={{ x: true }}
+          ></Table>
+        )}
       </header>
       <Modal
         title="Edit support request details"

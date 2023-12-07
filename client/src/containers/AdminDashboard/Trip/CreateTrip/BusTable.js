@@ -1,8 +1,9 @@
+import Spinner from "@/components/Shared/Spinner";
 import { useGetAllBusQuery } from "@/redux/bus/busApi";
 import { Avatar, Table, Typography } from "antd";
 
 const BusTable = () => {
-  const { data } = useGetAllBusQuery();
+  const { data, isLoading } = useGetAllBusQuery();
 
   const columns = [
     {
@@ -64,13 +65,18 @@ const BusTable = () => {
   return (
     <span className="block w-full md:w-1/2">
       <Typography.Title level={4}>Bus</Typography.Title>
-      <Table
-        columns={columns}
-        dataSource={data?.data}
-        pagination={{
-          pageSize: 5,
-        }}
-      ></Table>
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <Table
+          columns={columns}
+          dataSource={data?.data}
+          pagination={{
+            pageSize: 5,
+          }}
+          scroll={{ x: true }}
+        ></Table>
+      )}
     </span>
   );
 };

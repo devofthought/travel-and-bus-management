@@ -4,8 +4,9 @@ import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import UpdateTripForm from "./UpdateForm";
 import { BiTrip } from "react-icons/bi";
 import { AiOutlineArrowRight } from "react-icons/ai";
+import Spinner from "@/components/Shared/Spinner";
 
-const UpdateTripTable = ({ data }) => {
+const UpdateTripTable = ({ data, isLoading }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editingTrip, setEditingTrip] = useState(null);
   const columns = [
@@ -128,13 +129,18 @@ const UpdateTripTable = ({ data }) => {
   return (
     <div className="App">
       <header className="App-header">
-        <Table
-          columns={columns}
-          dataSource={data}
-          pagination={{
-            pageSize: 5,
-          }}
-        ></Table>
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <Table
+            columns={columns}
+            dataSource={data}
+            pagination={{
+              pageSize: 5,
+            }}
+            scroll={{ x: true }}
+          ></Table>
+        )}
         <Modal
           title="Update a trip"
           open={isEditing}

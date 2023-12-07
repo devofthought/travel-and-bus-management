@@ -3,10 +3,12 @@ import ReserveBusHistoryList from "./ReserveBusHistoryList";
 import { useGetAllReserveBusRequestQuery } from "@/redux/bus/busApi";
 
 const ReserveHistoryListContainer = () => {
-  const { data } = useGetAllReserveBusRequestQuery({ status: "approved" });
+  const { data, isLoading } = useGetAllReserveBusRequestQuery({
+    status: "approved",
+  });
   return (
     <>
-      <ReserveBusHistoryList data={data?.data} />
+      <ReserveBusHistoryList data={data?.data} isLoading={isLoading} />
     </>
   );
 };

@@ -9,6 +9,7 @@ import { useGetAllCompletedAndUpcomingTripForUserQuery } from "@/redux/trip/trip
 import dayjs from "dayjs";
 import { useAddFeedBackMutation } from "@/redux/feedback/feedbackApi";
 import Swal from "sweetalert2";
+import Spinner from "@/components/Shared/Spinner";
 
 const MyTourHistoryTable = () => {
   const {
@@ -189,14 +190,18 @@ const MyTourHistoryTable = () => {
     <div className="App">
       <header className="App-header">
         <div className="responsive-table-container">
-          <Table
-            columns={columns}
-            dataSource={tourHistoryData?.data}
-            pagination={{
-              pageSize: 5,
-            }}
-            scroll={{ x: true }}
-          ></Table>
+          {isLoading ? (
+            <Spinner />
+          ) : (
+            <Table
+              columns={columns}
+              dataSource={tourHistoryData?.data}
+              pagination={{
+                pageSize: 5,
+              }}
+              scroll={{ x: true }}
+            ></Table>
+          )}
         </div>
         <Modal
           open={open}

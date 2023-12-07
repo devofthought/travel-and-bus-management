@@ -1,8 +1,9 @@
+import Spinner from "@/components/Shared/Spinner";
 import { useGetAllRouteQuery } from "@/redux/route/routeApi";
 import { Table, Typography } from "antd";
 
 const RouteTable = () => {
-  const { data } = useGetAllRouteQuery();
+  const { data, isLoading } = useGetAllRouteQuery();
   const columns = [
     {
       title: "Sr.",
@@ -39,13 +40,18 @@ const RouteTable = () => {
   return (
     <span className="block w-full md:w-1/2">
       <Typography.Title level={4}>Route</Typography.Title>
-      <Table
-        columns={columns}
-        dataSource={data?.data}
-        pagination={{
-          pageSize: 5,
-        }}
-      ></Table>
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <Table
+          columns={columns}
+          dataSource={data?.data}
+          pagination={{
+            pageSize: 5,
+          }}
+          scroll={{ x: true }}
+        ></Table>
+      )}
     </span>
   );
 };

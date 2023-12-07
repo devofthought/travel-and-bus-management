@@ -3,10 +3,10 @@ import BusListTable from "./BusList";
 import { useGetAllBusQuery } from "@/redux/bus/busApi";
 
 const BusListContainer = () => {
-  const { data } = useGetAllBusQuery();
+  const { data, isLoading } = useGetAllBusQuery();
   return (
     <>
-      <BusListTable data={data?.data} />
+      <BusListTable data={data?.data} isLoading={isLoading} />
     </>
   );
 };

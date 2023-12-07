@@ -3,10 +3,12 @@ import ReserveBusList from "./ReserveBusList";
 import { useGetAllReserveBusRequestQuery } from "@/redux/bus/busApi";
 
 const ReserveListContainer = () => {
-  const { data } = useGetAllReserveBusRequestQuery({ status: "pending" });
+  const { data, isLoading } = useGetAllReserveBusRequestQuery({
+    status: "pending",
+  });
   return (
     <>
-      <ReserveBusList data={data?.data} />
+      <ReserveBusList data={data?.data} isLoading={isLoading} />
     </>
   );
 };

@@ -73,7 +73,11 @@ const TravelerList = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <Table columns={columns} dataSource={dataSource}></Table>
+        <Table
+          columns={columns}
+          dataSource={dataSource}
+          scroll={{ x: true }}
+        ></Table>
         <Modal
           title="Update a trip"
           open={isEditing}

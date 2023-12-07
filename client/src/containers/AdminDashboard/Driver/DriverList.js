@@ -4,8 +4,9 @@ import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import UpdateDriverForm from "./UpdateDriverForm";
 import { useDeleteDriverMutation } from "@/redux/driver/driverApi";
 import Swal from "sweetalert2";
+import Spinner from "@/components/Shared/Spinner";
 
-const DriverList = ({ data }) => {
+const DriverList = ({ data, loading }) => {
   const [deleteDriver, { data: response, error, isLoading }] =
     useDeleteDriverMutation();
   const [isEditing, setIsEditing] = useState(false);
@@ -145,7 +146,15 @@ const DriverList = ({ data }) => {
   return (
     <div className="App">
       <header className="App-header">
-        <Table columns={columns} dataSource={data}></Table>
+        {loading ? (
+          <Spinner />
+        ) : (
+          <Table
+            columns={columns}
+            dataSource={data}
+            scroll={{ x: true }}
+          ></Table>
+        )}
         <Modal
           title="Edit driver information"
           open={isEditing}

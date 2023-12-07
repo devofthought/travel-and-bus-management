@@ -4,9 +4,10 @@ import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useDeleteIncidentMutation } from "@/redux/incident/incidentApi";
 import UpdateIncidentForm from "./UpdateIncidentForm";
 import Swal from "sweetalert2";
+import Spinner from "@/components/Shared/Spinner";
 
-const incidentListTable = ({ data }) => {
-  const [deleteIncident, { data: response, error, isLoading }] =
+const incidentListTable = ({ data, isLoading }) => {
+  const [deleteIncident, { data: response, error }] =
     useDeleteIncidentMutation();
   const [isEditing, setIsEditing] = useState(false);
   const [editingIncident, setEditingIncident] = useState(null);
@@ -116,7 +117,15 @@ const incidentListTable = ({ data }) => {
   return (
     <div className="App">
       <header className="App-header">
-        <Table columns={columns} dataSource={data}></Table>
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <Table
+            columns={columns}
+            dataSource={data}
+            scroll={{ x: true }}
+          ></Table>
+        )}
         <Modal
           title="Edit route details"
           open={isEditing}

@@ -4,10 +4,10 @@ import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useDeleteRouteMutation } from "@/redux/route/routeApi";
 import UpdateRouteForm from "./UpdateRouteFrom";
 import Swal from "sweetalert2";
+import Spinner from "@/components/Shared/Spinner";
 
-const RouteListTable = ({ data }) => {
-  const [deleteRoute, { data: response, error, isLoading }] =
-    useDeleteRouteMutation();
+const RouteListTable = ({ data, isLoading }) => {
+  const [deleteRoute, { data: response, error }] = useDeleteRouteMutation();
   const [isEditing, setIsEditing] = useState(false);
   const [editingRoute, setEditingRoute] = useState(null);
   const columns = [
@@ -127,13 +127,18 @@ const RouteListTable = ({ data }) => {
   return (
     <div className="App">
       <header className="App-header">
-        <Table
-          columns={columns}
-          dataSource={data}
-          pagination={{
-            pageSize: 5,
-          }}
-        ></Table>
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <Table
+            columns={columns}
+            dataSource={data}
+            pagination={{
+              pageSize: 5,
+            }}
+            scroll={{ x: true }}
+          ></Table>
+        )}
         <Modal
           title="Edit route details"
           open={isEditing}

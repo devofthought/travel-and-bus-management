@@ -2,8 +2,9 @@ import { Table, Modal } from "antd";
 import { useState } from "react";
 import { EditOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
+import Spinner from "@/components/Shared/Spinner";
 
-const ReserveBusList = ({ data }) => {
+const ReserveBusList = ({ data, isLoading }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editingReserveRequest, setEditingReserveRequest] = useState(null);
   const columns = [
@@ -121,7 +122,15 @@ const ReserveBusList = ({ data }) => {
   return (
     <div className="App">
       <header className="App-header">
-        <Table columns={columns} dataSource={data}></Table>
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <Table
+            columns={columns}
+            dataSource={data}
+            scroll={{ x: true }}
+          ></Table>
+        )}
         <Modal
           title="Edit reserve bus request details"
           open={isEditing}
