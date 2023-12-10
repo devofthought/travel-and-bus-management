@@ -128,7 +128,7 @@ const TripListContainer = () => {
         dataSource={data?.data}
         pagination={{
           current: currentPage,
-          pageSize: 5,
+          pageSize: currentLimit,
           total: data?.meta?.total,
           onChange: (page, pageSize) => {
             setCurrentPage(page);
