@@ -120,18 +120,15 @@ const CompleteTripTable = () => {
   return (
     <span className="block w-full">
       <Typography.Title level={4}>Trip History</Typography.Title>
-      {isLoading ? (
-        <Spinner />
-      ) : (
-        <Table
-          columns={columns}
-          dataSource={data?.data}
-          pagination={{
-            pageSize: 5,
-          }}
-          scroll={{ x: true }}
-        ></Table>
-      )}
+      <Table
+        columns={columns}
+        dataSource={data?.data}
+        pagination={{
+          pageSize: 5,
+        }}
+        scroll={{ x: true }}
+        loading={isLoading && { indicator: <Spinner /> }}
+      ></Table>
     </span>
   );
 };
