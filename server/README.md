@@ -37,7 +37,7 @@ Dhruto travel Backend
 
 </p>
 
-<img src="https://img.shields.io/github/languages/top/ataur39n-sharif/ecommerce-backend?style&color=5D6D7E" alt="GitHub top language" />
+<img src="https://img.shields.io/github/languages/top/devofthought/travel-and-bus-management?style&color=5D6D7E" alt="GitHub top language" />
 
 <img src="https://img.shields.io/github/languages/code-size/devofthought/travel-and-bus-management?style&color=5D6D7E" alt="GitHub code size in bytes" />
 
