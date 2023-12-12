@@ -148,7 +148,7 @@ Here is an overview of your project's folder structure:
 │   ├── Middlewares/             # Express middlewares
 │   ├── Routes/                  # API route definitions
 │   ├── Utils/                   # Utility functions and modules
-        └── utilities/       
+│   │   └── utilities/       
 │   ├── app.ts                   # Main application entry point
 │   └── index.ts                 # Application startup script
 ├── .env                         # Environment variables configuration
