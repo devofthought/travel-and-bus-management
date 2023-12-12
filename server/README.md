@@ -114,7 +114,7 @@ Here is an overview of your project's folder structure:
 │   │   │   ├── support/ 
 │   │   │   ├── travel/ 
 │   │   │   ├── trip/ 
-│   │   │   └──User/            # User management code
+│   │   │   └── User/            # User management code
 │   │   ├── routes/   
 │   │   │   └── index.js/
 │   ├── Config/                 # Configuration files
