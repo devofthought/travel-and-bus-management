@@ -539,8 +539,8 @@ const Trip = () => {
                           ))}
                         </tbody>
                       </table>
-                      <div>
-                        <h4 className="text-center mt-4 text-lg font-semibold ">
+                      <div className="w-10/12 lg:w-1/2 mx-auto mt-5">
+                        <h4 className="text-right mt-4 text-lg font-semibold ">
                           Total: ৳ {selectedSeats?.length * trip?.ticket_price}
                         </h4>
                       </div>
