@@ -493,7 +493,6 @@ const Trip = () => {
                             }
                           })}
                         </div>
-                        <Tooltip title="Test">Hello</Tooltip>
                       </div>
                       {selectedSeats?.length >= 4 && (
                         <div
