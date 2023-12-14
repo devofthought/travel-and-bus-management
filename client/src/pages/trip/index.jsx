@@ -167,7 +167,7 @@ const Trip = () => {
                         </span>
                       </p>
                     </div>
-                    <div className="flex lg:hidden gap-2">
+                    <div className="flex md:hidden gap-2">
                       <h6 className="uppercase text-xs lg:text-sm text-gray-500 font-semibold">
                         Seats Available
                       </h6>
@@ -175,16 +175,16 @@ const Trip = () => {
                         {trip?.seats_available}
                       </p>
                     </div>
-                    <div className="flex md:hidden gap-2 mt-4">
-                      <p className="text-[#5b2192] font-semibold">
+                    <div className="text-[#5b2192] font-semibold flex md:hidden gap-2 mt-4">
+                      <p>
                         {/* {trip?.departure_time} */}
                         <span className="block">
                           {dayjs(trip?.departure_time).format("hh:mm A")}
                         </span>
-                      </p>
-                      <p className="text-[#5b2192] font-semibold">
+                      </p>{" "}
+                      -
+                      <p>
                         {/* {trip?.arrival_time} */}
-
                         <span className="block">
                           {dayjs(trip?.arrival_time).format("hh:mm A")}
                         </span>
@@ -192,7 +192,7 @@ const Trip = () => {
                     </div>
                   </div>
                 </li>
-                <li className="w-[20%] lg:w-[15%] p-7 border-t-0 border-l-0 border-b-0 border-r border-dashed hidden md:block">
+                <li className="w-[20%] lg:w-[15%] p-3 lg:p-7 border-t-0 border-l-0 border-b-0 border-r border-dashed hidden md:block">
                   <div className="search_item-content__ydL0p">
                     <h6 className="uppercase text-sm text-gray-500 font-semibold">
                       Departure time
@@ -208,7 +208,7 @@ const Trip = () => {
                     </p>
                   </div>
                 </li>
-                <li className="w-[20%] lg:w-[15%] p-7 border-t-0 border-l-0 border-b-0 border-r border-dashed hidden md:block">
+                <li className="w-[20%] lg:w-[15%] p-3 lg:p-7 border-t-0 border-l-0 border-b-0 border-r border-dashed hidden md:block">
                   <div className="search_item-content__ydL0p">
                     <h6 className="uppercase text-sm text-gray-500 font-semibold">
                       Arrival time
@@ -224,7 +224,7 @@ const Trip = () => {
                     </p>
                   </div>
                 </li>
-                <li className="w-[20%] lg:w-[15%] p-7 border-t-0 border-l-0 border-b-0 border-r border-dashed hidden md:block">
+                <li className="w-[20%] lg:w-[15%] p-3 lg:p-7 border-t-0 border-l-0 border-b-0 border-r border-dashed hidden lg:block">
                   <div className="search_item-content__ydL0p">
                     <h6 className="uppercase text-sm text-gray-500 font-semibold">
                       tour durations
@@ -244,7 +244,7 @@ const Trip = () => {
                     </p>
                   </div>
                 </li>
-                <li className="w-[15%] p-7 border-t-0 border-l-0 border-b-0 border-r border-dashed hidden lg:block">
+                <li className="w-[15%] p-3 lg:p-7 border-t-0 border-l-0 border-b-0 border-r border-dashed hidden md:block">
                   <div className="search_item-content__ydL0p">
                     <h6 className="uppercase text-sm text-gray-500 font-semibold">
                       Seats Available
@@ -254,7 +254,7 @@ const Trip = () => {
                     </p>
                   </div>
                 </li>
-                <li className="flex-1 p- text-right justify-end">
+                <li className="flex-1 p-3 lg:p-7 text-right justify-end">
                   <h3 className="text-lg md:text-xl lg-text-2xl font-semibold text-[#5b2192] mb-2">
                     ৳{trip?.ticket_price}
                   </h3>
