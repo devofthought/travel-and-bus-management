@@ -14,12 +14,11 @@ import dayjs from "dayjs";
 import { useGetMyProfileQuery } from "@/redux/user/userApi";
 import { getSingleTrip } from "@/data/tripSearchResult";
 import BookingSeatsType from "@/components/Shared/BookingSeatsType";
-import { IoSearchOutline } from "react-icons/io5";
+import { IoSearchOutline, IoWarning } from "react-icons/io5";
 import Loader from "@/components/UI/Loader";
 import TripBanner from "@/components/Shared/TripBanner";
 import duration from "dayjs/plugin/duration";
 import { useInsertBookingMutation } from "@/redux/booking/bookingApi";
-import toast from "react-hot-toast";
 dayjs.extend(duration);
 
 const Trip = () => {
@@ -280,208 +279,222 @@ const Trip = () => {
                 <div className="border-l-0 border-r-0 border-b-0 border-t border-dashed border-[90%] mt-6 pt-6">
                   <BookingSeatsType />
                   <div className="flex flex-col md:flex-row sm:p-4 mt-4 mx-0 sm:mx-20">
-                    <div
-                      className="rounded-sm p-2 w-[240px] h-[434px] mx-auto"
-                      style={{ border: "1px solid lightgray" }}
-                    >
-                      <div className="flex justify-end p-2 border-b border-[90%] mb-4">
-                        <GiSteeringWheel className="w-8 h-8 text-gray-400" />
-                      </div>
-                      <div className="w-full grid grid-cols-5 gap-2">
-                        {getSingleTrip?.seats?.map((seat, index) => {
-                          if (
-                            seat?.name === "A" ||
-                            seat?.name === "B" ||
-                            seat?.name === "C" ||
-                            seat?.name === "D" ||
-                            seat?.name === "E" ||
-                            seat?.name === "F" ||
-                            seat?.name === "G" ||
-                            seat?.name === "H" ||
-                            seat?.name === "I" ||
-                            seat?.name === "J"
-                          ) {
-                            return <span key={index}></span>;
-                          } else {
-                            return (
-                              <button
-                                title={seat?.name}
-                                key={index}
-                                className={`flex items-center justify-center border-none bg-white ${
-                                  seat?.isAvailable === false
-                                    ? "cursor-not-allowed"
-                                    : ` ${
-                                        !!seatStatus?.data?.find(
-                                          (s) => s?.booking_seat === seat?.name
-                                        )
-                                          ? "cursor-not-allowed"
-                                          : "cursor-pointer rounded-lg"
-                                      }`
-                                }`}
-                                disabled={
-                                  (!!seatStatus?.data?.find(
-                                    (s) => s?.booking_seat === seat?.name
-                                  )
-                                    ? true
-                                    : false) ||
-                                  (seat?.isAvailable === false && true)
-                                }
-                              >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="28"
-                                  height="28"
-                                  viewBox="0 0 100 100"
-                                  onClick={() => handleSelectSeat(seat?.name)}
-                                  className={`${
-                                    seat?.isAvailable
-                                      ? `${
-                                          selectedSeats[0] === seat?.name ||
-                                          selectedSeats[1] === seat?.name ||
-                                          selectedSeats[2] === seat?.name ||
-                                          selectedSeats[3] === seat?.name
-                                            ? "text-[#9cd27c]"
-                                            : "text-gray-400"
+                    <div>
+                      <div
+                        className="rounded-sm p-2 w-[240px] h-[434px] mx-auto"
+                        style={{ border: "1px solid lightgray" }}
+                      >
+                        <div className="flex justify-end p-2 border-b border-[90%] mb-4">
+                          <GiSteeringWheel className="w-8 h-8 text-gray-400" />
+                        </div>
+                        <div className="w-full grid grid-cols-5 gap-2">
+                          {getSingleTrip?.seats?.map((seat, index) => {
+                            if (
+                              seat?.name === "A" ||
+                              seat?.name === "B" ||
+                              seat?.name === "C" ||
+                              seat?.name === "D" ||
+                              seat?.name === "E" ||
+                              seat?.name === "F" ||
+                              seat?.name === "G" ||
+                              seat?.name === "H" ||
+                              seat?.name === "I" ||
+                              seat?.name === "J"
+                            ) {
+                              return <span key={index}></span>;
+                            } else {
+                              return (
+                                <button
+                                  title={seat?.name}
+                                  key={index}
+                                  className={`flex items-center justify-center border-none bg-white ${
+                                    seat?.isAvailable === false
+                                      ? "cursor-not-allowed"
+                                      : ` ${
+                                          !!seatStatus?.data?.find(
+                                            (s) =>
+                                              s?.booking_seat === seat?.name
+                                          )
+                                            ? "cursor-not-allowed"
+                                            : "cursor-pointer rounded-lg"
                                         }`
-                                      : "text-[#ff9090]"
                                   }`}
+                                  disabled={
+                                    (!!seatStatus?.data?.find(
+                                      (s) => s?.booking_seat === seat?.name
+                                    )
+                                      ? true
+                                      : false) ||
+                                    (seat?.isAvailable === false && true)
+                                  }
                                 >
-                                  <rect
-                                    x="10"
-                                    y="10"
-                                    width="80"
-                                    height="80"
-                                    rx="3"
-                                    ry="3"
-                                    fill={`${
-                                      selectedSeats[0] === seat?.name ||
-                                      selectedSeats[1] === seat?.name ||
-                                      selectedSeats[2] === seat?.name ||
-                                      selectedSeats[3] === seat?.name
-                                        ? "#22C55E"
-                                        : ` ${
-                                            !!seatStatus?.data?.find(
-                                              (s) =>
-                                                s?.booking_seat === seat?.name
-                                            )
-                                              ? !!seatStatus?.data?.find(
-                                                  (s) =>
-                                                    s?.booking_seat ===
-                                                      seat?.name &&
-                                                    s?.status === "completed"
-                                                )
-                                                ? "#ff9090"
-                                                : "#97a5c2"
-                                              : "#fff"
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="28"
+                                    height="28"
+                                    viewBox="0 0 100 100"
+                                    onClick={() => handleSelectSeat(seat?.name)}
+                                    className={`${
+                                      seat?.isAvailable
+                                        ? `${
+                                            selectedSeats[0] === seat?.name ||
+                                            selectedSeats[1] === seat?.name ||
+                                            selectedSeats[2] === seat?.name ||
+                                            selectedSeats[3] === seat?.name
+                                              ? "text-[#9cd27c]"
+                                              : "text-gray-400"
                                           }`
+                                        : "text-[#ff9090]"
                                     }`}
-                                    stroke="#000"
-                                    stroke-width="1"
-                                  />
-                                  <rect
-                                    x="4"
-                                    y="76"
-                                    width="93"
-                                    height="20"
-                                    rx="5"
-                                    ry="5"
-                                    fill={`${
-                                      selectedSeats[0] === seat?.name ||
-                                      selectedSeats[1] === seat?.name ||
-                                      selectedSeats[2] === seat?.name ||
-                                      selectedSeats[3] === seat?.name
-                                        ? "#22C55E"
-                                        : ` ${
-                                            !!seatStatus?.data?.find(
-                                              (s) =>
-                                                s?.booking_seat === seat?.name
-                                            )
-                                              ? !!seatStatus?.data?.find(
-                                                  (s) =>
-                                                    s?.booking_seat ===
-                                                      seat?.name &&
-                                                    s?.status === "completed"
-                                                )
-                                                ? "#ff9090"
-                                                : "#97a5c2"
-                                              : "#fff"
-                                          }`
-                                    }`}
-                                    stroke="#000"
-                                    stroke-width="1"
-                                  />
-                                  <rect
-                                    x="2"
-                                    y="30"
-                                    width="16"
-                                    height="65"
-                                    rx="5"
-                                    ry="5"
-                                    fill={`${
-                                      selectedSeats[0] === seat?.name ||
-                                      selectedSeats[1] === seat?.name ||
-                                      selectedSeats[2] === seat?.name ||
-                                      selectedSeats[3] === seat?.name
-                                        ? "#22C55E"
-                                        : ` ${
-                                            !!seatStatus?.data?.find(
-                                              (s) =>
-                                                s?.booking_seat === seat?.name
-                                            )
-                                              ? !!seatStatus?.data?.find(
-                                                  (s) =>
-                                                    s?.booking_seat ===
-                                                      seat?.name &&
-                                                    s?.status === "completed"
-                                                )
-                                                ? "#ff9090"
-                                                : "#97a5c2"
-                                              : "#fff"
-                                          }`
-                                    }`}
-                                    stroke="#000"
-                                    stroke-width="1"
-                                  />
-                                  <rect
-                                    x="83"
-                                    y="30"
-                                    width="16"
-                                    height="65"
-                                    rx="5"
-                                    ry="5"
-                                    fill={`${
-                                      selectedSeats[0] === seat?.name ||
-                                      selectedSeats[1] === seat?.name ||
-                                      selectedSeats[2] === seat?.name ||
-                                      selectedSeats[3] === seat?.name
-                                        ? "#22C55E"
-                                        : ` ${
-                                            !!seatStatus?.data?.find(
-                                              (s) =>
-                                                s?.booking_seat === seat?.name
-                                            )
-                                              ? !!seatStatus?.data?.find(
-                                                  (s) =>
-                                                    s?.booking_seat ===
-                                                      seat?.name &&
-                                                    s?.status === "completed"
-                                                )
-                                                ? "#ff9090"
-                                                : "#97a5c2"
-                                              : "#fff"
-                                          }`
-                                    }`}
-                                    stroke="#000"
-                                    stroke-width="1"
-                                  />
-                                </svg>
-                              </button>
-                            );
-                          }
-                        })}
+                                  >
+                                    <rect
+                                      x="10"
+                                      y="10"
+                                      width="80"
+                                      height="80"
+                                      rx="3"
+                                      ry="3"
+                                      fill={`${
+                                        selectedSeats[0] === seat?.name ||
+                                        selectedSeats[1] === seat?.name ||
+                                        selectedSeats[2] === seat?.name ||
+                                        selectedSeats[3] === seat?.name
+                                          ? "#22C55E"
+                                          : ` ${
+                                              !!seatStatus?.data?.find(
+                                                (s) =>
+                                                  s?.booking_seat === seat?.name
+                                              )
+                                                ? !!seatStatus?.data?.find(
+                                                    (s) =>
+                                                      s?.booking_seat ===
+                                                        seat?.name &&
+                                                      s?.status === "completed"
+                                                  )
+                                                  ? "#ff9090"
+                                                  : "#97a5c2"
+                                                : "#fff"
+                                            }`
+                                      }`}
+                                      stroke="#000"
+                                      stroke-width="1"
+                                    />
+                                    <rect
+                                      x="4"
+                                      y="76"
+                                      width="93"
+                                      height="20"
+                                      rx="5"
+                                      ry="5"
+                                      fill={`${
+                                        selectedSeats[0] === seat?.name ||
+                                        selectedSeats[1] === seat?.name ||
+                                        selectedSeats[2] === seat?.name ||
+                                        selectedSeats[3] === seat?.name
+                                          ? "#22C55E"
+                                          : ` ${
+                                              !!seatStatus?.data?.find(
+                                                (s) =>
+                                                  s?.booking_seat === seat?.name
+                                              )
+                                                ? !!seatStatus?.data?.find(
+                                                    (s) =>
+                                                      s?.booking_seat ===
+                                                        seat?.name &&
+                                                      s?.status === "completed"
+                                                  )
+                                                  ? "#ff9090"
+                                                  : "#97a5c2"
+                                                : "#fff"
+                                            }`
+                                      }`}
+                                      stroke="#000"
+                                      stroke-width="1"
+                                    />
+                                    <rect
+                                      x="2"
+                                      y="30"
+                                      width="16"
+                                      height="65"
+                                      rx="5"
+                                      ry="5"
+                                      fill={`${
+                                        selectedSeats[0] === seat?.name ||
+                                        selectedSeats[1] === seat?.name ||
+                                        selectedSeats[2] === seat?.name ||
+                                        selectedSeats[3] === seat?.name
+                                          ? "#22C55E"
+                                          : ` ${
+                                              !!seatStatus?.data?.find(
+                                                (s) =>
+                                                  s?.booking_seat === seat?.name
+                                              )
+                                                ? !!seatStatus?.data?.find(
+                                                    (s) =>
+                                                      s?.booking_seat ===
+                                                        seat?.name &&
+                                                      s?.status === "completed"
+                                                  )
+                                                  ? "#ff9090"
+                                                  : "#97a5c2"
+                                                : "#fff"
+                                            }`
+                                      }`}
+                                      stroke="#000"
+                                      stroke-width="1"
+                                    />
+                                    <rect
+                                      x="83"
+                                      y="30"
+                                      width="16"
+                                      height="65"
+                                      rx="5"
+                                      ry="5"
+                                      fill={`${
+                                        selectedSeats[0] === seat?.name ||
+                                        selectedSeats[1] === seat?.name ||
+                                        selectedSeats[2] === seat?.name ||
+                                        selectedSeats[3] === seat?.name
+                                          ? "#22C55E"
+                                          : ` ${
+                                              !!seatStatus?.data?.find(
+                                                (s) =>
+                                                  s?.booking_seat === seat?.name
+                                              )
+                                                ? !!seatStatus?.data?.find(
+                                                    (s) =>
+                                                      s?.booking_seat ===
+                                                        seat?.name &&
+                                                      s?.status === "completed"
+                                                  )
+                                                  ? "#ff9090"
+                                                  : "#97a5c2"
+                                                : "#fff"
+                                            }`
+                                      }`}
+                                      stroke="#000"
+                                      stroke-width="1"
+                                    />
+                                  </svg>
+                                </button>
+                              );
+                            }
+                          })}
+                        </div>
                       </div>
+                      {selectedSeats?.length >= 4 && (
+                        <div
+                          className="w-[240px] text-red-500 mx-auto border border-red-300 rounded-sm p-2 mt-4 flex items-center gap-2"
+                          style={{ border: "1px solid" }}
+                        >
+                          <IoWarning />
+                          <p className="text-xs">
+                            Maximum 4 seats can be booked.
+                          </p>
+                        </div>
+                      )}
                     </div>
-                    <div className="flex-1 mt-10 sm:mt-0 sm:p-4">
+                    <div className="flex-1 mt-10 md:mt-0 sm:px-4 sm:pb-4">
                       <h4 className="text-[#5b2192] text-2xl font-semibold text-center">
                         SEAT INFORMATION:
                       </h4>
