@@ -279,7 +279,7 @@ const Trip = () => {
               {selectedBusId === trip?.id && (
                 <div className="border-l-0 border-r-0 border-b-0 border-t border-dashed border-[90%] mt-6 pt-6">
                   <BookingSeatsType />
-                  <div className="flex flex-col md:flex-row sm:p-4 mt-4 mx-0 sm:mx-20">
+                  <div className="flex flex-col md:flex-row py-4 lg:pl-[12%] mt-4 mx-0 sm:mx-20">
                     <div>
                       <div
                         className="rounded-sm p-2 w-[240px] h-[434px] mx-auto"
