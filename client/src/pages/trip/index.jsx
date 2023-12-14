@@ -368,7 +368,7 @@ const Trip = () => {
                                                   (s) =>
                                                     s?.booking_seat ===
                                                       seat?.name &&
-                                                    s?.status === "pending"
+                                                    s?.status === "completed"
                                                 )
                                                 ? "#ff9090"
                                                 : "#97a5c2"
@@ -400,7 +400,7 @@ const Trip = () => {
                                                   (s) =>
                                                     s?.booking_seat ===
                                                       seat?.name &&
-                                                    s?.status === "pending"
+                                                    s?.status === "completed"
                                                 )
                                                 ? "#ff9090"
                                                 : "#97a5c2"
@@ -432,7 +432,7 @@ const Trip = () => {
                                                   (s) =>
                                                     s?.booking_seat ===
                                                       seat?.name &&
-                                                    s?.status === "pending"
+                                                    s?.status === "completed"
                                                 )
                                                 ? "#ff9090"
                                                 : "#97a5c2"
@@ -464,7 +464,7 @@ const Trip = () => {
                                                   (s) =>
                                                     s?.booking_seat ===
                                                       seat?.name &&
-                                                    s?.status === "pending"
+                                                    s?.status === "completed"
                                                 )
                                                 ? "#ff9090"
                                                 : "#97a5c2"
