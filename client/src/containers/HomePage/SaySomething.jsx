@@ -2,31 +2,34 @@ import Button from "@/components/UI/Button";
 import { useAddSupportConnectionMutation } from "@/redux/feedback/feedbackApi";
 import { Input } from "antd";
 import React, { useEffect } from "react";
+import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 
 const SaySomething = () => {
   const { TextArea } = Input;
-  const [AddSupportConnection, { data, error, isLoading }] =
+  const [AddSupportConnection, { data, error, isSuccess, isError }] =
     useAddSupportConnectionMutation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log(e.target.value);
-    // AddSupportConnection();  // TODO: [faizul bhai] handle this form and send value with RTK mutation
+    let first_name = e.target.first_name.value;
+    let last_name = e.target.last_name.value;
+    let email = e.target.email.value;
+    let phone = e.target.phone.value;
+    let subject = e.target.subject.value;
+    let message = e.target.message.value;
 
-    // TODO: [faizul bhai] request formating like this.
-    /*
-    
-    {
-    "first_name": "kamruzzaman",
-    "last_name": "Md",
-    "email": "md@gmail.com",
-    "phone": "01949016709",
-    "subject": "testing",
-    "message": "testing is nice"
-}
-    */
+    const body = { first_name, last_name, email, phone, subject, message };
+    console.log(first_name, last_name, email, phone, subject, message);
+    AddSupportConnection(body);
+
+    e.target.first_name.value = "";
+    e.target.last_name.value = "";
+    e.target.email.value = "";
+    e.target.phone.value = "";
+    e.target.subject.value = "";
+    e.target.message.value = "";
   };
 
   useEffect(() => {
@@ -53,6 +56,18 @@ const SaySomething = () => {
     }
   }, [data, error]);
 
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Your message was successfully sent!");
+    }
+  }, [isSuccess]);
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(error?.data?.message || "Something went wrong");
+    }
+  }, [isError, error]);
+
   return (
     <div className="main-container my-32 lg:my-36">
       <div className="flex flex-col md:flex-row gap-6 lg:gap-14" id="ContactUs">
@@ -64,18 +79,21 @@ const SaySomething = () => {
             We are always looking for new opportunities to work together. We are
             always looking for new opportunities to work together.
           </p>
-          <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+          <form
+            onSubmit={(e) => handleSubmit(e)}
+            className="flex flex-col gap-6"
+          >
             <div className="flex justify-between gap-4">
               <input
                 type="text"
-                name="firstName"
-                id="firstName"
+                id="first_name"
                 placeholder="First Name"
                 className="font-sans appearance-none border-2 border-gray-400 border-t-gray-100 border-l-gray-50 rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-[#d84e55] focus:shadow-outline"
+                required
               />
               <input
                 type="text"
-                id="lastName"
+                id="last_name"
                 placeholder="Last Name"
                 className="font-sans appearance-none border-2 border-gray-400 border-t-gray-100 border-l-gray-50 rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-[#d84e55] focus:shadow-outline"
               />
@@ -85,6 +103,7 @@ const SaySomething = () => {
               id="email"
               placeholder="Email"
               className="font-sans appearance-none border-2 border-gray-400 border-t-gray-100 border-l-gray-50 rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-[#d84e55] focus:shadow-outline"
+              required
             />
             <div className="flex justify-between gap-4">
               <input
@@ -101,8 +120,10 @@ const SaySomething = () => {
               />
             </div>
             <textarea
+              id="message"
               className="font-sans resize-y rounded-md w-full min-h-[150px] p-3 border-2 border-gray-400  text-gray-700 leading-tight focus:outline-[#d84e55] focus:shadow-outline"
               placeholder="Type Your Message"
+              required
             ></textarea>
             <Button btnName="Send Message" styles="w-full py-3"></Button>
           </form>
