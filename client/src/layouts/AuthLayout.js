@@ -6,7 +6,7 @@ import { useState } from "react";
 
 const AuthLayout = ({ children }) => {
   const router = useRouter();
-  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [isDropdownOpen, setDropdownOpen] = useState(true);
   console.log(isDropdownOpen);
   const toggleDropdown = () => {
     setDropdownOpen((prev) => !prev);
@@ -17,7 +17,7 @@ const AuthLayout = ({ children }) => {
       <Navbar></Navbar>
       <div className="flex justify-center items-center min-h-screen py-16 auth-bg">
         <div className="relative  md:w-3/12 h-auto p-6 rounded-xl bg-slate-50 border-solid border-2 border-slate-900">
-          <div className="absolute -top-16 right-[41%] md:-right-16">
+          <div className="absolute -top-32 md:-top-16 right-[41%] md:-right-16">
             <div className="relative inline-block text-left">
               <button
                 type="button"
@@ -54,7 +54,7 @@ const AuthLayout = ({ children }) => {
                   </div>
                   <div className="text-gray-600 hover:bg-[#f3f4f9] block px-4 py-2 text-base duration-300">
                     <h4>Traveler</h4>
-                    <p>Email: a@gmail.com</p>
+                    <p>Email: user@gmail.com</p>
                     <p>Password: 123456</p>
                   </div>
                 </div>
