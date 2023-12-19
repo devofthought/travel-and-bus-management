@@ -32,6 +32,12 @@ const createBooking = async (bookingData: BookingCreateDTO) => {
     /* user checking || user crate */
     let getTraveler = await Traveler.findOne({ email: user_id.email })
     if (!getTraveler) {
+      // ** email is validation checking
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+      if (!re.test(user_id.email)) {
+        throw new ApiError(httpStatus.BAD_REQUEST, 'Put a valid email address')
+      }
+
       //array
       const newTraveler = await Traveler.create(user_id)
       if (!newTraveler) {
@@ -59,8 +65,11 @@ const createBooking = async (bookingData: BookingCreateDTO) => {
       getTraveler = await Traveler.findById(newUser.traveler_id)
     }
 
-    if(!getTraveler){
-      throw new ApiError(httpStatus.BAD_REQUEST, 'some thing is wrong! try again later.')
+    if (!getTraveler) {
+      throw new ApiError(
+        httpStatus.BAD_REQUEST,
+        'some thing is wrong! try again later.'
+      )
     }
 
     /* //* checking seat number is has or not in a bus */
