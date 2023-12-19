@@ -9,7 +9,7 @@ import {
   useGetBusSeatStatusMutation,
   useGetTripsByUsersMutation,
 } from "@/redux/trip/tripApi";
-import { formatDuration, todayChecker } from "@/utils/helper";
+import { todayChecker } from "@/utils/helper";
 import dayjs from "dayjs";
 import { useGetMyProfileQuery } from "@/redux/user/userApi";
 import { getSingleTrip } from "@/data/tripSearchResult";
@@ -144,7 +144,6 @@ const Trip = () => {
         router.push("/payment");
       }, 3000);
       return () => clearTimeout(timer);
-
     } else if (
       bookingReqError?.status === 400 ||
       bookingReqError?.status === 404 ||
