@@ -126,7 +126,7 @@ const Trip = () => {
   }, [date, to, from]);
 
   useEffect(() => {
-    console.log(bookingReqResponse, bookingReqError);
+    // console.log(bookingReqResponse, bookingReqError);
     if (bookingReqResponse?.statusCode === 201) {
       api.success({
         message: `${bookingReqResponse?.message}`,
@@ -144,7 +144,7 @@ const Trip = () => {
         router.push("/payment");
       }, 3000);
       return () => clearTimeout(timer);
-      
+
     } else if (
       bookingReqError?.status === 400 ||
       bookingReqError?.status === 404 ||
