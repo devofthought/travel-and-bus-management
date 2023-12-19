@@ -40,6 +40,11 @@ const createBooking = (bookingData) => __awaiter(void 0, void 0, void 0, functio
         /* user checking || user crate */
         let getTraveler = yield traveler_modal_1.Traveler.findOne({ email: user_id.email });
         if (!getTraveler) {
+            // ** email is validation checking
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!re.test(user_id.email)) {
+                throw new ApiError_1.default(http_status_1.default.BAD_REQUEST, 'Put a valid email address');
+            }
             //array
             const newTraveler = yield traveler_modal_1.Traveler.create(user_id);
             if (!newTraveler) {
@@ -57,12 +62,12 @@ const createBooking = (bookingData) => __awaiter(void 0, void 0, void 0, functio
         if (!getTraveler) {
             throw new ApiError_1.default(http_status_1.default.BAD_REQUEST, 'some thing is wrong! try again later.');
         }
-        /* checking seat number is has or not in a bus */
+        /* //* checking seat number is has or not in a bus */
         const isSeatsPresentOnBus = booking_seat.every(seat => bus_constants_1.all_seats.includes(seat));
         if (!isSeatsPresentOnBus) {
             throw new ApiError_1.default(http_status_1.default.NOT_FOUND, 'wrong seats chosen!');
         }
-        /* user allowed to book a maximum of 4 seats */
+        /* //*user allowed to book a maximum of 4 seats */
         const bookingList = yield booking_model_1.Booking.find({
             $and: [
                 { trip_id },
