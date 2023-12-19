@@ -63,7 +63,7 @@ const createBooking = async (bookingData: BookingCreateDTO) => {
       throw new ApiError(httpStatus.BAD_REQUEST, 'some thing is wrong! try again later.')
     }
 
-    /* checking seat number is has or not in a bus */
+    /* //* checking seat number is has or not in a bus */
     const isSeatsPresentOnBus = booking_seat.every(seat =>
       all_seats.includes(seat)
     )
@@ -71,7 +71,7 @@ const createBooking = async (bookingData: BookingCreateDTO) => {
       throw new ApiError(httpStatus.NOT_FOUND, 'wrong seats chosen!')
     }
 
-    /* user allowed to book a maximum of 4 seats */
+    /* //*user allowed to book a maximum of 4 seats */
     const bookingList = await Booking.find({
       $and: [
         { trip_id },
