@@ -11,7 +11,7 @@ const createBookingController = catchAsync(
     res
       .status(201)
       .json({
-        statusCode: 200,
+        statusCode: 201,
         success: true,
         message: 'Seat booked successfully !',
         data: newBooking,
