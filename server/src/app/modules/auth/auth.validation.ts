@@ -66,7 +66,7 @@ const createAdminZodSchema = z.object({
       required_error: 'name is required',
     }),
     email: z.string({
-      required_error: 'email is required',
+      required_error: 'email is required',  //TODO: check email checking is working perfectly or not 
     }),
     phone: z.string({
       required_error: 'phone is required',
