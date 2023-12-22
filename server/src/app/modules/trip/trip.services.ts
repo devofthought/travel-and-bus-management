@@ -574,12 +574,10 @@ export const UpdateDateAndTimeFromAdminPanel = async ({
 
   await Promise.all(
     allDocuments.map(async document => {
-      const departureDate = new Date(document.departure_time)
-      const updatedDepartureDate = new Date(departureDate)
+      const updatedDepartureDate = new Date(document.departure_time)
       updatedDepartureDate.setDate(updatedDepartureDate.getDate() + 1)
 
-      const arrivalDate = new Date(document.arrival_time)
-      const updatedArrivalDate = new Date(arrivalDate)
+      const updatedArrivalDate = new Date(document.arrival_time)
       updatedArrivalDate.setDate(updatedArrivalDate.getDate() + 1)
 
       document.departure_time = updatedDepartureDate.toISOString()
