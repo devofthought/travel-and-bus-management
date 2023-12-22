@@ -115,6 +115,18 @@ const getBusSeatStatusOnTripController = catchAsync(
   }
 )
 
+const UpdateDateAndTimeFromAdminPanel = catchAsync(
+  async (req: Request, res: Response) => {
+    const result = await TripService.UpdateDateAndTimeFromAdminPanel(req.body)
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Trip data time update successfully!',
+      data: result,
+    })
+  }
+)
+
 export const TripController = {
   createTrip,
   updateTrip,
@@ -124,4 +136,5 @@ export const TripController = {
   getAllUpdateAbleTrip,
   getTripsByUsersController,
   getBusSeatStatusOnTripController,
+  UpdateDateAndTimeFromAdminPanel,
 }

@@ -2,6 +2,7 @@ import mongoose from 'mongoose'
 import configs from './config/index'
 import app from './app'
 import { Server } from 'http'
+import { dateAndTime } from './config/updateDateAndTime'
 
 process.on('uncaughtException', error => {
   console.log(error)
@@ -36,6 +37,9 @@ async function bootstrap() {
 }
 
 bootstrap()
+
+
+// dateAndTime()
 
 process.on('SIGTERM', () => {
   console.log('SIGTERM is received.')

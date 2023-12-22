@@ -44,5 +44,9 @@ router.post(
   '/get-bus-seat-status-on-trip',
   TripController.getBusSeatStatusOnTripController
 )
+router.post(
+  '/update-trip-data-and-time',
+  TripController.UpdateDateAndTimeFromAdminPanel
+)
 
 export const TripRoutes = router

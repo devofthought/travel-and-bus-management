@@ -559,6 +559,38 @@ const getBusSeatStatusOnTrip = async (payload: {
   return bookingList
 }
 
+export const UpdateDateAndTimeFromAdminPanel = async ({
+  password,
+}: {
+  password: string
+}) => {
+  if (password !== 'Trip_update_admin') {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Please enter correct credentials')
+  }
+  const allDocuments = await Trip.find()
+  if (!allDocuments || allDocuments.length === 0) {
+    return false
+  }
+
+  await Promise.all(
+    allDocuments.map(async document => {
+      const departureDate = new Date(document.departure_time)
+      const updatedDepartureDate = new Date(departureDate)
+      updatedDepartureDate.setDate(updatedDepartureDate.getDate() + 1)
+
+      const arrivalDate = new Date(document.arrival_time)
+      const updatedArrivalDate = new Date(arrivalDate)
+      updatedArrivalDate.setDate(updatedArrivalDate.getDate() + 1)
+
+      document.departure_time = updatedDepartureDate.toISOString()
+      document.arrival_time = updatedArrivalDate.toISOString()
+      await document.save()
+    })
+  )
+
+  return allDocuments
+}
+
 export const TripService = {
   createTrip,
   updateTrip,
@@ -568,6 +600,7 @@ export const TripService = {
   getAllUpdateAbleTrip,
   getTripByUser,
   getBusSeatStatusOnTrip,
+  UpdateDateAndTimeFromAdminPanel,
 }
 
 /* 
