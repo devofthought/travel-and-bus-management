@@ -19,7 +19,7 @@ const Technologies = () => {
   const settings = {
     dots: false,
     infinite: true,
-    slidesToShow: 5,
+    slidesToShow: 6,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 1000,
@@ -67,7 +67,7 @@ const Technologies = () => {
                 <Image
                   src={icon}
                   alt={icon}
-                  className="w-16 md:w-24 rounded-xl "
+                  className="w-16 md:w-20 rounded-xl "
                   preview={false}
                 />
               </div>
@@ -78,13 +78,13 @@ const Technologies = () => {
 
       <div className="container">
         <Marquee direction="right" speed={100}>
-          <div className="ml-10 flex justify-around gap-10 md:gap-16 items-center rounded-xl cursor-auto">
+          <div className="ml-10 flex justify-around gap-10 md:gap-[90px] items-center rounded-xl cursor-auto">
             {icons.map((icon, index) => (
               <Image
                 key={index}
                 src={icon}
                 alt={icon}
-                className="w-16 md:w-24 rounded-xl "
+                className="w-16 md:w-20 rounded-xl"
                 preview={false}
               />
             ))}
