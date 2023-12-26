@@ -108,7 +108,10 @@ const ReserveABus = () => {
                       { required: true, message: "Please input your From!" },
                     ]}
                   >
-                    <Input className="h-10 text-lg" placeholder="From" />
+                    <Input
+                      className="h-10 text-lg hover:border-red-500 border-2 focus:border-red-500 focus-within:border-red-500 rounded-[5px]"
+                      placeholder="From"
+                    />
                   </Form.Item>
                   <Form.Item
                     name="to"
@@ -116,7 +119,10 @@ const ReserveABus = () => {
                       { required: true, message: "Please input your To!" },
                     ]}
                   >
-                    <Input className="h-10 text-lg" placeholder="To" />
+                    <Input
+                      className="h-10 text-lg hover:border-red-500 border-2 focus:border-red-500 focus-within:border-red-500 rounded-[5px]"
+                      placeholder="To"
+                    />
                   </Form.Item>
 
                   <Form.Item
@@ -130,7 +136,7 @@ const ReserveABus = () => {
                   >
                     <Select
                       size="large"
-                      className=" text-lg w-full"
+                      className=" text-lg w-full hover:border-red-500 border-2 focus:border-red-500 focus-within:border-red-500 rounded-[5px]"
                       placeholder="Bus Type"
                       options={[
                         {
@@ -155,8 +161,8 @@ const ReserveABus = () => {
                   >
                     <Select
                       size="large"
-                      className=" text-lg w-full"
-                      placeholder="Bus Type"
+                      className="h-10 text-lg w-full hover:border-red-500 border-2 focus:border-red-500 focus-within:border-red-500 rounded-[5px]"
+                      placeholder="Bus Seats"
                       options={[
                         {
                           value: "20",
@@ -192,7 +198,7 @@ const ReserveABus = () => {
                     ]}
                   >
                     <DatePicker
-                      className="h-10 text-lg w-full"
+                      className="h-10 text-lg w-full hover:border-red-500 border-2 focus:border-red-500 focus-within:border-red-500 rounded-[5px]"
                       placeholder="Journey Date"
                       disabledDate={disabledDate}
                       format={dateFormatList}
@@ -209,7 +215,7 @@ const ReserveABus = () => {
                     ]}
                   >
                     <DatePicker
-                      className="h-10 text-lg w-full"
+                      className="h-10 text-lg w-full hover:border-red-500 border-2 focus:border-red-500 focus-within:border-red-500 rounded-[5px]"
                       placeholder="Journey End Date"
                       disabledDate={disabledDate}
                       format={dateFormatList}
@@ -223,7 +229,10 @@ const ReserveABus = () => {
                       { required: true, message: "Please input your Name!" },
                     ]}
                   >
-                    <Input className="h-10 text-lg" placeholder="Your name" />
+                    <Input
+                      className="h-10 text-lg hover:border-red-500 border-2 focus:border-red-500 focus-within:border-red-500 rounded-[5px]"
+                      placeholder="Your name"
+                    />
                   </Form.Item>
                   <Form.Item
                     name="email"
@@ -237,7 +246,10 @@ const ReserveABus = () => {
                       },
                     ]}
                   >
-                    <Input className="h-10 text-lg" placeholder="Your email" />
+                    <Input
+                      className="h-10 text-lg hover:border-red-500 border-2 focus:border-red-500 focus-within:border-red-500 rounded-[5px]"
+                      placeholder="Your email"
+                    />
                   </Form.Item>
                 </div>
                 <Form.Item>
