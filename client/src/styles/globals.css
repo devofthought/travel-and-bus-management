@@ -100,11 +100,11 @@ a {
   background-color:  rgb(220 38 38);
 }
 
-.blog-container {
-  width: 100%;
-  max-width: 1310px;
+/* .blog-container {
+  width: 90%;
+  max-width: 1200px;
   margin: 0 auto;
-}
+} */
 
 .loading-style {
   margin: 20px 0;
