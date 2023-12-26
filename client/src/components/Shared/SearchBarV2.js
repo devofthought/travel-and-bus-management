@@ -8,7 +8,7 @@ import { TbBusStop } from "react-icons/tb";
 import { Select } from "antd";
 
 const deptFrom = ["Dhaka", "Sylhet"];
-const ArrTo = ["Sylhet", "Dhaka", "brahmanbaria", "Bogora"];
+const ArrTo = ["Sylhet", "Dhaka", "Brahmanbaria", "Bogora"];
 
 const SearchBarV2 = () => {
   const disabledDate = (current) => {
@@ -82,15 +82,17 @@ const SearchBarV2 = () => {
                   ))}
                 </Select>
               </div>
-              <div
-                className="w-8 h-8 p-1 absolute -bottom-2 right-[42%] sm:top-[28px] sm:-right-[22px] lg:top-[40px] bg-white z-10 text-gray-500 flex items-center justify-center rounded-full cursor-pointer hover:shadow-lg"
-                style={{ border: "1px solid lightgray" }}
-                onClick={handleFromToSwitcher}
-              >
-                <MdSwapHoriz className="text-2xl" />
+              <div className="hidden lg:block">
+                <div
+                  className="w-8 h-8 p-1 absolute -bottom-2 right-[42%] sm:top-[28px] sm:-right-[22px] lg:top-[40px] bg-white z-10 text-gray-500 flex items-center justify-center rounded-full cursor-pointer hover:shadow-lg"
+                  style={{ border: "1px solid lightgray" }}
+                  onClick={handleFromToSwitcher}
+                >
+                  <MdSwapHoriz className="text-2xl" />
+                </div>
               </div>
             </div>
-            <div className="relative w-full h-full flex items-center lg:ps-8 ">
+            <div className="relative w-[80%] md:w-full h-full flex items-center lg:ps-8 ">
               <TbBusStop className="text-2xl text-gray-500 mr-2" />
               <Select
                 showSearch
@@ -123,7 +125,7 @@ const SearchBarV2 = () => {
               />
             </div>
             <button
-              className="border-none p-3 h-full text-lg sm:text-xl hover:opacity-90 primary-bg sm:font-bold  rounded-2xl lg:rounded-none lg:rounded-r-[36px] text-white cursor-pointer leading-6 "
+              className="border-none p-3 lg:h-full text-lg sm:text-xl hover:opacity-90 primary-bg sm:font-bold  rounded-xl lg:rounded-none lg:rounded-r-[36px] text-white cursor-pointer leading-6 "
               type="submit"
             >
               SEARCH BUSES
