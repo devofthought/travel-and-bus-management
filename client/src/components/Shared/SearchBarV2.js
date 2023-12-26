@@ -60,7 +60,7 @@ const SearchBarV2 = () => {
       <div className="search-bar">
         <form onSubmit={(e) => handleSearchTrip(e)}>
           <div
-            className="w-11/12 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 items-center justify-center bg-white p-5 lg:p-0 lg:shadow-lg lg:h-[112px]"
+            className="w-11/12 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 items-center justify-center bg-white p-5 lg:p-0 lg:shadow-lg lg:h-[100px]"
             style={{ borderRadius: "36px" }}
           >
             <div className="relative w-full h-full p-5 lg:p-0">
@@ -84,7 +84,7 @@ const SearchBarV2 = () => {
               </div>
               <div className="hidden lg:block">
                 <div
-                  className="w-8 h-8 p-1 absolute -bottom-2 right-[42%] sm:top-[28px] sm:-right-[22px] lg:top-[40px] bg-white z-10 text-gray-500 flex items-center justify-center rounded-full cursor-pointer hover:shadow-lg"
+                  className="w-8 h-8 p-1 absolute -bottom-2 right-[42%] sm:top-[28px] sm:-right-[22px] lg:top-[34px] bg-white z-10 text-gray-500 flex items-center justify-center rounded-full cursor-pointer hover:shadow-lg"
                   style={{ border: "1px solid lightgray" }}
                   onClick={handleFromToSwitcher}
                 >
