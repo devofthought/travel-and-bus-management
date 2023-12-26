@@ -52,7 +52,7 @@ const FAQ = () => {
   };
 
   return (
-    <div className="main-container my-32 lg:my-36">
+    <div className="main-container my-28 lg:my-32">
       <SectionTitle title={"Frequently Asked Questions"}></SectionTitle>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-y-2 mb-4">
         {renderOptions()}

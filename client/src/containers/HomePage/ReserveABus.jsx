@@ -78,7 +78,7 @@ const ReserveABus = () => {
   };
 
   return (
-    <div className="main-container py-32 lg:py-36" id="reserveBus">
+    <div className="main-container py-28 lg:py-32" id="reserveBus">
       <SectionTitle
         title={
           <>

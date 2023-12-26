@@ -52,7 +52,7 @@ const OurBuses = () => {
   };
 
   return (
-    <div className="main-container my-32 lg:my-36">
+    <div className="main-container my-28 lg:my-32">
       <SectionTitle title={"Our Top Buses"}></SectionTitle>
       <div className="mb-10 px-2 md:px-0">
         <Slider {...settings}>
