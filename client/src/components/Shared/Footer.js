@@ -3,6 +3,7 @@ import { IoMdMail, IoLogoYoutube } from "react-icons/io";
 import { MailOutlined } from "@ant-design/icons";
 import { Button, Input, Form } from "antd";
 import Link from "next/link";
+import Swal from "sweetalert2";
 
 const Footer = () => {
   const year = new Date().getFullYear();
@@ -10,6 +11,14 @@ const Footer = () => {
 
   const handleSubscribe = (values) => {
     console.log(values);
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: `Subscribe Successfully`,
+      showConfirmButton: false,
+      timer: 1500,
+    });
+    form.resetFields();
   };
   return (
     <div className="secondary-bg mt-5">
