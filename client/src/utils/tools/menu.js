@@ -183,6 +183,20 @@ export const Menus = [
       },
     ],
   },
+  {
+    label: "Upgrade",
+    key: "34262effgs",
+    icon: <MdOutlineRssFeed />,
+    permission: ["admin"],
+    children: [
+      {
+        label: "system time",
+        key: "349jgj938hj",
+        path: "/dashboard/system-time",
+        icon: <TbBrandFeedly />,
+      },
+    ],
+  },
   /* driver menubar */
   {
     label: "profile",

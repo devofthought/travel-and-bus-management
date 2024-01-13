@@ -66,7 +66,6 @@ const updateTripZodSchema = z.object({
   }),
 })
 
-
 const getTripsByUsers = z.object({
   body: z.object({
     to: z.string({
@@ -81,8 +80,17 @@ const getTripsByUsers = z.object({
   }),
 })
 
+const updateTimeZodSchema = z.object({
+  body: z.object({
+    password: z.string({
+      required_error: 'password is required',
+    }),
+  }),
+})
+
 export const TripValidation = {
   createTripZodSchema,
   updateTripZodSchema,
-  getTripsByUsers
+  getTripsByUsers,
+  updateTimeZodSchema,
 }
