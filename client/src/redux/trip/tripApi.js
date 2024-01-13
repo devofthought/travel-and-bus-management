@@ -59,6 +59,14 @@ const tripApi = apiSlice.injectEndpoints({
       query: ({ trip_status }) => `/trips/up-coming?trip_status=${trip_status}`,
       providesTags: ["trip"],
     }),
+    Upgrade: builder.mutation({
+      query: (body) => ({
+        url: "/trips/update-trip-data-and-time",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["trip"],
+    }),
   }),
 });
 
@@ -72,4 +80,5 @@ export const {
   useGetTripsByUsersMutation,
   useGetBusSeatStatusMutation,
   useGetAllCompletedAndUpcomingTripForUserQuery,
+  useUpgradeMutation
 } = tripApi;
