@@ -14,6 +14,13 @@ router.get(
 ) //done testing // for user dashboard // upcoming-trip and complete trip
 
 router.post(
+  '/update-trip-data-and-time',
+  auth(ENUM_USER_ROLE.ADMIN),
+  validateRequest(TripValidation.updateTimeZodSchema),
+  TripController.UpdateDateAndTimeFromAdminPanel
+)
+
+router.post(
   '/',
   auth(ENUM_USER_ROLE.ADMIN),
   validateRequest(TripValidation.createTripZodSchema),
@@ -43,10 +50,6 @@ router.post(
 router.post(
   '/get-bus-seat-status-on-trip',
   TripController.getBusSeatStatusOnTripController
-)
-router.post(
-  '/update-trip-data-and-time',
-  TripController.UpdateDateAndTimeFromAdminPanel
 )
 
 export const TripRoutes = router

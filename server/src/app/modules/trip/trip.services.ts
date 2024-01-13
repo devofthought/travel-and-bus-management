@@ -564,8 +564,8 @@ export const UpdateDateAndTimeFromAdminPanel = async ({
 }: {
   password: string
 }) => {
-  if (password !== 'Trip_update_admin') {
-    throw new ApiError(httpStatus.NOT_FOUND, 'Please enter correct credentials')
+  if (password !== 'trip_update_admin') {
+    throw new ApiError(httpStatus.NOT_ACCEPTABLE, 'Please enter correct credentials')
   }
   const allDocuments = await Trip.find()
   if (!allDocuments || allDocuments.length === 0) {

@@ -117,6 +117,7 @@ const getBusSeatStatusOnTripController = catchAsync(
 
 const UpdateDateAndTimeFromAdminPanel = catchAsync(
   async (req: Request, res: Response) => {
+    console.log('dad', req.body)
     const result = await TripService.UpdateDateAndTimeFromAdminPanel(req.body)
     sendResponse(res, {
       statusCode: httpStatus.OK,
