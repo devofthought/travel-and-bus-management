@@ -19,7 +19,14 @@ const booking_service_1 = require("./booking.service");
 const createBookingController = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const bookingData = req.body;
     const newBooking = yield booking_service_1.bookingService.createBooking(bookingData);
-    res.status(201).json(newBooking);
+    res
+        .status(201)
+        .json({
+        statusCode: 201,
+        success: true,
+        message: 'Seat booked successfully !',
+        data: newBooking,
+    });
 }));
 // Controller function to update booking status
 const updateBookingController = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {

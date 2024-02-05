@@ -82,7 +82,7 @@ const Review = () => {
   };
 
   return (
-    <div className="main-container my-32 lg:my-36">
+    <div className="main-container my-28 lg:my-32">
       <SectionTitle title={"What Our Client Say"}></SectionTitle>
       <div className="px-2 md:px-0">
         <Slider {...settings}>

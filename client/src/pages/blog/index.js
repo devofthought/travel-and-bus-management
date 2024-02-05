@@ -17,7 +17,7 @@ const Blog = () => {
       </section>
 
       {/* Editor Pick */}
-      <section className="blog-container py-10">
+      <section className="main-container py-10">
         <div className="flex items-center justify-between mb-8">
           <h5 className="text-base-content text-2xl font-bold">Editor Pick</h5>
         </div>
@@ -25,7 +25,7 @@ const Blog = () => {
       </section>
 
       {/* HORIZONTAL CARD */}
-      <section className="blog-container py-10">
+      <section className="main-container py-10">
         <div className="flex flex-col lg:grid lg:grid-cols-12 gap-8 items-start">
           <div className="col-span-12 lg:col-span-8">
             <div className="flex items-center justify-between mb-8">

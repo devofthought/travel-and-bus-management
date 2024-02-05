@@ -128,7 +128,11 @@ const LoginForm = () => {
         </div>
 
         <Form.Item>
-          <Button btnName="Log in" styles="w-full py-2"></Button>
+          <Button
+            isLoading={loginIsLoading}
+            btnName="Log in"
+            styles="w-full py-2"
+          ></Button>
         </Form.Item>
       </Form>
     </>

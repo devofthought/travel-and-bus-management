@@ -8,7 +8,8 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 
 const SignUpForm = () => {
-  const [signUp, { data: signUpData, isSuccess }] = useSignUpMutation();
+  const [signUp, { data: signUpData, isSuccess, isLoading }] =
+    useSignUpMutation();
   const [form] = Form.useForm(); // Create a form instance
   const [messageApi, contextHolder] = message.useMessage();
   const router = useRouter();
@@ -137,7 +138,11 @@ const SignUpForm = () => {
         </div>
 
         <Form.Item>
-          <Button btnName="Register" styles="w-full py-2"></Button>
+          <Button
+            isLoading={isLoading}
+            btnName="Register"
+            styles="w-full py-2"
+          ></Button>
         </Form.Item>
       </Form>
     </>
