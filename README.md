@@ -168,31 +168,8 @@ $ yarn
 $ yarn dev
 ```
 
-### Screenshots
 
-Some screenshots of the project from different types of users are available in the [screenshots](./screenshots/) directory.
-
-#### The login screen:
-
-![](./screenshots/login.png)
-
-#### The signup screen:
-
-![](./screenshots/signup.png)
-
-#### home page:
-
-![](./screenshots/home-page.png)![]()
-
-### ERD
-
-[Click Here](https://drive.google.com/file/d/1GjbnjmCYe-u9MlG96PwzlePOypFFe_3Q/view?usp=sharing)![](./screenshots/erd.png)
-
-### user account
-
-If the database is up and running (take 2/3 min), use the following credentials to login as a user:
-
-```
-username:
-password:
-```
+### Our Contributors
+<a href="https://github.com/devofthought/travel-and-bus-management/graphs/contributors">
+<img src="https://contrib.rocks/image?repo=devofthought/travel-and-bus-management" />
+</a>
