@@ -12,36 +12,25 @@ _Thrives on connectivity and convenience, the transportation industry is at the 
 
 - Admin also can view traveler information on trips such as his/her payment, route, seat info, and bus number.
 
-### Languages/Technologies (Backend)
 
-- express
-- Typescript
-- Openapi swagger
-- cookie-parser
-- bcrypt
-- cors
-- dotenv
-- google-auth-library
-- http-status
-- jsonwebtoken
-- mongoose
-- zod
 
-### Languages/Technologies (Frontend)
+### Languages/Technologies
 
-- Next.js
-- JavsScript
-- AntDesign
-- tailwind
-- reduxjs
-- reduxjs-toolkit
-- redux-logger
-- class-variance-authority
-- date-fns
-- gapi-script
-- lucide-react
-- react-day-picker
-- react-google-login
+| Backend                             | Frontend                     |
+| ----------------------------------- | ---------------------------- |
+| Express                             | Next.js                      |
+| Typescript                          | JavsScript                   |
+| Openapi swagger                     | AntDesign                    |
+| Cookie-parser                       | Tailwind                     |
+| Bcrypt                              | Reduxjs                      |
+| Cors                                | Reduxjs-toolkit              |
+| Dotenv                              | Redux-logger                 |
+| Google-auth-library                 | Class-variance-authority     |
+| Http-status                         | Date-fns                     |
+| Jsonwebtoken                        | Gapi-script                  |
+| Mongoose                            | Lucide-react                 |
+| Zod                                 | React-day-picker             |
+
 
 ### Functional Requirements
 
