@@ -3,7 +3,7 @@ import { AiOutlinePullRequest } from "react-icons/ai";
 import { BiBus, BiListOl, BiTrip, BiUser } from "react-icons/bi";
 import { BsBusFront, BsBusFrontFill, BsCardChecklist } from "react-icons/bs";
 import { FaRoad } from "react-icons/fa";
-import { GiAutoRepair, GiBusStop, GiMountainRoad } from "react-icons/gi";
+import { GiAutoRepair, GiBusStop, GiMountainRoad,GiUpgrade } from "react-icons/gi";
 import {
   MdCreate,
   MdOutlineAddRoad,
@@ -186,14 +186,14 @@ export const Menus = [
   {
     label: "Upgrade",
     key: "34262effgs",
-    icon: <MdOutlineRssFeed />,
+    icon: <GiUpgrade />,
     permission: ["admin"],
     children: [
       {
         label: "system time",
         key: "349jgj938hj",
         path: "/dashboard/system-time",
-        icon: <TbBrandFeedly />,
+        icon: <GiUpgrade />,
       },
     ],
   },
