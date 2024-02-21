@@ -13,7 +13,7 @@ const Technologies = () => {
     "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",
     "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
     "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redux/redux-original.svg",
-    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg",
+    // "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg",
   ];
 
   const settings = {
@@ -84,7 +84,7 @@ const Technologies = () => {
                 key={index}
                 src={icon}
                 alt={icon}
-                className="w-16 md:w-20 rounded-xl"
+                className="w-16 md:w-[108px] rounded-xl"
                 preview={false}
               />
             ))}
