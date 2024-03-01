@@ -17,7 +17,7 @@ const PaymentMethodCard = () => {
     setIsButtonDisabled(false);
   };
   const handleSslcommerz = () => {
-    fetch("http://localhost:5000/api/v1/payment/order", {
+    fetch("https://dhruto-travels-server.vercel.app/api/v1/payment/order", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(data),
@@ -28,13 +28,16 @@ const PaymentMethodCard = () => {
       });
   };
   const handleStripe = () => {
-    fetch("http://localhost:5000/api/v1/payment/stripe/order", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({
-        items: [data],
-      }),
-    })
+    fetch(
+      "https://dhruto-travels-server.vercel.app/api/v1/payment/stripe/order",
+      {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          items: [data],
+        }),
+      }
+    )
       .then((res) => res.json())
       .then((result) => {
         window.location.replace(result.url);
