@@ -48,7 +48,7 @@ export const PostListCard = ({ cardData }) => {
             >
               <Link
                 href={`/blog/${cardData?.slug}`}
-                className="line-clam-2 font-semibold text-xl md:text-2xl text-base-content leading-7 hover:text-primary transition hover:duration-300 overflow-hidden"
+                className="line-clam-2 font-semibold text-xl md:text-2xl text-base-content leading-7  text-black hover:text-[#d84e55]  transition hover:duration-300 overflow-hidden"
               >
                 {cardData?.title || (
                   <h3>
@@ -81,7 +81,7 @@ export const PostListCard = ({ cardData }) => {
                 <h5>
                   <Link
                     href=""
-                    className="text-sm font-medium hover:text-primary transition hover:duration-300 whitespace-nowrap"
+                    className="text-sm font-medium  text-black hover:text-[#d84e55]  transition hover:duration-300 whitespace-nowrap"
                   >
                     {cardData?.author || "unknown"}
                   </Link>

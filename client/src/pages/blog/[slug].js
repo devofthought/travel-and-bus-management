@@ -11,7 +11,7 @@ const BlogSingle = () => {
   const { slug } = router.query;
   return (
     <main>
-      <section className="py-10">
+      <section className="main-container py-10">
         <div className="blog-container mx-auto px-5 md:px-0 mb-10">
           {/* Breadcrumb */}
           <Breadcrumb

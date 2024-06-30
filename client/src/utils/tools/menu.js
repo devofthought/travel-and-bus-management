@@ -129,26 +129,26 @@ export const Menus = [
       },
     ],
   },
-  {
-    label: "Incident",
-    key: "380gj803d",
-    icon: <GiAutoRepair />,
-    permission: ["admin"],
-    children: [
-      {
-        label: "All incident",
-        key: "349jgj938hj",
-        path: "/dashboard/incident/all-incident",
-        icon: <BsCardChecklist />,
-      },
-      {
-        label: "create incident",
-        key: "349jgj938hj",
-        path: "/dashboard/incident/create-incident",
-        icon: <MdOutlineDriveFileRenameOutline />,
-      },
-    ],
-  },
+  // {
+  //   label: "Incident",
+  //   key: "380gj803d",
+  //   icon: <GiAutoRepair />,
+  //   permission: ["admin"],
+  //   children: [
+  //     {
+  //       label: "All incident",
+  //       key: "349jgj938hj",
+  //       path: "/dashboard/incident/all-incident",
+  //       icon: <BsCardChecklist />,
+  //     },
+  //     {
+  //       label: "create incident",
+  //       key: "349jgj938hj",
+  //       path: "/dashboard/incident/create-incident",
+  //       icon: <MdOutlineDriveFileRenameOutline />,
+  //     },
+  //   ],
+  // },
   {
     label: "Reserve Bus",
     key: "adsf234f234",
@@ -169,20 +169,20 @@ export const Menus = [
       },
     ],
   },
-  {
-    label: "Support",
-    key: "380gj803d",
-    icon: <MdOutlineRssFeed />,
-    permission: ["admin"],
-    children: [
-      {
-        label: "Support All",
-        key: "349jgj938hj",
-        path: "/dashboard/support",
-        icon: <TbBrandFeedly />,
-      },
-    ],
-  },
+  // {
+  //   label: "Support",
+  //   key: "380gj803d",
+  //   icon: <MdOutlineRssFeed />,
+  //   permission: ["admin"],
+  //   children: [
+  //     {
+  //       label: "Support All",
+  //       key: "349jgj938hj",
+  //       path: "/dashboard/support",
+  //       icon: <TbBrandFeedly />,
+  //     },
+  //   ],
+  // },
   {
     label: "Upgrade",
     key: "34262effgs",

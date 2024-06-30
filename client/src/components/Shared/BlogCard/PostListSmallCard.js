@@ -25,7 +25,7 @@ export const PostListSmallCard = ({ cardData }) => {
           <h5>
             <Link
               href={`/blog/${cardData?.slug}`}
-              className="line-clam-2 font-semibold text-base text-base-content leading-5 hover:text-primary transition hover:duration-300 line-clam-2"
+              className="line-clam-2 font-semibold text-base text-base-content leading-5  text-black hover:text-[#d84e55]  transition hover:duration-300 line-clam-2"
             >
               {cardData?.title ||
                 `All the Stats, Facts, and Data You will Ever Need to Know`}
