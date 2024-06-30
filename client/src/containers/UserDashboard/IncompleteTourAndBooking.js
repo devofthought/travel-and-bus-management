@@ -90,14 +90,14 @@ const IncompleteTourAndBooking = () => {
       title: "Bus Code",
       dataIndex: "bus_code",
     },
-    {
-      title: "Payment Status",
-      dataIndex: "payment_status",
-    },
-    {
-      title: "Pay Now",
-      dataIndex: "pay_now",
-    },
+    // {
+    //   title: "Payment Status",
+    //   dataIndex: "payment_status",
+    // },
+    // {
+    //   title: "Pay Now",
+    //   dataIndex: "pay_now",
+    // },
   ];
 
   return (
