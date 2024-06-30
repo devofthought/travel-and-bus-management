@@ -22,11 +22,11 @@ const Dashboard = () => {
             <RoadChart />
           </div>
           <div className="flex flex-col md:flex-row gap-5">
-            <SellChart />
+            {/* <SellChart /> */}
             <SellChartRightSide />
           </div>
           <div className="flex flex-col md:flex-row gap-5">
-            <MonthlyDailyTrip />
+            {/* <MonthlyDailyTrip /> */}
           </div>
         </div>
       )}

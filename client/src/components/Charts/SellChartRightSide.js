@@ -2,7 +2,7 @@ import { Progress } from "antd";
 
 const SellChartRightSide = () => {
   return (
-    <div className="max-w-60">
+    <div className="max-w-60 flex gap-4 flex-wrap">
       <div className="border border-solid border-gray-300 shadow p-3 rounded-md mt-5 text-center">
         <h1 className="text-3xl">6800+</h1>
         <h1 className="text-lg ml-4">Kilometer Reach</h1>

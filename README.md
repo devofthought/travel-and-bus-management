@@ -8,8 +8,6 @@ _Thrives on connectivity and convenience, the transportation industry is at the 
 
 - Bus agencies: Benefit from dedicated admin, and bus-driver accounts enabling them to efficiently manage routes, and schedules. Scheduling involves creating and updating bus schedules for each route, with assignments for buses and drivers. Notifications ensure drivers are promptly informed of route, Scheduling, and cancellations, enhancing operational responsiveness. If a driver cancels his/her trip then re-assign another driver.
 
-- Incident management allows agencies to record and oversee any accidents or mechanical issues, tracking details, status updates, and repair costs. The system also facilitates driver payroll management by tracking earnings based on assigned routes and completed trips.
-
 - Admin also can view traveler information on trips such as his/her payment, route, seat info, and bus number.
 
 
@@ -48,10 +46,6 @@ _Thrives on connectivity and convenience, the transportation industry is at the 
 - Administrators should be able to log in securely using their credentials, including email and a secure password.
 - Furthermore, administrators should have the capability to create or register bus drivers within the system.
 
-##### Drivers
-
-- Drivers should be able to log in to their accounts by providing their credentials.
-- Additionally, drivers should have the option to register or log in using their Google credentials.
 
 #### Travelers
 
@@ -65,12 +59,6 @@ _Thrives on connectivity and convenience, the transportation industry is at the 
 - Travelers can add a review/feedback about the service/bus/driver after completing a trip.
 - Travelers are able to update their personal information such as name, email, phone, image, age, and password.
 
-#### Drivers
-
-- Receive notifications regarding their upcoming trips, inclusive of pertinent details such as route, departure time, arrival time, and bus code.
-- Upon receiving a notification, drivers proceed to confirm the assignment, subsequently receiving a confirmation of the trip via email or message.
-- Drivers have the ability to update their personal information, including name, email, phone number, and profile image.
-- Additionally, drivers can access their trip history, encompassing route information, Date of Journey, departure and arrival times, and the number of travelers (associated with booked seats).
 
 #### Admin
 
